@@ -154,16 +154,16 @@ urlPrefix: https://html.spec.whatwg.org/multipage/; spec: HTML
 
   <em>This section is not normative.</em>
 
-  As the Web platform is extended to enable more useful and powerful
+  As the web platform is extended to enable more useful and powerful
   applications, it becomes increasingly important to ensure that the features
   which enable those applications are enabled only in contexts which meet a minimum
-  security bar. This document outlines threat models for feature abuse on the Web
+  security bar. This document outlines threat models for feature abuse on the web
   and outline normative requirements which should be incorporated into documents
   specifying new features.
 
   The most obvious of the requirements discussed here is that application code
-  with access to sensitive or private data be delivered over authenticated and
-  confidential channels that guarantee data integrity. Delivering code securely
+  with access to sensitive or private data be delivered confidentially over
+  authenticated channels that guarantee data integrity. Delivering code securely
   cannot ensure that an application will always meet a user's security and
   privacy requirements, but it is a necessary precondition.
 
@@ -244,8 +244,7 @@ urlPrefix: https://html.spec.whatwg.org/multipage/; spec: HTML
   in a <a>secure context</a>. That is:
 
   <div class="example">
-    <p> if
-    <code>https://example.com/</code> opened in a <a>top-level browsing
+    If <code>https://example.com/</code> opened in a <a>top-level browsing
     context</a> opens <code>https://sub.example.com/</code> in a frame, then
     both are <a>secure contexts</a>, as both were delivered over
     authenticated and encrypted channels.</p>
@@ -298,9 +297,9 @@ urlPrefix: https://html.spec.whatwg.org/multipage/; spec: HTML
 
   <h4 id="examples-workers">Web Workers</h4>
 
-  Dedicated Web Workers are similar in nature to framed documents. They're
+  Dedicated Workers are similar in nature to framed documents. They're
   <a>secure contexts</a> when they're delivered from <a>potentially
-  trustworthy origins</a>, and when their owner is itself a <a>secure
+  trustworthy origins</a>, only if their owner is itself a <a>secure
   context</a>:
 
   <div class="example">
@@ -352,7 +351,7 @@ urlPrefix: https://html.spec.whatwg.org/multipage/; spec: HTML
 
   Multiple contexts may attach to a Shared Worker. If a <a>secure context</a>
   creates a Shared Worker, then it is a <a>secure context</a>, and may only be
-  attached to by other <a>secure contexts</a>. If an non-secure context creates
+  attached to by other <a>secure contexts</a>. If a non-secure context creates
   a Shared Worker, then it is <em>not</em> a <a>secure context</a>, and may only
   be attached to by other non-secure contexts.
 
@@ -378,7 +377,7 @@ urlPrefix: https://html.spec.whatwg.org/multipage/; spec: HTML
   </div>
 
   <div class="example">
-    <p>If <code>https://example.com/</code> in a different <a>top-level
+    <p><code>https://example.com/</code> in a different <a>top-level
     browsing context</a> (e.g. in a new window) is a secure context, so it may
     access the secure shared worker:</p>
 
@@ -511,8 +510,8 @@ urlPrefix: https://html.spec.whatwg.org/multipage/; spec: HTML
   <h4 id="monkey-patching-shared-workers">Shared Workers</h4>
 
   The {{SharedWorker()}} constructor will throw a `SecurtyError` exception if
-  a if a <a>secure context</a> attempts to attach to an Worker which is not a
-  <a>secure context</a>, and if an non-secure context attempts to attach to a
+  a <a>secure context</a> attempts to attach to an Worker which is not a
+  <a>secure context</a>, and if a non-secure context attempts to attach to a
   Worker which is a <a>secure context</a>. The constructor is modified as
   follows:
 
@@ -524,7 +523,7 @@ urlPrefix: https://html.spec.whatwg.org/multipage/; spec: HTML
           settings object</a> does not match the result of executing the same
           algorithm on <var>worker global scope</var>'s <a>relevant settings
           object</a>, then throw a `SecurityError` exception, and abort
-          the remaining steps.
+          these steps.
 
   <h4 id="monkey-patching-global-object">Feature Detection</h4>
 
@@ -543,7 +542,7 @@ urlPrefix: https://html.spec.whatwg.org/multipage/; spec: HTML
   </pre>
 
   Both {{Window}}'s {{Window/isSecureContext}} and {{WorkerGlobalScope}}'s
-  {{WorkerGlobalScope/isSecureContext}} attribute's getters return
+  {{WorkerGlobalScope/isSecureContext}} attributes' getters return
   <code>true</code> if the <a>relevant settings object</a> for the getter's
   <a>global object</a> is a <a>secure context</a>, and <code>false</code>
   otherwise.
@@ -556,39 +555,40 @@ urlPrefix: https://html.spec.whatwg.org/multipage/; spec: HTML
     Is <var>settings object</var> a secure context?
   </h3>
 
-  Given a <a>settings object</a> (<var>settings</var>), this algorithm returns
-  "`Secure`" if the object represents a context which the user agent fetched via
-  a secure channel, and "`Not Secure`" otherwise.
+  Given a <a>settings object</a> (<var>settings object</var>), this algorithm
+  returns "`Secure`" if the object represents a context which the user agent
+  fetched via a secure channel, and "`Not Secure`" otherwise.
 
-  1.  Let <var>ancestors</var> be a list containing <var>settings</var>.
+  1.  Let <var>ancestors</var> be a list containing <var>settings object</var>.
 
-  2.  If <var>settings</var>' <a>global object</a> is a {{WorkerGlobalScope}},
-      then:
+  2.  If <var>settings object</var>'s <a>global object</a> is a
+      {{WorkerGlobalScope}}, then:
 
-      1.  For each {{Document}} (<var>document</var>) in <var>settings</var>'
-          <a>global object</a>'s list of <a>the worker's
+      1.  For each {{Document}} (<var>document</var>) in <var>settings
+          object</var>' <a>global object</a>'s list of <a>the worker's
           <code>Documents</code></a>:
 
           1.  Add each item in the result of executing [[#gather-ancestors]] on
               <var>document</var> to <var>ancestors</var>.
 
-  3.  Otherwise, <var>settings</var>' <a>global object</a> is a
+  3.  Otherwise, <var>settings object</var>'s <a>global object</a> is a
       {{Window}}, so:
 
       1.  Add each item in the result of executing [[#gather-ancestors]] on
-          <var>settings</var>' <a>responsible document</a> to
+          <var>settings object</var>'s <a>responsible document</a> to
           <var>ancestors</var>.
 
-  4.  For each <var>ancestor settings</var> in <var>ancestors</var>:
+  4.  For each <var>ancestor settings object</var> in <var>ancestors</var>:
 
-      1.  If <var>ancestor settings</var>'s <a>HTTPS state</a> is "`modern`",
-          skip to the next <var>ancestor settings</var>.
+      1.  If <var>ancestor settings object</var>'s <a>HTTPS state</a> is
+          "`modern`", skip to the next <var>ancestor settings</var>.
 
-      2.  Let <var>origin</var> be <var>ancestor settings</var>' <a>origin</a>.
+      2.  Let <var>origin</var> be <var>ancestor settings object</var>'s
+          <a>origin</a>.
 
       3.  If <var>origin</var> is a <a>globally unique identifier</a>, set
           <var>origin</var> to the <a lt="origin of a url">origin</a>
-          of <var>settings</var>'s <a>creation URL</a>.
+          of <var>settings object</var>'s <a>creation URL</a>.
 
           Note: We use the origin of the URL here in order to allow sandboxed
           context to remain secure (as sandboxing is a strict reduction in the
@@ -608,55 +608,55 @@ urlPrefix: https://html.spec.whatwg.org/multipage/; spec: HTML
   A <dfn export>potentially trustworthy origin</dfn> is one which a user agent
   can generally trust as delivering data securely.
 
-  Certain origins are always potentially trustworthy. In particular, user agents
-  MUST treat <code>file</code> URLs and URLs with hostnames names equivalent to
-  `localhost` as potentially trustworthy. In principle the user agent could
-  treat local files and local web servers as untrustworthy, but, <em>given the
-  information that is available to the user agent at runtime</em>, the resources
-  appear to have been transported securely. Additionally, treating such
-  resources as potentially trustworthy is convenient for developers building an
-  application before deploying it to the public.
+  Certain origins are always potentially trustworthy. In particular, the user
+  agent MUST treat <code>file</code> URLs and URLs with hostnames names
+  equivalent to `localhost` as potentially trustworthy. In principle the user
+  agent could treat local files and local web servers as untrustworthy, but,
+  <em>given the information that is available to the user agent at runtime</em>,
+  the resources appear to have been transported securely from disk to the user
+  agent. Additionally, treating such resources as potentially trustworthy is
+  convenient for developers building an application before deploying it to the
+  public. The user agent MAY choose to treat these kinds of resources as
+  insecure.
 
-  A user agent MAY choose to extend this trust to other, vendor-specific URL
+  The user agent MAY choose to extend this trust to other, vendor-specific URL
   schemes like <code>app:</code> or <code>chrome-extension:</code>.
 
   Given an <a>origin</a> <var>origin</var>, the following algorithm returns
-  <code>Potentially Trustworthy</code> or <code>Not Trustworthy</code> as
-  appropriate.
+  "`Potentially Trustworthy`" or "`Not Trustworthy`" as appropriate.
 
   1.  If <var>origin</var> is a <a>potentially secure origin</a>, return
-      <code>Potentially Trustworthy</code>.
+      "`Potentially Trustworthy`".
 
       Note: The origin of <code>blob:</code> and <code>filesystem:</code> URLs
       is the origin of the context in which they were created. Therefore,
-      blobs created in an potentially secure origin will themselves be
+      blobs created in a potentially secure origin will themselves be
       potentially secure. The origin of <code>data:</code> and
       <code>javascript:</code> URLs is an opaque identifier, which will not
       be considered potentially secure.
 
   2.  If <var>origin</var>'s <code>host</code> component is or falls within
-      <code>localhost.</code> [[!RFC6761]], return <code>Potentially
-      Trustworthy</code>.
+      "`localhost.`" [[!RFC6761]], return "`Potentially Trustworthy`".
 
   3.  If <var>origin</var>'s <code>host</code> component matches one of
       the CIDR notations <code>127.0.0.0/8</code> or <code>::1/128</code>
-      [[!RFC4632]], return <code>Potentially Trustworthy</code>.
+      [[!RFC4632]], return "`Potentially Trustworthy`".
 
   4.  If <var>origin</var>'s <code>scheme</code> component is
-      <code>file</code>, return <code>Potentially Trustworthy</code>.
+      <code>file</code>, return "`Potentially Trustworthy`".
 
   5.  If <var>origin</var>'s <code>scheme</code> component is one which
       the user agent considers to be authenticated, return
-      <code>Potentially Trustworthy</code>.
+      "`Potentially Trustworthy`".
 
       Note: See [[#packaged-applications]] for detail here.
 
   6.  If <var>origin</var> has been configured as a trustworthy origin,
-      return <code>Potentially Trustworthy</code>.
+      return "`Potentially Trustworthy`".
 
       Note: See [[#development-environments]] for detail here.
 
-  7.  Return <code>Not Trusted</code>.
+  7.  Return "`Not Trusted`".
 
   <h3 id="gather-ancestors">
     Gather <var>document</var>'s relevant ancestors
@@ -716,7 +716,7 @@ urlPrefix: https://html.spec.whatwg.org/multipage/; spec: HTML
   parties without the agreement of these parties" and one "cannot defend against
   the most nefarious actors while allowing monitoring by other actors no matter
   how benevolent some might consider them to be." [[RFC7258]] Therefore, the
-  algorithms defined in this document require mechansims that provide for the
+  algorithms defined in this document require mechanisms that provide for the
   privacy of data at the application layer, not simply integrity.
 
   <h4 id="threat-active">Active Network Attacker</h4>
@@ -755,8 +755,8 @@ urlPrefix: https://html.spec.whatwg.org/multipage/; spec: HTML
       historical examples of features that use sensor input.
     </li>
     <li>
-      The ability to access information about other devices a user
-      has access to. [[DISCOVERY]] and [[BLUETOOTH]] are good examples.
+      The ability to access information about other devices to which a user has
+      access. [[DISCOVERY]] and [[BLUETOOTH]] are good examples.
     </li>
     <li>
       The ability to track users using temporary or persistent identifiers,
@@ -772,7 +772,7 @@ urlPrefix: https://html.spec.whatwg.org/multipage/; spec: HTML
     <li>
       The ability to manipulate a user agent's native UI in some way which
       removes, obscures, or manipulates details relevant to a user's
-      understanding of their context. [[FULLSCREEN]], for instance.
+      understanding of their context. [[FULLSCREEN]] is a good example.
     </li>
     <li>
       The ability to introduce some functionality for which user permission will
@@ -795,7 +795,7 @@ urlPrefix: https://html.spec.whatwg.org/multipage/; spec: HTML
   <h3 id="isolation">Incomplete Isolation</h3>
 
   The <a>secure context</a> definition in this document does not completely
-  isolate a "secure" view on an origin from an "non-secure" view on the same
+  isolate a "secure" view on an origin from a "non-secure" view on the same
   origin. That is, a developer who is actively working to bypass the secure
   context restriction on a particular API will be able to create a
   `postMessage`-based shim if they're willing to pop up a new window
@@ -812,7 +812,7 @@ urlPrefix: https://html.spec.whatwg.org/multipage/; spec: HTML
 
   <h3 id="packaged-applications">Packaged Applications</h3>
 
-  User agents that support packaged applications MAY whitelist specific URL
+  A user agent that support packaged applications MAY whitelist specific URL
   schemes whose contents are authenticated by the user agent. For example,
   FirefoxOS application resources are referred to by a URL whose
   <a for="URL">scheme</a> component is `app:`. Likewise, Chrome's extensions
@@ -822,7 +822,7 @@ urlPrefix: https://html.spec.whatwg.org/multipage/; spec: HTML
   <h3 id="development-environments">Development Environments</h3>
 
   In order to support developers who run staging servers on non-loopback hosts,
-  user agents MAY allow users to configure specific sets of origins as
+  the user agent MAY allow users to configure specific sets of origins as
   trustworthy, even though [[#is-origin-trustworthy]] would normally return
   `Not Trusted`.
 
@@ -880,7 +880,7 @@ urlPrefix: https://html.spec.whatwg.org/multipage/; spec: HTML
 
   <h4 id="legacy-example">Example: Geolocation</h4>
 
-  The [[GEOLOCATION-API]] is a good concrete example of such an feature; it is
+  The [[GEOLOCATION-API]] is a good concrete example of such a feature; it is
   widely implemented and used on a large number of non-secure sites. A reasonable
   path forward might look like this:
 
@@ -889,14 +889,14 @@ urlPrefix: https://html.spec.whatwg.org/multipage/; spec: HTML
       {{getCurrentPosition()}} and {{watchPosition()}}.
 
       If the <a>incumbent settings object</a> is not a <a>secure context</a>,
-      then the algorithms should be aborted, and the <var>errorCallback</var>
+      then the algorithm should be aborted, and the <var>errorCallback</var>
       invoked with a `code` of `PERMISSION_DENIED`.
 
-  2.  User agents should announce clear intentions to disable the API for
+  2.  The user agent should announce clear intentions to disable the API for
       non-secure contexts on a specific date, and warn developers accordingly
       (via console messages, for example).
 
-  3.  Leading up to the flag day, user agents should announce a deprecation
+  3.  Leading up to the flag day, the user agent should announce a deprecation
       schedule to ensure both that site authors recognize the need to modify
       their code before it simply stops working altogether, and to protect
       users in the meantime. Such a plan might include any or all of:
