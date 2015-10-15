@@ -58,7 +58,7 @@ urlPrefix: http://www.w3.org/TR/html5/; spec: HTML5
   type: attribute
     urlPrefix: webstorage.html
       text: sessionStorage; for: WindowSessionStorage; url: the-sessionstorage-attribute
-urlPrefix: https://w3c.github.io/webappsec/specs/mixedcontent/; spec: MIX
+urlPrefix: http://www.w3.org/TR/mixed-content/; spec: MIX
   type: dfn
     text: potentially secure origin
 urlPrefix: http://www.w3.org/TR/service-workers/; spec: SERVICE-WORKERS
@@ -157,8 +157,8 @@ urlPrefix: https://html.spec.whatwg.org/multipage/; spec: HTML
   As the web platform is extended to enable more useful and powerful
   applications, it becomes increasingly important to ensure that the features
   which enable those applications are enabled only in contexts which meet a minimum
-  security bar. This document outlines threat models for feature abuse on the web
-  and outline normative requirements which should be incorporated into documents
+  security level. This document describes threat models for feature abuse on the web
+  and outlines normative requirements which should be incorporated into documents
   specifying new features.
 
   The most obvious of the requirements discussed here is that application code
@@ -167,7 +167,7 @@ urlPrefix: https://html.spec.whatwg.org/multipage/; spec: HTML
   cannot ensure that an application will always meet a user's security and
   privacy requirements, but it is a necessary precondition.
 
-  <h3 id="examples">Examples</h3>
+  The following examples summarize the normative text which follows:
 
   <style>
     .secure {
@@ -197,7 +197,7 @@ urlPrefix: https://html.spec.whatwg.org/multipage/; spec: HTML
     }
   </style>
 
-  <h4 id="examples-top-level">Top-level Documents</h4>
+  <h3 id="examples-top-level">Top-level Documents</h3>
 
   Top-level documents are secure on their own merits:
 
@@ -237,7 +237,7 @@ urlPrefix: https://html.spec.whatwg.org/multipage/; spec: HTML
     </svg>
   </div>
 
-  <h4 id="examples-framed">Framed Documents</h4>
+  <h3 id="examples-framed">Framed Documents</h3>
 
   Framed documents can be <a>secure contexts</a> if they are delivered from
   <a>potentially trustworthy origins</a>, <em>and</em> if they're embedded
@@ -295,7 +295,7 @@ urlPrefix: https://html.spec.whatwg.org/multipage/; spec: HTML
     </svg>
   </div>
 
-  <h4 id="examples-workers">Web Workers</h4>
+  <h3 id="examples-workers">Web Workers</h3>
 
   Dedicated Workers are similar in nature to framed documents. They're
   <a>secure contexts</a> when they're delivered from <a>potentially
@@ -347,7 +347,7 @@ urlPrefix: https://html.spec.whatwg.org/multipage/; spec: HTML
     </svg>
   </div>
 
-  <h4 id="examples-shared-workers">Shared Workers</h4>
+  <h3 id="examples-shared-workers">Shared Workers</h3>
 
   Multiple contexts may attach to a Shared Worker. If a <a>secure context</a>
   creates a Shared Worker, then it is a <a>secure context</a>, and may only be
@@ -469,7 +469,7 @@ urlPrefix: https://html.spec.whatwg.org/multipage/; spec: HTML
     </svg>
   </div>
 
-  <h4 id="examples-service-workers">Service Workers</h4>
+  <h3 id="examples-service-workers">Service Workers</h3>
 
   Service Workers are always <a>secure contexts</a>. Only <a>secure contexts</a>
   may register them, and they may only have clients which are <a>secure
@@ -495,7 +495,6 @@ urlPrefix: https://html.spec.whatwg.org/multipage/; spec: HTML
       </g>
     </svg>
   </div>
-
 </section>
 
 <section>
@@ -787,6 +786,29 @@ urlPrefix: https://html.spec.whatwg.org/multipage/; spec: HTML
   critical, we ought not forget that facilities that carry such information
   (such as new network access mechanisms, or other generic functions with access
   to network data) are equally sensitive.
+
+  <h3 id="ancestors">Ancestral Risk</h3>
+
+  The [[#settings-object]] algorithm walks through all the ancestors of a
+  particular context in order to determine whether or not the context itself is
+  secure. Why wouldn't we consider a securely-delivered document in an
+  <{iframe}> to be secure, in and of itself?
+
+  The short answer is that this model would enable abuse. Chrome's
+  implementation of [[WEBCRYPTOAPI]] was an early experiment in locking APIs to
+  secure contexts, and it does not walk through a context's ancestors. The
+  assumption was that locking the API to a resouce which was itself delivered
+  securely would be enough to ensure secure usage. The result, however, was
+  that entities like Netflix built <{iframe}>- and `postMessage()`-based shims
+  that exposed the API to non-secure contexts. The restriction was little more
+  than a speed-bump, slowing down non-secure access to the API, but completely
+  ineffective in preventing such access.
+
+  While the algorithms in this document do not perfectly isolate non-secure
+  contexts from <a>secure contexts</a> (as discussed in [[#isolation]]), the
+  ancestor checks provide a fairly robust protection for the guarantees of
+  authentication, confidentiality, and integrity that such contexts ought to
+  ptovide.
 </section>
 
 <section>

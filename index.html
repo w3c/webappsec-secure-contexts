@@ -1020,7 +1020,7 @@
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="http://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/Icons/w3c_home" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Secure Contexts</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2015-10-14">14 October 2015</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2015-10-15">15 October 2015</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1080,15 +1080,11 @@ certain minimum standards of authentication and confidentiality are met.</p>
     <li>
      <a href="#intro"><span class="secno">1</span> <span class="content">Introduction</span></a>
      <ul class="toc">
-      <li>
-       <a href="#examples"><span class="secno">1.1</span> <span class="content">Examples</span></a>
-       <ul class="toc">
-        <li><a href="#examples-top-level"><span class="secno">1.1.1</span> <span class="content">Top-level Documents</span></a>
-        <li><a href="#examples-framed"><span class="secno">1.1.2</span> <span class="content">Framed Documents</span></a>
-        <li><a href="#examples-workers"><span class="secno">1.1.3</span> <span class="content">Web Workers</span></a>
-        <li><a href="#examples-shared-workers"><span class="secno">1.1.4</span> <span class="content">Shared Workers</span></a>
-        <li><a href="#examples-service-workers"><span class="secno">1.1.5</span> <span class="content">Service Workers</span></a>
-       </ul>
+      <li><a href="#examples-top-level"><span class="secno">1.1</span> <span class="content">Top-level Documents</span></a>
+      <li><a href="#examples-framed"><span class="secno">1.2</span> <span class="content">Framed Documents</span></a>
+      <li><a href="#examples-workers"><span class="secno">1.3</span> <span class="content">Web Workers</span></a>
+      <li><a href="#examples-shared-workers"><span class="secno">1.4</span> <span class="content">Shared Workers</span></a>
+      <li><a href="#examples-service-workers"><span class="secno">1.5</span> <span class="content">Service Workers</span></a>
      </ul>
     <li>
      <a href="#framework"><span class="secno">2</span> <span class="content">Framework</span></a>
@@ -1117,6 +1113,7 @@ certain minimum standards of authentication and confidentiality are met.</p>
         <li><a href="#threat-active"><span class="secno">4.1.2</span> <span class="content">Active Network Attacker</span></a>
        </ul>
       <li><a href="#threat-risks"><span class="secno">4.2</span> <span class="content">Risks associated with non-secure contexts</span></a>
+      <li><a href="#ancestors"><span class="secno">4.3</span> <span class="content">Ancestral Risk</span></a>
      </ul>
     <li>
      <a href="#security-considerations"><span class="secno">5</span> <span class="content">Security Considerations</span></a>
@@ -1164,16 +1161,16 @@ certain minimum standards of authentication and confidentiality are met.</p>
     <p>As the web platform is extended to enable more useful and powerful
   applications, it becomes increasingly important to ensure that the features
   which enable those applications are enabled only in contexts which meet a minimum
-  security bar. This document outlines threat models for feature abuse on the web
-  and outline normative requirements which should be incorporated into documents
+  security level. This document describes threat models for feature abuse on the web
+  and outlines normative requirements which should be incorporated into documents
   specifying new features.</p>
     <p>The most obvious of the requirements discussed here is that application code
   with access to sensitive or private data be delivered confidentially over
   authenticated channels that guarantee data integrity. Delivering code securely
   cannot ensure that an application will always meet a user’s security and
   privacy requirements, but it is a necessary precondition.</p>
-    <h3 class="heading settled" data-level="1.1" id="examples"><span class="secno">1.1. </span><span class="content">Examples</span><a class="self-link" href="#examples"></a></h3>
-    <h4 class="heading settled" data-level="1.1.1" id="examples-top-level"><span class="secno">1.1.1. </span><span class="content">Top-level Documents</span><a class="self-link" href="#examples-top-level"></a></h4>
+    <p>The following examples summarize the normative text which follows:</p>
+    <h3 class="heading settled" data-level="1.1" id="examples-top-level"><span class="secno">1.1. </span><span class="content">Top-level Documents</span><a class="self-link" href="#examples-top-level"></a></h3>
     <p>Top-level documents are secure on their own merits:</p>
     <div class="example" id="example-f9c0bcaa">
      <a class="self-link" href="#example-f9c0bcaa"></a> 
@@ -1208,7 +1205,7 @@ certain minimum standards of authentication and confidentiality are met.</p>
       </g>
      </svg>
     </div>
-    <h4 class="heading settled" data-level="1.1.2" id="examples-framed"><span class="secno">1.1.2. </span><span class="content">Framed Documents</span><a class="self-link" href="#examples-framed"></a></h4>
+    <h3 class="heading settled" data-level="1.2" id="examples-framed"><span class="secno">1.2. </span><span class="content">Framed Documents</span><a class="self-link" href="#examples-framed"></a></h3>
     <p>Framed documents can be <a data-link-type="dfn" href="#secure-context">secure contexts</a> if they are delivered from <a data-link-type="dfn" href="#potentially-trustworthy-origin">potentially trustworthy origins</a>, <em>and</em> if they’re embedded
   in a <a data-link-type="dfn" href="#secure-context">secure context</a>. That is:</p>
     <div class="example" id="example-9e620851">
@@ -1260,7 +1257,7 @@ certain minimum standards of authentication and confidentiality are met.</p>
       </g>
      </svg>
     </div>
-    <h4 class="heading settled" data-level="1.1.3" id="examples-workers"><span class="secno">1.1.3. </span><span class="content">Web Workers</span><a class="self-link" href="#examples-workers"></a></h4>
+    <h3 class="heading settled" data-level="1.3" id="examples-workers"><span class="secno">1.3. </span><span class="content">Web Workers</span><a class="self-link" href="#examples-workers"></a></h3>
     <p>Dedicated Workers are similar in nature to framed documents. They’re <a data-link-type="dfn" href="#secure-context">secure contexts</a> when they’re delivered from <a data-link-type="dfn" href="#potentially-trustworthy-origin">potentially
   trustworthy origins</a>, only if their owner is itself a <a data-link-type="dfn" href="#secure-context">secure
   context</a>:</p>
@@ -1306,7 +1303,7 @@ certain minimum standards of authentication and confidentiality are met.</p>
       </g>
      </svg>
     </div>
-    <h4 class="heading settled" data-level="1.1.4" id="examples-shared-workers"><span class="secno">1.1.4. </span><span class="content">Shared Workers</span><a class="self-link" href="#examples-shared-workers"></a></h4>
+    <h3 class="heading settled" data-level="1.4" id="examples-shared-workers"><span class="secno">1.4. </span><span class="content">Shared Workers</span><a class="self-link" href="#examples-shared-workers"></a></h3>
     <p>Multiple contexts may attach to a Shared Worker. If a <a data-link-type="dfn" href="#secure-context">secure context</a> creates a Shared Worker, then it is a <a data-link-type="dfn" href="#secure-context">secure context</a>, and may only be
   attached to by other <a data-link-type="dfn" href="#secure-context">secure contexts</a>. If a non-secure context creates
   a Shared Worker, then it is <em>not</em> a <a data-link-type="dfn" href="#secure-context">secure context</a>, and may only
@@ -1417,7 +1414,7 @@ certain minimum standards of authentication and confidentiality are met.</p>
       </g>
      </svg>
     </div>
-    <h4 class="heading settled" data-level="1.1.5" id="examples-service-workers"><span class="secno">1.1.5. </span><span class="content">Service Workers</span><a class="self-link" href="#examples-service-workers"></a></h4>
+    <h3 class="heading settled" data-level="1.5" id="examples-service-workers"><span class="secno">1.5. </span><span class="content">Service Workers</span><a class="self-link" href="#examples-service-workers"></a></h3>
     <p>Service Workers are always <a data-link-type="dfn" href="#secure-context">secure contexts</a>. Only <a data-link-type="dfn" href="#secure-context">secure contexts</a> may register them, and they may only have clients which are <a data-link-type="dfn" href="#secure-context">secure
   contexts</a>.</p>
     <div class="example" id="example-58019791">
@@ -1545,7 +1542,7 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://h
   "<code>Potentially Trustworthy</code>" or "<code>Not Trustworthy</code>" as appropriate.</p>
     <ol>
      <li data-md="">
-      <p>If <var>origin</var> is a <a data-link-type="dfn" href="https://w3c.github.io/webappsec/specs/mixedcontent/#potentially-secure-origin">potentially secure origin</a>, return
+      <p>If <var>origin</var> is a <a data-link-type="dfn" href="http://www.w3.org/TR/mixed-content/#potentially-secure-origin">potentially secure origin</a>, return
   "<code>Potentially Trustworthy</code>".</p>
       <p class="note" role="note">Note: The origin of <code>blob:</code> and <code>filesystem:</code> URLs
   is the origin of the context in which they were created. Therefore,
@@ -1666,6 +1663,24 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://h
   critical, we ought not forget that facilities that carry such information
   (such as new network access mechanisms, or other generic functions with access
   to network data) are equally sensitive.</p>
+    <h3 class="heading settled" data-level="4.3" id="ancestors"><span class="secno">4.3. </span><span class="content">Ancestral Risk</span><a class="self-link" href="#ancestors"></a></h3>
+    <p>The <a href="#settings-object">§3.1 Is settings object a secure context?</a> algorithm walks through all the ancestors of a
+  particular context in order to determine whether or not the context itself is
+  secure. Why wouldn’t we consider a securely-delivered document in an <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/embedded-content.html#the-iframe-element">iframe</a></code> to be secure, in and of itself?</p>
+    <p>The short answer is that this model would enable abuse. Chrome’s
+  implementation of <a data-link-type="biblio" href="#biblio-webcryptoapi">[WEBCRYPTOAPI]</a> was an early experiment in locking APIs to
+  secure contexts, and it does not walk through a context’s ancestors. The
+  assumption was that locking the API to a resouce which was itself delivered
+  securely would be enough to ensure secure usage. The result, however, was
+  that entities like Netflix built <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/embedded-content.html#the-iframe-element">iframe</a></code>- and <code>postMessage()</code>-based shims
+  that exposed the API to non-secure contexts. The restriction was little more
+  than a speed-bump, slowing down non-secure access to the API, but completely
+  ineffective in preventing such access.</p>
+    <p>While the algorithms in this document do not perfectly isolate non-secure
+  contexts from <a data-link-type="dfn" href="#secure-context">secure contexts</a> (as discussed in <a href="#isolation">§5.1 Incomplete Isolation</a>), the
+  ancestor checks provide a fairly robust protection for the guarantees of
+  authentication, confidentiality, and integrity that such contexts ought to
+  ptovide.</p>
    </section>
    <section>
     <h2 class="heading settled" data-level="5" id="security-considerations"><span class="secno">5. </span><span class="content">Security Considerations</span><a class="self-link" href="#security-considerations"></a></h2>
@@ -1855,7 +1870,7 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://h
    <li>
     <a data-link-type="biblio" href="#biblio-mix">[MIX]</a> defines the following terms:
     <ul>
-     <li><a href="https://w3c.github.io/webappsec/specs/mixedcontent/#potentially-secure-origin">potentially secure origin</a>
+     <li><a href="http://www.w3.org/TR/mixed-content/#potentially-secure-origin">potentially secure origin</a>
     </ul>
    <li>
     <a data-link-type="biblio" href="#biblio-rfc6454">[rfc6454]</a> defines the following terms:
@@ -1873,6 +1888,11 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://h
     <a data-link-type="biblio" href="#biblio-w3c-process">[W3C-PROCESS]</a> defines the following terms:
     <ul>
      <li><a href="http://www.w3.org/2014/Process-20140801/#rec-modify">modify a specification</a>
+    </ul>
+   <li>
+    <a data-link-type="biblio" href="#biblio-html">[HTML]</a> defines the following terms:
+    <ul>
+     <li><a href="https://html.spec.whatwg.org/multipage/embedded-content.html#the-iframe-element">iframe</a>
     </ul>
   </ul>
   <h2 class="no-num heading settled" id="references"><span class="content">References</span><a class="self-link" href="#references"></a></h2>
@@ -1917,6 +1937,8 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://h
    <dd>Chrome Security Team. <a href="https://www.chromium.org/Home/chromium-security/prefer-secure-origins-for-powerful-new-features">Prefer Secure Origins For Powerful New Features</a>. URL: <a href="https://www.chromium.org/Home/chromium-security/prefer-secure-origins-for-powerful-new-features">https://www.chromium.org/Home/chromium-security/prefer-secure-origins-for-powerful-new-features</a>
    <dt id="biblio-verizon"><a class="self-link" href="#biblio-verizon"></a>[VERIZON]
    <dd>Mark Bergen; Alex Kantrowitz. <a href="http://adage.com/article/digital/verizon-target-mobile-subscribers-ads/293356/">Verizon looks to target its mobile subscribers with ads</a>. URL: <a href="http://adage.com/article/digital/verizon-target-mobile-subscribers-ads/293356/">http://adage.com/article/digital/verizon-target-mobile-subscribers-ads/293356/</a>
+   <dt id="biblio-webcryptoapi"><a class="self-link" href="#biblio-webcryptoapi"></a>[WebCryptoAPI]
+   <dd>Ryan Sleevi; Mark Watson. <a href="http://www.w3.org/TR/WebCryptoAPI/">Web Cryptography API</a>. 11 December 2014. CR. URL: <a href="http://www.w3.org/TR/WebCryptoAPI/">http://www.w3.org/TR/WebCryptoAPI/</a>
    <dt id="biblio-encrypted-media"><a class="self-link" href="#biblio-encrypted-media"></a>[ENCRYPTED-MEDIA]
    <dd>David Dorwin; et al. <a href="http://www.w3.org/TR/encrypted-media/">Encrypted Media Extensions</a>. 31 March 2015. WD. URL: <a href="http://www.w3.org/TR/encrypted-media/">http://www.w3.org/TR/encrypted-media/</a>
    <dt id="biblio-fullscreen"><a class="self-link" href="#biblio-fullscreen"></a>[FULLSCREEN]
