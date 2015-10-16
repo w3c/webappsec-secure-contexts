@@ -504,6 +504,9 @@ urlPrefix: https://html.spec.whatwg.org/multipage/; spec: HTML
   the algorithm in [[#settings-object]] returns "`Secure`". The <a>settings
   object</a> is otherwise <dfn export lt="non-secure context">non-secure</dfn>.
 
+  Likewise, a <a>global object</a> is considered a <a>secure context</a> if its
+  <a>relevant settings object</a> is a <a>secure context</a>.
+
   <h3 id="monkey-patching">Modifications to HTML</h3>
 
   <h4 id="monkey-patching-shared-workers">Shared Workers</h4>
@@ -580,7 +583,7 @@ urlPrefix: https://html.spec.whatwg.org/multipage/; spec: HTML
   4.  For each <var>ancestor settings object</var> in <var>ancestors</var>:
 
       1.  If <var>ancestor settings object</var>'s <a>HTTPS state</a> is
-          "`modern`", skip to the next <var>ancestor settings</var>.
+          "`modern`", skip to the next <var>ancestor settings object</var>.
 
       2.  Let <var>origin</var> be <var>ancestor settings object</var>'s
           <a>origin</a>.
@@ -911,7 +914,7 @@ urlPrefix: https://html.spec.whatwg.org/multipage/; spec: HTML
       {{getCurrentPosition()}} and {{watchPosition()}}.
 
       If the <a>incumbent settings object</a> is not a <a>secure context</a>,
-      then the algorithm should be aborted, and the <var>errorCallback</var>
+      then the algorithm should be aborted, and the `errorCallback`
       invoked with a `code` of `PERMISSION_DENIED`.
 
   2.  The user agent should announce clear intentions to disable the API for

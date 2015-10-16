@@ -1020,7 +1020,7 @@
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="http://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/Icons/w3c_home" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Secure Contexts</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2015-10-15">15 October 2015</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2015-10-16">16 October 2015</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1443,6 +1443,7 @@ certain minimum standards of authentication and confidentiality are met.</p>
     <p>A <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#settings-object">settings object</a> is considered a <dfn data-dfn-type="dfn" data-export="" id="secure-context">secure context<a class="self-link" href="#secure-context"></a></dfn> if
   the algorithm in <a href="#settings-object">§3.1 Is settings object a secure context?</a> returns "<code>Secure</code>". The <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#settings-object">settings
   object</a> is otherwise <dfn data-dfn-type="dfn" data-export="" data-lt="non-secure context" id="non-secure-context">non-secure<a class="self-link" href="#non-secure-context"></a></dfn>.</p>
+    <p>Likewise, a <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#global-object">global object</a> is considered a <a data-link-type="dfn" href="#secure-context">secure context</a> if its <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#relevant-settings-object-for-a-global-object">relevant settings object</a> is a <a data-link-type="dfn" href="#secure-context">secure context</a>.</p>
     <h3 class="heading settled" data-level="2.1" id="monkey-patching"><span class="secno">2.1. </span><span class="content">Modifications to HTML</span><a class="self-link" href="#monkey-patching"></a></h3>
     <h4 class="heading settled" data-level="2.1.1" id="monkey-patching-shared-workers"><span class="secno">2.1.1. </span><span class="content">Shared Workers</span><a class="self-link" href="#monkey-patching-shared-workers"></a></h4>
     <p>The <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/workers.html#dom-sharedworker">SharedWorker()</a></code> constructor will throw a <code>SecurtyError</code> exception if
@@ -1508,7 +1509,7 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://h
       <ol>
        <li data-md="">
         <p>If <var>ancestor settings object</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#https-state">HTTPS state</a> is
-  "<code>modern</code>", skip to the next <var>ancestor settings</var>.</p>
+  "<code>modern</code>", skip to the next <var>ancestor settings object</var>.</p>
        <li data-md="">
         <p>Let <var>origin</var> be <var>ancestor settings object</var>’s <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a>.</p>
        <li data-md="">
@@ -1756,7 +1757,7 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://h
       <p><a data-link-type="dfn" href="http://www.w3.org/2014/Process-20140801/#rec-modify">Modify</a> the specification to include
   checks against <a data-link-type="dfn" href="#secure-context">secure context</a> before executing the algorithms for <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/geolocation-API/#get-current-position">getCurrentPosition()</a></code> and <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/geolocation-API/#watch-position">watchPosition()</a></code>.</p>
       <p>If the <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#incumbent-settings-object">incumbent settings object</a> is not a <a data-link-type="dfn" href="#secure-context">secure context</a>,
-  then the algorithm should be aborted, and the <var>errorCallback</var> invoked with a <code>code</code> of <code>PERMISSION_DENIED</code>.</p>
+  then the algorithm should be aborted, and the <code>errorCallback</code> invoked with a <code>code</code> of <code>PERMISSION_DENIED</code>.</p>
      <li data-md="">
       <p>The user agent should announce clear intentions to disable the API for
   non-secure contexts on a specific date, and warn developers accordingly
