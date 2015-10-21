@@ -634,7 +634,10 @@ urlPrefix: https://html.spec.whatwg.org/multipage/; spec: HTML
   Given an <a>origin</a> <var>origin</var>, the following algorithm returns
   "`Potentially Trustworthy`" or "`Not Trustworthy`" as appropriate.
 
-  1.  If <var>origin</var> is a <a>potentially secure origin</a>, return
+  1.  If <var>origin</var> is an <a>opaque identifier</a>, return "`Not
+      Trustworthy`".
+
+  2.  If <var>origin</var> is a <a>potentially secure origin</a>, return
       "`Potentially Trustworthy`".
 
       Note: The origin of <code>blob:</code> and <code>filesystem:</code> URLs
@@ -644,28 +647,28 @@ urlPrefix: https://html.spec.whatwg.org/multipage/; spec: HTML
       <code>javascript:</code> URLs is an <a>opaque identifier</a>, which will
       not be considered potentially secure.
 
-  2.  If <var>origin</var>'s <code>host</code> component is or falls within
+  3.  If <var>origin</var>'s <code>host</code> component is or falls within
       "`localhost.`" [[!RFC6761]], return "`Potentially Trustworthy`".
 
-  3.  If <var>origin</var>'s <code>host</code> component matches one of
+  4.  If <var>origin</var>'s <code>host</code> component matches one of
       the CIDR notations <code>127.0.0.0/8</code> or <code>::1/128</code>
       [[!RFC4632]], return "`Potentially Trustworthy`".
 
-  4.  If <var>origin</var>'s <code>scheme</code> component is
+  5.  If <var>origin</var>'s <code>scheme</code> component is
       <code>file</code>, return "`Potentially Trustworthy`".
 
-  5.  If <var>origin</var>'s <code>scheme</code> component is one which
+  6.  If <var>origin</var>'s <code>scheme</code> component is one which
       the user agent considers to be authenticated, return
       "`Potentially Trustworthy`".
 
       Note: See [[#packaged-applications]] for detail here.
 
-  6.  If <var>origin</var> has been configured as a trustworthy origin,
+  7.  If <var>origin</var> has been configured as a trustworthy origin,
       return "`Potentially Trustworthy`".
 
       Note: See [[#development-environments]] for detail here.
 
-  7.  Return "`Not Trusted`".
+  8.  Return "`Not Trusted`".
 
   <h3 id="gather-ancestors">
     Gather <var>document</var>'s relevant ancestors
