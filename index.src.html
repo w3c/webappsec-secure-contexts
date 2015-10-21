@@ -566,12 +566,14 @@ urlPrefix: https://html.spec.whatwg.org/multipage/; spec: HTML
   returns "`Secure`" if the object represents a context which the user agent
   fetched via a secure channel, and "`Not Secure`" otherwise.
 
-  1.  Let <var>ancestors</var> be a list containing <var>settings object</var>.
+  1.  Let <var>ancestors</var> be an empty list.
 
   2.  If <var>settings object</var>'s <a>global object</a> is a
       {{WorkerGlobalScope}}, then:
 
-      1.  For each {{Document}} (<var>document</var>) in <var>settings
+      1.  Add |settings object| to |ancestors|.
+
+      2.  For each {{Document}} (<var>document</var>) in <var>settings
           object</var>' <a>global object</a>'s list of <a>the worker's
           <code>Documents</code></a>:
 
@@ -673,8 +675,10 @@ urlPrefix: https://html.spec.whatwg.org/multipage/; spec: HTML
   <a>settings objects</a> which ought to be considered when determining whether
   or not <var>document</var> is a <a>secure context</a>.
 
-  1.  Let <var>ancestors</var> be a list containing <var>document</var>'s
-      <a>relevant settings object</a>.
+  1.  Let <var>ancestors</var> be an empty list.
+ 
+  2.  If <var>document</var> is not <a>an IFrame `srcdoc` `Document`</a>, add
+      |document|'s <a>relevant settings object</a> to |ancestors|.
 
   2.  While <var>document</var> has a <a>creator <code>Document</code></a>
       <var>creator</var>:
