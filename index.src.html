@@ -46,6 +46,8 @@ urlPrefix: http://www.w3.org/TR/html5/; spec: HTML5
       text: sandboxed origin browsing context flag
       text: sandboxing flag set
       text: top-level browsing context
+      text: origin
+      text: opaque identifier; url: origin
     urlPrefix: webappapis.html
       text: incumbent settings object
       text: settings object
@@ -73,10 +75,6 @@ urlPrefix: https://url.spec.whatwg.org/; spec: URL
     text: scheme; for: URL; url: concept-url-scheme
   type: interface
     text: URL
-urlPrefix: https://tools.ietf.org/html/rfc6454; spec: RFC6454
-  type: dfn
-    text: globally unique identifier; url: section-2.3
-    text: origin; url: section-3.2
 urlPrefix: https://html.spec.whatwg.org/multipage/; spec: HTML
   type: dfn
     urlPrefix: workers.html
@@ -595,7 +593,7 @@ urlPrefix: https://html.spec.whatwg.org/multipage/; spec: HTML
       2.  Let <var>origin</var> be <var>ancestor settings object</var>'s
           <a>origin</a>.
 
-      3.  If <var>origin</var> is a <a>globally unique identifier</a>, set
+      3.  If <var>origin</var> is an <a>opaque identifier</a>, set
           <var>origin</var> to the <a lt="origin of a url">origin</a>
           of <var>settings object</var>'s <a>creation URL</a>.
 
@@ -641,8 +639,8 @@ urlPrefix: https://html.spec.whatwg.org/multipage/; spec: HTML
       is the origin of the context in which they were created. Therefore,
       blobs created in a potentially secure origin will themselves be
       potentially secure. The origin of <code>data:</code> and
-      <code>javascript:</code> URLs is an opaque identifier, which will not
-      be considered potentially secure.
+      <code>javascript:</code> URLs is an <a>opaque identifier</a>, which will
+      not be considered potentially secure.
 
   2.  If <var>origin</var>'s <code>host</code> component is or falls within
       "`localhost.`" [[!RFC6761]], return "`Potentially Trustworthy`".
