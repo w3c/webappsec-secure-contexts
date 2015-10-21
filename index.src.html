@@ -592,6 +592,12 @@ urlPrefix: https://html.spec.whatwg.org/multipage/; spec: HTML
       1.  If <var>ancestor settings object</var>'s <a>HTTPS state</a> is
           "`modern`", skip to the next <var>ancestor settings object</var>.
 
+          Note: Most of the time, this check will be enough to determine whether
+          a particular context was securely delivered. Documents delivered over
+          TLS will have the flag set, and `srcdoc` `Document`s inherit their
+          ancestor's flag. We'll only continue past this check when dealing with
+          things like `http://127.0.0.1/`.
+
       2.  Let <var>origin</var> be <var>ancestor settings object</var>'s
           <a>origin</a>.
 
