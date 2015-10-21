@@ -1491,10 +1491,12 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://h
   fetched via a secure channel, and "<code>Not Secure</code>" otherwise.</p>
     <ol>
      <li data-md="">
-      <p>Let <var>ancestors</var> be a list containing <var>settings object</var>.</p>
+      <p>Let <var>ancestors</var> be an empty list.</p>
      <li data-md="">
       <p>If <var>settings object</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#global-object">global object</a> is a <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/workers.html#workerglobalscope">WorkerGlobalScope</a></code>, then:</p>
       <ol>
+       <li data-md="">
+        <p>Add <var>settings object</var> to <var>ancestors</var>.</p>
        <li data-md="">
         <p>For each <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/dom/#interface-document">Document</a></code> (<var>document</var>) in <var>settings
   object</var>' <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#global-object">global object</a>’s list of <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/workers.html#the-workers-documents">the worker’s <code>Documents</code></a>:</p>
@@ -1516,9 +1518,9 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://h
         <p>If <var>ancestor settings object</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#https-state">HTTPS state</a> is
   "<code>modern</code>", skip to the next <var>ancestor settings object</var>.</p>
        <li data-md="">
-        <p>Let <var>origin</var> be <var>ancestor settings object</var>’s <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a>.</p>
+        <p>Let <var>origin</var> be <var>ancestor settings object</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#origin">origin</a>.</p>
        <li data-md="">
-        <p>If <var>origin</var> is a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-2.3">globally unique identifier</a>, set <var>origin</var> to the <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-origin">origin</a> of <var>settings object</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#creation-url">creation URL</a>.</p>
+        <p>If <var>origin</var> is an <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#origin">opaque identifier</a>, set <var>origin</var> to the <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-origin">origin</a> of <var>settings object</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#creation-url">creation URL</a>.</p>
         <p class="note" role="note">Note: We use the origin of the URL here in order to allow sandboxed
   context to remain secure (as sandboxing is a strict reduction in the
   context’s capabilities, and therefore to the risk it poses). This
@@ -1544,17 +1546,19 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://h
   insecure.</p>
     <p>The user agent MAY choose to extend this trust to other, vendor-specific URL
   schemes like <code>app:</code> or <code>chrome-extension:</code>.</p>
-    <p>Given an <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> <var>origin</var>, the following algorithm returns
+    <p>Given an <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#origin">origin</a> <var>origin</var>, the following algorithm returns
   "<code>Potentially Trustworthy</code>" or "<code>Not Trustworthy</code>" as appropriate.</p>
     <ol>
+     <li data-md="">
+      <p>If <var>origin</var> is an <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#origin">opaque identifier</a>, return "<code>Not Trustworthy</code>".</p>
      <li data-md="">
       <p>If <var>origin</var> is a <a data-link-type="dfn" href="http://www.w3.org/TR/mixed-content/#potentially-secure-origin">potentially secure origin</a>, return
   "<code>Potentially Trustworthy</code>".</p>
       <p class="note" role="note">Note: The origin of <code>blob:</code> and <code>filesystem:</code> URLs
   is the origin of the context in which they were created. Therefore,
   blobs created in a potentially secure origin will themselves be
-  potentially secure. The origin of <code>data:</code> and <code>javascript:</code> URLs is an opaque identifier, which will not
-  be considered potentially secure.</p>
+  potentially secure. The origin of <code>data:</code> and <code>javascript:</code> URLs is an <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#origin">opaque identifier</a>, which will
+  not be considered potentially secure.</p>
      <li data-md="">
       <p>If <var>origin</var>’s <code>host</code> component is or falls within
   "<code>localhost.</code>" <a data-link-type="biblio" href="#biblio-rfc6761">[RFC6761]</a>, return "<code>Potentially Trustworthy</code>".</p>
@@ -1580,7 +1584,9 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://h
   or not <var>document</var> is a <a data-link-type="dfn" href="#secure-context">secure context</a>.</p>
     <ol>
      <li data-md="">
-      <p>Let <var>ancestors</var> be a list containing <var>document</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#relevant-settings-object-for-a-global-object">relevant settings object</a>.</p>
+      <p>Let <var>ancestors</var> be an empty list.</p>
+     <li data-md="">
+      <p>If <var>document</var> is not <a data-link-type="dfn" href="http://www.w3.org/TR/html5/embedded-content-0.html#an-iframe-srcdoc-document">an IFrame <code>srcdoc</code> <code>Document</code></a>, add <var>document</var>'s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#relevant-settings-object-for-a-global-object">relevant settings object</a> to <var>ancestors</var>.</p>
      <li data-md="">
       <p>While <var>document</var> has a <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#creator-document">creator <code>Document</code></a> <var>creator</var>:</p>
       <ol>
@@ -1867,6 +1873,8 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://h
      <li><a href="http://www.w3.org/TR/html5/browsers.html#creator-document">creator document</a>
      <li><a href="http://www.w3.org/TR/html5/webappapis.html#global-object">global object</a>
      <li><a href="http://www.w3.org/TR/html5/webappapis.html#incumbent-settings-object">incumbent settings object</a>
+     <li><a href="http://www.w3.org/TR/html5/browsers.html#origin">opaque identifier</a>
+     <li><a href="http://www.w3.org/TR/html5/browsers.html#origin">origin</a>
      <li><a href="http://www.w3.org/TR/html5/webappapis.html#relevant-settings-object-for-a-global-object">relevant settings object</a>
      <li><a href="http://www.w3.org/TR/html5/webappapis.html#responsible-document">responsible document</a>
      <li><a href="http://www.w3.org/TR/html5/webstorage.html#the-sessionstorage-attribute">sessionStorage</a>
@@ -1877,12 +1885,6 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://h
     <a data-link-type="biblio" href="#biblio-mix">[MIX]</a> defines the following terms:
     <ul>
      <li><a href="http://www.w3.org/TR/mixed-content/#potentially-secure-origin">potentially secure origin</a>
-    </ul>
-   <li>
-    <a data-link-type="biblio" href="#biblio-rfc6454">[rfc6454]</a> defines the following terms:
-    <ul>
-     <li><a href="https://tools.ietf.org/html/rfc6454#section-2.3">globally unique identifier</a>
-     <li><a href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a>
     </ul>
    <li>
     <a data-link-type="biblio" href="#biblio-url">[url]</a> defines the following terms:
@@ -1920,8 +1922,6 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://h
    <dd>S. Bradner. <a href="https://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href="https://tools.ietf.org/html/rfc2119">https://tools.ietf.org/html/rfc2119</a>
    <dt id="biblio-rfc4632"><a class="self-link" href="#biblio-rfc4632"></a>[RFC4632]
    <dd>V. Fuller; T. Li. <a href="https://tools.ietf.org/html/rfc4632">Classless Inter-domain Routing (CIDR): The Internet Address Assignment and Aggregation Plan</a>. August 2006. Best Current Practice. URL: <a href="https://tools.ietf.org/html/rfc4632">https://tools.ietf.org/html/rfc4632</a>
-   <dt id="biblio-rfc6454"><a class="self-link" href="#biblio-rfc6454"></a>[RFC6454]
-   <dd>A. Barth. <a href="https://tools.ietf.org/html/rfc6454">The Web Origin Concept</a>. December 2011. Proposed Standard. URL: <a href="https://tools.ietf.org/html/rfc6454">https://tools.ietf.org/html/rfc6454</a>
    <dt id="biblio-rfc6761"><a class="self-link" href="#biblio-rfc6761"></a>[RFC6761]
    <dd>S. Cheshire; M. Krochmal. <a href="https://tools.ietf.org/html/rfc6761">Special-Use Domain Names</a>. February 2013. Proposed Standard. URL: <a href="https://tools.ietf.org/html/rfc6761">https://tools.ietf.org/html/rfc6761</a>
    <dt id="biblio-url"><a class="self-link" href="#biblio-url"></a>[URL]
