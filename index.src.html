@@ -559,38 +559,35 @@ urlPrefix: https://html.spec.whatwg.org/multipage/; spec: HTML
   <h2 id="algorithms">Algorithms</h2>
 
   <h3 id="settings-object">
-    Is <var>settings object</var> a secure context?
+    Is |settings object| a secure context?
   </h3>
 
-  Given a <a>settings object</a> (<var>settings object</var>), this algorithm
-  returns "`Secure`" if the object represents a context which the user agent
-  fetched via a secure channel, and "`Not Secure`" otherwise.
+  Given a <a>settings object</a> (|settings object|), this algorithm returns
+  "`Secure`" if the object represents a context which the user agent obtained
+  via a secure channel, and "`Not Secure`" otherwise.
 
-  1.  Let <var>ancestors</var> be an empty list.
+  1.  Let |ancestors| be an empty list.
 
-  2.  If <var>settings object</var>'s <a>global object</a> is a
+  2.  If |settings object|'s <a>global object</a> is a
       {{WorkerGlobalScope}}, then:
 
       1.  Add |settings object| to |ancestors|.
 
-      2.  For each {{Document}} (<var>document</var>) in <var>settings
-          object</var>' <a>global object</a>'s list of <a>the worker's
-          <code>Documents</code></a>:
+      2.  For each {{Document}} (|document|) in |settings object|'s <a>global
+          object</a>'s list of <a>the worker's `Documents`</a>:
 
           1.  Add each item in the result of executing [[#gather-ancestors]] on
-              <var>document</var> to <var>ancestors</var>.
+              |document| to |ancestors|.
 
-  3.  Otherwise, <var>settings object</var>'s <a>global object</a> is a
-      {{Window}}, so:
+  3.  Otherwise, |settings object|'s <a>global object</a> is a {{Window}}, so:
 
       1.  Add each item in the result of executing [[#gather-ancestors]] on
-          <var>settings object</var>'s <a>responsible document</a> to
-          <var>ancestors</var>.
+          |settings object|'s <a>responsible document</a> to |ancestors|.
 
-  4.  For each <var>ancestor settings object</var> in <var>ancestors</var>:
+  4.  For each |ancestor settings object| in |ancestors|:
 
-      1.  If <var>ancestor settings object</var>'s <a>HTTPS state</a> is
-          "`modern`", skip to the next <var>ancestor settings object</var>.
+      1.  If |ancestor settings object|'s <a>HTTPS state</a> is "`modern`", skip
+          to the next |ancestor settings object|.
 
           Note: Most of the time, this check will be enough to determine whether
           a particular context was securely delivered. Documents delivered over
@@ -598,12 +595,11 @@ urlPrefix: https://html.spec.whatwg.org/multipage/; spec: HTML
           ancestor's flag. We'll only continue past this check when dealing with
           things like `http://127.0.0.1/`.
 
-      2.  Let <var>origin</var> be <var>ancestor settings object</var>'s
-          <a>origin</a>.
+      2.  Let |origin| be |ancestor settings object|'s <a>origin</a>.
 
-      3.  If <var>origin</var> is an <a>opaque identifier</a>, set
-          <var>origin</var> to the <a lt="origin of a url">origin</a>
-          of <var>settings object</var>'s <a>creation URL</a>.
+      3.  If |origin| is an <a>opaque identifier</a>, set |origin| to the
+          <a lt="origin of a url">origin</a> of |settings object|'s <a>creation
+          URL</a>.
 
           Note: We use the origin of the URL here in order to allow sandboxed
           context to remain secure (as sandboxing is a strict reduction in the
@@ -611,7 +607,7 @@ urlPrefix: https://html.spec.whatwg.org/multipage/; spec: HTML
           covers scenarios such as `<iframe sandbox src="http://localhost/">`.
 
       4.  If the result of executing the [[#is-origin-trustworthy]] algorithm
-          on <var>origin</var> is <strong>not</strong> `Potentially
+          on |origin| is <strong>not</strong> `Potentially
           Trustworthy`, then return "`Not Secure`".
 
   5.  Return "`Secure`".

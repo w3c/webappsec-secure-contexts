@@ -1486,46 +1486,47 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://h
    <section>
     <h2 class="heading settled" data-level="3" id="algorithms"><span class="secno">3. </span><span class="content">Algorithms</span><a class="self-link" href="#algorithms"></a></h2>
     <h3 class="heading settled" data-level="3.1" id="settings-object"><span class="secno">3.1. </span><span class="content"> Is <var>settings object</var> a secure context? </span><a class="self-link" href="#settings-object"></a></h3>
-    <p>Given a <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#settings-object">settings object</a> (<var>settings object</var>), this algorithm
-  returns "<code>Secure</code>" if the object represents a context which the user agent
-  fetched via a secure channel, and "<code>Not Secure</code>" otherwise.</p>
+    <p>Given a <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#settings-object">settings object</a> (<var>settings object</var>), this algorithm returns
+  "<code>Secure</code>" if the object represents a context which the user agent obtained
+  via a secure channel, and "<code>Not Secure</code>" otherwise.</p>
     <ol>
      <li data-md="">
       <p>Let <var>ancestors</var> be an empty list.</p>
      <li data-md="">
-      <p>If <var>settings object</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#global-object">global object</a> is a <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/workers.html#workerglobalscope">WorkerGlobalScope</a></code>, then:</p>
+      <p>If <var>settings object</var>'s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#global-object">global object</a> is a <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/workers.html#workerglobalscope">WorkerGlobalScope</a></code>, then:</p>
       <ol>
        <li data-md="">
         <p>Add <var>settings object</var> to <var>ancestors</var>.</p>
        <li data-md="">
-        <p>For each <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/dom/#interface-document">Document</a></code> (<var>document</var>) in <var>settings
-  object</var>' <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#global-object">global object</a>’s list of <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/workers.html#the-workers-documents">the worker’s <code>Documents</code></a>:</p>
+        <p>For each <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/dom/#interface-document">Document</a></code> (<var>document</var>) in <var>settings object</var>'s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#global-object">global
+  object</a>’s list of <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/workers.html#the-workers-documents">the worker’s <code>Documents</code></a>:</p>
         <ol>
          <li data-md="">
           <p>Add each item in the result of executing <a href="#gather-ancestors">§3.3 Gather document’s relevant ancestors</a> on <var>document</var> to <var>ancestors</var>.</p>
         </ol>
       </ol>
      <li data-md="">
-      <p>Otherwise, <var>settings object</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#global-object">global object</a> is a <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/dom/#interface-window">Window</a></code>, so:</p>
+      <p>Otherwise, <var>settings object</var>'s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#global-object">global object</a> is a <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/dom/#interface-window">Window</a></code>, so:</p>
       <ol>
        <li data-md="">
-        <p>Add each item in the result of executing <a href="#gather-ancestors">§3.3 Gather document’s relevant ancestors</a> on <var>settings object</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#responsible-document">responsible document</a> to <var>ancestors</var>.</p>
+        <p>Add each item in the result of executing <a href="#gather-ancestors">§3.3 Gather document’s relevant ancestors</a> on <var>settings object</var>'s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#responsible-document">responsible document</a> to <var>ancestors</var>.</p>
       </ol>
      <li data-md="">
       <p>For each <var>ancestor settings object</var> in <var>ancestors</var>:</p>
       <ol>
        <li data-md="">
-        <p>If <var>ancestor settings object</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#https-state">HTTPS state</a> is
-  "<code>modern</code>", skip to the next <var>ancestor settings object</var>.</p>
+        <p>If <var>ancestor settings object</var>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#https-state">HTTPS state</a> is "<code>modern</code>", skip
+  to the next <var>ancestor settings object</var>.</p>
         <p class="note" role="note">Note: Most of the time, this check will be enough to determine whether
   a particular context was securely delivered. Documents delivered over
   TLS will have the flag set, and <code>srcdoc</code> <code>Document</code>s inherit their
   ancestor’s flag. We’ll only continue past this check when dealing with
   things like <code>http://127.0.0.1/</code>.</p>
        <li data-md="">
-        <p>Let <var>origin</var> be <var>ancestor settings object</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#origin">origin</a>.</p>
+        <p>Let <var>origin</var> be <var>ancestor settings object</var>'s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#origin">origin</a>.</p>
        <li data-md="">
-        <p>If <var>origin</var> is an <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#origin">opaque identifier</a>, set <var>origin</var> to the <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-origin">origin</a> of <var>settings object</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#creation-url">creation URL</a>.</p>
+        <p>If <var>origin</var> is an <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#origin">opaque identifier</a>, set <var>origin</var> to the <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-origin">origin</a> of <var>settings object</var>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#creation-url">creation
+  URL</a>.</p>
         <p class="note" role="note">Note: We use the origin of the URL here in order to allow sandboxed
   context to remain secure (as sandboxing is a strict reduction in the
   context’s capabilities, and therefore to the risk it poses). This
