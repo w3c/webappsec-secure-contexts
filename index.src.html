@@ -27,6 +27,8 @@ urlPrefix: http://www.w3.org/TR/dom/; spec: DOM
 urlPrefix: https://fetch.spec.whatwg.org/; spec: FETCH
   type: interface
     text: Response
+  type: dfn
+    text: basic fetch
 urlPrefix: http://www.w3.org/TR/geolocation-API/; spec: GEOLOCATION-API
   type: method
     text: getCurrentPosition(); url: get-current-position
@@ -589,11 +591,18 @@ urlPrefix: https://html.spec.whatwg.org/multipage/; spec: HTML
       1.  If |ancestor settings object|'s <a>HTTPS state</a> is "`modern`", skip
           to the next |ancestor settings object|.
 
-          Note: Most of the time, this check will be enough to determine whether
-          a particular context was securely delivered. Documents delivered over
-          TLS will have the flag set, and `srcdoc` `Document`s inherit their
-          ancestor's flag. We'll only continue past this check when dealing with
-          things like `http://127.0.0.1/`.
+          <div class="note">
+            Most of the time, this check will be enough to determine whether
+            a particular context was securely delivered. Documents delivered over
+            TLS will have the flag set, and `srcdoc` `Document`s inherit their
+            ancestor's flag (as do other kinds of requests which inherit their
+            requestor's origin: see the <a>basic fetch</a> algorithm for details
+            on some of these [[FETCH]]).
+          
+            We'll only continue past this check when dealing with resources
+            delivered from "trustworthy" but unauthenticated locations like
+            `http://127.0.0.1/`.
+          </div>
 
       2.  Let |origin| be |ancestor settings object|'s <a>origin</a>.
 
