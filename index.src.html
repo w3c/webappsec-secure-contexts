@@ -62,7 +62,7 @@ urlPrefix: http://www.w3.org/TR/html5/; spec: HTML5
       text: sessionStorage; for: WindowSessionStorage; url: the-sessionstorage-attribute
 urlPrefix: http://www.w3.org/TR/mixed-content/; spec: MIX
   type: dfn
-    text: potentially secure origin
+    text: a priori authenticated url
 urlPrefix: http://www.w3.org/TR/service-workers/; spec: SERVICE-WORKERS
   type: interface
     text: ServiceWorker; url: service-worker-obj
@@ -623,54 +623,60 @@ urlPrefix: https://html.spec.whatwg.org/multipage/; spec: HTML
   A <dfn export>potentially trustworthy origin</dfn> is one which a user agent
   can generally trust as delivering data securely.
 
-  Certain origins are always potentially trustworthy. In particular, the user
-  agent MUST treat <code>file</code> URLs and URLs with hostnames names
-  equivalent to `localhost` as potentially trustworthy. In principle the user
-  agent could treat local files and local web servers as untrustworthy, but,
-  <em>given the information that is available to the user agent at runtime</em>,
-  the resources appear to have been transported securely from disk to the user
-  agent. Additionally, treating such resources as potentially trustworthy is
-  convenient for developers building an application before deploying it to the
-  public. The user agent MAY choose to treat these kinds of resources as
-  insecure.
+  This algorithms considers certain hosts, scheme, and origins as potentially
+  trustworthy, even though they might not be authenticated and encrypted in the
+  traditional sense. In particular, the user agent SHOULD treat `file` URLs and
+  URLs with hostnames names equivalent to `localhost` as potentially
+  trustworthy. In principle the user agent could treat local files and local web
+  servers as untrustworthy, but, <em>given the information that is available to
+  the user agent at runtime</em>, the resources appear to have been transported
+  securely from disk to the user agent. Additionally, treating such resources as
+  potentially trustworthy is convenient for developers building an application
+  before deploying it to the public.
 
-  The user agent MAY choose to extend this trust to other, vendor-specific URL
-  schemes like <code>app:</code> or <code>chrome-extension:</code>.
+  This developer-friendlyness is not without risk, however. User agents which
+  prioritize security over such niceties MAY choose to more strictly assign
+  trust in a way which excludes `localhost.` and `file`.
 
-  Given an <a>origin</a> <var>origin</var>, the following algorithm returns
+  On the other hand, the user agent MAY choose to extend this trust to other,
+  vendor-specific URL schemes like `app:` or `chrome-extension:` which it can
+  determine <i lang="la">a priori</i> to be trusted (see
+  [[#packaged-applications]] for detail).
+
+  Given an <a>origin</a> (|origin|), the following algorithm returns
   "`Potentially Trustworthy`" or "`Not Trustworthy`" as appropriate.
 
-  1.  If <var>origin</var> is an <a>opaque identifier</a>, return "`Not
+  1.  If |origin| is an <a>opaque identifier</a>, return "`Not Trustworthy`".
+
+  2.  If |origin|'s `scheme` is either "`https`" or "`wss`", return
+      "`Potentially Trustworthy`".
+
+      Note: This is meant to be analog to the <a><i lang="la">a priori</i>
+      authenticated URL</a> concept in [[MIX]].
+
+      Note: The origin of `blob:` and `filesystem:` URLs is the origin of the
+      context in which they were created. Therefore, blobs created in a
+      trustworthy origin will themselves be potentially trustworthy. The origin
+      of `data:` and `javascript:` URLs, on the other hand, is an <a>opaque
+      identifier</a>, which will not be considered potentially trustworthy.
+
+  3.  If |origin|'s `host` component is or falls within "`localhost.`"
+      [[!RFC6761]], return "`Potentially Trustworthy`".
+
+  4.  If |origin|'s `host` component matches one of the CIDR notations
+      `127.0.0.0/8` or `::1/128` [[!RFC4632]], return "`Potentially
       Trustworthy`".
 
-  2.  If <var>origin</var> is a <a>potentially secure origin</a>, return
-      "`Potentially Trustworthy`".
+  5.  If |origin|'s `scheme` component is `file`, return "`Potentially
+      Trustworthy`".
 
-      Note: The origin of <code>blob:</code> and <code>filesystem:</code> URLs
-      is the origin of the context in which they were created. Therefore,
-      blobs created in a potentially secure origin will themselves be
-      potentially secure. The origin of <code>data:</code> and
-      <code>javascript:</code> URLs is an <a>opaque identifier</a>, which will
-      not be considered potentially secure.
-
-  3.  If <var>origin</var>'s <code>host</code> component is or falls within
-      "`localhost.`" [[!RFC6761]], return "`Potentially Trustworthy`".
-
-  4.  If <var>origin</var>'s <code>host</code> component matches one of
-      the CIDR notations <code>127.0.0.0/8</code> or <code>::1/128</code>
-      [[!RFC4632]], return "`Potentially Trustworthy`".
-
-  5.  If <var>origin</var>'s <code>scheme</code> component is
-      <code>file</code>, return "`Potentially Trustworthy`".
-
-  6.  If <var>origin</var>'s <code>scheme</code> component is one which
-      the user agent considers to be authenticated, return
-      "`Potentially Trustworthy`".
+  6.  If |origin|'s `scheme` component is one which the user agent considers to
+      be authenticated, return "`Potentially Trustworthy`".
 
       Note: See [[#packaged-applications]] for detail here.
 
-  7.  If <var>origin</var> has been configured as a trustworthy origin,
-      return "`Potentially Trustworthy`".
+  7.  If |origin| has been configured as a trustworthy origin, return
+      `Potentially Trustworthy`".
 
       Note: See [[#development-environments]] for detail here.
 

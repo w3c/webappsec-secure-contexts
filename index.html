@@ -1020,7 +1020,7 @@
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="http://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/Icons/w3c_home" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Secure Contexts</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2015-10-21">21 October 2015</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2015-10-22">22 October 2015</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1540,46 +1540,48 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://h
     <h3 class="heading settled" data-level="3.2" id="is-origin-trustworthy"><span class="secno">3.2. </span><span class="content"> Is <var>origin</var> potentially trustworthy? </span><a class="self-link" href="#is-origin-trustworthy"></a></h3>
     <p>A <dfn data-dfn-type="dfn" data-export="" id="potentially-trustworthy-origin">potentially trustworthy origin<a class="self-link" href="#potentially-trustworthy-origin"></a></dfn> is one which a user agent
   can generally trust as delivering data securely.</p>
-    <p>Certain origins are always potentially trustworthy. In particular, the user
-  agent MUST treat <code>file</code> URLs and URLs with hostnames names
-  equivalent to <code>localhost</code> as potentially trustworthy. In principle the user
-  agent could treat local files and local web servers as untrustworthy, but, <em>given the information that is available to the user agent at runtime</em>,
-  the resources appear to have been transported securely from disk to the user
-  agent. Additionally, treating such resources as potentially trustworthy is
-  convenient for developers building an application before deploying it to the
-  public. The user agent MAY choose to treat these kinds of resources as
-  insecure.</p>
-    <p>The user agent MAY choose to extend this trust to other, vendor-specific URL
-  schemes like <code>app:</code> or <code>chrome-extension:</code>.</p>
-    <p>Given an <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#origin">origin</a> <var>origin</var>, the following algorithm returns
+    <p>This algorithms considers certain hosts, scheme, and origins as potentially
+  trustworthy, even though they might not be authenticated and encrypted in the
+  traditional sense. In particular, the user agent SHOULD treat <code>file</code> URLs and
+  URLs with hostnames names equivalent to <code>localhost</code> as potentially
+  trustworthy. In principle the user agent could treat local files and local web
+  servers as untrustworthy, but, <em>given the information that is available to
+  the user agent at runtime</em>, the resources appear to have been transported
+  securely from disk to the user agent. Additionally, treating such resources as
+  potentially trustworthy is convenient for developers building an application
+  before deploying it to the public.</p>
+    <p>This developer-friendlyness is not without risk, however. User agents which
+  prioritize security over such niceties MAY choose to more strictly assign
+  trust in a way which excludes <code>localhost.</code> and <code>file</code>.</p>
+    <p>On the other hand, the user agent MAY choose to extend this trust to other,
+  vendor-specific URL schemes like <code>app:</code> or <code>chrome-extension:</code> which it can
+  determine <i lang="la">a priori</i> to be trusted (see <a href="#packaged-applications">§6.1 Packaged Applications</a> for detail).</p>
+    <p>Given an <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#origin">origin</a> (<var>origin</var>), the following algorithm returns
   "<code>Potentially Trustworthy</code>" or "<code>Not Trustworthy</code>" as appropriate.</p>
     <ol>
      <li data-md="">
       <p>If <var>origin</var> is an <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#origin">opaque identifier</a>, return "<code>Not Trustworthy</code>".</p>
      <li data-md="">
-      <p>If <var>origin</var> is a <a data-link-type="dfn" href="http://www.w3.org/TR/mixed-content/#potentially-secure-origin">potentially secure origin</a>, return
+      <p>If <var>origin</var>'s <code>scheme</code> is either "<code>https</code>" or "<code>wss</code>", return
   "<code>Potentially Trustworthy</code>".</p>
-      <p class="note" role="note">Note: The origin of <code>blob:</code> and <code>filesystem:</code> URLs
-  is the origin of the context in which they were created. Therefore,
-  blobs created in a potentially secure origin will themselves be
-  potentially secure. The origin of <code>data:</code> and <code>javascript:</code> URLs is an <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#origin">opaque identifier</a>, which will
-  not be considered potentially secure.</p>
+      <p class="note" role="note">Note: This is meant to be analog to the <a data-link-type="dfn" href="http://www.w3.org/TR/mixed-content/#a-priori-authenticated-url"><i lang="la">a priori</i> authenticated URL</a> concept in <a data-link-type="biblio" href="#biblio-mix">[MIX]</a>.</p>
+      <p class="note" role="note">Note: The origin of <code>blob:</code> and <code>filesystem:</code> URLs is the origin of the
+  context in which they were created. Therefore, blobs created in a
+  trustworthy origin will themselves be potentially trustworthy. The origin
+  of <code>data:</code> and <code>javascript:</code> URLs, on the other hand, is an <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#origin">opaque
+  identifier</a>, which will not be considered potentially trustworthy.</p>
      <li data-md="">
-      <p>If <var>origin</var>’s <code>host</code> component is or falls within
-  "<code>localhost.</code>" <a data-link-type="biblio" href="#biblio-rfc6761">[RFC6761]</a>, return "<code>Potentially Trustworthy</code>".</p>
+      <p>If <var>origin</var>'s <code>host</code> component is or falls within "<code>localhost.</code>" <a data-link-type="biblio" href="#biblio-rfc6761">[RFC6761]</a>, return "<code>Potentially Trustworthy</code>".</p>
      <li data-md="">
-      <p>If <var>origin</var>’s <code>host</code> component matches one of
-  the CIDR notations <code>127.0.0.0/8</code> or <code>::1/128</code> <a data-link-type="biblio" href="#biblio-rfc4632">[RFC4632]</a>, return "<code>Potentially Trustworthy</code>".</p>
+      <p>If <var>origin</var>'s <code>host</code> component matches one of the CIDR notations <code>127.0.0.0/8</code> or <code>::1/128</code> <a data-link-type="biblio" href="#biblio-rfc4632">[RFC4632]</a>, return "<code>Potentially Trustworthy</code>".</p>
      <li data-md="">
-      <p>If <var>origin</var>’s <code>scheme</code> component is <code>file</code>, return "<code>Potentially Trustworthy</code>".</p>
+      <p>If <var>origin</var>'s <code>scheme</code> component is <code>file</code>, return "<code>Potentially Trustworthy</code>".</p>
      <li data-md="">
-      <p>If <var>origin</var>’s <code>scheme</code> component is one which
-  the user agent considers to be authenticated, return
-  "<code>Potentially Trustworthy</code>".</p>
+      <p>If <var>origin</var>'s <code>scheme</code> component is one which the user agent considers to
+  be authenticated, return "<code>Potentially Trustworthy</code>".</p>
       <p class="note" role="note">Note: See <a href="#packaged-applications">§6.1 Packaged Applications</a> for detail here.</p>
      <li data-md="">
-      <p>If <var>origin</var> has been configured as a trustworthy origin,
-  return "<code>Potentially Trustworthy</code>".</p>
+      <p>If <var>origin</var> has been configured as a trustworthy origin, return <code>Potentially Trustworthy</code>".</p>
       <p class="note" role="note">Note: See <a href="#development-environments">§6.2 Development Environments</a> for detail here.</p>
      <li data-md="">
       <p>Return "<code>Not Trusted</code>".</p>
@@ -1889,7 +1891,7 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://h
    <li>
     <a data-link-type="biblio" href="#biblio-mix">[MIX]</a> defines the following terms:
     <ul>
-     <li><a href="http://www.w3.org/TR/mixed-content/#potentially-secure-origin">potentially secure origin</a>
+     <li><a href="http://www.w3.org/TR/mixed-content/#a-priori-authenticated-url">a priori authenticated url</a>
     </ul>
    <li>
     <a data-link-type="biblio" href="#biblio-url">[url]</a> defines the following terms:
