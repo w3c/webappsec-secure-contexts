@@ -962,6 +962,13 @@
 		font-weight: bold;
 	}
 
+/** Extra-large Elements ******************************************************/
+
+	.big-element-wrapper {
+		max-width: 50em;
+		overflow-x: auto;
+	}
+
 /******************************************************************************/
 /*                                    Print                                   */
 /******************************************************************************/
@@ -1020,7 +1027,7 @@
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="http://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/Icons/w3c_home" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Secure Contexts</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2015-10-22">22 October 2015</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2015-11-12">12 November 2015</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1032,7 +1039,7 @@
      <dt>Version History:
      <dd><a href="https://github.com/w3c/webappsec-secure-contexts/commits/master/index.src.html">https://github.com/w3c/webappsec-secure-contexts/commits/master/index.src.html</a>
      <dt>Feedback:
-     <dd><span><a href="mailto:public-webappsec@w3.org?subject=%5Bpowerful-features%5D%20YOUR%20TOPIC%20HERE">public-webappsec@w3.org</a> with subject line “<kbd>[powerful-features] <i>… message topic …</i></kbd>” (<a href="http://lists.w3.org/Archives/Public/public-webappsec/" rel="discussion">archives</a>)</span>
+     <dd><span><a href="mailto:public-webappsec@w3.org?subject=%5Bpowerful-features%5D%20YOUR%20TOPIC%20HERE">public-webappsec@w3.org</a> with subject line “<kbd>[powerful-features] <i data-lt="">… message topic …</i></kbd>” (<a href="http://lists.w3.org/Archives/Public/public-webappsec/" rel="discussion">archives</a>)</span>
      <dt class="editor">Editors:
      <dd class="editor p-author h-card vcard" data-editor-id="56384"><a class="p-name fn u-email email" href="mailto:mkwst@google.com">Mike West</a> (<span class="p-org org">Google Inc.</span>)
      <dd class="editor p-author h-card vcard" data-editor-id="75060"><a class="p-name fn u-email email" href="mailto:yzhu@yahoo-inc.com">Yan Zhu</a> (<span class="p-org org">Yahoo! Inc.</span>)
@@ -1120,19 +1127,20 @@ certain minimum standards of authentication and confidentiality are met.</p>
      <ul class="toc">
       <li><a href="#isolation"><span class="secno">5.1</span> <span class="content">Incomplete Isolation</span></a>
      </ul>
+    <li><a href="#privacy-considerations"><span class="secno">6</span> <span class="content">Privacy Considerations</span></a>
     <li>
-     <a href="#implementation-considerations"><span class="secno">6</span> <span class="content">Implementation Considerations</span></a>
+     <a href="#implementation-considerations"><span class="secno">7</span> <span class="content">Implementation Considerations</span></a>
      <ul class="toc">
-      <li><a href="#packaged-applications"><span class="secno">6.1</span> <span class="content">Packaged Applications</span></a>
-      <li><a href="#development-environments"><span class="secno">6.2</span> <span class="content">Development Environments</span></a>
-      <li><a href="#new"><span class="secno">6.3</span> <span class="content">Restricting New Features</span></a>
+      <li><a href="#packaged-applications"><span class="secno">7.1</span> <span class="content">Packaged Applications</span></a>
+      <li><a href="#development-environments"><span class="secno">7.2</span> <span class="content">Development Environments</span></a>
+      <li><a href="#new"><span class="secno">7.3</span> <span class="content">Restricting New Features</span></a>
       <li>
-       <a href="#legacy"><span class="secno">6.4</span> <span class="content">Restricting Legacy Features</span></a>
+       <a href="#legacy"><span class="secno">7.4</span> <span class="content">Restricting Legacy Features</span></a>
        <ul class="toc">
-        <li><a href="#legacy-example"><span class="secno">6.4.1</span> <span class="content">Example: Geolocation</span></a>
+        <li><a href="#legacy-example"><span class="secno">7.4.1</span> <span class="content">Example: Geolocation</span></a>
        </ul>
      </ul>
-    <li><a href="#acknowledgements"><span class="secno">7</span> <span class="content">Acknowledgements</span></a>
+    <li><a href="#acknowledgements"><span class="secno">8</span> <span class="content">Acknowledgements</span></a>
     <li>
      <a href="#conformance"><span class="secno"></span> <span class="content">Conformance</span></a>
      <ul class="toc">
@@ -1163,7 +1171,7 @@ certain minimum standards of authentication and confidentiality are met.</p>
   which enable those applications are enabled only in contexts which meet a minimum
   security level. This document describes threat models for feature abuse on the web
   (see <a href="#threat-models">§4.1 Threat Models</a>) and outlines normative requirements which should be
-  incorporated into documents specifying new features (see <a href="#implementation-considerations">§6 Implementation Considerations</a>).</p>
+  incorporated into documents specifying new features (see <a href="#implementation-considerations">§7 Implementation Considerations</a>).</p>
     <p>The most obvious of the requirements discussed here is that application code
   with access to sensitive or private data be delivered confidentially over
   authenticated channels that guarantee data integrity. Delivering code securely
@@ -1176,7 +1184,20 @@ certain minimum standards of authentication and confidentiality are met.</p>
   defined below ensure that these bypasses are difficult and user-visible.</p>
     <p>The following examples summarize the normative text which follows:</p>
     <h3 class="heading settled" data-level="1.1" id="examples-top-level"><span class="secno">1.1. </span><span class="content">Top-level Documents</span><a class="self-link" href="#examples-top-level"></a></h3>
-    <p>Top-level documents are secure on their own merits:</p>
+    <p>Top-level documents are secure as long as they don’t have a non-secure <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#opener-browsing-context">opener browsing context</a>. This is a bit convoluted, so let’s go straight
+  to the examples:</p>
+    <div class="example" id="example-c3b67557">
+     <a class="self-link" href="#example-c3b67557"></a> 
+     <p><code>http://example.com/</code> opened in a <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#top-level-browsing-context">top-level browsing
+    context</a> is not a <a data-link-type="dfn" href="#secure-context">secure context</a>, as it was not delivered over
+    an authenticated and encrypted channel.</p>
+     <svg height="200" width="400">
+      <g transform="translate(10,10)">
+       <rect class="non-secure" height="175" width="297" x="0" y="0"></rect>
+       <text transform="translate(10, 20)">http://example.com/</text>
+      </g>
+     </svg>
+    </div>
     <div class="example" id="example-f9c0bcaa">
      <a class="self-link" href="#example-f9c0bcaa"></a> 
      <p><code>https://example.com/</code> opened in a <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#top-level-browsing-context">top-level browsing
@@ -1189,11 +1210,85 @@ certain minimum standards of authentication and confidentiality are met.</p>
       </g>
      </svg>
     </div>
-    <div class="example" id="example-385f5648">
-     <a class="self-link" href="#example-385f5648"></a> 
+    <div class="example" id="example-601f9a50">
+     <a class="self-link" href="#example-601f9a50"></a> 
+     <p>
+      If a secure context opens <code>https://example.com/</code> in a new
+    window, that new window will be a secure context, as it is both secure on
+    its own merits, and was opened from a secure context: 
+      <svg height="400" width="400">
+       <g transform="translate(10,10)">
+        <rect class="secure" height="175" width="297" x="0" y="0"></rect>
+        <text transform="translate(10, 20)">https://secure.example.com/</text>
+       </g>
+       <g transform="translate(10,210)">
+        <rect class="secure" height="175" width="297" x="0" y="0"></rect>
+        <text transform="translate(10, 20)">https://another.example.com/</text>
+       </g>
+       <g>
+        <path d="M150, 87 C 200 75, 350 75, 150 287"></path>
+       </g>
+      </svg>
+     </p>
+    </div>
+    <div class="example" id="example-0de24a13">
+     <a class="self-link" href="#example-0de24a13"></a> 
+     <p>If a non-secure context opens <code>https://example.com/</code> in a new
+    window, then things are more complicated. The new window’s status depends on
+    how it was opened. If the non-secure context can obtain a reference to the
+    secure context, or vice-versa, then the new window is not a secure context. </p>
+     <p>This means that the following will both produce non-secure contexts:</p>
+<pre>&lt;a href="https://example.com/" target="_blank">Link!&lt;/a>
+      
+&lt;script>
+  var w = window.open("https://example.com/");
+&lt;/script>
+</pre>
+     <svg height="400" width="400">
+      <g transform="translate(10,10)">
+       <rect class="non-secure" height="175" width="297" x="0" y="0"></rect>
+       <text transform="translate(10, 20)">https://non-secure.example.com/</text>
+      </g>
+      <g transform="translate(10,210)">
+       <rect class="non-secure" height="175" width="297" x="0" y="0"></rect>
+       <text transform="translate(10, 20)">https://another.example.com/</text>
+      </g>
+      <g>
+       <path d="M150, 87 C 200 75, 350 75, 150 287"></path>
+      </g>
+     </svg>
+     <p>The link can be broken via the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/semantics.html#link-type-noopener"><code>noopener</code></a> link relation, meaning
+    that the following will both produce secure contexts:</p>
+<pre>&lt;a href="https://example.com/" rel="noopener" target="_blank">Link!&lt;/a>
+      
+&lt;script>
+  var w = window.open("https://example.com/", "", "noopener");
+&lt;/script>
+</pre>
+     <svg height="400" width="400">
+      <g transform="translate(10,10)">
+       <rect class="non-secure" height="175" width="297" x="0" y="0"></rect>
+       <text transform="translate(10, 20)">https://non-secure.example.com/</text>
+      </g>
+      <g transform="translate(10,210)">
+       <rect class="secure" height="175" width="297" x="0" y="0"></rect>
+       <text transform="translate(10, 20)">https://another.example.com/</text>
+      </g>
+      <g>
+       <path d="M150, 87 C 200 75, 350 75, 150 287"></path>
+      </g>
+     </svg>
+    </div>
+    <div class="example" id="example-e024fc75">
+     <a class="self-link" href="#example-e024fc75"></a> 
      <p><code>http://non-secure.example.com/</code> opened in a <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#top-level-browsing-context">top-level
     browsing context</a> pops open a new window containing <code>https://example.com/</code>. The former is not a <a data-link-type="dfn" href="#secure-context">secure
-    context</a>; the latter is a <a data-link-type="dfn" href="#secure-context">secure context</a>, because it is a new
+    context</a>; the latter is a <a data-link-type="dfn" href="#secure-context">secure context</a> if and only if it was
+    opened in a way that broke off contact with the non-secure context. That is,
+    if the new window can access the non-secure context via <code>window.opener</code>, and
+    the non-secure context can access the secure context by grabbing a reference
+    to the window, then it 
+    , because it is a new
     top-level browsing context delivered over an authenticated and encrypted
     channel.</p>
      <svg height="400" width="400">
@@ -1493,12 +1588,12 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://h
      <li data-md="">
       <p>Let <var>ancestors</var> be an empty list.</p>
      <li data-md="">
-      <p>If <var>settings object</var>'s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#global-object">global object</a> is a <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/workers.html#workerglobalscope">WorkerGlobalScope</a></code>, then:</p>
+      <p>If <var>settings object</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#global-object">global object</a> is a <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/workers.html#workerglobalscope">WorkerGlobalScope</a></code>, then:</p>
       <ol>
        <li data-md="">
         <p>Add <var>settings object</var> to <var>ancestors</var>.</p>
        <li data-md="">
-        <p>For each <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/dom/#interface-document">Document</a></code> (<var>document</var>) in <var>settings object</var>'s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#global-object">global
+        <p>For each <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/dom/#interface-document">Document</a></code> (<var>document</var>) in <var>settings object</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#global-object">global
   object</a>’s list of <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/workers.html#the-workers-documents">the worker’s <code>Documents</code></a>:</p>
         <ol>
          <li data-md="">
@@ -1506,16 +1601,16 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://h
         </ol>
       </ol>
      <li data-md="">
-      <p>Otherwise, <var>settings object</var>'s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#global-object">global object</a> is a <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/dom/#interface-window">Window</a></code>, so:</p>
+      <p>Otherwise, <var>settings object</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#global-object">global object</a> is a <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/dom/#interface-window">Window</a></code>, so:</p>
       <ol>
        <li data-md="">
-        <p>Add each item in the result of executing <a href="#gather-ancestors">§3.3 Gather document’s relevant ancestors</a> on <var>settings object</var>'s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#responsible-document">responsible document</a> to <var>ancestors</var>.</p>
+        <p>Add each item in the result of executing <a href="#gather-ancestors">§3.3 Gather document’s relevant ancestors</a> on <var>settings object</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#responsible-document">responsible document</a> to <var>ancestors</var>.</p>
       </ol>
      <li data-md="">
       <p>For each <var>ancestor settings object</var> in <var>ancestors</var>:</p>
       <ol>
        <li data-md="">
-        <p>If <var>ancestor settings object</var>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#https-state">HTTPS state</a> is "<code>modern</code>", skip
+        <p>If <var>ancestor settings object</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#https-state">HTTPS state</a> is "<code>modern</code>", skip
   to the next <var>ancestor settings object</var>.</p>
         <div class="note" role="note">
           Most of the time, this check will be enough to determine whether
@@ -1528,9 +1623,9 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://h
     delivered from "trustworthy" but unauthenticated locations like <code>http://127.0.0.1/</code>.</p>
         </div>
        <li data-md="">
-        <p>Let <var>origin</var> be <var>ancestor settings object</var>'s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#origin">origin</a>.</p>
+        <p>Let <var>origin</var> be <var>ancestor settings object</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#origin">origin</a>.</p>
        <li data-md="">
-        <p>If <var>origin</var> is an <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#origin">opaque identifier</a>, set <var>origin</var> to the <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-origin">origin</a> of <var>settings object</var>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#creation-url">creation
+        <p>If <var>origin</var> is an <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#origin">opaque identifier</a>, set <var>origin</var> to the <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-origin">origin</a> of <var>settings object</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#creation-url">creation
   URL</a>.</p>
         <p class="note" role="note">Note: We use the origin of the URL here in order to allow sandboxed
   context to remain secure (as sandboxing is a strict reduction in the
@@ -1561,14 +1656,14 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://h
   trust in a way which excludes <code>localhost.</code> and <code>file</code>.</p>
     <p>On the other hand, the user agent MAY choose to extend this trust to other,
   vendor-specific URL schemes like <code>app:</code> or <code>chrome-extension:</code> which it can
-  determine <i lang="la">a priori</i> to be trusted (see <a href="#packaged-applications">§6.1 Packaged Applications</a> for detail).</p>
+  determine <i lang="la">a priori</i> to be trusted (see <a href="#packaged-applications">§7.1 Packaged Applications</a> for detail).</p>
     <p>Given an <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#origin">origin</a> (<var>origin</var>), the following algorithm returns
   "<code>Potentially Trustworthy</code>" or "<code>Not Trustworthy</code>" as appropriate.</p>
     <ol>
      <li data-md="">
       <p>If <var>origin</var> is an <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#origin">opaque identifier</a>, return "<code>Not Trustworthy</code>".</p>
      <li data-md="">
-      <p>If <var>origin</var>'s <code>scheme</code> is either "<code>https</code>" or "<code>wss</code>", return
+      <p>If <var>origin</var>’s <code>scheme</code> is either "<code>https</code>" or "<code>wss</code>", return
   "<code>Potentially Trustworthy</code>".</p>
       <p class="note" role="note">Note: This is meant to be analog to the <a data-link-type="dfn" href="http://www.w3.org/TR/mixed-content/#a-priori-authenticated-url"><i lang="la">a priori</i> authenticated URL</a> concept in <a data-link-type="biblio" href="#biblio-mix">[MIX]</a>.</p>
       <p class="note" role="note">Note: The origin of <code>blob:</code> and <code>filesystem:</code> URLs is the origin of the
@@ -1577,18 +1672,18 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://h
   of <code>data:</code> and <code>javascript:</code> URLs, on the other hand, is an <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#origin">opaque
   identifier</a>, which will not be considered potentially trustworthy.</p>
      <li data-md="">
-      <p>If <var>origin</var>'s <code>host</code> component is or falls within "<code>localhost.</code>" <a data-link-type="biblio" href="#biblio-rfc6761">[RFC6761]</a>, return "<code>Potentially Trustworthy</code>".</p>
+      <p>If <var>origin</var>’s <code>host</code> component is or falls within "<code>localhost.</code>" <a data-link-type="biblio" href="#biblio-rfc6761">[RFC6761]</a>, return "<code>Potentially Trustworthy</code>".</p>
      <li data-md="">
-      <p>If <var>origin</var>'s <code>host</code> component matches one of the CIDR notations <code>127.0.0.0/8</code> or <code>::1/128</code> <a data-link-type="biblio" href="#biblio-rfc4632">[RFC4632]</a>, return "<code>Potentially Trustworthy</code>".</p>
+      <p>If <var>origin</var>’s <code>host</code> component matches one of the CIDR notations <code>127.0.0.0/8</code> or <code>::1/128</code> <a data-link-type="biblio" href="#biblio-rfc4632">[RFC4632]</a>, return "<code>Potentially Trustworthy</code>".</p>
      <li data-md="">
-      <p>If <var>origin</var>'s <code>scheme</code> component is <code>file</code>, return "<code>Potentially Trustworthy</code>".</p>
+      <p>If <var>origin</var>’s <code>scheme</code> component is <code>file</code>, return "<code>Potentially Trustworthy</code>".</p>
      <li data-md="">
-      <p>If <var>origin</var>'s <code>scheme</code> component is one which the user agent considers to
+      <p>If <var>origin</var>’s <code>scheme</code> component is one which the user agent considers to
   be authenticated, return "<code>Potentially Trustworthy</code>".</p>
-      <p class="note" role="note">Note: See <a href="#packaged-applications">§6.1 Packaged Applications</a> for detail here.</p>
+      <p class="note" role="note">Note: See <a href="#packaged-applications">§7.1 Packaged Applications</a> for detail here.</p>
      <li data-md="">
       <p>If <var>origin</var> has been configured as a trustworthy origin, return <code>Potentially Trustworthy</code>".</p>
-      <p class="note" role="note">Note: See <a href="#development-environments">§6.2 Development Environments</a> for detail here.</p>
+      <p class="note" role="note">Note: See <a href="#development-environments">§7.2 Development Environments</a> for detail here.</p>
      <li data-md="">
       <p>Return "<code>Not Trusted</code>".</p>
     </ol>
@@ -1599,13 +1694,13 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://h
      <li data-md="">
       <p>Let <var>ancestors</var> be an empty list.</p>
      <li data-md="">
-      <p>If <var>document</var> is not <a data-link-type="dfn" href="http://www.w3.org/TR/html5/embedded-content-0.html#an-iframe-srcdoc-document">an IFrame <code>srcdoc</code> <code>Document</code></a>, add <var>document</var>'s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#relevant-settings-object-for-a-global-object">relevant settings object</a> to <var>ancestors</var>.</p>
+      <p>If <var>document</var> is not <a data-link-type="dfn" href="http://www.w3.org/TR/html5/embedded-content-0.html#an-iframe-srcdoc-document">an IFrame <code>srcdoc</code> <code>Document</code></a>, add <var>document</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#relevant-settings-object-for-a-global-object">relevant settings object</a> to <var>ancestors</var>.</p>
      <li data-md="">
       <p>While <var>document</var> has a <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#creator-document">creator <code>Document</code></a> <var>creator</var>:</p>
       <ol>
        <li data-md="">
         <p>If <var>creator</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#browsing-context">browsing context</a> is an <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#ancestor-browsing-context">ancestor
-  browsing context</a> of <var>document</var>:</p>
+  browsing context</a> or <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#opener-browsing-context">opener browsing context</a> of <var>document</var>:</p>
         <ol>
          <li data-md="">
           <p>Insert <var>creator</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#relevant-settings-object-for-a-global-object">relevant settings object</a> into <var>ancestors</var>, unless <var>creator</var> is <a data-link-type="dfn" href="http://www.w3.org/TR/html5/embedded-content-0.html#an-iframe-srcdoc-document">an IFrame <code>srcdoc</code> <code>Document</code></a>.</p>
@@ -1619,8 +1714,10 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://h
       <p>Return <var>ancestors</var>.</p>
     </ol>
     <p class="note" role="note">Note: When gathering a <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/dom/#interface-document">Document</a></code>'s ancestors, we walk the browsing context
-  creation document chain, but stop when that chain spans across more than one <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/dom/#interface-window">Window</a></code>. That is, a newly opened window is evaluated on its own merits,
-  without regard for the status of the opener.</p>
+  creation document chain, but stop when that chain hits a <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#top-level-browsing-context">top-level browsing
+  context</a>. We’ll follow the chain for <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#auxiliary-browsing-context">auxiliary browsing contexts</a>,
+  however, which means that popups' status depend on how they’re opened, as
+  discussed in <a href="#examples-top-level">§1.1 Top-level Documents</a>.</p>
    </section>
    <section>
     <h2 class="heading settled" data-level="4" id="threat-models-risks"><span class="secno">4. </span><span class="content"> Threat models and risks </span><a class="self-link" href="#threat-models-risks"></a></h2>
@@ -1712,27 +1809,32 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://h
     <h3 class="heading settled" data-level="5.1" id="isolation"><span class="secno">5.1. </span><span class="content">Incomplete Isolation</span><a class="self-link" href="#isolation"></a></h3>
     <p>The <a data-link-type="dfn" href="#secure-context">secure context</a> definition in this document does not completely
   isolate a "secure" view on an origin from a "non-secure" view on the same
-  origin. That is, a developer who is actively working to bypass the secure
-  context restriction on a particular API will be able to create a <code>postMessage</code>-based shim if they’re willing to pop up a new window
-  and rely on its persistence (as the new window will be a new top-level
-  browsing context, and will be evaluated without regard for the opener’s
-  state).</p>
-    <p>More esoteric exfiltration methods will be available as well, ranging from
-  shared <code>localStorage</code> and related <code>storage</code> events to <code>window.name</code> tricks.</p>
+  origin. Exfiltration will still be possible via increasingly esoteric
+  mechanisms such as the contents of <code>localStorage</code>/<code>sessionStorage</code>, <code>storage</code> events, <code>BroadcastChannel</code>, and others.</p>
    </section>
    <section>
-    <h2 class="heading settled" data-level="6" id="implementation-considerations"><span class="secno">6. </span><span class="content">Implementation Considerations</span><a class="self-link" href="#implementation-considerations"></a></h2>
-    <h3 class="heading settled" data-level="6.1" id="packaged-applications"><span class="secno">6.1. </span><span class="content">Packaged Applications</span><a class="self-link" href="#packaged-applications"></a></h3>
+    <h2 class="heading settled" data-level="6" id="privacy-considerations"><span class="secno">6. </span><span class="content">Privacy Considerations</span><a class="self-link" href="#privacy-considerations"></a></h2>
+    <p>The <a data-link-type="dfn" href="#secure-context">secure context</a> definition in this document does not in itself have
+  any privacy impact. It does, however, enable other features which do have
+  interesting privacy implications to lock themselves into contexts which
+  ensures that specific guarantees can be made regarding integrity,
+  authenticity, and confidentiality.</p>
+    <p>From a privacy perspective, specification authors are encouraged to consider
+  requiring secure contexts for the features they define.</p>
+   </section>
+   <section>
+    <h2 class="heading settled" data-level="7" id="implementation-considerations"><span class="secno">7. </span><span class="content">Implementation Considerations</span><a class="self-link" href="#implementation-considerations"></a></h2>
+    <h3 class="heading settled" data-level="7.1" id="packaged-applications"><span class="secno">7.1. </span><span class="content">Packaged Applications</span><a class="self-link" href="#packaged-applications"></a></h3>
     <p>A user agent that support packaged applications MAY whitelist specific URL
   schemes whose contents are authenticated by the user agent. For example,
   FirefoxOS application resources are referred to by a URL whose <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-scheme">scheme</a> component is <code>app:</code>. Likewise, Chrome’s extensions
   and apps live on <code>chrome-extension:</code> schemes. These could reasonably be
   considered trusted origins.</p>
-    <h3 class="heading settled" data-level="6.2" id="development-environments"><span class="secno">6.2. </span><span class="content">Development Environments</span><a class="self-link" href="#development-environments"></a></h3>
+    <h3 class="heading settled" data-level="7.2" id="development-environments"><span class="secno">7.2. </span><span class="content">Development Environments</span><a class="self-link" href="#development-environments"></a></h3>
     <p>In order to support developers who run staging servers on non-loopback hosts,
   the user agent MAY allow users to configure specific sets of origins as
   trustworthy, even though <a href="#is-origin-trustworthy">§3.2 Is origin potentially trustworthy?</a> would normally return <code>Not Trusted</code>.</p>
-    <h3 class="heading settled" data-level="6.3" id="new"><span class="secno">6.3. </span><span class="content">Restricting New Features</span><a class="self-link" href="#new"></a></h3>
+    <h3 class="heading settled" data-level="7.3" id="new"><span class="secno">7.3. </span><span class="content">Restricting New Features</span><a class="self-link" href="#new"></a></h3>
     <p><em>This section is non-normative.</em></p>
     <p>When writing a specification for new features, we recommend that authors
   and editors guard sensitive APIs with checks against <a data-link-type="dfn" href="#secure-context">secure contexts</a>.
@@ -1750,7 +1852,7 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://h
        </ol>
      </ol>
     </div>
-    <h3 class="heading settled" data-level="6.4" id="legacy"><span class="secno">6.4. </span><span class="content">Restricting Legacy Features</span><a class="self-link" href="#legacy"></a></h3>
+    <h3 class="heading settled" data-level="7.4" id="legacy"><span class="secno">7.4. </span><span class="content">Restricting Legacy Features</span><a class="self-link" href="#legacy"></a></h3>
     <p><em>This section is non-normative.</em></p>
     <p>The list above clearly includes some existing functionality that is currently
   available to the web over non-secure channels. We recommend that such legacy
@@ -1764,7 +1866,7 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://h
      <li data-md="">
       <p>If such a feature is widely implemented, but not yet in wide use, we
   recommend that it be quickly restricted to <a data-link-type="dfn" href="#secure-context">secure contexts</a> by
-  adding a check as described in <a href="#new">§6.3 Restricting New Features</a> to existing implementations, and <a data-link-type="dfn" href="http://www.w3.org/2014/Process-20140801/#rec-modify">modifying the specification</a> accordingly.</p>
+  adding a check as described in <a href="#new">§7.3 Restricting New Features</a> to existing implementations, and <a data-link-type="dfn" href="http://www.w3.org/2014/Process-20140801/#rec-modify">modifying the specification</a> accordingly.</p>
      <li data-md="">
       <p>If such a feature is in wide use, we recommend that the existing
   functionality be deprecated; the specification should be <a data-link-type="dfn" href="http://www.w3.org/2014/Process-20140801/#rec-modify">modified</a> to note that it does not
@@ -1772,7 +1874,7 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://h
   be developed to both offer a conformant version of the feature and to
   migrate existing users into that new version.</p>
     </ol>
-    <h4 class="heading settled" data-level="6.4.1" id="legacy-example"><span class="secno">6.4.1. </span><span class="content">Example: Geolocation</span><a class="self-link" href="#legacy-example"></a></h4>
+    <h4 class="heading settled" data-level="7.4.1" id="legacy-example"><span class="secno">7.4.1. </span><span class="content">Example: Geolocation</span><a class="self-link" href="#legacy-example"></a></h4>
     <p>The <a data-link-type="biblio" href="#biblio-geolocation-api">[GEOLOCATION-API]</a> is a good concrete example of such a feature; it is
   widely implemented and used on a large number of non-secure sites. A reasonable
   path forward might look like this:</p>
@@ -1804,7 +1906,7 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://h
     </ol>
    </section>
    <section>
-    <h2 class="heading settled" data-level="7" id="acknowledgements"><span class="secno">7. </span><span class="content">Acknowledgements</span><a class="self-link" href="#acknowledgements"></a></h2>
+    <h2 class="heading settled" data-level="8" id="acknowledgements"><span class="secno">8. </span><span class="content">Acknowledgements</span><a class="self-link" href="#acknowledgements"></a></h2>
     <p>This document is largely based on the Chrome Security team’s work on <a data-link-type="biblio" href="#biblio-powerful-new-features">[POWERFUL-NEW-FEATURES]</a>. Chris Palmer, Ryan Sleevi, and David Dorwin have
   been particularly engaged. Anne van Kesteren, Boris Zbarsky, and Henri Sivonen
   have also provided very helpful feedback.</p>
@@ -1880,6 +1982,7 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://h
      <li><a href="https://html.spec.whatwg.org/multipage/workers.html#workerglobalscope">WorkerGlobalScope</a>
      <li><a href="https://html.spec.whatwg.org/multipage/webappapis.html#creation-url">creation url</a>
      <li><a href="https://html.spec.whatwg.org/multipage/webappapis.html#https-state">https state</a>
+     <li><a href="https://html.spec.whatwg.org/multipage/semantics.html#link-type-noopener">noopener</a>
      <li><a href="https://html.spec.whatwg.org/multipage/workers.html#the-workers-documents">the worker's documents</a>
     </ul>
    <li>
@@ -1887,11 +1990,13 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://h
     <ul>
      <li><a href="http://www.w3.org/TR/html5/embedded-content-0.html#an-iframe-srcdoc-document">an iframe srcdoc document</a>
      <li><a href="http://www.w3.org/TR/html5/browsers.html#ancestor-browsing-context">ancestor browsing context</a>
+     <li><a href="http://www.w3.org/TR/html5/browsers.html#auxiliary-browsing-context">auxiliary browsing context</a>
      <li><a href="http://www.w3.org/TR/html5/browsers.html#browsing-context">browsing context</a>
      <li><a href="http://www.w3.org/TR/html5/browsers.html#creator-document">creator document</a>
      <li><a href="http://www.w3.org/TR/html5/webappapis.html#global-object">global object</a>
      <li><a href="http://www.w3.org/TR/html5/webappapis.html#incumbent-settings-object">incumbent settings object</a>
      <li><a href="http://www.w3.org/TR/html5/browsers.html#origin">opaque identifier</a>
+     <li><a href="http://www.w3.org/TR/html5/browsers.html#opener-browsing-context">opener browsing context</a>
      <li><a href="http://www.w3.org/TR/html5/browsers.html#origin">origin</a>
      <li><a href="http://www.w3.org/TR/html5/webappapis.html#relevant-settings-object-for-a-global-object">relevant settings object</a>
      <li><a href="http://www.w3.org/TR/html5/webappapis.html#responsible-document">responsible document</a>

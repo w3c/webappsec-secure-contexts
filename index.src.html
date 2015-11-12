@@ -40,6 +40,7 @@ urlPrefix: http://www.w3.org/TR/html5/; spec: HTML5
     urlPrefix: browsers.html
       text: active document
       text: ancestor browsing context
+      text: auxiliary browsing context
       text: browsing context
       text: browsing context container
       text: creating a new Document object
@@ -50,6 +51,7 @@ urlPrefix: http://www.w3.org/TR/html5/; spec: HTML5
       text: top-level browsing context
       text: origin
       text: opaque identifier; url: origin
+      text: opener browsing context
     urlPrefix: webappapis.html
       text: incumbent settings object
       text: settings object
@@ -79,6 +81,8 @@ urlPrefix: https://url.spec.whatwg.org/; spec: URL
     text: URL
 urlPrefix: https://html.spec.whatwg.org/multipage/; spec: HTML
   type: dfn
+    urlPrefix: semantics.html
+      text: noopener; url: link-type-noopener
     urlPrefix: workers.html
       text: the worker's documents
       text: set up a worker environment settings object
@@ -205,8 +209,23 @@ urlPrefix: https://html.spec.whatwg.org/multipage/; spec: HTML
   </style>
 
   <h3 id="examples-top-level">Top-level Documents</h3>
+  
+  Top-level documents are secure as long as they don't have a non-secure
+  <a>opener browsing context</a>. This is a bit convoluted, so let's go straight
+  to the examples:
 
-  Top-level documents are secure on their own merits:
+  <div class="example">
+    <p><code>http://example.com/</code> opened in a <a>top-level browsing
+    context</a> is not a <a>secure context</a>, as it was not delivered over
+    an authenticated and encrypted channel.</p>
+
+    <svg width="400" height="200">
+      <g transform="translate(10,10)">
+        <rect height="175" width="297" y="0" x="0" class="non-secure" />
+        <text transform="translate(10, 20)">http://example.com/</text>
+      </g>
+    </svg>
+  </div>
 
   <div class="example">
     <p><code>https://example.com/</code> opened in a <a>top-level browsing
@@ -222,10 +241,92 @@ urlPrefix: https://html.spec.whatwg.org/multipage/; spec: HTML
   </div>
 
   <div class="example">
+    <p>If a secure context opens <code>https://example.com/</code> in a new
+    window, that new window will be a secure context, as it is both secure on
+    its own merits, and was opened from a secure context:
+
+    <svg width="400" height="400">
+      <g transform="translate(10,10)">
+        <rect height="175" width="297" y="0" x="0" class="secure" />
+        <text transform="translate(10, 20)">https://secure.example.com/</text>
+      </g>
+      <g transform="translate(10,210)">
+        <rect height="175" width="297" y="0" x="0" class="secure" />
+        <text transform="translate(10, 20)">https://another.example.com/</text>
+      </g>
+      <g>
+        <path d="M150, 87 C 200 75, 350 75, 150 287"></path>
+      </g>
+    </svg>
+  </div>
+
+  <div class="example">
+    <p>If a non-secure context opens <code>https://example.com/</code> in a new
+    window, then things are more complicated. The new window's status depends on
+    how it was opened. If the non-secure context can obtain a reference to the
+    secure context, or vice-versa, then the new window is not a secure context.
+
+    This means that the following will both produce non-secure contexts:
+
+    <pre>
+      &lt;a href="https://example.com/" target="_blank">Link!&lt;/a>
+      
+      &lt;script>
+        var w = window.open("https://example.com/");
+      &lt;/script>
+    </pre>
+   
+    <svg width="400" height="400">
+      <g transform="translate(10,10)">
+        <rect height="175" width="297" y="0" x="0" class="non-secure" />
+        <text transform="translate(10, 20)">https://non-secure.example.com/</text>
+      </g>
+      <g transform="translate(10,210)">
+        <rect height="175" width="297" y="0" x="0" class="non-secure" />
+        <text transform="translate(10, 20)">https://another.example.com/</text>
+      </g>
+      <g>
+        <path d="M150, 87 C 200 75, 350 75, 150 287"></path>
+      </g>
+    </svg>
+
+    The link can be broken via the <a>`noopener`</a> link relation, meaning
+    that the following will both produce secure contexts:
+
+    <pre>
+      &lt;a href="https://example.com/" rel="noopener" target="_blank">Link!&lt;/a>
+      
+      &lt;script>
+        var w = window.open("https://example.com/", "", "noopener");
+      &lt;/script>
+    </pre>
+   
+    <svg width="400" height="400">
+      <g transform="translate(10,10)">
+        <rect height="175" width="297" y="0" x="0" class="non-secure" />
+        <text transform="translate(10, 20)">https://non-secure.example.com/</text>
+      </g>
+      <g transform="translate(10,210)">
+        <rect height="175" width="297" y="0" x="0" class="secure" />
+        <text transform="translate(10, 20)">https://another.example.com/</text>
+      </g>
+      <g>
+        <path d="M150, 87 C 200 75, 350 75, 150 287"></path>
+      </g>
+    </svg>
+  </div>
+
+  
+  <div class="example">
     <p><code>http://non-secure.example.com/</code> opened in a <a>top-level
     browsing context</a> pops open a new window containing
     <code>https://example.com/</code>. The former is not a <a>secure
-    context</a>; the latter is a <a>secure context</a>, because it is a new
+    context</a>; the latter is a <a>secure context</a> if and only if it was
+    opened in a way that broke off contact with the non-secure context. That is,
+    if the new window can access the non-secure context via `window.opener`, and
+    the non-secure context can access the secure context by grabbing a reference
+    to the window, then it 
+    , because it is a new
     top-level browsing context delivered over an authenticated and encrypted
     channel.</p>
 
@@ -704,7 +805,8 @@ urlPrefix: https://html.spec.whatwg.org/multipage/; spec: HTML
       <var>creator</var>:
 
       1.  If <var>creator</var>'s <a>browsing context</a> is an <a>ancestor
-          browsing context</a> of <var>document</var>:
+          browsing context</a> or <a>opener browsing context</a> of
+          <var>document</var>:
 
           1.  Insert <var>creator</var>'s <a>relevant settings object</a> into
               <var>ancestors</var>, unless <var>creator</var> is <a>an IFrame
@@ -717,9 +819,10 @@ urlPrefix: https://html.spec.whatwg.org/multipage/; spec: HTML
   3.  Return <var>ancestors</var>.
 
   Note: When gathering a {{Document}}'s ancestors, we walk the browsing context
-  creation document chain, but stop when that chain spans across more than one
-  {{Window}}. That is, a newly opened window is evaluated on its own merits,
-  without regard for the status of the opener.
+  creation document chain, but stop when that chain hits a <a>top-level browsing
+  context</a>. We'll follow the chain for <a>auxiliary browsing contexts</a>,
+  however, which means that popups' status depend on how they're opened, as
+  discussed in [[#examples-top-level]].
 </section>
 
 <section>
@@ -850,15 +953,22 @@ urlPrefix: https://html.spec.whatwg.org/multipage/; spec: HTML
 
   The <a>secure context</a> definition in this document does not completely
   isolate a "secure" view on an origin from a "non-secure" view on the same
-  origin. That is, a developer who is actively working to bypass the secure
-  context restriction on a particular API will be able to create a
-  `postMessage`-based shim if they're willing to pop up a new window
-  and rely on its persistence (as the new window will be a new top-level
-  browsing context, and will be evaluated without regard for the opener's
-  state).
+  origin. Exfiltration will still be possible via increasingly esoteric
+  mechanisms such as the contents of `localStorage`/`sessionStorage`,
+  `storage` events, `BroadcastChannel`, and others.
+</section>
 
-  More esoteric exfiltration methods will be available as well, ranging from
-  shared `localStorage` and related `storage` events to `window.name` tricks.
+<section>
+  <h2 id="privacy-considerations">Privacy Considerations</h2>
+
+  The <a>secure context</a> definition in this document does not in itself have
+  any privacy impact. It does, however, enable other features which do have
+  interesting privacy implications to lock themselves into contexts which
+  ensures that specific guarantees can be made regarding integrity,
+  authenticity, and confidentiality.
+
+  From a privacy perspective, specification authors are encouraged to consider
+  requiring secure contexts for the features they define.
 </section>
 
 <section>
