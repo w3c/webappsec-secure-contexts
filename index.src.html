@@ -98,6 +98,9 @@ urlPrefix: https://html.spec.whatwg.org/multipage/; spec: HTML
     urlPrefix: webappapis.html
       text: creation URL
       text: HTTPS state
+spec: WEBIDL; urlPrefix: https://heycam.github.io/webidl/
+  type: dfn
+    text: exposed; url: dfn-exposed
 </pre>
 <pre class="biblio">
 {
@@ -616,11 +619,41 @@ urlPrefix: https://html.spec.whatwg.org/multipage/; spec: HTML
   Likewise, a <a>global object</a> is considered a <a>secure context</a> if its
   <a>relevant settings object</a> is a <a>secure context</a>.
 
-  <h3 id="monkey-patching">Modifications to HTML</h3>
+  <h3 id="monkey-patching-idl">Modifications to WebIDL</h3>
+
+  A new `[SecureContext]` attribute is available for operators, which ensures
+  that they will only be <a>exposed</a> into secure contexts. The following
+  example should help:
+
+  <div class="example">
+    <pre class="idl">
+      interface ExampleFeature {
+        // This call will succeed in all contexts.
+        Promise &lt;double> calculateNotSoSecretResult();
+
+        // This operation will not be exposed to a non-secure context. If such a context
+        // is somehow able to call it despite this precaution, the Promise will be
+        // immedietely rejected with a 'SecurityError' exception.
+        [SecureContext] Promise&lt;double> calculateSecretResult();
+
+        // The same applies here: the operation will not be exposed to a non-secure context,
+        // and if somehow called from a non-secure context, a 'SecurityError'
+        // exception will be thrown.
+        [SecureContext] boolean getSecretBoolean();
+      };
+    </pre>
+  </div>
+
+  Specification authors are encouraged to use this attribute when defining new
+  features.
+
+  ISSUE(heycam/webidl#65): This addition is currently under review.
+
+  <h3 id="monkey-patching-html">Modifications to HTML</h3>
 
   <h4 id="monkey-patching-shared-workers">Shared Workers</h4>
 
-  The {{SharedWorker()}} constructor will throw a `SecurtyError` exception if
+  The {{SharedWorker()}} constructor will throw a `SecurityError` exception if
   a <a>secure context</a> attempts to attach to an Worker which is not a
   <a>secure context</a>, and if a non-secure context attempts to attach to a
   Worker which is a <a>secure context</a>. The constructor is modified as
@@ -1024,6 +1057,24 @@ urlPrefix: https://html.spec.whatwg.org/multipage/; spec: HTML
         </ol>
       </li>
     </ol>
+  </div>
+
+  Authors should also ensure that sensitive APIs are only exposed to <a>secure
+  contexts</a> by guarding them with the `[SecureContext]` attribute:
+
+  <div class="example">
+    <pre class="idl">
+      [SecureContext]
+      interface SensitiveFeature {
+        Promise&lt;double> getTheSecretDouble();
+      };
+
+      // Or:
+
+      interface AnotherSensitiveFeature {
+        [SecureContext] void doThatPowerfulThing();
+      };
+    </pre>
   </div>
 
   <h3 id="legacy">Restricting Legacy Features</h3>
