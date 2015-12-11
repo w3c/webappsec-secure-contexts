@@ -39,12 +39,14 @@ urlPrefix: http://www.w3.org/TR/html5/; spec: HTML5
       text: an iframe srcdoc document
     urlPrefix: browsers.html
       text: active document
+      text: alias; url: concept-origin-alias
       text: ancestor browsing context
       text: auxiliary browsing context
       text: browsing context
       text: browsing context container
       text: creating a new Document object
       text: creator Document
+      text: effective script origin
       text: nested browsing context
       text: sandboxed origin browsing context flag
       text: sandboxing flag set
@@ -79,24 +81,23 @@ urlPrefix: https://url.spec.whatwg.org/; spec: URL
     text: scheme; for: URL; url: concept-url-scheme
   type: interface
     text: URL
+spec: WORKERS; urlPrefix: http://www.w3.org/TR/workers/
+  type: dfn
+    text: the worker's documents
+    text: set up a worker environment settings object
+  type: interface
+    text: SharedWorker
+    text: Worker
+    text: WorkerGlobalScope
+  type: constructor
+    text: SharedWorker(); url: dom-sharedworker
 urlPrefix: https://html.spec.whatwg.org/multipage/; spec: HTML
   type: dfn
     urlPrefix: semantics.html
       text: noopener; url: link-type-noopener
-    urlPrefix: workers.html
-      text: the worker's documents
-      text: set up a worker environment settings object
     urlPrefix: webappapis.html
       text: creation URL
       text: HTTPS state
-  type: constructor
-    urlPrefix: workers.html
-      text: SharedWorker(); url: dom-sharedworker
-  type: interface
-    urlPrefix: workers.html
-      text: WorkerGlobalScope
-      text: Worker
-      text: SharedWorker
 </pre>
 <pre class="biblio">
 {
@@ -689,7 +690,17 @@ urlPrefix: https://html.spec.whatwg.org/multipage/; spec: HTML
 
   4.  For each |ancestor settings object| in |ancestors|:
 
-      1.  If |ancestor settings object|'s <a>HTTPS state</a> is "`modern`", skip
+      1.  The user agent MAY return "`Not Secure`" if |ancestor settings
+          object|'s <a>effective script origin</a> is <em>not</em> an
+          <a>alias</a> to its <a>origin</a>.
+
+          Note: This allows user agents the option of treating documents as
+          non-secure contexts if they relax same-origin restrictions via
+          `{{document.domain}}`. This feature's usage is widespread enough to
+          make it difficult for this behavior to be a requirement, but user
+          agents are encouraged to migrate to this behavior over time.
+
+      2.  If |ancestor settings object|'s <a>HTTPS state</a> is "`modern`", skip
           to the next |ancestor settings object|.
 
           <div class="note">
@@ -705,9 +716,9 @@ urlPrefix: https://html.spec.whatwg.org/multipage/; spec: HTML
             `http://127.0.0.1/`.
           </div>
 
-      2.  Let |origin| be |ancestor settings object|'s <a>origin</a>.
+      3.  Let |origin| be |ancestor settings object|'s <a>origin</a>.
 
-      3.  If |origin| is an <a>opaque identifier</a>, set |origin| to the
+      4.  If |origin| is an <a>opaque identifier</a>, set |origin| to the
           <a lt="origin of a url">origin</a> of |settings object|'s <a>creation
           URL</a>.
 
@@ -716,7 +727,7 @@ urlPrefix: https://html.spec.whatwg.org/multipage/; spec: HTML
           context's capabilities, and therefore to the risk it poses). This
           covers scenarios such as `<iframe sandbox src="http://localhost/">`.
 
-      4.  If the result of executing the [[#is-origin-trustworthy]] algorithm
+      5.  If the result of executing the [[#is-origin-trustworthy]] algorithm
           on |origin| is <strong>not</strong> `Potentially
           Trustworthy`, then return "`Not Secure`".
 

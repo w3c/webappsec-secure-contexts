@@ -1027,7 +1027,7 @@
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="http://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/Icons/w3c_home" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Secure Contexts</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2015-11-12">12 November 2015</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2015-12-11">11 December 2015</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1546,13 +1546,13 @@ certain minimum standards of authentication and confidentiality are met.</p>
     <p>Likewise, a <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#global-object">global object</a> is considered a <a data-link-type="dfn" href="#secure-context">secure context</a> if its <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#relevant-settings-object-for-a-global-object">relevant settings object</a> is a <a data-link-type="dfn" href="#secure-context">secure context</a>.</p>
     <h3 class="heading settled" data-level="2.1" id="monkey-patching"><span class="secno">2.1. </span><span class="content">Modifications to HTML</span><a class="self-link" href="#monkey-patching"></a></h3>
     <h4 class="heading settled" data-level="2.1.1" id="monkey-patching-shared-workers"><span class="secno">2.1.1. </span><span class="content">Shared Workers</span><a class="self-link" href="#monkey-patching-shared-workers"></a></h4>
-    <p>The <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/workers.html#dom-sharedworker">SharedWorker()</a></code> constructor will throw a <code>SecurtyError</code> exception if
+    <p>The <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/workers/#dom-sharedworker">SharedWorker()</a></code> constructor will throw a <code>SecurtyError</code> exception if
   a <a data-link-type="dfn" href="#secure-context">secure context</a> attempts to attach to an Worker which is not a <a data-link-type="dfn" href="#secure-context">secure context</a>, and if a non-secure context attempts to attach to a
   Worker which is a <a data-link-type="dfn" href="#secure-context">secure context</a>. The constructor is modified as
   follows:</p>
     <ol>
      <li data-md="">
-      <p>As the first substep of the <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/workers.html#dom-sharedworker">SharedWorker()</a></code> constructor’s current step
+      <p>As the first substep of the <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/workers/#dom-sharedworker">SharedWorker()</a></code> constructor’s current step
   7.7 ("If <var>worker global scope</var> is not <code>null</code>, then run these
   steps:"), run the following step:</p>
       <ol>
@@ -1572,11 +1572,11 @@ certain minimum standards of authentication and confidentiality are met.</p>
   readonly attribute boolean <dfn class="idl-code" data-dfn-for="Window" data-dfn-type="attribute" data-export="" data-readonly="" data-type="boolean " id="dom-window-issecurecontext">isSecureContext<a class="self-link" href="#dom-window-issecurecontext"></a></dfn>;
 };
 
-partial interface <a class="idl-code" data-link-type="interface" href="https://html.spec.whatwg.org/multipage/workers.html#workerglobalscope">WorkerGlobalScope</a> {
+partial interface <a class="idl-code" data-link-type="interface" href="http://www.w3.org/TR/workers/#workerglobalscope">WorkerGlobalScope</a> {
   readonly attribute boolean <dfn class="idl-code" data-dfn-for="WorkerGlobalScope" data-dfn-type="attribute" data-export="" data-readonly="" data-type="boolean " id="dom-workerglobalscope-issecurecontext">isSecureContext<a class="self-link" href="#dom-workerglobalscope-issecurecontext"></a></dfn>;
 };
 </pre>
-    <p>Both <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/dom/#interface-window">Window</a></code>'s <code class="idl"><a data-link-type="idl" href="#dom-window-issecurecontext">isSecureContext</a></code> and <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/workers.html#workerglobalscope">WorkerGlobalScope</a></code>'s <code class="idl"><a data-link-type="idl" href="#dom-workerglobalscope-issecurecontext">isSecureContext</a></code> attributes' getters return <code>true</code> if the <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#relevant-settings-object-for-a-global-object">relevant settings object</a> for the getter’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#global-object">global object</a> is a <a data-link-type="dfn" href="#secure-context">secure context</a>, and <code>false</code> otherwise.</p>
+    <p>Both <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/dom/#interface-window">Window</a></code>'s <code class="idl"><a data-link-type="idl" href="#dom-window-issecurecontext">isSecureContext</a></code> and <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/workers/#workerglobalscope">WorkerGlobalScope</a></code>'s <code class="idl"><a data-link-type="idl" href="#dom-workerglobalscope-issecurecontext">isSecureContext</a></code> attributes' getters return <code>true</code> if the <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#relevant-settings-object-for-a-global-object">relevant settings object</a> for the getter’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#global-object">global object</a> is a <a data-link-type="dfn" href="#secure-context">secure context</a>, and <code>false</code> otherwise.</p>
    </section>
    <section>
     <h2 class="heading settled" data-level="3" id="algorithms"><span class="secno">3. </span><span class="content">Algorithms</span><a class="self-link" href="#algorithms"></a></h2>
@@ -1588,13 +1588,13 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://h
      <li data-md="">
       <p>Let <var>ancestors</var> be an empty list.</p>
      <li data-md="">
-      <p>If <var>settings object</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#global-object">global object</a> is a <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/workers.html#workerglobalscope">WorkerGlobalScope</a></code>, then:</p>
+      <p>If <var>settings object</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#global-object">global object</a> is a <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/workers/#workerglobalscope">WorkerGlobalScope</a></code>, then:</p>
       <ol>
        <li data-md="">
         <p>Add <var>settings object</var> to <var>ancestors</var>.</p>
        <li data-md="">
         <p>For each <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/dom/#interface-document">Document</a></code> (<var>document</var>) in <var>settings object</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#global-object">global
-  object</a>’s list of <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/workers.html#the-workers-documents">the worker’s <code>Documents</code></a>:</p>
+  object</a>’s list of <a data-link-type="dfn" href="http://www.w3.org/TR/workers/#the-workers-documents">the worker’s <code>Documents</code></a>:</p>
         <ol>
          <li data-md="">
           <p>Add each item in the result of executing <a href="#gather-ancestors">§3.3 Gather document’s relevant ancestors</a> on <var>document</var> to <var>ancestors</var>.</p>
@@ -1609,6 +1609,13 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://h
      <li data-md="">
       <p>For each <var>ancestor settings object</var> in <var>ancestors</var>:</p>
       <ol>
+       <li data-md="">
+        <p>The user agent MAY return "<code>Not Secure</code>" if <var>ancestor settings
+  object</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#effective-script-origin">effective script origin</a> is <em>not</em> an <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#concept-origin-alias">alias</a> to its <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#origin">origin</a>.</p>
+        <p class="note" role="note">Note: This allows user agents the option of treating documents as
+  non-secure contexts if they relax same-origin restrictions via <code>{{document.domain}}</code>. This feature’s usage is widespread enough to
+  make it difficult for this behavior to be a requirement, but user
+  agents are encouraged to migrate to this behavior over time.</p>
        <li data-md="">
         <p>If <var>ancestor settings object</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#https-state">HTTPS state</a> is "<code>modern</code>", skip
   to the next <var>ancestor settings object</var>.</p>
@@ -1978,21 +1985,20 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://h
    <li>
     <a data-link-type="biblio" href="#biblio-html">[HTML]</a> defines the following terms:
     <ul>
-     <li><a href="https://html.spec.whatwg.org/multipage/workers.html#dom-sharedworker">SharedWorker()</a>
-     <li><a href="https://html.spec.whatwg.org/multipage/workers.html#workerglobalscope">WorkerGlobalScope</a>
      <li><a href="https://html.spec.whatwg.org/multipage/webappapis.html#creation-url">creation url</a>
      <li><a href="https://html.spec.whatwg.org/multipage/webappapis.html#https-state">https state</a>
      <li><a href="https://html.spec.whatwg.org/multipage/semantics.html#link-type-noopener">noopener</a>
-     <li><a href="https://html.spec.whatwg.org/multipage/workers.html#the-workers-documents">the worker's documents</a>
     </ul>
    <li>
     <a data-link-type="biblio" href="#biblio-html5">[html5]</a> defines the following terms:
     <ul>
+     <li><a href="http://www.w3.org/TR/html5/browsers.html#concept-origin-alias">alias</a>
      <li><a href="http://www.w3.org/TR/html5/embedded-content-0.html#an-iframe-srcdoc-document">an iframe srcdoc document</a>
      <li><a href="http://www.w3.org/TR/html5/browsers.html#ancestor-browsing-context">ancestor browsing context</a>
      <li><a href="http://www.w3.org/TR/html5/browsers.html#auxiliary-browsing-context">auxiliary browsing context</a>
      <li><a href="http://www.w3.org/TR/html5/browsers.html#browsing-context">browsing context</a>
      <li><a href="http://www.w3.org/TR/html5/browsers.html#creator-document">creator document</a>
+     <li><a href="http://www.w3.org/TR/html5/browsers.html#effective-script-origin">effective script origin</a>
      <li><a href="http://www.w3.org/TR/html5/webappapis.html#global-object">global object</a>
      <li><a href="http://www.w3.org/TR/html5/webappapis.html#incumbent-settings-object">incumbent settings object</a>
      <li><a href="http://www.w3.org/TR/html5/browsers.html#origin">opaque identifier</a>
@@ -2019,6 +2025,13 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://h
     <a data-link-type="biblio" href="#biblio-w3c-process">[W3C-PROCESS]</a> defines the following terms:
     <ul>
      <li><a href="http://www.w3.org/2014/Process-20140801/#rec-modify">modify a specification</a>
+    </ul>
+   <li>
+    <a data-link-type="biblio" href="#biblio-workers">[workers]</a> defines the following terms:
+    <ul>
+     <li><a href="http://www.w3.org/TR/workers/#dom-sharedworker">SharedWorker()</a>
+     <li><a href="http://www.w3.org/TR/workers/#workerglobalscope">WorkerGlobalScope</a>
+     <li><a href="http://www.w3.org/TR/workers/#the-workers-documents">the worker's documents</a>
     </ul>
    <li>
     <a data-link-type="biblio" href="#biblio-html">[HTML]</a> defines the following terms:
@@ -2051,6 +2064,8 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://h
    <dd>S. Cheshire; M. Krochmal. <a href="https://tools.ietf.org/html/rfc6761">Special-Use Domain Names</a>. February 2013. Proposed Standard. URL: <a href="https://tools.ietf.org/html/rfc6761">https://tools.ietf.org/html/rfc6761</a>
    <dt id="biblio-url"><a class="self-link" href="#biblio-url"></a>[URL]
    <dd>Anne van Kesteren; Sam Ruby. <a href="http://www.w3.org/TR/url-1/">URL</a>. 9 December 2014. WD. URL: <a href="http://www.w3.org/TR/url-1/">http://www.w3.org/TR/url-1/</a>
+   <dt id="biblio-workers"><a class="self-link" href="#biblio-workers"></a>[WORKERS]
+   <dd>Ian Hickson. <a href="http://www.w3.org/TR/workers/">Web Workers</a>. 24 September 2015. WD. URL: <a href="http://www.w3.org/TR/workers/">http://www.w3.org/TR/workers/</a>
   </dl>
   <h3 class="no-num heading settled" id="informative"><span class="content">Informative References</span><a class="self-link" href="#informative"></a></h3>
   <dl>
@@ -2088,7 +2103,7 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://h
   readonly attribute boolean <a data-readonly="" data-type="boolean " href="#dom-window-issecurecontext">isSecureContext</a>;
 };
 
-partial interface <a class="idl-code" data-link-type="interface" href="https://html.spec.whatwg.org/multipage/workers.html#workerglobalscope">WorkerGlobalScope</a> {
+partial interface <a class="idl-code" data-link-type="interface" href="http://www.w3.org/TR/workers/#workerglobalscope">WorkerGlobalScope</a> {
   readonly attribute boolean <a data-readonly="" data-type="boolean " href="#dom-workerglobalscope-issecurecontext">isSecureContext</a>;
 };
 
