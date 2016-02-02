@@ -320,35 +320,6 @@ spec: WEBIDL; urlPrefix: https://heycam.github.io/webidl/
     </svg>
   </div>
 
-  
-  <div class="example">
-    <p><code>http://non-secure.example.com/</code> opened in a <a>top-level
-    browsing context</a> pops open a new window containing
-    <code>https://example.com/</code>. The former is not a <a>secure
-    context</a>; the latter is a <a>secure context</a> if and only if it was
-    opened in a way that broke off contact with the non-secure context. That is,
-    if the new window can access the non-secure context via `window.opener`, and
-    the non-secure context can access the secure context by grabbing a reference
-    to the window, then it 
-    , because it is a new
-    top-level browsing context delivered over an authenticated and encrypted
-    channel.</p>
-
-    <svg width="400" height="400">
-      <g transform="translate(10,10)">
-        <rect height="175" width="297" y="0" x="0" class="non-secure" />
-        <text transform="translate(10, 20)">http://non-secure.example.com/</text>
-      </g>
-      <g transform="translate(10,210)">
-        <rect height="175" width="297" y="0" x="0" class="secure" />
-        <text transform="translate(10, 20)">https://example.com/</text>
-      </g>
-      <g>
-        <path d="M150, 87 C 200 75, 350 75, 150 287"></path>
-      </g>
-    </svg>
-  </div>
-
   <h3 id="examples-framed">Framed Documents</h3>
 
   Framed documents can be <a>secure contexts</a> if they are delivered from
