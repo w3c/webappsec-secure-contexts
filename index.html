@@ -1,6 +1,7 @@
 <!doctype html><html lang="en">
  <head>
   <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+  <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
   <title>Secure Contexts</title>
 <style data-fill-with="stylesheet">/******************************************************************************
  *                   Style sheet for the W3C specifications                   *
@@ -10,7 +11,7 @@
  * Indices
  *   - .toc for the Table of Contents (<ol class="toc">)
  *     -> <span class="secno"> for the section numbers
- *   - #toc for the Table of Contents (<section id="toc">)
+ *   - #toc for the Table of Contents (<nav id="toc">)
  *   - ul.index for Indices (<a href="#ref">term</a><span>, in §N.M</span>)
  *   - table.index for Index Tables (e.g. for properties or elements)
  *
@@ -62,8 +63,7 @@
  *     Note that this styling basically doesn't help at all when printing,
  *     since A4 paper isn't much wider than the max-width here.
  *     It's better to design things to fit into a narrower measure if possible.
- *   - back-to-top link:
- *     <p role=navigation id="back-to-top"><a href="#toc"><abbr title="Back to Top">&uarr;</abbr>
+ *   - js-added ToC jump links (see fixup.js)
  *
  ******************************************************************************/
 
@@ -75,10 +75,10 @@
 		counter-reset: example figure issue;
 
 		/* Layout */
-		max-width: 50em;           /* limit line length to 50em for readability   */
-		margin: 0;                 /* start-align text within page                     */
-		padding: 1.6em 1em 2em 58px; /* assume 16px font size for downlevel clients */
-		padding: 1.6em 1em 2em calc(26px + 2em); /* leave space for status flag    */
+		max-width: 50em;               /* limit line length to 50em for readability   */
+		margin: 0 auto;                /* center text within page                     */
+		padding: 1.6em 1.5em 2em 50px; /* assume 16px font size for downlevel clients */
+		padding: 1.6em 1.5em 2em calc(26px + 1.5em); /* leave space for status flag     */
 
 		/* Typography */
 		line-height: 1.5;
@@ -92,19 +92,9 @@
 		/* Colors */
 		color: black;
 		background: white top left fixed no-repeat;
-		background-size: 25px 380px;
+		background-size: 25px auto;
 	}
 
-	.overlarge {
-		width: calc(100vw - 26px - 3em);
-		max-width: none;
-	}
-	div.figure img,    div.sidefigure img,    figure img,
-	div.figure object, div.sidefigure object, figure object,
-	table.data, table.index {
-		max-width: calc(100vw - 26px - 3em);
-		/* See below for sidebar-accommodating override. */
-	}
 
 /******************************************************************************/
 /*                         Front Matter & Navigation                          */
@@ -123,32 +113,36 @@
 
 	div.head h2 { margin-bottom: 1.5em;}
 
-	.head > :first-child {
+	div.head .logo {
 		float: right;
 		margin: 0;
 	}
 
 	@media screen {
-		.head > p:first-child > a {
+		div.head .logo > a {
 			display: inline-block;
-			background: url("logos/w3c-white.svg") no-repeat center / contain content-box border-box;
-			padding: .4rem .7rem;
+			margin: 0.4rem 0 0.2rem .4rem;
+		}
+
+		div.head img[src*="logos/W3C"] {
+			display: block;
+			border: solid #1a5e9a;
+			border-width: .65rem .7rem .6rem;
 			border-radius: .4rem;
-			margin: .4rem 0 0 .4rem;
-			background-color: hsl(208, 71%, 35%);
+			background: #1a5e9a;
+			color: white;
+			font-weight: bold;
 		}
 
-		.head > p:first-child > a > img {
-			visibility: hidden;
+		div.head a:hover > img[src*="logos/W3C"],
+		div.head a:focus > img[src*="logos/W3C"] {
+			background: #457cad;
+			border-color: #457cad;
 		}
 
-		.head > p:first-child > a:hover,
-		.head > p:first-child > a:focus {
-			background-color: hsla(208, 71%, 35%,.8);
-		}
-
-		.head > p:first-child > a:active {
-			background-color: #c00;
+		div.head a:active > img[src*="logos/W3C"] {
+			background: #c00;
+			border-color: #c00;
 		}
 	}
 
@@ -159,48 +153,60 @@
 /** Back to Top / ToC Toggle **************************************************/
 
 	@media print {
-		#back-to-top,
-		.toc-toggle {
+		#toc-nav {
 			display: none;
 		}
 	}
 	@media not print {
-		#back-to-top,
-		body > #toc-toggle {
+		#toc-nav {
 			position: fixed;
 			z-index: 2;
 			bottom: 0; left: 0;
 			margin: 0;
-			width: 26px;
-			text-align: center;
-			border-top-right-radius: 26px;
+			min-width: 1.33em;
+			border-top-right-radius: 2rem;
 			box-shadow: 0 0 2px;
-			font: 1em monospace;
-			font: 1rem monospace;
+			font-size: 1.5em;
 			color: black;
 		}
-		#back-to-top a,
-		body > #toc-toggle {
+		#toc-nav > a {
 			display: block;
-			width: 22px;
-			height: 22px;
-			padding: 4px 4px 0 0;
+			white-space: nowrap;
+
+			height: 1.33em;
+			padding: .1em 0.3em;
 			margin: 0;
-			border: none;
-			border-top-right-radius: 26px;
-		}
-		#back-to-top :first-child {
-			display: block;
-			padding-bottom: 22px;
-			margin-bottom: -22px;
-		}
-		#back-to-top > a {
+
 			background: white;
 			box-shadow: 0 0 2px;
+			border: none;
+			border-top-right-radius: 1.33em;
+			background: white;
 		}
-		#back-to-top > a:hover,
-		#back-to-top > a:focus {
+		#toc-nav > #toc-jump {
+			padding-bottom: 2em;
+			margin-bottom: -1.9em;
+		}
+
+		#toc-nav > a:hover,
+		#toc-nav > a:focus {
 			background: #f8f8f8;
+		}
+		#toc-nav > a:not(:hover):not(:focus) {
+			color: #707070;
+		}
+
+		/* statusbar gets in the way on keyboard focus; remove once browsers fix */
+		#toc-nav > a[href="#toc"]:not(:hover):focus:last-child {
+			padding-bottom: 1.5rem;
+		}
+
+		#toc-nav:not(:hover) > a:not(:focus) > span + span {
+			/* Ideally this uses :focus-within on #toc-nav */
+			display: none;
+		}
+		#toc-nav > a > span + span {
+			padding-right: 0.2em;
 		}
 
 		#toc-toggle-inline {
@@ -219,14 +225,8 @@
 			left: -1px;
 		}
 
-		.toc-toggle:active,
-		#back-to-top :active {
+		#toc-nav :active {
 			color: #C00;
-		}
-
-		#back-to-top abbr {
-			border: none;
-			text-decoration: none;
 		}
 	}
 
@@ -239,6 +239,8 @@
 			top: 0; bottom: 0;
 			left: 0;
 			width: 23.5em;
+			max-width: 80%;
+			max-width: calc(100% - 2em - 26px);
 			overflow: auto;
 			padding: 0 1em;
 			padding-left: 42px;
@@ -257,8 +259,18 @@
 			color: gray;
 			color: hsla(203,20%,40%,.7);
 		}
-		body.toc-sidebar #back-to-top :first-child {
-			display: none;
+		body.toc-sidebar #toc-jump:not(:focus) {
+			width: 0;
+			height: 0;
+			padding: 0;
+			position: absolute;
+			overflow: hidden;
+		}
+	}
+	/* Hide main scroller when only the ToC is visible anyway */
+	@media screen and (max-width: 28em) {
+		body.toc-sidebar {
+			overflow: hidden;
 		}
 	}
 
@@ -290,22 +302,20 @@
 
 		body:not(.toc-inline) {
 			padding-left: 29em;
-			padding-right: 1.5em;
 		}
-		body:not(.toc-inline) .overlarge,
-		body:not(.toc-inline) div.figure img,
-		body:not(.toc-inline) div.sidefigure img,
-		body:not(.toc-inline) figure img,
-		body:not(.toc-inline) div.figure object,
-		body:not(.toc-inline) div.sidefigure object,
-		body:not(.toc-inline) figure object,
-		body:not(.toc-inline) table.data,
-		body:not(.toc-inline) table.index {
-			max-width: calc(100vw - 30.5em);
-		}
+		/* See also Overflow section at the bottom */
 
-		body:not(.toc-inline) #back-to-top :first-child {
-			display: none;
+		body:not(.toc-inline) #toc-jump:not(:focus) {
+			width: 0;
+			height: 0;
+			padding: 0;
+			position: absolute;
+			overflow: hidden;
+		}
+	}
+	@media screen and (min-width: 90em) {
+		body:not(.toc-inline) {
+			margin: 0 4em;
 		}
 	}
 
@@ -392,15 +402,11 @@
 	}
 
 	dl dd {
-		margin: 0 0 1em 2em;
+		margin: 0 0 .5em 2em;
 	}
 
-	.head dd + dt {
-		margin-top: .5em;
-	}
-
-	.head dd { /* undo for header */
-		margin-bottom: 0;
+	.head dd + dd { /* compact for header */
+		margin-top: -.5em;
 	}
 
 	/* Style for algorithms */
@@ -478,6 +484,7 @@
 		font-size: .9em;
 		page-break-inside: avoid;
 		hyphens: none;
+		text-transform: none;
 	}
 	pre code,
 	code code {
@@ -502,12 +509,15 @@
 
 	/* We hyperlink a lot, so make it less intrusive */
 	a[href] {
-		color: #005a9c;
+		color: #034575;
 		text-decoration: none;
-		border-bottom: 1px solid #555;
+		border-bottom: 1px solid #707070;
+		/* Need a bit of extending for it to look okay */
+		padding: 0 1px 0;
+		margin: 0 -1px 0;
 	}
 	a:visited {
-		border-bottom-color: #969696;
+		border-bottom-color: #BBB;
 	}
 
 	/* Use distinguishing colors when user is interacting with the link */
@@ -541,16 +551,17 @@
 	   .caption::before, figcaption::before { content: "Figure " counter(figure) ". "; }
 	*/
 
-	figure, div.figure, div.sidefigure {
+	figure, .figure, .sidefigure {
 		page-break-inside: avoid;
-		text-align: center;
-	}
-
-	div.figure, p.figure, div.sidefigure, figure {
 		text-align: center;
 		margin: 2.5em 0;
 	}
-	div.figure pre, div.sidefigure pre, figure pre {
+	.figure img,    .sidefigure img,    figure img,
+	.figure object, .sidefigure object, figure object {
+		max-width: 100%;
+		margin: auto;
+	}
+	.figure pre, .sidefigure pre, figure pre {
 		text-align: left;
 		display: table;
 		margin: 1em auto;
@@ -558,24 +569,26 @@
 	.figure table, figure table {
 		margin: auto;
 	}
-	div.sidefigure, figure.sidefigure {
-		float: right;
-		width: 50%;
-		margin: 0 0 0.5em 0.5em
+	@media screen and (min-width: 20em) {
+		.sidefigure {
+			float: right;
+			width: 50%;
+			margin: 0 0 0.5em 0.5em
+		}
 	}
-	p.caption, figcaption, caption {
+	.caption, figcaption, caption {
 		font-style: italic;
 		font-size: 90%;
 	}
-	p.caption::before, figcaption::before, figcaption > .marker {
+	.caption::before, figcaption::before, figcaption > .marker {
 		font-weight: bold;
 	}
-	p.caption, figcaption {
+	.caption, figcaption {
 		counter-increment: figure;
 	}
 
 	/* DL list is indented 2em, but figure inside it is not */
-	dd > div.figure, dd > figure { margin-left: -2em }
+	dd > .figure, dd > figure { margin-left: -2em }
 
 /******************************************************************************/
 /*                             Colored Boxes                                  */
@@ -592,14 +605,10 @@
 		border-right-style: solid;
 	}
 
-	div.issue,
-	div.note,
-	details.note,
-	aside.note,
-	div.example,
-	div.advisement,
-	p.advisement,
-	strong.advisement,
+	.issue,
+	.note,
+	.example,
+	.advisement,
 	blockquote {
 		margin: 1em auto;
 	}
@@ -736,7 +745,7 @@
 
 /** Entity Definition Boxes ***************************************************/
 
-	.def, pre.idl {
+	.def {
 		padding: .5em 1em;
 		background: #DEF;
 		margin: 1.2em 0;
@@ -776,6 +785,7 @@
 		font-style: italic;
 		font-weight: normal;
 		padding-left: 1em;
+		width: 3em;
 	}
 
 	/* For when values are extra-complex and need formatting for readability */
@@ -809,6 +819,8 @@
 	*/
 
 	table {
+		word-wrap: normal;
+		overflow-wrap: normal;
 		hyphens: manual;
 	}
 
@@ -819,12 +831,10 @@
 		width: 100%;
 		border: hidden;
 	}
-	table.data {
-		width: auto;
-	}
 	table.data caption,
 	table.index caption {
-		width: 100%;
+		max-width: 50em;
+		margin: 0 auto 1em;
 	}
 
 	table.data td,  table.data th,
@@ -838,11 +848,6 @@
 	table.data thead td:empty {
 		padding: 0;
 		border: 0;
-	}
-
-	table.data  thead th[scope="row"],
-	table.index thead th[scope="row"] {
-		text-align: right;
 	}
 
 	table.data  thead,
@@ -859,15 +864,20 @@
 
 	table.data  tbody th:first-child,
 	table.index tbody th:first-child  {
-		text-align: right;
 		border-right: 2px solid;
 		border-top: 1px solid silver;
 		padding-right: 1em;
 	}
 
+	table.data th[colspan],
+	table.data td[colspan] {
+		text-align: center;
+	}
+
 	table.complex.data th,
 	table.complex.data td {
 		border: 1px solid silver;
+		text-align: center;
 	}
 
 	table.data.longlastcol td:last-child,
@@ -882,10 +892,7 @@
 
 
 /*
-	a.property {
-		font-weight: bold;
-		color: hsla(203, 90%, 30%,.8);
-	}
+Alternate table alignment rules
 
 	table.data,
 	table.index {
@@ -901,6 +908,8 @@
 	table.index tbody th:first-child  {
 		text-align: right;
 	}
+
+Possible extra rowspan handling
 
 	table.data  tbody th[rowspan]:not([rowspan='1']),
 	table.index tbody th[rowspan]:not([rowspan='1']),
@@ -925,60 +934,90 @@
 
 /** Table of Contents *********************************************************/
 
-	.toc, .toc ol, .toc ul, .toc li {
-		list-style: none; /* Numbers must be inlined into source */
-		/* because generated content isn't search/selectable and markers can't do multilevel yet */
-		margin:  0;
-		padding: 0;
-		line-height: 1.2rem; /* consistent spacing */
-	}
-
-	/* ToC not indented until third level, but font style & margins show hierarchy */
-	.toc > li             { margin: 1.2em 0;   font-weight: bold;   }
-	.toc > li li          { margin: 0;         font-weight: normal; }
-	.toc > li li li       { margin-left:  2em; font-style:  italic; }
-	.toc > li li li li    { margin-left:    0; font-style:  normal; }
-	.toc > li li li li li { margin-left: 1rem; font-style:  italic; font-size: 85%; }
-
 	.toc a {
 		/* More spacing; use padding to make it part of the click target. */
 		padding-top: 0.1em;
 		/* Larger, more consistently-sized click target */
 		display: block;
-		/* Consistent layout across link hover effects */
-		border-bottom-style: solid;
-		border-bottom-width: 3px;
-		margin-bottom: -1px;
+		/* Reverse color scheme */
+		color: black;
+		border-color: #3980B5;
+	}
+	.toc a:visited {
+		border-color: #054572;
 	}
 	.toc a:not(:focus):not(:hover) {
 		/* Allow colors to cascade through from link styling */
 		border-bottom-color: transparent;
 	}
 
+	.toc, .toc ol, .toc ul, .toc li {
+		list-style: none; /* Numbers must be inlined into source */
+		/* because generated content isn't search/selectable and markers can't do multilevel yet */
+		margin:  0;
+		padding: 0;
+		line-height: 1.1rem; /* consistent spacing */
+	}
+
+	/* ToC not indented until third level, but font style & margins show hierarchy */
+	.toc > li             { font-weight: bold;   }
+	.toc > li li          { font-weight: normal; }
+	.toc > li li li       { font-style:  italic; }
+	.toc > li li li li    { font-style:  normal; }
+	.toc > li li li li li { font-style:  italic;
+	                        font-size:   85%;    }
+
+	.toc > li             { margin: 1.5em 0;     }
+	.toc > li li          { margin: 0.3rem 0;    }
+	.toc > li li li       { margin-left: 2em;
+	                        margin-left: 2rem;   }
+
 	/* Section numbers in a column of their own */
 	:not(li) > .toc {
-		margin-left: 4em;
+		margin-left: 5em;
 	}
 
 	.toc .secno {
 		float: left;
 		width: 4em;
-		margin-left: -4em;
-	}
-
-	.toc > li li li .secno {
-		margin-left: -6em;
+		white-space: nowrap;
 	}
 	.toc > li li li li .secno {
 		font-size: 85%;
-		margin-left: -7.06em;
-		margin-left: -6rem;
 	}
 	.toc > li li li li li .secno {
-		margin-left: -8.24em;
-		margin-left: -7rem;
 		font-size: 100%;
 	}
+
+	:not(li) > .toc              { margin-left:  5rem; }
+	.toc .secno                  { margin-left: -5rem; }
+	.toc > li li li .secno       { margin-left: -7rem; }
+	.toc > li li li li .secno    { margin-left: -9rem; }
+	.toc > li li li li li .secno { margin-left: -11rem; }
+
+	/* Tighten up indentation in narrow ToCs */
+	@media (max-width: 30em) {
+		:not(li) > .toc              { margin-left:  4rem; }
+		.toc .secno                  { margin-left: -4rem; }
+		.toc > li li li              { margin-left:  1rem; }
+		.toc > li li li .secno       { margin-left: -5rem; }
+		.toc > li li li li .secno    { margin-left: -6rem; }
+		.toc > li li li li li .secno { margin-left: -7rem; }
+	}
+	@media screen and (min-width: 78em) {
+		body:not(.toc-inline) :not(li) > .toc              { margin-left:  4rem; }
+		body:not(.toc-inline) .toc .secno                  { margin-left: -4rem; }
+		body:not(.toc-inline) .toc > li li li              { margin-left:  1rem; }
+		body:not(.toc-inline) .toc > li li li .secno       { margin-left: -5rem; }
+		body:not(.toc-inline) .toc > li li li li .secno    { margin-left: -6rem; }
+		body:not(.toc-inline) .toc > li li li li li .secno { margin-left: -7rem; }
+	}
+	body.toc-sidebar #toc :not(li) > .toc              { margin-left:  4rem; }
+	body.toc-sidebar #toc .toc .secno                  { margin-left: -4rem; }
+	body.toc-sidebar #toc .toc > li li li              { margin-left:  1rem; }
+	body.toc-sidebar #toc .toc > li li li .secno       { margin-left: -5rem; }
+	body.toc-sidebar #toc .toc > li li li li .secno    { margin-left: -6rem; }
+	body.toc-sidebar #toc .toc > li li li li li .secno { margin-left: -7rem; }
 
 	.toc li {
 		clear: both;
@@ -1003,7 +1042,7 @@
 			color: transparent; }
 		ul.index li a:hover + span,
 		ul.index li a:focus + span {
-			color: gray;
+			color: #707070;
 		}
 	}
 
@@ -1052,62 +1091,75 @@
 	}
 
 /******************************************************************************/
+/*                                    Legacy                                  */
+/******************************************************************************/
+
+	/* This rule is inherited from past style sheets. No idea what it's for. */
+	.hide { display: none }
+
+
+
+/******************************************************************************/
+/*                             Overflow Control                               */
+/******************************************************************************/
+
+	.figure .caption, .sidefigure .caption, figcaption {
+		/* in case figure is overlarge, limit caption to 50em */
+		max-width: 50rem;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	@media (min-width: 55em) {
+		.overlarge {
+			margin-left: calc(13px + 26.5rem - 50vw);
+			margin-right: calc(13px + 26.5rem - 50vw);
+			max-width: none;
+		}
+	}
+	@media screen and (min-width: 78em) {
+		body:not(.toc-inline) .overlarge {
+			/* 30.5em body padding 50em content area */
+			margin-left: calc(40em - 50vw) !important;
+			margin-right: calc(40em - 50vw) !important;
+		}
+	}
+	@media screen and (min-width: 90em) {
+		body:not(.toc-inline) .overlarge {
+			/* 4em html margin 30.5em body padding 50em content area */
+			margin-left: 0 !important;
+			margin-right: calc(84.5em - 100vw) !important;
+		}
+	}
+
+	@media not print {
+		.overlarge {
+			overflow-x: auto;
+			/* See Lea Verou's explanation background-attachment:
+			 * http://lea.verou.me/2012/04/background-attachment-local/
+			 *
+			background: top left  / 4em 100% linear-gradient(to right,  #ffffff, rgba(255, 255, 255, 0)) local,
+			            top right / 4em 100% linear-gradient(to left, #ffffff, rgba(255, 255, 255, 0)) local,
+			            top left  / 1em 100% linear-gradient(to right,  #c3c3c5, rgba(195, 195, 197, 0)) scroll,
+			            top right / 1em 100% linear-gradient(to left, #c3c3c5, rgba(195, 195, 197, 0)) scroll,
+			            white;
+			background-repeat: no-repeat;
+			*/
+		}
+	}
+
+/******************************************************************************/
 /*                                  Bikeshed                                  */
 /******************************************************************************/
 
 	/* Style for paragraphs I know are in MD-genned lists */
+	/* This is a weird hack for me not yet following the commonmark spec
+	   regarding paragraph and lists. */
 	[data-md] > :first-child {
 		margin-top: 0;
 	}
 	[data-md] > :last-child {
 		margin-bottom: 0;
-	}
-
-	/* This is mostly to make the list inside the CR exit criteria more compact. */
-
-	ol.inline, ol.inline li {
-		display: inline;
-		padding: 0; margin: 0;
-	}
-	ol.inline {
-		counter-reset: list-item;
-	}
-	ol.inline li {
-		counter-increment: list-item;
-	}
-	ol.inline li::before {
-		content: "(" counter(list-item) ") ";
-		font-weight: bold;
-	}
-
-/** Syntax-Highlighted Code ***************************************************/
-
-	.example pre[class*="language-"],
-	.example [class*="language-"] pre,
-	.example pre[class*="lang-"],
-	.example [class*="lang-"] pre {
-		background: transparent; /* Prism applies a gray background that doesn't work well in the template. */
-	}
-
-/** Example Code **************************************************************/
-
-	div.html, div.xml,
-	pre.html, pre.xml {
-		padding: 0.5em;
-		margin: 1em 0;
-		position: relative;
-		clear: both;
-		color: #600;
-	}
-	pre.example,
-	pre.html,
-	pre.xml {
-		padding-top: 1.5em;
-	}
-
-	pre.illegal, .illegal pre
-	pre.deprecated, .deprecated pre {
-		color: red;
 	}
 
 /** Inline CSS fragments ******************************************************/
@@ -1132,12 +1184,6 @@
 	}
 	pre .property::before, pre .property::after {
 		content: "";
-	}
-
-/** Inline markup fragments ***************************************************/
-
-	code.html, code.xml {
-		color: #660000;
 	}
 
 /** Autolinks produced using Bikeshed *****************************************/
@@ -1183,7 +1229,7 @@
 	}
 
 /** Self-Links ****************************************************************/
-	/* Auto-generated links from an element to its own anchor, for usability */
+/* Auto-generated links from an element to its own anchor, for usability */
 
 	.heading, .issue, .note, .example, li, dt {
 		position: relative;
@@ -1191,8 +1237,8 @@
 	a.self-link {
 		position: absolute;
 		top: 0;
-		left: -2.5em;
-		width: 2em;
+		left: calc(-1 * (3.5rem - 26px));
+		width: calc(3.5rem - 26px);
 		height: 2em;
 		text-align: center;
 		border: none;
@@ -1204,9 +1250,6 @@
 	}
 	.heading > a.self-link {
 		font-size: 83%;
-	}
-	li > a.self-link {
-		left: -3.5em;
 	}
 	dfn > a.self-link {
 		top: auto;
@@ -1230,29 +1273,9 @@
 	.heading > a.self-link::before { content: "§"; }
 	dfn > a.self-link::before      { content: "#"; }
 
-/******************************************************************************/
-/*                                    Images                                  */
-/******************************************************************************/
-
-	pre.ascii-art {
-		display: table; /* shrinkwrap */
-		margin: 1em auto;
-	}
-
-	/* Displaying the output of text layout, particularly when
-		 line-breaking is being invoked, and thus having a
-		 visible width is good. */
-	pre.output {
-		margin: 1em;
-		border: solid thin silver;
-		padding: 0.25em;
-		display: table;
-	}
-
-/******************************************************************************/
-/*                                  Counters                                  */
-/******************************************************************************/
-
+/** Counters ******************************************************************/
+/* Adds the auto-genned issue/example counters,
+   until Bikeshed fills in manual ones. */
 	.issue:not(.no-marker)::before {
 		content: "Issue " counter(issue);
 	}
@@ -1268,24 +1291,10 @@
 	}
 
 
-/** At-risk List **************************************************************/
-	/* Style for At Risk features (intended as editorial aid, not intended for publishing) */
 
-	.atrisk::before {
-	 float: right;
-	 margin-top: -0.25em;
-	 padding: 0.5em 1em 0.5em 0;
-	 text-indent: -0.9em;
-	 border: 1px solid;
-	 content: '\25C0    Not yet widely implemented';
-	 white-space: pre;
-	 font-size: small;
-	 background-color: white;
-	 color: gray;
-	 text-align: center;
-	}
-
-	.toc .atrisk::before { content:none }
+/********************************************
+ Remember to remove the logo section when copypasting freshly.
+ */
 </style>
   <meta content="Bikeshed 1.0.0" name="generator">
 <style>
@@ -1315,12 +1324,46 @@
       stroke-dasharray: 5px, 5px;
     }
   </style>
- </head>
+<style>
+        .dfn-panel {
+            display: inline-block;
+            position: absolute;
+            z-index: 35;
+            height: auto;
+            width: -webkit-fit-content;
+            max-width: 300px;
+            max-height: 500px;
+            overflow: auto;
+            padding: 0.5em 0.75em;
+            font: small Helvetica Neue, sans-serif, Droid Sans Fallback;
+            background: #DDDDDD;
+            color: black;
+            border: outset 0.2em;
+        }
+        .dfn-panel:not(.on) { display: none; }
+        .dfn-panel * { margin: 0; padding: 0; text-indent: 0; }
+        .dfn-panel > b { display: block; }
+        .dfn-panel a { color: black; }
+        .dfn-panel a:not(:hover) { text-decoration: none !important; border-bottom: none !important; }
+        .dfn-panel > b + b { margin-top: 0.25em; }
+        .dfn-panel > span { display: list-item; list-style: inside; }
+        .dfn-panel.activated {
+            display: inline-block;
+            position: fixed;
+            left: .5em;
+            bottom: .5em;
+            margin: 0 auto;
+            max-width: calc(100vw - 1.5em - .4em - .5em);
+            max-height: 30vh;
+        }
+
+        .dfn-paneled { cursor: pointer; }
+        </style>
  <body class="h-entry">
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="http://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/Icons/w3c_home" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Secure Contexts</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2016-02-02">2 February 2016</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2016-03-03">3 March 2016</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1484,7 +1527,7 @@ certain minimum standards of authentication and confidentiality are met.</p>
     <div class="example" id="example-c3b67557">
      <a class="self-link" href="#example-c3b67557"></a> 
      <p><code>http://example.com/</code> opened in a <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#top-level-browsing-context">top-level browsing
-    context</a> is not a <a data-link-type="dfn" href="#secure-context">secure context</a>, as it was not delivered over
+    context</a> is not a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-1">secure context</a>, as it was not delivered over
     an authenticated and encrypted channel.</p>
      <svg height="200" width="400">
       <g transform="translate(10,10)">
@@ -1496,7 +1539,7 @@ certain minimum standards of authentication and confidentiality are met.</p>
     <div class="example" id="example-f9c0bcaa">
      <a class="self-link" href="#example-f9c0bcaa"></a> 
      <p><code>https://example.com/</code> opened in a <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#top-level-browsing-context">top-level browsing
-    context</a> is a <a data-link-type="dfn" href="#secure-context">secure context</a>, as it was delivered over
+    context</a> is a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-2">secure context</a>, as it was delivered over
     an authenticated and encrypted channel.</p>
      <svg height="200" width="400">
       <g transform="translate(10,10)">
@@ -1575,12 +1618,12 @@ certain minimum standards of authentication and confidentiality are met.</p>
      </svg>
     </div>
     <h3 class="heading settled" data-level="1.2" id="examples-framed"><span class="secno">1.2. </span><span class="content">Framed Documents</span><a class="self-link" href="#examples-framed"></a></h3>
-    <p>Framed documents can be <a data-link-type="dfn" href="#secure-context">secure contexts</a> if they are delivered from <a data-link-type="dfn" href="#potentially-trustworthy-origin">potentially trustworthy origins</a>, <em>and</em> if they’re embedded
-  in a <a data-link-type="dfn" href="#secure-context">secure context</a>. That is:</p>
+    <p>Framed documents can be <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-3">secure contexts</a> if they are delivered from <a data-link-type="dfn" href="#potentially-trustworthy-origin" id="ref-for-potentially-trustworthy-origin-1">potentially trustworthy origins</a>, <em>and</em> if they’re embedded
+  in a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-4">secure context</a>. That is:</p>
     <div class="example" id="example-9e620851">
      <a class="self-link" href="#example-9e620851"></a> If <code>https://example.com/</code> opened in a <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#top-level-browsing-context">top-level browsing
     context</a> opens <code>https://sub.example.com/</code> in a frame, then
-    both are <a data-link-type="dfn" href="#secure-context">secure contexts</a>, as both were delivered over
+    both are <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-5">secure contexts</a>, as both were delivered over
     authenticated and encrypted channels.
      <p></p>
      <svg height="200" width="400">
@@ -1627,14 +1670,14 @@ certain minimum standards of authentication and confidentiality are met.</p>
      </svg>
     </div>
     <h3 class="heading settled" data-level="1.3" id="examples-workers"><span class="secno">1.3. </span><span class="content">Web Workers</span><a class="self-link" href="#examples-workers"></a></h3>
-    <p>Dedicated Workers are similar in nature to framed documents. They’re <a data-link-type="dfn" href="#secure-context">secure contexts</a> when they’re delivered from <a data-link-type="dfn" href="#potentially-trustworthy-origin">potentially
-  trustworthy origins</a>, only if their owner is itself a <a data-link-type="dfn" href="#secure-context">secure
+    <p>Dedicated Workers are similar in nature to framed documents. They’re <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-6">secure contexts</a> when they’re delivered from <a data-link-type="dfn" href="#potentially-trustworthy-origin" id="ref-for-potentially-trustworthy-origin-2">potentially
+  trustworthy origins</a>, only if their owner is itself a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-7">secure
   context</a>:</p>
     <div class="example" id="example-512dd4fd">
      <a class="self-link" href="#example-512dd4fd"></a> 
      <p>If <code>https://example.com/</code> in a <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#top-level-browsing-context">top-level browsing
     context</a> runs <code>https://example.com/worker.js</code>, then
-    both the document and the worker are <a data-link-type="dfn" href="#secure-context">secure contexts</a>.</p>
+    both the document and the worker are <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-8">secure contexts</a>.</p>
      <svg height="200" width="600">
       <g transform="translate(10,10)">
        <rect class="secure" height="175" width="300" x="0" y="0"></rect>
@@ -1653,7 +1696,7 @@ certain minimum standards of authentication and confidentiality are met.</p>
      <a class="self-link" href="#example-453513c5"></a> 
      <p>If <code>http://non-secure.example.com/</code> in a <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#top-level-browsing-context">top-level browsing
     context</a> frames <code>https://example.com/</code>, which runs <code>https://example.com/worker.js</code>, then neither the framed document
-    nor the worker are <a data-link-type="dfn" href="#secure-context">secure contexts</a>.</p>
+    nor the worker are <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-9">secure contexts</a>.</p>
      <svg height="200" width="600">
       <g transform="translate(10,10)">
        <rect class="non-secure" height="175" width="297" x="0" y="0"></rect>
@@ -1673,9 +1716,9 @@ certain minimum standards of authentication and confidentiality are met.</p>
      </svg>
     </div>
     <h3 class="heading settled" data-level="1.4" id="examples-shared-workers"><span class="secno">1.4. </span><span class="content">Shared Workers</span><a class="self-link" href="#examples-shared-workers"></a></h3>
-    <p>Multiple contexts may attach to a Shared Worker. If a <a data-link-type="dfn" href="#secure-context">secure context</a> creates a Shared Worker, then it is a <a data-link-type="dfn" href="#secure-context">secure context</a>, and may only be
-  attached to by other <a data-link-type="dfn" href="#secure-context">secure contexts</a>. If a non-secure context creates
-  a Shared Worker, then it is <em>not</em> a <a data-link-type="dfn" href="#secure-context">secure context</a>, and may only
+    <p>Multiple contexts may attach to a Shared Worker. If a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-10">secure context</a> creates a Shared Worker, then it is a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-11">secure context</a>, and may only be
+  attached to by other <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-12">secure contexts</a>. If a non-secure context creates
+  a Shared Worker, then it is <em>not</em> a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-13">secure context</a>, and may only
   be attached to by other non-secure contexts.</p>
     <div class="example" id="example-7e3c52b5">
      <a class="self-link" href="#example-7e3c52b5"></a> 
@@ -1784,7 +1827,7 @@ certain minimum standards of authentication and confidentiality are met.</p>
      </svg>
     </div>
     <h3 class="heading settled" data-level="1.5" id="examples-service-workers"><span class="secno">1.5. </span><span class="content">Service Workers</span><a class="self-link" href="#examples-service-workers"></a></h3>
-    <p>Service Workers are always <a data-link-type="dfn" href="#secure-context">secure contexts</a>. Only <a data-link-type="dfn" href="#secure-context">secure contexts</a> may register them, and they may only have clients which are <a data-link-type="dfn" href="#secure-context">secure
+    <p>Service Workers are always <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-14">secure contexts</a>. Only <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-15">secure contexts</a> may register them, and they may only have clients which are <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-16">secure
   contexts</a>.</p>
     <div class="example" id="example-58019791">
      <a class="self-link" href="#example-58019791"></a> 
@@ -1809,29 +1852,30 @@ certain minimum standards of authentication and confidentiality are met.</p>
    </section>
    <section>
     <h2 class="heading settled" data-level="2" id="framework"><span class="secno">2. </span><span class="content">Framework</span><a class="self-link" href="#framework"></a></h2>
-    <p>A <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#settings-object">settings object</a> is considered a <dfn data-dfn-type="dfn" data-export="" id="secure-context">secure context<a class="self-link" href="#secure-context"></a></dfn> if
+    <p>A <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#settings-object">settings object</a> is considered a <dfn class="dfn-paneled" data-dfn-type="dfn" data-export="" data-lt="secure context" id="secure-context">secure context<span class="dfn-panel"><b><a href="#secure-context">#secure-context</a></b><b>Referenced in:</b><span><a href="#ref-for-secure-context-1">1.1. Top-level Documents</a> <a href="#ref-for-secure-context-2">(2)</a></span><span><a href="#ref-for-secure-context-3">1.2. Framed Documents</a> <a href="#ref-for-secure-context-4">(2)</a> <a href="#ref-for-secure-context-5">(3)</a></span><span><a href="#ref-for-secure-context-6">1.3. Web Workers</a> <a href="#ref-for-secure-context-7">(2)</a> <a href="#ref-for-secure-context-8">(3)</a> <a href="#ref-for-secure-context-9">(4)</a></span><span><a href="#ref-for-secure-context-10">1.4. Shared Workers</a> <a href="#ref-for-secure-context-11">(2)</a> <a href="#ref-for-secure-context-12">(3)</a> <a href="#ref-for-secure-context-13">(4)</a></span><span><a href="#ref-for-secure-context-14">1.5. Service Workers</a> <a href="#ref-for-secure-context-15">(2)</a> <a href="#ref-for-secure-context-16">(3)</a></span><span><a href="#ref-for-secure-context-17">2. Framework</a> <a href="#ref-for-secure-context-18">(2)</a></span><span><a href="#ref-for-secure-context-19">2.2.1. Shared Workers</a> <a href="#ref-for-secure-context-20">(2)</a> <a href="#ref-for-secure-context-21">(3)</a></span><span><a href="#ref-for-secure-context-22">2.2.2. Feature Detection</a> <a href="#ref-for-secure-context-23">(2)</a></span><span><a href="#ref-for-secure-context-24">3.3. 
+    Gather document’s relevant ancestors </a></span><span><a href="#ref-for-secure-context-25">4.2. Ancestral Risk</a></span><span><a href="#ref-for-secure-context-26">4.3. Risks associated with non-secure contexts</a> <a href="#ref-for-secure-context-27">(2)</a></span><span><a href="#ref-for-secure-context-28">5.1. Incomplete Isolation</a></span><span><a href="#ref-for-secure-context-29">6. Privacy Considerations</a></span><span><a href="#ref-for-secure-context-30">7.3. Restricting New Features</a> <a href="#ref-for-secure-context-31">(2)</a> <a href="#ref-for-secure-context-32">(3)</a></span><span><a href="#ref-for-secure-context-33">7.4. Restricting Legacy Features</a> <a href="#ref-for-secure-context-34">(2)</a> <a href="#ref-for-secure-context-35">(3)</a></span><span><a href="#ref-for-secure-context-36">7.4.1. Example: Geolocation</a> <a href="#ref-for-secure-context-37">(2)</a></span></span></dfn> if
   the algorithm in <a href="#settings-object">§3.1 Is settings object a secure context?</a> returns "<code>Secure</code>". The <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#settings-object">settings
   object</a> is otherwise <dfn data-dfn-type="dfn" data-export="" data-lt="non-secure context" id="non-secure-context">non-secure<a class="self-link" href="#non-secure-context"></a></dfn>.</p>
-    <p>Likewise, a <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#global-object">global object</a> is considered a <a data-link-type="dfn" href="#secure-context">secure context</a> if its <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#relevant-settings-object-for-a-global-object">relevant settings object</a> is a <a data-link-type="dfn" href="#secure-context">secure context</a>.</p>
+    <p>Likewise, a <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#global-object">global object</a> is considered a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-17">secure context</a> if its <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#relevant-settings-object-for-a-global-object">relevant settings object</a> is a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-18">secure context</a>.</p>
     <h3 class="heading settled" data-level="2.1" id="monkey-patching-idl"><span class="secno">2.1. </span><span class="content">Modifications to WebIDL</span><a class="self-link" href="#monkey-patching-idl"></a></h3>
     <p>A new <code>[SecureContext]</code> attribute is available for operators, which ensures
   that they will only be <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-exposed">exposed</a> into secure contexts. The following
   example should help:</p>
     <div class="example" id="example-bb4ea7aa">
      <a class="self-link" href="#example-bb4ea7aa"></a> 
-<pre class="idl">interface <dfn class="idl-code" data-dfn-type="interface" data-export="" id="examplefeature">ExampleFeature<a class="self-link" href="#examplefeature"></a></dfn> {
+<pre class="idl def">interface ExampleFeature {
   // This call will succeed in all contexts.
-  Promise &lt;double> <dfn class="idl-code" data-dfn-for="ExampleFeature" data-dfn-type="method" data-export="" data-lt="calculateNotSoSecretResult()" id="dom-examplefeature-calculatenotsosecretresult">calculateNotSoSecretResult<a class="self-link" href="#dom-examplefeature-calculatenotsosecretresult"></a></dfn>();
+  Promise &lt;double> calculateNotSoSecretResult();
 
   // This operation will not be exposed to a non-secure context. If such a context
   // is somehow able to call it despite this precaution, the Promise will be
   // immedietely rejected with a 'SecurityError' exception.
-  [SecureContext] Promise&lt;double> <dfn class="idl-code" data-dfn-for="ExampleFeature" data-dfn-type="method" data-export="" data-lt="calculateSecretResult()" id="dom-examplefeature-calculatesecretresult">calculateSecretResult<a class="self-link" href="#dom-examplefeature-calculatesecretresult"></a></dfn>();
+  [SecureContext] Promise&lt;double> calculateSecretResult();
 
   // The same applies here: the operation will not be exposed to a non-secure context,
   // and if somehow called from a non-secure context, a 'SecurityError'
   // exception will be thrown.
-  [SecureContext] boolean <dfn class="idl-code" data-dfn-for="ExampleFeature" data-dfn-type="method" data-export="" data-lt="getSecretBoolean()" id="dom-examplefeature-getsecretboolean">getSecretBoolean<a class="self-link" href="#dom-examplefeature-getsecretboolean"></a></dfn>();
+  [SecureContext] boolean getSecretBoolean();
 };
 </pre>
     </div>
@@ -1841,8 +1885,8 @@ certain minimum standards of authentication and confidentiality are met.</p>
     <h3 class="heading settled" data-level="2.2" id="monkey-patching-html"><span class="secno">2.2. </span><span class="content">Modifications to HTML</span><a class="self-link" href="#monkey-patching-html"></a></h3>
     <h4 class="heading settled" data-level="2.2.1" id="monkey-patching-shared-workers"><span class="secno">2.2.1. </span><span class="content">Shared Workers</span><a class="self-link" href="#monkey-patching-shared-workers"></a></h4>
     <p>The <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/workers/#dom-sharedworker">SharedWorker()</a></code> constructor will throw a <code>SecurityError</code> exception if
-  a <a data-link-type="dfn" href="#secure-context">secure context</a> attempts to attach to an Worker which is not a <a data-link-type="dfn" href="#secure-context">secure context</a>, and if a non-secure context attempts to attach to a
-  Worker which is a <a data-link-type="dfn" href="#secure-context">secure context</a>. The constructor is modified as
+  a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-19">secure context</a> attempts to attach to an Worker which is not a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-20">secure context</a>, and if a non-secure context attempts to attach to a
+  Worker which is a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-21">secure context</a>. The constructor is modified as
   follows:</p>
     <ol>
      <li data-md="">
@@ -1860,17 +1904,17 @@ certain minimum standards of authentication and confidentiality are met.</p>
     </ol>
     <h4 class="heading settled" data-level="2.2.2" id="monkey-patching-global-object"><span class="secno">2.2.2. </span><span class="content">Feature Detection</span><a class="self-link" href="#monkey-patching-global-object"></a></h4>
     <p>To determine whether a context is capable of making use of features which
-  require <a data-link-type="dfn" href="#secure-context">secure contexts</a>, a simple boolean attribute is added to the
+  require <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-22">secure contexts</a>, a simple boolean attribute is added to the
   global object:</p>
-<pre class="idl">partial interface <a class="idl-code" data-link-type="interface" href="http://www.w3.org/TR/dom/#interface-window">Window</a> {
-  readonly attribute boolean <dfn class="idl-code" data-dfn-for="Window" data-dfn-type="attribute" data-export="" data-readonly="" data-type="boolean " id="dom-window-issecurecontext">isSecureContext<a class="self-link" href="#dom-window-issecurecontext"></a></dfn>;
+<pre class="idl def">partial interface <a class="idl-code" data-link-type="interface" href="http://www.w3.org/TR/dom/#interface-window">Window</a> {
+  readonly attribute boolean <dfn class="dfn-paneled idl-code" data-dfn-for="Window" data-dfn-type="attribute" data-export="" data-lt="isSecureContext" data-readonly="" data-type="boolean " id="dom-window-issecurecontext">isSecureContext<span class="dfn-panel"><b><a href="#dom-window-issecurecontext">#dom-window-issecurecontext</a></b><b>Referenced in:</b><span><a href="#ref-for-dom-window-issecurecontext-1">2.2.2. Feature Detection</a></span></span></dfn>;
 };
 
 partial interface <a class="idl-code" data-link-type="interface" href="http://www.w3.org/TR/workers/#workerglobalscope">WorkerGlobalScope</a> {
-  readonly attribute boolean <dfn class="idl-code" data-dfn-for="WorkerGlobalScope" data-dfn-type="attribute" data-export="" data-readonly="" data-type="boolean " id="dom-workerglobalscope-issecurecontext">isSecureContext<a class="self-link" href="#dom-workerglobalscope-issecurecontext"></a></dfn>;
+  readonly attribute boolean <dfn class="dfn-paneled idl-code" data-dfn-for="WorkerGlobalScope" data-dfn-type="attribute" data-export="" data-lt="isSecureContext" data-readonly="" data-type="boolean " id="dom-workerglobalscope-issecurecontext">isSecureContext<span class="dfn-panel"><b><a href="#dom-workerglobalscope-issecurecontext">#dom-workerglobalscope-issecurecontext</a></b><b>Referenced in:</b><span><a href="#ref-for-dom-workerglobalscope-issecurecontext-1">2.2.2. Feature Detection</a></span></span></dfn>;
 };
 </pre>
-    <p>Both <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/dom/#interface-window">Window</a></code>'s <code class="idl"><a data-link-type="idl" href="#dom-window-issecurecontext">isSecureContext</a></code> and <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/workers/#workerglobalscope">WorkerGlobalScope</a></code>'s <code class="idl"><a data-link-type="idl" href="#dom-workerglobalscope-issecurecontext">isSecureContext</a></code> attributes' getters return <code>true</code> if the <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#relevant-settings-object-for-a-global-object">relevant settings object</a> for the getter’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#global-object">global object</a> is a <a data-link-type="dfn" href="#secure-context">secure context</a>, and <code>false</code> otherwise.</p>
+    <p>Both <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/dom/#interface-window">Window</a></code>'s <code class="idl"><a data-link-type="idl" href="#dom-window-issecurecontext" id="ref-for-dom-window-issecurecontext-1">isSecureContext</a></code> and <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/workers/#workerglobalscope">WorkerGlobalScope</a></code>'s <code class="idl"><a data-link-type="idl" href="#dom-workerglobalscope-issecurecontext" id="ref-for-dom-workerglobalscope-issecurecontext-1">isSecureContext</a></code> attributes' getters return <code>true</code> if the <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#relevant-settings-object-for-a-global-object">relevant settings object</a> for the getter’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#global-object">global object</a> is a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-23">secure context</a>, and <code>false</code> otherwise.</p>
    </section>
    <section>
     <h2 class="heading settled" data-level="3" id="algorithms"><span class="secno">3. </span><span class="content">Algorithms</span><a class="self-link" href="#algorithms"></a></h2>
@@ -1940,7 +1984,7 @@ partial interface <a class="idl-code" data-link-type="interface" href="http://ww
       <p>Return "<code>Secure</code>".</p>
     </ol>
     <h3 class="heading settled" data-level="3.2" id="is-origin-trustworthy"><span class="secno">3.2. </span><span class="content"> Is <var>origin</var> potentially trustworthy? </span><a class="self-link" href="#is-origin-trustworthy"></a></h3>
-    <p>A <dfn data-dfn-type="dfn" data-export="" id="potentially-trustworthy-origin">potentially trustworthy origin<a class="self-link" href="#potentially-trustworthy-origin"></a></dfn> is one which a user agent
+    <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-export="" data-lt="potentially trustworthy origin" id="potentially-trustworthy-origin">potentially trustworthy origin<span class="dfn-panel"><b><a href="#potentially-trustworthy-origin">#potentially-trustworthy-origin</a></b><b>Referenced in:</b><span><a href="#ref-for-potentially-trustworthy-origin-1">1.2. Framed Documents</a></span><span><a href="#ref-for-potentially-trustworthy-origin-2">1.3. Web Workers</a></span></span></dfn> is one which a user agent
   can generally trust as delivering data securely.</p>
     <p>This algorithms considers certain hosts, scheme, and origins as potentially
   trustworthy, even though they might not be authenticated and encrypted in the
@@ -1990,7 +2034,7 @@ partial interface <a class="idl-code" data-link-type="interface" href="http://ww
     </ol>
     <h3 class="heading settled" data-level="3.3" id="gather-ancestors"><span class="secno">3.3. </span><span class="content"> Gather <var>document</var>’s relevant ancestors </span><a class="self-link" href="#gather-ancestors"></a></h3>
     <p>Given a <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/dom/#interface-document">Document</a></code> (<var>document</var>), this algorithm returns a list of <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#settings-object">settings objects</a> which ought to be considered when determining whether
-  or not <var>document</var> is a <a data-link-type="dfn" href="#secure-context">secure context</a>.</p>
+  or not <var>document</var> is a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-24">secure context</a>.</p>
     <ol>
      <li data-md="">
       <p>Let <var>ancestors</var> be an empty list.</p>
@@ -2064,13 +2108,13 @@ partial interface <a class="idl-code" data-link-type="interface" href="http://ww
   than a speed-bump, slowing down non-secure access to the API, but completely
   ineffective in preventing such access.</p>
     <p>While the algorithms in this document do not perfectly isolate non-secure
-  contexts from <a data-link-type="dfn" href="#secure-context">secure contexts</a> (as discussed in <a href="#isolation">§5.1 Incomplete Isolation</a>), the
+  contexts from <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-25">secure contexts</a> (as discussed in <a href="#isolation">§5.1 Incomplete Isolation</a>), the
   ancestor checks provide a fairly robust protection for the guarantees of
   authentication, confidentiality, and integrity that such contexts ought to
   ptovide.</p>
     <h3 class="heading settled" data-level="4.3" id="threat-risks"><span class="secno">4.3. </span><span class="content">Risks associated with non-secure contexts</span><a class="self-link" href="#threat-risks"></a></h3>
     <p>Certain web platform features that have a distinct impact on a user’s
-  security or privacy should be available for use only in <a data-link-type="dfn" href="#secure-context">secure
+  security or privacy should be available for use only in <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-26">secure
   contexts</a> in order to defend against the threats above. Features
   available in non-secure contexts risk exposing these capabilities to
   network attackers:</p>
@@ -2094,13 +2138,13 @@ partial interface <a class="idl-code" data-link-type="interface" href="http://ww
       browsing sessions. <a data-link-type="biblio" href="#biblio-service-workers">[SERVICE-WORKERS]</a> is a great example. 
      <li> The ability to manipulate a user agent’s native UI in some way which
       removes, obscures, or manipulates details relevant to a user’s
-      understanding of their context. <a data-link-type="biblio" href="#biblio-fullscreen">[FULLSCREEN]</a> is a good example. 
+      understanding of their context. <a data-link-type="biblio" href="#biblio-whatwg-fullscreen">[FULLSCREEN]</a> is a good example. 
      <li> The ability to introduce some functionality for which user permission will
       be required. 
     </ol>
     <p>This list is non-exhaustive, but should give you a feel for the types of
   risks we should consider when writing or implementing specifications.</p>
-    <p class="note" role="note">Note: While restricting a feature itself to <a data-link-type="dfn" href="#secure-context">secure contexts</a> is
+    <p class="note" role="note">Note: While restricting a feature itself to <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-27">secure contexts</a> is
   critical, we ought not forget that facilities that carry such information
   (such as new network access mechanisms, or other generic functions with access
   to network data) are equally sensitive.</p>
@@ -2108,14 +2152,14 @@ partial interface <a class="idl-code" data-link-type="interface" href="http://ww
    <section>
     <h2 class="heading settled" data-level="5" id="security-considerations"><span class="secno">5. </span><span class="content">Security Considerations</span><a class="self-link" href="#security-considerations"></a></h2>
     <h3 class="heading settled" data-level="5.1" id="isolation"><span class="secno">5.1. </span><span class="content">Incomplete Isolation</span><a class="self-link" href="#isolation"></a></h3>
-    <p>The <a data-link-type="dfn" href="#secure-context">secure context</a> definition in this document does not completely
+    <p>The <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-28">secure context</a> definition in this document does not completely
   isolate a "secure" view on an origin from a "non-secure" view on the same
   origin. Exfiltration will still be possible via increasingly esoteric
   mechanisms such as the contents of <code>localStorage</code>/<code>sessionStorage</code>, <code>storage</code> events, <code>BroadcastChannel</code>, and others.</p>
    </section>
    <section>
     <h2 class="heading settled" data-level="6" id="privacy-considerations"><span class="secno">6. </span><span class="content">Privacy Considerations</span><a class="self-link" href="#privacy-considerations"></a></h2>
-    <p>The <a data-link-type="dfn" href="#secure-context">secure context</a> definition in this document does not in itself have
+    <p>The <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-29">secure context</a> definition in this document does not in itself have
   any privacy impact. It does, however, enable other features which do have
   interesting privacy implications to lock themselves into contexts which
   ensures that specific guarantees can be made regarding integrity,
@@ -2138,13 +2182,13 @@ partial interface <a class="idl-code" data-link-type="interface" href="http://ww
     <h3 class="heading settled" data-level="7.3" id="new"><span class="secno">7.3. </span><span class="content">Restricting New Features</span><a class="self-link" href="#new"></a></h3>
     <p><em>This section is non-normative.</em></p>
     <p>When writing a specification for new features, we recommend that authors
-  and editors guard sensitive APIs with checks against <a data-link-type="dfn" href="#secure-context">secure contexts</a>.
+  and editors guard sensitive APIs with checks against <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-30">secure contexts</a>.
   For example, something like the following might be a good approach:</p>
     <div class="example" id="example-1611693b">
      <a class="self-link" href="#example-1611693b"></a> 
      <ol>
       <li>
-        If the <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#incumbent-settings-object">incumbent settings object</a> is <em>not</em> a <a data-link-type="dfn" href="#secure-context">secure
+        If the <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#incumbent-settings-object">incumbent settings object</a> is <em>not</em> a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-31">secure
         context</a>, then: 
        <ol>
         <li> [<i>insert something appropriate here: perhaps a Promise could be
@@ -2153,19 +2197,19 @@ partial interface <a class="idl-code" data-link-type="interface" href="http://ww
        </ol>
      </ol>
     </div>
-    <p>Authors should also ensure that sensitive APIs are only exposed to <a data-link-type="dfn" href="#secure-context">secure
+    <p>Authors should also ensure that sensitive APIs are only exposed to <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-32">secure
   contexts</a> by guarding them with the <code>[SecureContext]</code> attribute:</p>
     <div class="example" id="example-63db205d">
      <a class="self-link" href="#example-63db205d"></a> 
-<pre class="idl">[SecureContext]
-interface <dfn class="idl-code" data-dfn-type="interface" data-export="" id="sensitivefeature">SensitiveFeature<a class="self-link" href="#sensitivefeature"></a></dfn> {
-  Promise&lt;double> <dfn class="idl-code" data-dfn-for="SensitiveFeature" data-dfn-type="method" data-export="" data-lt="getTheSecretDouble()" id="dom-sensitivefeature-getthesecretdouble">getTheSecretDouble<a class="self-link" href="#dom-sensitivefeature-getthesecretdouble"></a></dfn>();
+<pre class="idl def">[SecureContext]
+interface SensitiveFeature {
+  Promise&lt;double> getTheSecretDouble();
 };
 
 // Or:
 
-interface <dfn class="idl-code" data-dfn-type="interface" data-export="" id="anothersensitivefeature">AnotherSensitiveFeature<a class="self-link" href="#anothersensitivefeature"></a></dfn> {
-  [SecureContext] void <dfn class="idl-code" data-dfn-for="AnotherSensitiveFeature" data-dfn-type="method" data-export="" data-lt="doThatPowerfulThing()" id="dom-anothersensitivefeature-dothatpowerfulthing">doThatPowerfulThing<a class="self-link" href="#dom-anothersensitivefeature-dothatpowerfulthing"></a></dfn>();
+interface AnotherSensitiveFeature {
+  [SecureContext] void doThatPowerfulThing();
 };
 </pre>
     </div>
@@ -2173,16 +2217,16 @@ interface <dfn class="idl-code" data-dfn-type="interface" data-export="" id="ano
     <p><em>This section is non-normative.</em></p>
     <p>The list above clearly includes some existing functionality that is currently
   available to the web over non-secure channels. We recommend that such legacy
-  functionality begin requiring a <a data-link-type="dfn" href="#secure-context">secure context</a> as quickly as is
+  functionality begin requiring a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-33">secure context</a> as quickly as is
   reasonably possible.</p>
     <ol>
      <li data-md="">
       <p>If such a feature is not widely implemented, we recommend that the
   specification be immediately <a data-link-type="dfn" href="http://www.w3.org/2014/Process-20140801/#rec-modify">modified</a> to include a restriction
-  to <a data-link-type="dfn" href="#secure-context">secure contexts</a>.</p>
+  to <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-34">secure contexts</a>.</p>
      <li data-md="">
       <p>If such a feature is widely implemented, but not yet in wide use, we
-  recommend that it be quickly restricted to <a data-link-type="dfn" href="#secure-context">secure contexts</a> by
+  recommend that it be quickly restricted to <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-35">secure contexts</a> by
   adding a check as described in <a href="#new">§7.3 Restricting New Features</a> to existing implementations, and <a data-link-type="dfn" href="http://www.w3.org/2014/Process-20140801/#rec-modify">modifying the specification</a> accordingly.</p>
      <li data-md="">
       <p>If such a feature is in wide use, we recommend that the existing
@@ -2198,8 +2242,8 @@ interface <dfn class="idl-code" data-dfn-type="interface" data-export="" id="ano
     <ol>
      <li data-md="">
       <p><a data-link-type="dfn" href="http://www.w3.org/2014/Process-20140801/#rec-modify">Modify</a> the specification to include
-  checks against <a data-link-type="dfn" href="#secure-context">secure context</a> before executing the algorithms for <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/geolocation-API/#get-current-position">getCurrentPosition()</a></code> and <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/geolocation-API/#watch-position">watchPosition()</a></code>.</p>
-      <p>If the <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#incumbent-settings-object">incumbent settings object</a> is not a <a data-link-type="dfn" href="#secure-context">secure context</a>,
+  checks against <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-36">secure context</a> before executing the algorithms for <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/geolocation-API/#get-current-position">getCurrentPosition()</a></code> and <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/geolocation-API/#watch-position">watchPosition()</a></code>.</p>
+      <p>If the <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#incumbent-settings-object">incumbent settings object</a> is not a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-37">secure context</a>,
   then the algorithm should be aborted, and the <code>errorCallback</code> invoked with a <code>code</code> of <code>PERMISSION_DENIED</code>.</p>
      <li data-md="">
       <p>The user agent should announce clear intentions to disable the API for
@@ -2260,16 +2304,10 @@ interface <dfn class="idl-code" data-dfn-type="interface" data-export="" id="ano
     particular, the algorithms defined in this specification are intended to
     be easy to understand and are not intended to be performant. Implementers
     are encouraged to optimize.</p>
-  <h2 class="no-num heading settled" id="index"><span class="content">Index</span><a class="self-link" href="#index"></a></h2>
-  <h3 class="no-num heading settled" id="index-defined-here"><span class="content">Terms defined by this specification</span><a class="self-link" href="#index-defined-here"></a></h3>
+<script src="https://www.w3.org/scripts/TR/2016/fixup.js"></script>
+  <h2 class="no-num no-ref heading settled" id="index"><span class="content">Index</span><a class="self-link" href="#index"></a></h2>
+  <h3 class="no-num no-ref heading settled" id="index-defined-here"><span class="content">Terms defined by this specification</span><a class="self-link" href="#index-defined-here"></a></h3>
   <ul class="index">
-   <li><a href="#anothersensitivefeature">AnotherSensitiveFeature</a><span>, in §7.3</span>
-   <li><a href="#dom-examplefeature-calculatenotsosecretresult">calculateNotSoSecretResult()</a><span>, in §2.1</span>
-   <li><a href="#dom-examplefeature-calculatesecretresult">calculateSecretResult()</a><span>, in §2.1</span>
-   <li><a href="#dom-anothersensitivefeature-dothatpowerfulthing">doThatPowerfulThing()</a><span>, in §7.3</span>
-   <li><a href="#examplefeature">ExampleFeature</a><span>, in §2.1</span>
-   <li><a href="#dom-examplefeature-getsecretboolean">getSecretBoolean()</a><span>, in §2.1</span>
-   <li><a href="#dom-sensitivefeature-getthesecretdouble">getTheSecretDouble()</a><span>, in §7.3</span>
    <li>
     isSecureContext
     <ul>
@@ -2279,12 +2317,11 @@ interface <dfn class="idl-code" data-dfn-type="interface" data-export="" id="ano
    <li><a href="#non-secure-context">non-secure context</a><span>, in §2</span>
    <li><a href="#potentially-trustworthy-origin">potentially trustworthy origin</a><span>, in §3.2</span>
    <li><a href="#secure-context">secure context</a><span>, in §2</span>
-   <li><a href="#sensitivefeature">SensitiveFeature</a><span>, in §7.3</span>
   </ul>
-  <h3 class="no-num heading settled" id="index-defined-elsewhere"><span class="content">Terms defined by reference</span><a class="self-link" href="#index-defined-elsewhere"></a></h3>
+  <h3 class="no-num no-ref heading settled" id="index-defined-elsewhere"><span class="content">Terms defined by reference</span><a class="self-link" href="#index-defined-elsewhere"></a></h3>
   <ul class="index">
    <li>
-    <a data-link-type="biblio" href="#biblio-dom">[dom]</a> defines the following terms:
+    <a data-link-type="biblio" href="#biblio-whatwg-dom">[WHATWG-DOM]</a> defines the following terms:
     <ul>
      <li><a href="http://www.w3.org/TR/dom/#interface-document">Document</a>
      <li><a href="http://www.w3.org/TR/dom/#interface-window">Window</a>
@@ -2334,7 +2371,7 @@ interface <dfn class="idl-code" data-dfn-type="interface" data-export="" id="ano
      <li><a href="http://www.w3.org/TR/mixed-content/#a-priori-authenticated-url">a priori authenticated url</a>
     </ul>
    <li>
-    <a data-link-type="biblio" href="#biblio-url">[url]</a> defines the following terms:
+    <a data-link-type="biblio" href="#biblio-whatwg-url">[WHATWG-URL]</a> defines the following terms:
     <ul>
      <li><a href="https://url.spec.whatwg.org/#concept-url-origin">origin of a url</a>
      <li><a href="https://url.spec.whatwg.org/#concept-url-scheme">scheme</a>
@@ -2362,84 +2399,69 @@ interface <dfn class="idl-code" data-dfn-type="interface" data-export="" id="ano
      <li><a href="https://html.spec.whatwg.org/multipage/embedded-content.html#the-iframe-element">iframe</a>
     </ul>
   </ul>
-  <h2 class="no-num heading settled" id="references"><span class="content">References</span><a class="self-link" href="#references"></a></h2>
-  <h3 class="no-num heading settled" id="normative"><span class="content">Normative References</span><a class="self-link" href="#normative"></a></h3>
+  <h2 class="no-num no-ref heading settled" id="references"><span class="content">References</span><a class="self-link" href="#references"></a></h2>
+  <h3 class="no-num no-ref heading settled" id="normative"><span class="content">Normative References</span><a class="self-link" href="#normative"></a></h3>
   <dl>
-   <dt id="biblio-fetch"><a class="self-link" href="#biblio-fetch"></a>[FETCH]
-   <dd>Anne van Kesteren. <a href="https://fetch.spec.whatwg.org/">Fetch Standard</a>. Living Standard. URL: <a href="https://fetch.spec.whatwg.org/">https://fetch.spec.whatwg.org/</a>
-   <dt id="biblio-html"><a class="self-link" href="#biblio-html"></a>[HTML]
+   <dt id="biblio-geolocation-api">[geolocation-API]
+   <dd>Andrei Popescu. <a href="http://dev.w3.org/geo/api/spec-source.html">Geolocation API Specification</a>. 28 May 2015. PER. URL: <a href="http://dev.w3.org/geo/api/spec-source.html">http://dev.w3.org/geo/api/spec-source.html</a>
+   <dt id="biblio-html">[HTML]
    <dd>Ian Hickson. <a href="https://html.spec.whatwg.org/multipage/">HTML Standard</a>. Living Standard. URL: <a href="https://html.spec.whatwg.org/multipage/">https://html.spec.whatwg.org/multipage/</a>
-   <dt id="biblio-mix"><a class="self-link" href="#biblio-mix"></a>[MIX]
-   <dd>Mike West. <a href="http://www.w3.org/TR/mixed-content/">Mixed Content</a>. 8 October 2015. CR. URL: <a href="http://www.w3.org/TR/mixed-content/">http://www.w3.org/TR/mixed-content/</a>
-   <dt id="biblio-w3c-process"><a class="self-link" href="#biblio-w3c-process"></a>[W3C-PROCESS]
-   <dd>Charles McCathie Nevile. <a href="http://www.w3.org/2014/Process-20140801/">World Wide Web Consortium Process Document</a>. URL: <a href="http://www.w3.org/2014/Process-20140801/">http://www.w3.org/2014/Process-20140801/</a>
-   <dt id="biblio-webidl"><a class="self-link" href="#biblio-webidl"></a>[WebIDL]
-   <dd>Cameron McCormack; Boris Zbarsky. <a href="http://www.w3.org/TR/WebIDL-1/">WebIDL Level 1</a>. 4 August 2015. WD. URL: <a href="http://www.w3.org/TR/WebIDL-1/">http://www.w3.org/TR/WebIDL-1/</a>
-   <dt id="biblio-dom"><a class="self-link" href="#biblio-dom"></a>[DOM]
-   <dd>Anne van Kesteren; et al. <a href="http://www.w3.org/TR/dom/">W3C DOM4</a>. 19 November 2015. REC. URL: <a href="http://www.w3.org/TR/dom/">http://www.w3.org/TR/dom/</a>
-   <dt id="biblio-geolocation-api"><a class="self-link" href="#biblio-geolocation-api"></a>[geolocation-API]
-   <dd>Andrei Popescu. <a href="http://www.w3.org/TR/geolocation-API/">Geolocation API Specification</a>. 28 May 2015. PER. URL: <a href="http://www.w3.org/TR/geolocation-API/">http://www.w3.org/TR/geolocation-API/</a>
-   <dt id="biblio-html5"><a class="self-link" href="#biblio-html5"></a>[HTML5]
-   <dd>Ian Hickson; et al. <a href="http://www.w3.org/TR/html5/">HTML5</a>. 28 October 2014. REC. URL: <a href="http://www.w3.org/TR/html5/">http://www.w3.org/TR/html5/</a>
-   <dt id="biblio-rfc2119"><a class="self-link" href="#biblio-rfc2119"></a>[RFC2119]
+   <dt id="biblio-html5">[HTML5]
+   <dd>Ian Hickson; et al. <a href="http://www.w3.org/html/wg/drafts/html/master/">HTML5</a>. 28 October 2014. REC. URL: <a href="http://www.w3.org/html/wg/drafts/html/master/">http://www.w3.org/html/wg/drafts/html/master/</a>
+   <dt id="biblio-rfc2119">[RFC2119]
    <dd>S. Bradner. <a href="https://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href="https://tools.ietf.org/html/rfc2119">https://tools.ietf.org/html/rfc2119</a>
-   <dt id="biblio-rfc4632"><a class="self-link" href="#biblio-rfc4632"></a>[RFC4632]
+   <dt id="biblio-rfc4632">[RFC4632]
    <dd>V. Fuller; T. Li. <a href="https://tools.ietf.org/html/rfc4632">Classless Inter-domain Routing (CIDR): The Internet Address Assignment and Aggregation Plan</a>. August 2006. Best Current Practice. URL: <a href="https://tools.ietf.org/html/rfc4632">https://tools.ietf.org/html/rfc4632</a>
-   <dt id="biblio-rfc6761"><a class="self-link" href="#biblio-rfc6761"></a>[RFC6761]
+   <dt id="biblio-rfc6761">[RFC6761]
    <dd>S. Cheshire; M. Krochmal. <a href="https://tools.ietf.org/html/rfc6761">Special-Use Domain Names</a>. February 2013. Proposed Standard. URL: <a href="https://tools.ietf.org/html/rfc6761">https://tools.ietf.org/html/rfc6761</a>
-   <dt id="biblio-url"><a class="self-link" href="#biblio-url"></a>[URL]
-   <dd>Anne van Kesteren; Sam Ruby. <a href="http://www.w3.org/TR/url-1/">URL</a>. 9 December 2014. WD. URL: <a href="http://www.w3.org/TR/url-1/">http://www.w3.org/TR/url-1/</a>
-   <dt id="biblio-workers"><a class="self-link" href="#biblio-workers"></a>[WORKERS]
-   <dd>Ian Hickson. <a href="http://www.w3.org/TR/workers/">Web Workers</a>. 24 September 2015. WD. URL: <a href="http://www.w3.org/TR/workers/">http://www.w3.org/TR/workers/</a>
+   <dt id="biblio-w3c-process">[W3C-PROCESS]
+   <dd>Charles McCathie Nevile. <a href="http://www.w3.org/2014/Process-20140801/">World Wide Web Consortium Process Document</a>. URL: <a href="http://www.w3.org/2014/Process-20140801/">http://www.w3.org/2014/Process-20140801/</a>
+   <dt id="biblio-webidl">[WebIDL]
+   <dd>Cameron McCormack; Boris Zbarsky. <a href="https://heycam.github.io/webidl/">WebIDL Level 1</a>. 4 August 2015. WD. URL: <a href="https://heycam.github.io/webidl/">https://heycam.github.io/webidl/</a>
+   <dt id="biblio-whatwg-dom">[WHATWG-DOM]
+   <dd>Anne van Kesteren. <a href="https://dom.spec.whatwg.org/">DOM Standard</a>. Living Standard. URL: <a href="https://dom.spec.whatwg.org/">https://dom.spec.whatwg.org/</a>
+   <dt id="biblio-whatwg-url">[WHATWG-URL]
+   <dd>Anne van Kesteren; Sam Ruby. <a href="https://url.spec.whatwg.org/">URL Standard</a>. Living Standard. URL: <a href="https://url.spec.whatwg.org/">https://url.spec.whatwg.org/</a>
+   <dt id="biblio-workers">[WORKERS]
+   <dd>Ian Hickson. <a href="https://html.spec.whatwg.org/multipage/workers.html">Web Workers</a>. 24 September 2015. WD. URL: <a href="https://html.spec.whatwg.org/multipage/workers.html">https://html.spec.whatwg.org/multipage/workers.html</a>
   </dl>
-  <h3 class="no-num heading settled" id="informative"><span class="content">Informative References</span><a class="self-link" href="#informative"></a></h3>
+  <h3 class="no-num no-ref heading settled" id="informative"><span class="content">Informative References</span><a class="self-link" href="#informative"></a></h3>
   <dl>
-   <dt id="biblio-bluetooth"><a class="self-link" href="#biblio-bluetooth"></a>[BLUETOOTH]
+   <dt id="biblio-bluetooth">[BLUETOOTH]
    <dd>Jeffrey Yasskin; Vincent Scheib. <a href="https://webbluetoothcg.github.io/web-bluetooth/">Web Bluetooth</a>. URL: <a href="https://webbluetoothcg.github.io/web-bluetooth/">https://webbluetoothcg.github.io/web-bluetooth/</a>
-   <dt id="biblio-comcast"><a class="self-link" href="#biblio-comcast"></a>[COMCAST]
+   <dt id="biblio-comcast">[COMCAST]
    <dd>David Kravets. <a href="http://arstechnica.com/tech-policy/2014/09/why-comcasts-javascript-ad-injections-threaten-security-net-neutrality/">Comcast Wi-Fi serving self-promotional ads via JavaScript injection</a>. URL: <a href="http://arstechnica.com/tech-policy/2014/09/why-comcasts-javascript-ad-injections-threaten-security-net-neutrality/">http://arstechnica.com/tech-policy/2014/09/why-comcasts-javascript-ad-injections-threaten-security-net-neutrality/</a>
-   <dt id="biblio-credential-management"><a class="self-link" href="#biblio-credential-management"></a>[CREDENTIAL-MANAGEMENT]
+   <dt id="biblio-credential-management">[CREDENTIAL-MANAGEMENT]
    <dd>Mike West. <a href="https://w3c.github.io/webappsec/specs/credentialmanagement/">Credential Management</a>. ED. URL: <a href="https://w3c.github.io/webappsec/specs/credentialmanagement/">https://w3c.github.io/webappsec/specs/credentialmanagement/</a>
-   <dt id="biblio-discovery"><a class="self-link" href="#biblio-discovery"></a>[DISCOVERY]
+   <dt id="biblio-discovery">[DISCOVERY]
    <dd>Rich Tibbett. <a href="https://dvcs.w3.org/hg/dap/raw-file/tip/discovery-api/Overview.html">Network Service Discovery</a>. URL: <a href="https://dvcs.w3.org/hg/dap/raw-file/tip/discovery-api/Overview.html">https://dvcs.w3.org/hg/dap/raw-file/tip/discovery-api/Overview.html</a>
-   <dt id="biblio-indexeddb"><a class="self-link" href="#biblio-indexeddb"></a>[IndexedDB]
+   <dt id="biblio-encrypted-media">[ENCRYPTED-MEDIA]
+   <dd>David Dorwin; et al. <a href="http://www.w3.org/TR/encrypted-media/">Encrypted Media Extensions</a>. 27 February 2016. WD. URL: <a href="http://www.w3.org/TR/encrypted-media/">http://www.w3.org/TR/encrypted-media/</a>
+   <dt id="biblio-fetch">[FETCH]
+   <dd>Anne van Kesteren. <a href="https://fetch.spec.whatwg.org/">Fetch Standard</a>. Living Standard. URL: <a href="https://fetch.spec.whatwg.org/">https://fetch.spec.whatwg.org/</a>
+   <dt id="biblio-indexeddb">[IndexedDB]
    <dd>Nikunj Mehta; et al. <a href="http://www.w3.org/TR/IndexedDB/">Indexed Database API</a>. 8 January 2015. REC. URL: <a href="http://www.w3.org/TR/IndexedDB/">http://www.w3.org/TR/IndexedDB/</a>
-   <dt id="biblio-powerful-new-features"><a class="self-link" href="#biblio-powerful-new-features"></a>[POWERFUL-NEW-FEATURES]
-   <dd>Chrome Security Team. <a href="https://www.chromium.org/Home/chromium-security/prefer-secure-origins-for-powerful-new-features">Prefer Secure Origins For Powerful New Features</a>. URL: <a href="https://www.chromium.org/Home/chromium-security/prefer-secure-origins-for-powerful-new-features">https://www.chromium.org/Home/chromium-security/prefer-secure-origins-for-powerful-new-features</a>
-   <dt id="biblio-verizon"><a class="self-link" href="#biblio-verizon"></a>[VERIZON]
-   <dd>Mark Bergen; Alex Kantrowitz. <a href="http://adage.com/article/digital/verizon-target-mobile-subscribers-ads/293356/">Verizon looks to target its mobile subscribers with ads</a>. URL: <a href="http://adage.com/article/digital/verizon-target-mobile-subscribers-ads/293356/">http://adage.com/article/digital/verizon-target-mobile-subscribers-ads/293356/</a>
-   <dt id="biblio-webcryptoapi"><a class="self-link" href="#biblio-webcryptoapi"></a>[WebCryptoAPI]
-   <dd>Ryan Sleevi; Mark Watson. <a href="http://www.w3.org/TR/WebCryptoAPI/">Web Cryptography API</a>. 11 December 2014. CR. URL: <a href="http://www.w3.org/TR/WebCryptoAPI/">http://www.w3.org/TR/WebCryptoAPI/</a>
-   <dt id="biblio-encrypted-media"><a class="self-link" href="#biblio-encrypted-media"></a>[ENCRYPTED-MEDIA]
-   <dd>David Dorwin; et al. <a href="http://www.w3.org/TR/encrypted-media/">Encrypted Media Extensions</a>. 30 November 2015. WD. URL: <a href="http://www.w3.org/TR/encrypted-media/">http://www.w3.org/TR/encrypted-media/</a>
-   <dt id="biblio-fullscreen"><a class="self-link" href="#biblio-fullscreen"></a>[FULLSCREEN]
-   <dd>Anne van Kesteren; Tantek Çelik. <a href="http://www.w3.org/TR/fullscreen/">Fullscreen</a>. 18 November 2014. NOTE. URL: <a href="http://www.w3.org/TR/fullscreen/">http://www.w3.org/TR/fullscreen/</a>
-   <dt id="biblio-mediacapture-streams"><a class="self-link" href="#biblio-mediacapture-streams"></a>[MEDIACAPTURE-STREAMS]
+   <dt id="biblio-mediacapture-streams">[MEDIACAPTURE-STREAMS]
    <dd>Daniel Burnett; et al. <a href="http://www.w3.org/TR/mediacapture-streams/">Media Capture and Streams</a>. 14 April 2015. LCWD. URL: <a href="http://www.w3.org/TR/mediacapture-streams/">http://www.w3.org/TR/mediacapture-streams/</a>
-   <dt id="biblio-rfc6265"><a class="self-link" href="#biblio-rfc6265"></a>[RFC6265]
+   <dt id="biblio-mix">[MIX]
+   <dd>Mike West. <a href="http://www.w3.org/TR/mixed-content/">Mixed Content</a>. 8 October 2015. CR. URL: <a href="http://www.w3.org/TR/mixed-content/">http://www.w3.org/TR/mixed-content/</a>
+   <dt id="biblio-powerful-new-features">[POWERFUL-NEW-FEATURES]
+   <dd>Chrome Security Team. <a href="https://www.chromium.org/Home/chromium-security/prefer-secure-origins-for-powerful-new-features">Prefer Secure Origins For Powerful New Features</a>. URL: <a href="https://www.chromium.org/Home/chromium-security/prefer-secure-origins-for-powerful-new-features">https://www.chromium.org/Home/chromium-security/prefer-secure-origins-for-powerful-new-features</a>
+   <dt id="biblio-rfc6265">[RFC6265]
    <dd>A. Barth. <a href="https://tools.ietf.org/html/rfc6265">HTTP State Management Mechanism</a>. April 2011. Proposed Standard. URL: <a href="https://tools.ietf.org/html/rfc6265">https://tools.ietf.org/html/rfc6265</a>
-   <dt id="biblio-rfc7258"><a class="self-link" href="#biblio-rfc7258"></a>[RFC7258]
+   <dt id="biblio-rfc7258">[RFC7258]
    <dd>S. Farrell; H. Tschofenig. <a href="https://tools.ietf.org/html/rfc7258">Pervasive Monitoring Is an Attack</a>. May 2014. Best Current Practice. URL: <a href="https://tools.ietf.org/html/rfc7258">https://tools.ietf.org/html/rfc7258</a>
-   <dt id="biblio-service-workers"><a class="self-link" href="#biblio-service-workers"></a>[SERVICE-WORKERS]
+   <dt id="biblio-service-workers">[SERVICE-WORKERS]
    <dd>Alex Russell; Jungkee Song; Jake Archibald. <a href="http://www.w3.org/TR/service-workers/">Service Workers</a>. 25 June 2015. WD. URL: <a href="http://www.w3.org/TR/service-workers/">http://www.w3.org/TR/service-workers/</a>
+   <dt id="biblio-verizon">[VERIZON]
+   <dd>Mark Bergen; Alex Kantrowitz. <a href="http://adage.com/article/digital/verizon-target-mobile-subscribers-ads/293356/">Verizon looks to target its mobile subscribers with ads</a>. URL: <a href="http://adage.com/article/digital/verizon-target-mobile-subscribers-ads/293356/">http://adage.com/article/digital/verizon-target-mobile-subscribers-ads/293356/</a>
+   <dt id="biblio-webcryptoapi">[WebCryptoAPI]
+   <dd>Ryan Sleevi; Mark Watson. <a href="http://www.w3.org/TR/WebCryptoAPI/">Web Cryptography API</a>. 11 December 2014. CR. URL: <a href="http://www.w3.org/TR/WebCryptoAPI/">http://www.w3.org/TR/WebCryptoAPI/</a>
+   <dt id="biblio-whatwg-fullscreen">[WHATWG-FULLSCREEN]
+   <dd>Anne van Kesteren. <a href="https://fullscreen.spec.whatwg.org/">Fullscreen API Standard</a>. Living Standard. URL: <a href="https://fullscreen.spec.whatwg.org/">https://fullscreen.spec.whatwg.org/</a>
   </dl>
-  <h2 class="no-num heading settled" id="idl-index"><span class="content">IDL Index</span><a class="self-link" href="#idl-index"></a></h2>
-<pre class="idl">interface <a href="#examplefeature">ExampleFeature</a> {
-  // This call will succeed in all contexts.
-  Promise &lt;double> <a href="#dom-examplefeature-calculatenotsosecretresult">calculateNotSoSecretResult</a>();
-
-  // This operation will not be exposed to a non-secure context. If such a context
-  // is somehow able to call it despite this precaution, the Promise will be
-  // immedietely rejected with a 'SecurityError' exception.
-  [SecureContext] Promise&lt;double> <a href="#dom-examplefeature-calculatesecretresult">calculateSecretResult</a>();
-
-  // The same applies here: the operation will not be exposed to a non-secure context,
-  // and if somehow called from a non-secure context, a 'SecurityError'
-  // exception will be thrown.
-  [SecureContext] boolean <a href="#dom-examplefeature-getsecretboolean">getSecretBoolean</a>();
-};
-
-partial interface <a class="idl-code" data-link-type="interface" href="http://www.w3.org/TR/dom/#interface-window">Window</a> {
+  <h2 class="no-num no-ref heading settled" id="idl-index"><span class="content">IDL Index</span><a class="self-link" href="#idl-index"></a></h2>
+<pre class="idl def">partial interface <a class="idl-code" data-link-type="interface" href="http://www.w3.org/TR/dom/#interface-window">Window</a> {
   readonly attribute boolean <a data-readonly="" data-type="boolean " href="#dom-window-issecurecontext">isSecureContext</a>;
 };
 
@@ -2447,21 +2469,49 @@ partial interface <a class="idl-code" data-link-type="interface" href="http://ww
   readonly attribute boolean <a data-readonly="" data-type="boolean " href="#dom-workerglobalscope-issecurecontext">isSecureContext</a>;
 };
 
-[SecureContext]
-interface <a href="#sensitivefeature">SensitiveFeature</a> {
-  Promise&lt;double> <a href="#dom-sensitivefeature-getthesecretdouble">getTheSecretDouble</a>();
-};
-
-// Or:
-
-interface <a href="#anothersensitivefeature">AnotherSensitiveFeature</a> {
-  [SecureContext] void <a href="#dom-anothersensitivefeature-dothatpowerfulthing">doThatPowerfulThing</a>();
-};
-
 </pre>
-  <h2 class="no-num heading settled" id="issues-index"><span class="content">Issues Index</span><a class="self-link" href="#issues-index"></a></h2>
+  <h2 class="no-num no-ref heading settled" id="issues-index"><span class="content">Issues Index</span><a class="self-link" href="#issues-index"></a></h2>
   <div style="counter-reset:issue">
    <div class="issue"> This addition is currently under review. <a href="https://github.com/heycam/webidl/issues/65">&lt;https://github.com/heycam/webidl/issues/65></a><a href="#issue-020b0dc4"> ↵ </a></div>
   </div>
- </body>
-</html>
+<script>
+        document.body.addEventListener("click", function(e) {
+            var queryAll = function(sel) { return [].slice.call(document.querySelectorAll(sel)); }
+            // Find the dfn element or panel, if any, that was clicked on.
+            var el = e.target;
+            var target;
+            while(el.parentElement) {
+                if(el.tagName == "DFN") {
+                    target = "dfn";
+                    break;
+                }
+                if(/H\d/.test(el.tagName) && el.getAttribute('data-dfn-type') != null) {
+                    target = "dfn";
+                    break;
+                }
+                if(el.classList.contains("dfn-panel")) {
+                    target = "dfn-panel";
+                    break;
+                }
+                el = el.parentElement;
+            }
+            if(target != "dfn-panel") {
+                // Turn off any currently "on" or "activated" panels.
+                queryAll(".dfn-panel.on, .dfn-panel.activated").forEach(function(el){
+                    el.classList.remove("on");
+                    el.classList.remove("activated");
+                });
+            }
+            if(target == "dfn") {
+                // open the panel
+                var dfnPanel = el.querySelector(".dfn-panel");
+                if(dfnPanel) {
+                    dfnPanel.classList.add("on");
+                }
+            } else if(target == "dfn-panel") {
+                // Switch it to "activated" state, which pins it.
+                el.classList.add("activated");
+            }
+
+        });
+        </script>
