@@ -708,9 +708,9 @@ spec: WEBIDL; urlPrefix: https://heycam.github.io/webidl/
         requestor's origin: see the <a>basic fetch</a> algorithm for details
         on some of these [[FETCH]]).
 
-        We'll only continue past this check when dealing with resources
+        We only continue past this check in order to allow resources
         delivered from "trustworthy" but unauthenticated locations like
-        `http://127.0.0.1/`.
+        `http://127.0.0.1/` to be treated as creating a secure context.
       </div>
 
   4.  Let |origin| be |settings object|'s <a>origin</a>.
