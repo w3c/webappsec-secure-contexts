@@ -1963,10 +1963,12 @@ partial interface <a class="idl-code" data-link-type="interface" href="http://ww
      <li data-md="">
       <p>If <var>origin</var> is an <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#origin">opaque identifier</a>, set <var>origin</var> to the <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-origin">origin</a> of <var>settings object</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#creation-url">creation
   URL</a>.</p>
-      <p class="note" role="note">Note: We use the origin of the URL here in order to allow sandboxed
-  context to remain secure (as sandboxing is a strict reduction in the
-  context’s capabilities, and therefore to the risk it poses). This
-  covers scenarios such as <code>&lt;iframe sandbox src="http://localhost/"></code>.</p>
+      <p class="note" role="note">Note: We use the origin of the URL here because sandboxed content that
+  is treated as being in a unique origin (e.g. <code>&lt;iframe sandbox src="http://localhost/"></code>) would be treated as
+  non-trustworthy by <a href="#is-origin-trustworthy">§3.2 Is origin potentially trustworthy?</a>. Since sandboxing is a
+  strict reduction in the content’s capabilities, and therefore in the
+  risk it poses, we look at the origin of its URL to determine whether we
+  would have considered it trustworthy had it not been sandboxed.</p>
      <li data-md="">
       <p>If the result of executing the <a href="#is-origin-trustworthy">§3.2 Is origin potentially trustworthy?</a> algorithm
   on <var>origin</var> is <strong>not</strong> <code>Potentially Trustworthy</code>, then return "<code>Not Secure</code>".</p>

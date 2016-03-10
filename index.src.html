@@ -719,10 +719,13 @@ spec: WEBIDL; urlPrefix: https://heycam.github.io/webidl/
       <a lt="origin of a url">origin</a> of |settings object|'s <a>creation
       URL</a>.
 
-      Note: We use the origin of the URL here in order to allow sandboxed
-      context to remain secure (as sandboxing is a strict reduction in the
-      context's capabilities, and therefore to the risk it poses). This
-      covers scenarios such as `<iframe sandbox src="http://localhost/">`.
+      Note: We use the origin of the URL here because sandboxed content that
+      is treated as being in a unique origin (e.g.
+      `<iframe sandbox src="http://localhost/">`) would be treated as
+      non-trustworthy by [[#is-origin-trustworthy]]. Since sandboxing is a
+      strict reduction in the content's capabilities, and therefore in the
+      risk it poses, we look at the origin of its URL to determine whether we
+      would have considered it trustworthy had it not been sandboxed.
 
   6.  If the result of executing the [[#is-origin-trustworthy]] algorithm
       on |origin| is <strong>not</strong> `Potentially
