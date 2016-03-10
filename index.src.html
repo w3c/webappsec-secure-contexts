@@ -697,17 +697,7 @@ spec: WEBIDL; urlPrefix: https://heycam.github.io/webidl/
           status, a popups' status depend on how it is opened, as discussed
           in [[#examples-top-level]].
 
-  3.  The user agent MAY return "`Not Secure`" if |settings object|'s
-      <a>effective script origin</a> is <em>not</em> an <a>alias</a> to its
-      <a>origin</a>.
-
-      Note: This allows user agents the option of treating documents as
-      non-secure contexts if they relax same-origin restrictions via
-      `{{document.domain}}`. This feature's usage is widespread enough to
-      make it difficult for this behavior to be a requirement, but user
-      agents are encouraged to migrate to this behavior over time.
-
-  4.  If |settings object|'s <a>HTTPS state</a> is "`modern`", return
+  3.  If |settings object|'s <a>HTTPS state</a> is "`modern`", return
       "`Secure`".
 
       <div class="note">
@@ -723,9 +713,9 @@ spec: WEBIDL; urlPrefix: https://heycam.github.io/webidl/
         `http://127.0.0.1/`.
       </div>
 
-  5.  Let |origin| be |settings object|'s <a>origin</a>.
+  4.  Let |origin| be |settings object|'s <a>origin</a>.
 
-  6.  If |origin| is an <a>opaque identifier</a>, set |origin| to the
+  5.  If |origin| is an <a>opaque identifier</a>, set |origin| to the
       <a lt="origin of a url">origin</a> of |settings object|'s <a>creation
       URL</a>.
 
@@ -734,11 +724,11 @@ spec: WEBIDL; urlPrefix: https://heycam.github.io/webidl/
       context's capabilities, and therefore to the risk it poses). This
       covers scenarios such as `<iframe sandbox src="http://localhost/">`.
 
-  7.  If the result of executing the [[#is-origin-trustworthy]] algorithm
+  6.  If the result of executing the [[#is-origin-trustworthy]] algorithm
       on |origin| is <strong>not</strong> `Potentially
       Trustworthy`, then return "`Not Secure`".
 
-  8.  Return "`Secure`".
+  7.  Return "`Secure`".
 
   <h3 id="is-origin-trustworthy">
     Is <var>origin</var> potentially trustworthy?
