@@ -670,72 +670,75 @@ spec: WEBIDL; urlPrefix: https://heycam.github.io/webidl/
     Is |settings object| a secure context?
   </h3>
 
-  Given a <a>settings object</a> (|settings object|), this algorithm returns
+  Given a <a>settings object</a> (|settings object|) this algorithm returns
   "`Secure`" if the object represents a context which the user agent obtained
   via a secure channel, and "`Not Secure`" otherwise.
 
-  1.  Let |ancestors| be an empty list.
+  1.  If |settings object|'s <a>global object</a> is a {{WorkerGlobalScope}},
+      then:
 
-  2.  If |settings object|'s <a>global object</a> is a
-      {{WorkerGlobalScope}}, then:
-
-      1.  Add |settings object| to |ancestors|.
-
-      2.  For each {{Document}} (|document|) in |settings object|'s <a>global
+      1.  For each {{Document}} (|document|) in |settings object|'s <a>global
           object</a>'s list of <a>the worker's `Documents`</a>:
 
-          1.  Add each item in the result of executing [[#gather-ancestors]] on
-              |document| to |ancestors|.
+          1.  If |document|'s <a>relevant settings object</a> is not a
+              <a>secure context</a>, return "`Not Secure`".
 
-  3.  Otherwise, |settings object|'s <a>global object</a> is a {{Window}}, so:
+  2.  Otherwise, |settings object|'s <a>global object</a> is a {{Window}}. If
+      |settings object|'s <a>responsible document</a> has a <a>creator
+      <code>Document</code></a>, <var>creator</var>:
 
-      1.  Add each item in the result of executing [[#gather-ancestors]] on
-          |settings object|'s <a>responsible document</a> to |ancestors|.
+      1.  If <var>creator</var>'s <a>browsing context</a> is an <a>ancestor
+          browsing context</a> or <a>opener browsing context</a> of
+          |settings object|'s <a>responsible document</a> and
+          <var>creator</var>'s <a>relevant settings object</a> is not a secure
+          context, return "`Not Secure`".
 
-  4.  For each |ancestor settings object| in |ancestors|:
+          Note: Since we take account of <a>auxiliary browsing contexts</a>'
+          status, a popups' status depend on how it is opened, as discussed
+          in [[#examples-top-level]].
 
-      1.  The user agent MAY return "`Not Secure`" if |ancestor settings
-          object|'s <a>effective script origin</a> is <em>not</em> an
-          <a>alias</a> to its <a>origin</a>.
+  3.  The user agent MAY return "`Not Secure`" if |settings object|'s
+      <a>effective script origin</a> is <em>not</em> an <a>alias</a> to its
+      <a>origin</a>.
 
-          Note: This allows user agents the option of treating documents as
-          non-secure contexts if they relax same-origin restrictions via
-          `{{document.domain}}`. This feature's usage is widespread enough to
-          make it difficult for this behavior to be a requirement, but user
-          agents are encouraged to migrate to this behavior over time.
+      Note: This allows user agents the option of treating documents as
+      non-secure contexts if they relax same-origin restrictions via
+      `{{document.domain}}`. This feature's usage is widespread enough to
+      make it difficult for this behavior to be a requirement, but user
+      agents are encouraged to migrate to this behavior over time.
 
-      2.  If |ancestor settings object|'s <a>HTTPS state</a> is "`modern`", skip
-          to the next |ancestor settings object|.
+  4.  If |settings object|'s <a>HTTPS state</a> is "`modern`", return
+      "`Secure`".
 
-          <div class="note">
-            Most of the time, this check will be enough to determine whether
-            a particular context was securely delivered. Documents delivered over
-            TLS will have the flag set, and `srcdoc` `Document`s inherit their
-            ancestor's flag (as do other kinds of requests which inherit their
-            requestor's origin: see the <a>basic fetch</a> algorithm for details
-            on some of these [[FETCH]]).
-          
-            We'll only continue past this check when dealing with resources
-            delivered from "trustworthy" but unauthenticated locations like
-            `http://127.0.0.1/`.
-          </div>
+      <div class="note">
+        Most of the time, this check will be enough to determine whether
+        a particular context was securely delivered. Documents delivered over
+        TLS will have the flag set, and `srcdoc` `Document`s inherit their
+        ancestor's flag (as do other kinds of requests which inherit their
+        requestor's origin: see the <a>basic fetch</a> algorithm for details
+        on some of these [[FETCH]]).
 
-      3.  Let |origin| be |ancestor settings object|'s <a>origin</a>.
+        We'll only continue past this check when dealing with resources
+        delivered from "trustworthy" but unauthenticated locations like
+        `http://127.0.0.1/`.
+      </div>
 
-      4.  If |origin| is an <a>opaque identifier</a>, set |origin| to the
-          <a lt="origin of a url">origin</a> of |settings object|'s <a>creation
-          URL</a>.
+  5.  Let |origin| be |settings object|'s <a>origin</a>.
 
-          Note: We use the origin of the URL here in order to allow sandboxed
-          context to remain secure (as sandboxing is a strict reduction in the
-          context's capabilities, and therefore to the risk it poses). This
-          covers scenarios such as `<iframe sandbox src="http://localhost/">`.
+  6.  If |origin| is an <a>opaque identifier</a>, set |origin| to the
+      <a lt="origin of a url">origin</a> of |settings object|'s <a>creation
+      URL</a>.
 
-      5.  If the result of executing the [[#is-origin-trustworthy]] algorithm
-          on |origin| is <strong>not</strong> `Potentially
-          Trustworthy`, then return "`Not Secure`".
+      Note: We use the origin of the URL here in order to allow sandboxed
+      context to remain secure (as sandboxing is a strict reduction in the
+      context's capabilities, and therefore to the risk it poses). This
+      covers scenarios such as `<iframe sandbox src="http://localhost/">`.
 
-  5.  Return "`Secure`".
+  7.  If the result of executing the [[#is-origin-trustworthy]] algorithm
+      on |origin| is <strong>not</strong> `Potentially
+      Trustworthy`, then return "`Not Secure`".
+
+  8.  Return "`Secure`".
 
   <h3 id="is-origin-trustworthy">
     Is <var>origin</var> potentially trustworthy?
@@ -803,41 +806,6 @@ spec: WEBIDL; urlPrefix: https://heycam.github.io/webidl/
 
   8.  Return "`Not Trusted`".
 
-  <h3 id="gather-ancestors">
-    Gather <var>document</var>'s relevant ancestors
-  </h3>
-
-  Given a {{Document}} (<var>document</var>), this algorithm returns a list of
-  <a>settings objects</a> which ought to be considered when determining whether
-  or not <var>document</var> is a <a>secure context</a>.
-
-  1.  Let <var>ancestors</var> be an empty list.
- 
-  2.  If <var>document</var> is not <a>an IFrame `srcdoc` `Document`</a>, add
-      |document|'s <a>relevant settings object</a> to |ancestors|.
-
-  2.  While <var>document</var> has a <a>creator <code>Document</code></a>
-      <var>creator</var>:
-
-      1.  If <var>creator</var>'s <a>browsing context</a> is an <a>ancestor
-          browsing context</a> or <a>opener browsing context</a> of
-          <var>document</var>:
-
-          1.  Insert <var>creator</var>'s <a>relevant settings object</a> into
-              <var>ancestors</var>, unless <var>creator</var> is <a>an IFrame
-              `srcdoc` `Document`</a>.
-
-          2.  Let <var>document</var> be <var>creator</var>.
-
-      2.  Otherwise, exit this loop.
-
-  3.  Return <var>ancestors</var>.
-
-  Note: When gathering a {{Document}}'s ancestors, we walk the browsing context
-  creation document chain, but stop when that chain hits a <a>top-level browsing
-  context</a>. We'll follow the chain for <a>auxiliary browsing contexts</a>,
-  however, which means that popups' status depend on how they're opened, as
-  discussed in [[#examples-top-level]].
 </section>
 
 <section>
