@@ -1363,7 +1363,7 @@ Possible extra rowspan handling
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="http://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/Icons/w3c_home" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Secure Contexts</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2016-03-03">3 March 2016</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2016-03-10">10 March 2016</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1946,12 +1946,6 @@ partial interface <a class="idl-code" data-link-type="interface" href="http://ww
   in <a href="#examples-top-level">§1.1 Top-level Documents</a>.</p>
       </ol>
      <li data-md="">
-      <p>The user agent MAY return "<code>Not Secure</code>" if <var>settings object</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#effective-script-origin">effective script origin</a> is <em>not</em> an <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#concept-origin-alias">alias</a> to its <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#origin">origin</a>.</p>
-      <p class="note" role="note">Note: This allows user agents the option of treating documents as
-  non-secure contexts if they relax same-origin restrictions via <code>{{document.domain}}</code>. This feature’s usage is widespread enough to
-  make it difficult for this behavior to be a requirement, but user
-  agents are encouraged to migrate to this behavior over time.</p>
-     <li data-md="">
       <p>If <var>settings object</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#https-state">HTTPS state</a> is "<code>modern</code>", return
   "<code>Secure</code>".</p>
       <div class="note" role="note">
@@ -2312,12 +2306,10 @@ interface AnotherSensitiveFeature {
    <li>
     <a data-link-type="biblio" href="#biblio-html5">[html5]</a> defines the following terms:
     <ul>
-     <li><a href="http://www.w3.org/TR/html5/browsers.html#concept-origin-alias">alias</a>
      <li><a href="http://www.w3.org/TR/html5/browsers.html#ancestor-browsing-context">ancestor browsing context</a>
      <li><a href="http://www.w3.org/TR/html5/browsers.html#auxiliary-browsing-context">auxiliary browsing context</a>
      <li><a href="http://www.w3.org/TR/html5/browsers.html#browsing-context">browsing context</a>
      <li><a href="http://www.w3.org/TR/html5/browsers.html#creator-document">creator document</a>
-     <li><a href="http://www.w3.org/TR/html5/browsers.html#effective-script-origin">effective script origin</a>
      <li><a href="http://www.w3.org/TR/html5/webappapis.html#global-object">global object</a>
      <li><a href="http://www.w3.org/TR/html5/webappapis.html#incumbent-settings-object">incumbent settings object</a>
      <li><a href="http://www.w3.org/TR/html5/browsers.html#origin">opaque identifier</a>
