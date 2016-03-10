@@ -703,10 +703,10 @@ spec: WEBIDL; urlPrefix: https://heycam.github.io/webidl/
       <div class="note">
         Most of the time, this check will be enough to determine whether
         a particular context was securely delivered. Documents delivered over
-        TLS will have the flag set, and `srcdoc` `Document`s inherit their
-        ancestor's flag (as do other kinds of requests which inherit their
-        requestor's origin: see the <a>basic fetch</a> algorithm for details
-        on some of these [[FETCH]]).
+        TLS will have their <a>HTTPS state</a> set, and `srcdoc` `Document`s
+        inherit their ancestor's <a>HTTPS state</a> (as do other kinds of
+        requests which inherit their requestor's origin: see the <a>basic
+        fetch</a> algorithm for details on some of these [[FETCH]]).
 
         We only continue past this check in order to allow resources
         delivered from "trustworthy" but unauthenticated locations like

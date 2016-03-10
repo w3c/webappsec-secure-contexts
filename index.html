@@ -1951,11 +1951,11 @@ partial interface <a class="idl-code" data-link-type="interface" href="http://ww
       <div class="note" role="note">
         Most of the time, this check will be enough to determine whether
     a particular context was securely delivered. Documents delivered over
-    TLS will have the flag set, and <code>srcdoc</code> <code>Document</code>s inherit their
-    ancestor’s flag (as do other kinds of requests which inherit their
-    requestor’s origin: see the <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#basic-fetch">basic fetch</a> algorithm for details
-    on some of these <a data-link-type="biblio" href="#biblio-fetch">[FETCH]</a>). 
-       <p>We’ll only continue past this check in order to allow resources
+    TLS will have their <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#https-state">HTTPS state</a> set, and <code>srcdoc</code> <code>Document</code>s
+    inherit their ancestor’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#https-state">HTTPS state</a> (as do other kinds of
+    requests which inherit their requestor’s origin: see the <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#basic-fetch">basic
+    fetch</a> algorithm for details on some of these <a data-link-type="biblio" href="#biblio-fetch">[FETCH]</a>). 
+       <p>We only continue past this check in order to allow resources
     delivered from "trustworthy" but unauthenticated locations like <code>http://127.0.0.1/</code> to be treated as creating a secure context.</p>
       </div>
      <li data-md="">
