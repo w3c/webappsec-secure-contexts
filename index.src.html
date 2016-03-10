@@ -703,14 +703,14 @@ spec: WEBIDL; urlPrefix: https://heycam.github.io/webidl/
       <div class="note">
         Most of the time, this check will be enough to determine whether
         a particular context was securely delivered. Documents delivered over
-        TLS will have the flag set, and `srcdoc` `Document`s inherit their
-        ancestor's flag (as do other kinds of requests which inherit their
-        requestor's origin: see the <a>basic fetch</a> algorithm for details
-        on some of these [[FETCH]]).
+        TLS will have their <a>HTTPS state</a> set, and `srcdoc` `Document`s
+        inherit their ancestor's <a>HTTPS state</a> (as do other kinds of
+        requests which inherit their requestor's origin: see the <a>basic
+        fetch</a> algorithm for details on some of these [[FETCH]]).
 
-        We'll only continue past this check when dealing with resources
+        We only continue past this check in order to allow resources
         delivered from "trustworthy" but unauthenticated locations like
-        `http://127.0.0.1/`.
+        `http://127.0.0.1/` to be treated as creating a secure context.
       </div>
 
   4.  Let |origin| be |settings object|'s <a>origin</a>.
@@ -719,10 +719,13 @@ spec: WEBIDL; urlPrefix: https://heycam.github.io/webidl/
       <a lt="origin of a url">origin</a> of |settings object|'s <a>creation
       URL</a>.
 
-      Note: We use the origin of the URL here in order to allow sandboxed
-      context to remain secure (as sandboxing is a strict reduction in the
-      context's capabilities, and therefore to the risk it poses). This
-      covers scenarios such as `<iframe sandbox src="http://localhost/">`.
+      Note: We use the origin of the URL here because sandboxed content that
+      is treated as being in a unique origin (e.g.
+      `<iframe sandbox src="http://localhost/">`) would be treated as
+      non-trustworthy by [[#is-origin-trustworthy]]. Since sandboxing is a
+      strict reduction in the content's capabilities, and therefore in the
+      risk it poses, we look at the origin of its URL to determine whether we
+      would have considered it trustworthy had it not been sandboxed.
 
   6.  If the result of executing the [[#is-origin-trustworthy]] algorithm
       on |origin| is <strong>not</strong> `Potentially
