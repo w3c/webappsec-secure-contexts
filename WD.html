@@ -1,0 +1,2483 @@
+<!doctype html><html lang="en">
+ <head>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+  <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+  <title>Secure Contexts</title>
+<style data-fill-with="stylesheet">/******************************************************************************
+ *                   Style sheet for the W3C specifications                   *
+ *
+ * Special classes handled by this style sheet include:
+ *
+ * Indices
+ *   - .toc for the Table of Contents (<ol class="toc">)
+ *     + <span class="secno"> for the section numbers
+ *   - #toc for the Table of Contents (<nav id="toc">)
+ *   - ul.index for Indices (<a href="#ref">term</a><span>, in §N.M</span>)
+ *   - table.index for Index Tables (e.g. for properties or elements)
+ *
+ * Structural Markup
+ *   - table.data for general data tables
+ *     -> use 'scope' attribute, <colgroup>, <thead>, and <tbody> for best results !
+ *     -> use <table class='complex data'> for extra-complex tables
+ *     -> use <td class='long'> for paragraph-length cell content
+ *     -> use <td class='pre'> when manual line breaks/indentation would help readability
+ *   - dl.switch for switch statements
+ *   - ol.algorithm for algorithms (helps to visualize nesting)
+ *   - .figure and .caption (HTML4) and figure and figcaption (HTML5)
+ *     -> .sidefigure for right-floated figures
+ *   - ins/del
+ *
+ * Code
+ *   - pre and code
+ *
+ * Special Sections
+ *   - .note       for informative notes             (div, p, span, aside, details)
+ *   - .example    for informative examples          (div, p, pre, span)
+ *   - .issue      for issues                        (div, p, span)
+ *   - .advisement for loud normative statements     (div, p, strong)
+ *   - .annoying-warning for spec obsoletion notices (div, aside, details)
+ *
+ * Definition Boxes
+ *   - pre.def   for WebIDL definitions
+ *   - table.def for tables that define other entities (e.g. CSS properties)
+ *   - dl.def    for definition lists that define other entitles (e.g. HTML elements)
+ *
+ * Numbering
+ *   - .secno for section numbers in .toc and headings (<span class='secno'>3.2</span>)
+ *   - .marker for source-inserted example/figure/issue numbers (<span class='marker'>Issue 4</span>)
+ *   - ::before styled for CSS-generated issue/example/figure numbers:
+ *     -> Documents wishing to use this only need to add
+ *        figcaption::before,
+ *        .caption::before { content: "Figure "  counter(figure);  }
+ *        .example::before { content: "Example " counter(example); }
+ *        .issue::before   { content: "Issue "   counter(issue);   }
+ *
+ * Header Stuff (ignore, just don't conflict with these classes)
+ *   - .head for the header
+ *   - .copyright for the copyright
+ *
+ * Miscellaneous
+ *   - .overlarge for things that should be as wide as possible, even if
+ *     that overflows the body text area. This can be used on an item or
+ *     on its container, depending on the effect desired.
+ *     Note that this styling basically doesn't help at all when printing,
+ *     since A4 paper isn't much wider than the max-width here.
+ *     It's better to design things to fit into a narrower measure if possible.
+ *   - js-added ToC jump links (see fixup.js)
+ *
+ ******************************************************************************/
+
+/******************************************************************************/
+/*                                   Body                                     */
+/******************************************************************************/
+
+	body {
+		counter-reset: example figure issue;
+
+		/* Layout */
+		max-width: 50em;               /* limit line length to 50em for readability   */
+		margin: 0 auto;                /* center text within page                     */
+		padding: 1.6em 1.5em 2em 50px; /* assume 16px font size for downlevel clients */
+		padding: 1.6em 1.5em 2em calc(26px + 1.5em); /* leave space for status flag     */
+
+		/* Typography */
+		line-height: 1.5;
+		font-family: sans-serif;
+		widows: 2;
+		orphans: 2;
+		word-wrap: break-word;
+		overflow-wrap: break-word;
+		hyphens: auto;
+
+		/* Colors */
+		color: black;
+		background: white top left fixed no-repeat;
+		background-size: 25px auto;
+	}
+
+
+/******************************************************************************/
+/*                         Front Matter & Navigation                          */
+/******************************************************************************/
+
+/** Header ********************************************************************/
+
+	div.head { margin-bottom: 1em }
+	div.head hr { border-style: solid; }
+
+	div.head h1 {
+		font-weight: bold;
+		margin: 0 0 .1em;
+		font-size: 220%;
+	}
+
+	div.head h2 { margin-bottom: 1.5em;}
+
+/** W3C Logo ******************************************************************/
+
+	.head .logo {
+		float: right;
+		margin: 0.4rem 0 0.2rem .4rem;
+	}
+
+	.head img[src*="logos/W3C"] {
+		display: block;
+		border: solid #1a5e9a;
+		border-width: .65rem .7rem .6rem;
+		border-radius: .4rem;
+		background: #1a5e9a;
+		color: white;
+		font-weight: bold;
+	}
+
+	.head a:hover > img[src*="logos/W3C"],
+	.head a:focus > img[src*="logos/W3C"] {
+		opacity: .8;
+	}
+
+	.head a:active > img[src*="logos/W3C"] {
+		background: #c00;
+		border-color: #c00;
+	}
+
+	/* see also additional rules in Link Styling section */
+
+/** Copyright *****************************************************************/
+
+	p.copyright,
+	p.copyright small { font-size: small }
+
+/** Back to Top / ToC Toggle **************************************************/
+
+	@media print {
+		#toc-nav {
+			display: none;
+		}
+	}
+	@media not print {
+		#toc-nav {
+			position: fixed;
+			z-index: 2;
+			bottom: 0; left: 0;
+			margin: 0;
+			min-width: 1.33em;
+			border-top-right-radius: 2rem;
+			box-shadow: 0 0 2px;
+			font-size: 1.5em;
+			color: black;
+		}
+		#toc-nav > a {
+			display: block;
+			white-space: nowrap;
+
+			height: 1.33em;
+			padding: .1em 0.3em;
+			margin: 0;
+
+			background: white;
+			box-shadow: 0 0 2px;
+			border: none;
+			border-top-right-radius: 1.33em;
+			background: white;
+		}
+		#toc-nav > #toc-jump {
+			padding-bottom: 2em;
+			margin-bottom: -1.9em;
+		}
+
+		#toc-nav > a:hover,
+		#toc-nav > a:focus {
+			background: #f8f8f8;
+		}
+		#toc-nav > a:not(:hover):not(:focus) {
+			color: #707070;
+		}
+
+		/* statusbar gets in the way on keyboard focus; remove once browsers fix */
+		#toc-nav > a[href="#toc"]:not(:hover):focus:last-child {
+			padding-bottom: 1.5rem;
+		}
+
+		#toc-nav:not(:hover) > a:not(:focus) > span + span {
+			/* Ideally this uses :focus-within on #toc-nav */
+			display: none;
+		}
+		#toc-nav > a > span + span {
+			padding-right: 0.2em;
+		}
+
+		#toc-toggle-inline {
+			vertical-align: 0.05em;
+			font-size: 80%;
+			color: gray;
+			color: hsla(203,20%,40%,.7);
+			border-style: none;
+			background: transparent;
+			position: relative;
+		}
+		#toc-toggle-inline:hover:not(:active),
+		#toc-toggle-inline:focus:not(:active) {
+			text-shadow: 1px 1px silver;
+			top: -1px;
+			left: -1px;
+		}
+
+		#toc-nav :active {
+			color: #C00;
+		}
+	}
+
+/** ToC Sidebar ***************************************************************/
+
+	/* Floating sidebar */
+	@media screen {
+		body.toc-sidebar #toc {
+			position: fixed;
+			top: 0; bottom: 0;
+			left: 0;
+			width: 23.5em;
+			max-width: 80%;
+			max-width: calc(100% - 2em - 26px);
+			overflow: auto;
+			padding: 0 1em;
+			padding-left: 42px;
+			padding-left: calc(1em + 26px);
+			background: inherit;
+			background-color: #f7f8f9;
+			z-index: 1;
+			box-shadow: -.1em 0 .25em rgba(0,0,0,.1) inset;
+		}
+		body.toc-sidebar #toc h2 {
+			margin-top: .8rem;
+			font-variant: small-caps;
+			font-variant: all-small-caps;
+			text-transform: lowercase;
+			font-weight: bold;
+			color: gray;
+			color: hsla(203,20%,40%,.7);
+		}
+		body.toc-sidebar #toc-jump:not(:focus) {
+			width: 0;
+			height: 0;
+			padding: 0;
+			position: absolute;
+			overflow: hidden;
+		}
+	}
+	/* Hide main scroller when only the ToC is visible anyway */
+	@media screen and (max-width: 28em) {
+		body.toc-sidebar {
+			overflow: hidden;
+		}
+	}
+
+	/* Sidebar with its own space */
+	@media screen and (min-width: 78em) {
+		body:not(.toc-inline) #toc {
+			position: fixed;
+			top: 0; bottom: 0;
+			left: 0;
+			width: 23.5em;
+			overflow: auto;
+			padding: 0 1em;
+			padding-left: 42px;
+			padding-left: calc(1em + 26px);
+			background: inherit;
+			background-color: #f7f8f9;
+			z-index: 1;
+			box-shadow: -.1em 0 .25em rgba(0,0,0,.1) inset;
+		}
+		body:not(.toc-inline) #toc h2 {
+			margin-top: .8rem;
+			font-variant: small-caps;
+			font-variant: all-small-caps;
+			text-transform: lowercase;
+			font-weight: bold;
+			color: gray;
+			color: hsla(203,20%,40%,.7);
+		}
+
+		body:not(.toc-inline) {
+			padding-left: 29em;
+		}
+		/* See also Overflow section at the bottom */
+
+		body:not(.toc-inline) #toc-jump:not(:focus) {
+			width: 0;
+			height: 0;
+			padding: 0;
+			position: absolute;
+			overflow: hidden;
+		}
+	}
+	@media screen and (min-width: 90em) {
+		body:not(.toc-inline) {
+			margin: 0 4em;
+		}
+	}
+
+/******************************************************************************/
+/*                                Sectioning                                  */
+/******************************************************************************/
+
+/** Headings ******************************************************************/
+
+	h1, h2, h3, h4, h5, h6, dt {
+		page-break-after: avoid;
+		page-break-inside: avoid;
+		font: 100% sans-serif;   /* Reset all font styling to clear out UA styles */
+		font-family: inherit;    /* Inherit the font family. */
+		line-height: 1.2;        /* Keep wrapped headings compact */
+		hyphens: manual;         /* Hyphenated headings look weird */
+	}
+
+	h2, h3, h4, h5, h6 {
+		margin-top: 3rem;
+	}
+
+	h1, h2, h3 {
+		color: #005A9C;
+		background: transparent;
+	}
+
+	h1 { font-size: 170%; }
+	h2 { font-size: 140%; }
+	h3 { font-size: 120%; }
+	h4 { font-weight: bold; }
+	h5 { font-style: italic; }
+	h6 { font-variant: small-caps; }
+	dt { font-weight: bold; }
+
+/** Subheadings ***************************************************************/
+
+	h1 + h2,
+	#subtitle {
+		/* #subtitle is a subtitle in an H2 under the H1 */
+		margin-top: 0;
+	}
+	h2 + h3,
+	h3 + h4,
+	h4 + h5,
+	h5 + h6 {
+		margin-top: 1.2em; /* = 1 x line-height */
+	}
+
+/** Section divider ***********************************************************/
+
+	:not(.head) > hr {
+		font-size: 1.5em;
+		text-align: center;
+		margin: 1em auto;
+		height: auto;
+		border: transparent solid 0;
+		background: transparent;
+	}
+	:not(.head) > hr::before {
+		content: "\2727\2003\2003\2727\2003\2003\2727";
+	}
+
+/******************************************************************************/
+/*                            Paragraphs and Lists                            */
+/******************************************************************************/
+
+	p {
+		margin: 1em 0;
+	}
+
+	dd > p:first-child,
+	li > p:first-child {
+		margin-top: 0;
+	}
+
+	ul, ol {
+		margin-left: 0;
+		padding-left: 2em;
+	}
+
+	li {
+		margin: 0.25em 0 0.5em;
+		padding: 0;
+	}
+
+	dl dd {
+		margin: 0 0 .5em 2em;
+	}
+
+	.head dd + dd { /* compact for header */
+		margin-top: -.5em;
+	}
+
+	/* Style for algorithms */
+	ol.algorithm ol:not(.algorithm) {
+	 border-left: 0.5em solid #DEF;
+	}
+
+	/* Style for switch/case <dl>s */
+	dl.switch > dd > ol.only {
+	 margin-left: 0;
+	}
+	dl.switch > dd > ol.algorithm {
+	 margin-left: -2em;
+	}
+	dl.switch {
+	 padding-left: 2em;
+	}
+	dl.switch > dt {
+	 text-indent: -1.5em;
+	 margin-top: 1em;
+	}
+	dl.switch > dt + dt {
+	 margin-top: 0;
+	}
+	dl.switch > dt::before {
+	 content: '\21AA';
+	 padding: 0 0.5em 0 0;
+	 display: inline-block;
+	 width: 1em;
+	 text-align: right;
+	 line-height: 0.5em;
+	}
+
+/** Terminology Markup ********************************************************/
+
+
+/******************************************************************************/
+/*                                 Inline Markup                              */
+/******************************************************************************/
+
+/** Terminology Markup ********************************************************/
+	dfn   { /* Defining instance */
+		font-weight: bolder;
+	}
+	a > i { /* Instance of term */
+		font-style: normal;
+	}
+	dt dfn code, code.idl {
+		font-size: inherit;
+	}
+	dfn var {
+		font-style: normal;
+	}
+
+/** Change Marking ************************************************************/
+
+	del { color: red;  text-decoration: line-through; }
+	ins { color: #080; text-decoration: underline;    }
+
+/** Miscellaneous improvements to inline formatting ***************************/
+
+	sup {
+		vertical-align: super;
+		font-size: 80%
+	}
+
+/******************************************************************************/
+/*                                    Code                                    */
+/******************************************************************************/
+
+/** General monospace/pre rules ***********************************************/
+
+	pre, code, samp {
+		font-family: Menlo, Consolas, "DejaVu Sans Mono", Monaco, monospace;
+		font-size: .9em;
+		page-break-inside: avoid;
+		hyphens: none;
+		text-transform: none;
+	}
+	pre code,
+	code code {
+		font-size: 100%;
+	}
+
+	pre {
+		margin-top: 1em;
+		margin-bottom: 1em;
+		overflow: auto;
+	}
+
+/** Inline Code fragments *****************************************************/
+
+  /* Do something nice. */
+
+/******************************************************************************/
+/*                                    Links                                   */
+/******************************************************************************/
+
+/** General Hyperlinks ********************************************************/
+
+	/* We hyperlink a lot, so make it less intrusive */
+	a[href] {
+		color: #034575;
+		text-decoration: none;
+		border-bottom: 1px solid #707070;
+		/* Need a bit of extending for it to look okay */
+		padding: 0 1px 0;
+		margin: 0 -1px 0;
+	}
+	a:visited {
+		border-bottom-color: #BBB;
+	}
+
+	/* Use distinguishing colors when user is interacting with the link */
+	a[href]:focus,
+	a[href]:hover {
+		background: #f8f8f8;
+		background: rgba(75%, 75%, 75%, .25);
+		border-bottom-width: 3px;
+		margin-bottom: -2px;
+	}
+	a[href]:active {
+		color: #C00;
+		border-color: #C00;
+	}
+
+	/* Backout above styling for W3C logo */
+	.head .logo,
+	.head .logo a {
+		border: none;
+		text-decoration: none;
+		background: transparent;
+	}
+
+/******************************************************************************/
+/*                                    Images                                  */
+/******************************************************************************/
+
+	img {
+		border-style: none;
+	}
+
+	/* For autogen numbers, add
+	   .caption::before, figcaption::before { content: "Figure " counter(figure) ". "; }
+	*/
+
+	figure, .figure, .sidefigure {
+		page-break-inside: avoid;
+		text-align: center;
+		margin: 2.5em 0;
+	}
+	.figure img,    .sidefigure img,    figure img,
+	.figure object, .sidefigure object, figure object {
+		max-width: 100%;
+		margin: auto;
+	}
+	.figure pre, .sidefigure pre, figure pre {
+		text-align: left;
+		display: table;
+		margin: 1em auto;
+	}
+	.figure table, figure table {
+		margin: auto;
+	}
+	@media screen and (min-width: 20em) {
+		.sidefigure {
+			float: right;
+			width: 50%;
+			margin: 0 0 0.5em 0.5em
+		}
+	}
+	.caption, figcaption, caption {
+		font-style: italic;
+		font-size: 90%;
+	}
+	.caption::before, figcaption::before, figcaption > .marker {
+		font-weight: bold;
+	}
+	.caption, figcaption {
+		counter-increment: figure;
+	}
+
+	/* DL list is indented 2em, but figure inside it is not */
+	dd > .figure, dd > figure { margin-left: -2em }
+
+/******************************************************************************/
+/*                             Colored Boxes                                  */
+/******************************************************************************/
+
+	.issue, .note, .example, .advisement, blockquote {
+		padding: .5em;
+		border: .5em;
+		border-left-style: solid;
+		page-break-inside: avoid;
+	}
+	span.issue, span.note {
+		padding: .1em .5em .15em;
+		border-right-style: solid;
+	}
+
+	.issue,
+	.note,
+	.example,
+	.advisement,
+	blockquote {
+		margin: 1em auto;
+	}
+	.note  > p:first-child,
+	.issue > p:first-child,
+	blockquote > :first-child {
+		margin-top: 0;
+	}
+	blockquote > :last-child {
+		margin-bottom: 0;
+	}
+
+/** Blockquotes ***************************************************************/
+
+	blockquote {
+		border-color: silver;
+	}
+
+/** Open issue ****************************************************************/
+
+	.issue {
+		border-color: #E05252;
+		background: #FBE9E9;
+		counter-increment: issue;
+		overflow: auto;
+	}
+	.issue::before, .issue > .marker {
+		text-transform: uppercase;
+		color: #AE1E1E;
+		padding-right: 1em;
+		text-transform: uppercase;
+	}
+	/* Add .issue::before { content: "Issue " counter(issue); } for autogen numbers,
+	   or use class="marker" to mark up the issue number in source. */
+
+/** Example *******************************************************************/
+
+	.example {
+		border-color: #E0CB52;
+		background: #FCFAEE;
+		counter-increment: example;
+		overflow: auto;
+		clear: both;
+	}
+	.example::before, .example > .marker {
+		text-transform: uppercase;
+		color: #827017;
+		min-width: 7.5em;
+		display: block;
+	}
+	/* Add .example::before { content: "Example " counter(example); } for autogen numbers,
+	   or use class="marker" to mark up the example number in source. */
+
+/** Non-normative Note ********************************************************/
+
+	.note {
+		border-color: #52E052;
+		background: #E9FBE9;
+		overflow: auto;
+	}
+
+	.note::before, .note > .marker,
+	details.note > summary::before,
+	details.note > summary > .marker {
+		text-transform: uppercase;
+		display: block;
+		color: hsl(120, 70%, 30%);
+	}
+	/* Add .note::before { content: "Note"; } for autogen label,
+	   or use class="marker" to mark up the label in source. */
+
+	details.note > summary {
+		display: block;
+		color: hsl(120, 70%, 30%);
+	}
+	details.note[open] > summary {
+		border-bottom: 1px silver solid;
+	}
+
+/** Advisement Box ************************************************************/
+	/*  for attention-grabbing normative statements */
+
+	.advisement {
+		border-color: orange;
+		border-style: none solid;
+		background: #FFEECC;
+	}
+	strong.advisement {
+		display: block;
+		text-align: center;
+	}
+	.advisement > .marker {
+		color: #B35F00;
+	}
+
+/** Spec Obsoletion Notice ****************************************************/
+	/* obnoxious obsoletion notice for older/abandoned specs. */
+
+	details {
+		display: block;
+	}
+	summary {
+		font-weight: bolder;
+	}
+
+	.annoying-warning:not(details),
+	details.annoying-warning:not([open]) > summary,
+	details.annoying-warning[open] {
+		background: #fdd;
+		color: red;
+		font-weight: bold;
+		padding: .75em 1em;
+		border: thick red;
+		border-style: solid;
+		border-radius: 1em;
+	}
+	.annoying-warning :last-child {
+		margin-bottom: 0;
+	}
+
+@media not print {
+	details.annoying-warning[open] {
+		position: fixed;
+		left: 1em;
+		right: 1em;
+		bottom: 1em;
+		z-index: 1000;
+	}
+}
+
+	details.annoying-warning:not([open]) > summary {
+		text-align: center;
+	}
+
+/** Entity Definition Boxes ***************************************************/
+
+	.def {
+		padding: .5em 1em;
+		background: #DEF;
+		margin: 1.2em 0;
+		border-left: 0.5em solid #8CCBF2;
+	}
+
+/******************************************************************************/
+/*                                    Tables                                  */
+/******************************************************************************/
+
+	th, td {
+		text-align: left;
+		text-align: start;
+	}
+
+/** Property/Descriptor Definition Tables *************************************/
+
+	table.def {
+		/* inherits .def box styling, see above */
+		width: 100%;
+		border-spacing: 0;
+	}
+
+	table.def td,
+	table.def th {
+		padding: 0.5em;
+		vertical-align: baseline;
+		border-bottom: 1px solid #bbd7e9;
+	}
+
+	table.def > tbody > tr:last-child th,
+	table.def > tbody > tr:last-child td {
+		border-bottom: 0;
+	}
+
+	table.def th {
+		font-style: italic;
+		font-weight: normal;
+		padding-left: 1em;
+		width: 3em;
+	}
+
+	/* For when values are extra-complex and need formatting for readability */
+	table td.pre {
+		white-space: pre-wrap;
+	}
+
+	/* A footnote at the bottom of a def table */
+	table.def           td.footnote {
+		padding-top: 0.6em;
+	}
+	table.def           td.footnote::before {
+		content: " ";
+		display: block;
+		height: 0.6em;
+		width: 4em;
+		border-top: thin solid;
+	}
+
+/** Data tables (and properly marked-up index tables) *************************/
+	/*
+		 <table class="data"> highlights structural relationships in a table
+		 when correct markup is used (e.g. thead/tbody, th vs. td, scope attribute)
+
+		 Use class="complex data" for particularly complicated tables --
+		 (This will draw more lines: busier, but clearer.)
+
+		 Use class="long" on table cells with paragraph-like contents
+		 (This will adjust text alignment accordingly.)
+		 Alternately use class="longlastcol" on tables, to have the last column assume "long".
+	*/
+
+	table {
+		word-wrap: normal;
+		overflow-wrap: normal;
+		hyphens: manual;
+	}
+
+	table.data,
+	table.index {
+		margin: 1em auto;
+		border-collapse: collapse;
+		border: hidden;
+		width: 100%;
+	}
+	table.data caption,
+	table.index caption {
+		max-width: 50em;
+		margin: 0 auto 1em;
+	}
+
+	table.data td,  table.data th,
+	table.index td, table.index th {
+		padding: 0.5em 1em;
+		border-width: 1px;
+		border-color: silver;
+		border-top-style: solid;
+	}
+
+	table.data thead td:empty {
+		padding: 0;
+		border: 0;
+	}
+
+	table.data  thead,
+	table.index thead,
+	table.data  tbody,
+	table.index tbody {
+		border-bottom: 2px solid;
+	}
+
+	table.data colgroup,
+	table.index colgroup {
+		border-left: 2px solid;
+	}
+
+	table.data  tbody th:first-child,
+	table.index tbody th:first-child  {
+		border-right: 2px solid;
+		border-top: 1px solid silver;
+		padding-right: 1em;
+	}
+
+	table.data th[colspan],
+	table.data td[colspan] {
+		text-align: center;
+	}
+
+	table.complex.data th,
+	table.complex.data td {
+		border: 1px solid silver;
+		text-align: center;
+	}
+
+	table.data.longlastcol td:last-child,
+	table.data td.long {
+	 vertical-align: baseline;
+	 text-align: left;
+	}
+
+	table.data img {
+		vertical-align: middle;
+	}
+
+
+/*
+Alternate table alignment rules
+
+	table.data,
+	table.index {
+		text-align: center;
+	}
+
+	table.data  thead th[scope="row"],
+	table.index thead th[scope="row"] {
+		text-align: right;
+	}
+
+	table.data  tbody th:first-child,
+	table.index tbody th:first-child  {
+		text-align: right;
+	}
+
+Possible extra rowspan handling
+
+	table.data  tbody th[rowspan]:not([rowspan='1']),
+	table.index tbody th[rowspan]:not([rowspan='1']),
+	table.data  tbody td[rowspan]:not([rowspan='1']),
+	table.index tbody td[rowspan]:not([rowspan='1']) {
+		border-left: 1px solid silver;
+	}
+
+	table.data  tbody th[rowspan]:first-child,
+	table.index tbody th[rowspan]:first-child,
+	table.data  tbody td[rowspan]:first-child,
+	table.index tbody td[rowspan]:first-child{
+		border-left: 0;
+		border-right: 1px solid silver;
+	}
+*/
+
+/******************************************************************************/
+/*                                  Indices                                   */
+/******************************************************************************/
+
+
+/** Table of Contents *********************************************************/
+
+	.toc a {
+		/* More spacing; use padding to make it part of the click target. */
+		padding-top: 0.1rem;
+		/* Larger, more consistently-sized click target */
+		display: block;
+		/* Reverse color scheme */
+		color: black;
+		border-color: #3980B5;
+	}
+	.toc a:visited {
+		border-color: #054572;
+	}
+	.toc a:not(:focus):not(:hover) {
+		/* Allow colors to cascade through from link styling */
+		border-bottom-color: transparent;
+	}
+
+	.toc, .toc ol, .toc ul, .toc li {
+		list-style: none; /* Numbers must be inlined into source */
+		/* because generated content isn't search/selectable and markers can't do multilevel yet */
+		margin:  0;
+		padding: 0;
+		line-height: 1.1rem; /* consistent spacing */
+	}
+
+	/* ToC not indented until third level, but font style & margins show hierarchy */
+	.toc > li             { font-weight: bold;   }
+	.toc > li li          { font-weight: normal; }
+	.toc > li li li       { font-style:  italic; }
+	.toc > li li li li    { font-style:  normal; }
+	.toc > li li li li li { font-style:  italic;
+	                        font-size:   85%;    }
+
+	.toc > li             { margin: 1.5rem 0;    }
+	.toc > li li          { margin: 0.3rem 0;    }
+	.toc > li li li       { margin-left: 2rem;   }
+
+	/* Section numbers in a column of their own */
+	.toc .secno {
+		float: left;
+		width: 4rem;
+		white-space: nowrap;
+	}
+	.toc > li li li li .secno {
+		font-size: 85%;
+	}
+	.toc > li li li li li .secno {
+		font-size: 100%;
+	}
+
+	:not(li) > .toc              { margin-left:  5rem; }
+	.toc .secno                  { margin-left: -5rem; }
+	.toc > li li li .secno       { margin-left: -7rem; }
+	.toc > li li li li .secno    { margin-left: -9rem; }
+	.toc > li li li li li .secno { margin-left: -11rem; }
+
+	/* Tighten up indentation in narrow ToCs */
+	@media (max-width: 30em) {
+		:not(li) > .toc              { margin-left:  4rem; }
+		.toc .secno                  { margin-left: -4rem; }
+		.toc > li li li              { margin-left:  1rem; }
+		.toc > li li li .secno       { margin-left: -5rem; }
+		.toc > li li li li .secno    { margin-left: -6rem; }
+		.toc > li li li li li .secno { margin-left: -7rem; }
+	}
+	@media screen and (min-width: 78em) {
+		body:not(.toc-inline) :not(li) > .toc              { margin-left:  4rem; }
+		body:not(.toc-inline) .toc .secno                  { margin-left: -4rem; }
+		body:not(.toc-inline) .toc > li li li              { margin-left:  1rem; }
+		body:not(.toc-inline) .toc > li li li .secno       { margin-left: -5rem; }
+		body:not(.toc-inline) .toc > li li li li .secno    { margin-left: -6rem; }
+		body:not(.toc-inline) .toc > li li li li li .secno { margin-left: -7rem; }
+	}
+	body.toc-sidebar #toc :not(li) > .toc              { margin-left:  4rem; }
+	body.toc-sidebar #toc .toc .secno                  { margin-left: -4rem; }
+	body.toc-sidebar #toc .toc > li li li              { margin-left:  1rem; }
+	body.toc-sidebar #toc .toc > li li li .secno       { margin-left: -5rem; }
+	body.toc-sidebar #toc .toc > li li li li .secno    { margin-left: -6rem; }
+	body.toc-sidebar #toc .toc > li li li li li .secno { margin-left: -7rem; }
+
+	.toc li {
+		clear: both;
+	}
+
+
+/** Index *********************************************************************/
+
+	/* Index Lists: Layout */
+	ul.index       { margin-left: 0; columns: 15em; text-indent: 1em hanging; }
+	ul.index li    { margin-left: 0; list-style: none; break-inside: avoid; }
+	ul.index li li { margin-left: 1em }
+	ul.index dl    { margin-top: 0; }
+	ul.index dt    { margin: .2em 0 .2em 20px;}
+	ul.index dd    { margin: .2em 0 .2em 40px;}
+	/* Index Lists: Typography */
+	ul.index ul,
+	ul.index dl { font-size: smaller; }
+	@media not print {
+		ul.index li span {
+			white-space: nowrap;
+			color: transparent; }
+		ul.index li a:hover + span,
+		ul.index li a:focus + span {
+			color: #707070;
+		}
+	}
+
+/** Index Tables *****************************************************/
+	/* See also the data table styling section, which this effectively subclasses */
+
+	table.index {
+		font-size: small;
+		border-collapse: collapse;
+		border-spacing: 0;
+		text-align: left;
+		margin: 1em 0;
+	}
+
+	table.index td,
+	table.index th {
+		padding: 0.4em;
+	}
+
+	table.index tr:hover td:not([rowspan]),
+	table.index tr:hover th:not([rowspan]) {
+		background: #f7f8f9;
+	}
+
+	/* The link in the first column in the property table (formerly a TD) */
+	table.index th:first-child a {
+		font-weight: bold;
+	}
+
+/******************************************************************************/
+/*                                    Print                                   */
+/******************************************************************************/
+
+	@media print {
+		/* Pages have their own margins. */
+		html {
+			margin: 0;
+		}
+		/* Serif for print. */
+		body {
+			font-family: serif;
+		}
+	}
+	@page {
+		margin: 1.5cm 1.1cm;
+	}
+
+/******************************************************************************/
+/*                                    Legacy                                  */
+/******************************************************************************/
+
+	/* This rule is inherited from past style sheets. No idea what it's for. */
+	.hide { display: none }
+
+
+
+/******************************************************************************/
+/*                             Overflow Control                               */
+/******************************************************************************/
+
+	.figure .caption, .sidefigure .caption, figcaption {
+		/* in case figure is overlarge, limit caption to 50em */
+		max-width: 50rem;
+		margin-left: auto;
+		margin-right: auto;
+	}
+	.overlarge > table {
+		/* limit preferred width of table */
+		max-width: 50em;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	@media (min-width: 55em) {
+		.overlarge {
+			margin-left: calc(13px + 26.5rem - 50vw);
+			margin-right: calc(13px + 26.5rem - 50vw);
+			max-width: none;
+		}
+	}
+	@media screen and (min-width: 78em) {
+		body:not(.toc-inline) .overlarge {
+			/* 30.5em body padding 50em content area */
+			margin-left: calc(40em - 50vw) !important;
+			margin-right: calc(40em - 50vw) !important;
+		}
+	}
+	@media screen and (min-width: 90em) {
+		body:not(.toc-inline) .overlarge {
+			/* 4em html margin 30.5em body padding 50em content area */
+			margin-left: 0 !important;
+			margin-right: calc(84.5em - 100vw) !important;
+		}
+	}
+
+	@media not print {
+		.overlarge {
+			overflow-x: auto;
+			/* See Lea Verou's explanation background-attachment:
+			 * http://lea.verou.me/2012/04/background-attachment-local/
+			 *
+			background: top left  / 4em 100% linear-gradient(to right,  #ffffff, rgba(255, 255, 255, 0)) local,
+			            top right / 4em 100% linear-gradient(to left, #ffffff, rgba(255, 255, 255, 0)) local,
+			            top left  / 1em 100% linear-gradient(to right,  #c3c3c5, rgba(195, 195, 197, 0)) scroll,
+			            top right / 1em 100% linear-gradient(to left, #c3c3c5, rgba(195, 195, 197, 0)) scroll,
+			            white;
+			background-repeat: no-repeat;
+			*/
+		}
+	}
+
+/******************************************************************************/
+/*                                  Bikeshed                                  */
+/******************************************************************************/
+
+	/* Style for paragraphs I know are in MD-genned lists */
+	/* This is a weird hack for me not yet following the commonmark spec
+	   regarding paragraph and lists. */
+	[data-md] > :first-child {
+		margin-top: 0;
+	}
+	[data-md] > :last-child {
+		margin-bottom: 0;
+	}
+
+/** Inline CSS fragments ******************************************************/
+
+	.css.css, .property.property, .descriptor.descriptor {
+		color: #005a9c;
+		font-size: inherit;
+		font-family: inherit;
+	}
+	.css::before, .property::before, .descriptor::before {
+		content: "‘";
+	}
+	.css::after, .property::after, .descriptor::after {
+		content: "’";
+	}
+	.property, .descriptor {
+		/* Don't wrap property and descriptor names */
+		white-space: nowrap;
+	}
+	.type { /* CSS value <type> */
+		font-style: italic;
+	}
+	pre .property::before, pre .property::after {
+		content: "";
+	}
+
+/** Autolinks produced using Bikeshed *****************************************/
+
+	[data-link-type]:not([data-link-type="dfn"]),
+	[data-dfn-type]:not([data-dfn-type="dfn"]) {
+		hyphens: none;
+	}
+
+	[data-link-type="property"]::before,
+	[data-link-type="propdesc"]::before,
+	[data-link-type="descriptor"]::before,
+	[data-link-type="value"]::before,
+	[data-link-type="function"]::before,
+	[data-link-type="at-rule"]::before,
+	[data-link-type="selector"]::before,
+	[data-link-type="maybe"]::before {
+		content: "‘";
+	}
+	[data-link-type="property"]::after,
+	[data-link-type="propdesc"]::after,
+	[data-link-type="descriptor"]::after,
+	[data-link-type="value"]::after,
+	[data-link-type="function"]::after,
+	[data-link-type="at-rule"]::after,
+	[data-link-type="selector"]::after,
+	[data-link-type="maybe"]::after {
+		content: "’";
+	}
+
+	[data-link-type].production::before,
+	[data-link-type].production::after,
+	.prod [data-link-type]::before,
+	.prod [data-link-type]::after {
+		content: "";
+	}
+
+	[data-link-type=element],
+	[data-link-type=element-attr] {
+		font-family: Menlo, Consolas, "DejaVu Sans Mono", monospace;
+		font-size: .9em;
+	}
+	[data-link-type=element]::before { content: "<" }
+	[data-link-type=element]::after  { content: ">" }
+
+	[data-link-type=biblio] {
+		white-space: pre;
+	}
+
+/** Self-Links ****************************************************************/
+/* Auto-generated links from an element to its own anchor, for usability */
+
+	.heading, .issue, .note, .example, li, dt {
+		position: relative;
+	}
+	a.self-link {
+		position: absolute;
+		top: 0;
+		left: calc(-1 * (3.5rem - 26px));
+		width: calc(3.5rem - 26px);
+		height: 2em;
+		text-align: center;
+		border: none;
+		transition: opacity .2s;
+		opacity: .5;
+	}
+	a.self-link:hover {
+		opacity: 1;
+	}
+	.heading > a.self-link {
+		font-size: 83%;
+	}
+	li > a.self-link {
+		left: calc(-1 * (3.5rem - 26px) - 2em);
+	}
+	dfn > a.self-link {
+		top: auto;
+		left: auto;
+		opacity: 0;
+		width: 1.5em;
+		height: 1.5em;
+		background: gray;
+		color: white;
+		font-style: normal;
+		transition: opacity .2s, background-color .2s, color .2s;
+	}
+	dfn:hover > a.self-link {
+		opacity: 1;
+	}
+	dfn > a.self-link:hover {
+		color: black;
+	}
+
+	a.self-link::before            { content: "¶"; }
+	.heading > a.self-link::before { content: "§"; }
+	dfn > a.self-link::before      { content: "#"; }
+
+/** Counters ******************************************************************/
+/* Adds the auto-genned issue/example counters,
+   until Bikeshed fills in manual ones. */
+	.issue:not(.no-marker)::before {
+		content: "Issue " counter(issue);
+	}
+
+	.example:not(.no-marker)::before {
+		content: "Example";
+		content: "Example " counter(example);
+	}
+	.invalid.example:not(.no-marker)::before,
+	.illegal.example:not(.no-marker)::before {
+		content: "Invalid Example";
+		content: "Invalid Example" counter(example);
+	}
+
+
+
+/********************************************
+ Remember to fix the logo section when copypasting freshly.
+ */
+</style>
+  <meta content="Bikeshed 1.0.0" name="generator">
+<style>
+    .secure {
+      fill: #8F8;
+    }
+    .non-secure {
+      fill: #F88;
+    }
+    rect, circle {
+      stroke-width: 2;
+      stroke: black;
+      fill-opacity: 0.75;
+    }
+    text {
+      font-family: monospace;
+    }
+    text.rejection {
+      fill: #F00;
+      font-weight: 700;
+      font-size: 2em;
+    }
+    g path {
+      stroke-width: 2px;
+      stroke: #666;
+      fill-opacity: 0;
+      stroke-dasharray: 5px, 5px;
+    }
+  </style>
+<style>
+        .dfn-panel {
+            display: inline-block;
+            position: absolute;
+            z-index: 35;
+            height: auto;
+            width: -webkit-fit-content;
+            max-width: 300px;
+            max-height: 500px;
+            overflow: auto;
+            padding: 0.5em 0.75em;
+            font: small Helvetica Neue, sans-serif, Droid Sans Fallback;
+            background: #DDDDDD;
+            color: black;
+            border: outset 0.2em;
+        }
+        .dfn-panel:not(.on) { display: none; }
+        .dfn-panel * { margin: 0; padding: 0; text-indent: 0; }
+        .dfn-panel > b { display: block; }
+        .dfn-panel a { color: black; }
+        .dfn-panel a:not(:hover) { text-decoration: none !important; border-bottom: none !important; }
+        .dfn-panel > b + b { margin-top: 0.25em; }
+        .dfn-panel > span { display: list-item; list-style: inside; }
+        .dfn-panel.activated {
+            display: inline-block;
+            position: fixed;
+            left: .5em;
+            bottom: .5em;
+            margin: 0 auto;
+            max-width: calc(100vw - 1.5em - .4em - .5em);
+            max-height: 30vh;
+        }
+
+        .dfn-paneled { cursor: pointer; }
+        </style>
+ <body class="h-entry">
+  <div class="head">
+   <p data-fill-with="logo"><a class="logo" href="http://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
+   <h1 class="p-name no-ref" id="title">Secure Contexts</h1>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2016-04-12">12 April 2016</time></span></h2>
+   <div data-fill-with="spec-metadata">
+    <dl>
+     <dt>This version:
+     <dd><a class="u-url" href="https://w3c.github.io/webappsec-secure-contexts/">https://w3c.github.io/webappsec-secure-contexts/</a>
+     <dt>Latest version:
+     <dd><a href="http://www.w3.org/TR/powerful-features/">http://www.w3.org/TR/powerful-features/</a>
+     <dt>Previous Versions:
+     <dd><a href="http://www.w3.org/TR/2014/WD-powerful-features-20141204/" rel="previous">http://www.w3.org/TR/2014/WD-powerful-features-20141204/</a>
+     <dt>Version History:
+     <dd><a href="https://github.com/w3c/webappsec-secure-contexts/commits/master/index.src.html">https://github.com/w3c/webappsec-secure-contexts/commits/master/index.src.html</a>
+     <dt>Feedback:
+     <dd><span><a href="mailto:public-webappsec@w3.org?subject=%5Bpowerful-features%5D%20YOUR%20TOPIC%20HERE">public-webappsec@w3.org</a> with subject line “<kbd>[powerful-features] <i data-lt="">… message topic …</i></kbd>” (<a href="http://lists.w3.org/Archives/Public/public-webappsec/" rel="discussion">archives</a>)</span>
+     <dt class="editor">Editor:
+     <dd class="editor p-author h-card vcard" data-editor-id="56384"><a class="p-name fn u-email email" href="mailto:mkwst@google.com">Mike West</a> (<span class="p-org org">Google Inc.</span>)
+     <dt class="editor">Former Editor:
+     <dd class="editor p-author h-card vcard"><span class="p-name fn">Yan Zhu</span> (<span class="p-org org">Brave</span>)
+     <dt>Participate:
+     <dd><span><a href="https://github.com/w3c/webappsec-secure-contexts/issues/new">File an issue</a> (<a href="https://github.com/w3c/webappsec-secure-contexts/issues">open issues</a>)</span>
+    </dl>
+   </div>
+   <div data-fill-with="warning"></div>
+   <p class="copyright" data-fill-with="copyright"><a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2016 <a href="http://www.w3.org/"><abbr title="World Wide Web Consortium">W3C</abbr></a><sup>®</sup> (<a href="http://www.csail.mit.edu/"><abbr title="Massachusetts Institute of Technology">MIT</abbr></a>, <a href="http://www.ercim.eu/"><abbr title="European Research Consortium for Informatics and Mathematics">ERCIM</abbr></a>, <a href="http://www.keio.ac.jp/">Keio</a>, <a href="http://ev.buaa.edu.cn/">Beihang</a>). W3C <a href="http://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="http://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and <a href="http://www.w3.org/Consortium/Legal/copyright-documents">document use</a> rules apply. </p>
+   <hr title="Separator for header">
+  </div>
+  <h2 class="no-num no-toc no-ref heading settled" id="abstract"><span class="content">Abstract</span></h2>
+  <div class="p-summary" data-fill-with="abstract">
+   <p>This specification defines "secure contexts", thereby allowing user agent
+
+implementers and specification authors to enable certain features only when
+certain minimum standards of authentication and confidentiality are met.</p>
+  </div>
+  <h2 class="no-num no-toc no-ref heading settled" id="status"><span class="content">Status of this document</span></h2>
+  <div data-fill-with="status">
+   <p> This is a public copy of the editors’ draft.
+	It is provided for discussion only and may change at any moment.
+	Its publication here does not imply endorsement of its contents by W3C.
+	Don’t cite this document other than as work in progress. </p>
+   <p> <strong>Changes to this document may be tracked at <a href="https://github.com/w3c/webappsec">https://github.com/w3c/webappsec</a>.</strong> </p>
+   <p> The (<a href="http://lists.w3.org/Archives/Public/public-webappsec/">archived</a>) public mailing list <a href="mailto:public-webappsec@w3.org?Subject=%5Bpowerful-features%5D%20PUT%20SUBJECT%20HERE">public-webappsec@w3.org</a> (see <a href="http://www.w3.org/Mail/Request">instructions</a>)
+	is preferred for discussion of this specification.
+	When sending e-mail,
+	please put the text “powerful-features” in the subject,
+	preferably like this:
+	“[powerful-features] <em>…summary of comment…</em>” </p>
+   <p> This document was produced by the <a href="http://www.w3.org/2011/webappsec/">Web Application Security Working Group</a>. </p>
+   <p> This document was produced by a group operating under
+	the <a href="http://www.w3.org/Consortium/Patent-Policy-20040205/">5 February 2004 W3C Patent Policy</a>.
+	W3C maintains a <a href="http://www.w3.org/2004/01/pp-impl/49309/status" rel="disclosure">public list of any patent disclosures</a> made in connection with the deliverables of the group;
+	that page also includes instructions for disclosing a patent.
+	An individual who has actual knowledge of a patent which the individual believes contains <a href="http://www.w3.org/Consortium/Patent-Policy-20040205/#def-essential">Essential Claim(s)</a> must disclose the information in accordance with <a href="http://www.w3.org/Consortium/Patent-Policy-20040205/#sec-Disclosure">section 6 of the W3C Patent Policy</a>. </p>
+   <p> This document is governed by the <a href="http://www.w3.org/2015/Process-20150901/" id="w3c_process_revision">1 September 2015 W3C Process Document</a>. </p>
+   <p></p>
+  </div>
+  <div data-fill-with="at-risk"></div>
+  <nav data-fill-with="table-of-contents" id="toc">
+   <h2 class="no-num no-toc no-ref" id="contents">Table of Contents</h2>
+   <ol class="toc" role="directory">
+    <li>
+     <a href="#intro"><span class="secno">1</span> <span class="content">Introduction</span></a>
+     <ol class="toc">
+      <li><a href="#examples-top-level"><span class="secno">1.1</span> <span class="content">Top-level Documents</span></a>
+      <li><a href="#examples-framed"><span class="secno">1.2</span> <span class="content">Framed Documents</span></a>
+      <li><a href="#examples-workers"><span class="secno">1.3</span> <span class="content">Web Workers</span></a>
+      <li><a href="#examples-shared-workers"><span class="secno">1.4</span> <span class="content">Shared Workers</span></a>
+      <li><a href="#examples-service-workers"><span class="secno">1.5</span> <span class="content">Service Workers</span></a>
+     </ol>
+    <li>
+     <a href="#framework"><span class="secno">2</span> <span class="content">Framework</span></a>
+     <ol class="toc">
+      <li><a href="#monkey-patching-idl"><span class="secno">2.1</span> <span class="content">Modifications to WebIDL</span></a>
+      <li>
+       <a href="#monkey-patching-html"><span class="secno">2.2</span> <span class="content">Modifications to HTML</span></a>
+       <ol class="toc">
+        <li><a href="#monkey-patching-shared-workers"><span class="secno">2.2.1</span> <span class="content">Shared Workers</span></a>
+        <li><a href="#monkey-patching-global-object"><span class="secno">2.2.2</span> <span class="content">Feature Detection</span></a>
+       </ol>
+     </ol>
+    <li>
+     <a href="#algorithms"><span class="secno">3</span> <span class="content">Algorithms</span></a>
+     <ol class="toc">
+      <li><a href="#settings-object"><span class="secno">3.1</span> <span class="content"> Is <var>settings object</var> a secure context? </span></a>
+      <li><a href="#is-origin-trustworthy"><span class="secno">3.2</span> <span class="content"> Is <var>origin</var> potentially trustworthy? </span></a>
+     </ol>
+    <li>
+     <a href="#threat-models-risks"><span class="secno">4</span> <span class="content"> Threat models and risks </span></a>
+     <ol class="toc">
+      <li>
+       <a href="#threat-models"><span class="secno">4.1</span> <span class="content">Threat Models</span></a>
+       <ol class="toc">
+        <li><a href="#threat-passive"><span class="secno">4.1.1</span> <span class="content">Passive Network Attacker</span></a>
+        <li><a href="#threat-active"><span class="secno">4.1.2</span> <span class="content">Active Network Attacker</span></a>
+       </ol>
+      <li><a href="#ancestors"><span class="secno">4.2</span> <span class="content">Ancestral Risk</span></a>
+      <li><a href="#threat-risks"><span class="secno">4.3</span> <span class="content">Risks associated with non-secure contexts</span></a>
+     </ol>
+    <li>
+     <a href="#security-considerations"><span class="secno">5</span> <span class="content">Security Considerations</span></a>
+     <ol class="toc">
+      <li><a href="#isolation"><span class="secno">5.1</span> <span class="content">Incomplete Isolation</span></a>
+     </ol>
+    <li><a href="#privacy-considerations"><span class="secno">6</span> <span class="content">Privacy Considerations</span></a>
+    <li>
+     <a href="#implementation-considerations"><span class="secno">7</span> <span class="content">Implementation Considerations</span></a>
+     <ol class="toc">
+      <li><a href="#packaged-applications"><span class="secno">7.1</span> <span class="content">Packaged Applications</span></a>
+      <li><a href="#development-environments"><span class="secno">7.2</span> <span class="content">Development Environments</span></a>
+      <li><a href="#new"><span class="secno">7.3</span> <span class="content">Restricting New Features</span></a>
+      <li>
+       <a href="#legacy"><span class="secno">7.4</span> <span class="content">Restricting Legacy Features</span></a>
+       <ol class="toc">
+        <li><a href="#legacy-example"><span class="secno">7.4.1</span> <span class="content">Example: Geolocation</span></a>
+       </ol>
+     </ol>
+    <li><a href="#acknowledgements"><span class="secno">8</span> <span class="content">Acknowledgements</span></a>
+    <li>
+     <a href="#conformance"><span class="secno"></span> <span class="content">Conformance</span></a>
+     <ol class="toc">
+      <li><a href="#conventions"><span class="secno"></span> <span class="content">Document conventions</span></a>
+      <li><a href="#conformant-algorithms"><span class="secno"></span> <span class="content">Conformant Algorithms</span></a>
+     </ol>
+    <li>
+     <a href="#index"><span class="secno"></span> <span class="content">Index</span></a>
+     <ol class="toc">
+      <li><a href="#index-defined-here"><span class="secno"></span> <span class="content">Terms defined by this specification</span></a>
+      <li><a href="#index-defined-elsewhere"><span class="secno"></span> <span class="content">Terms defined by reference</span></a>
+     </ol>
+    <li>
+     <a href="#references"><span class="secno"></span> <span class="content">References</span></a>
+     <ol class="toc">
+      <li><a href="#normative"><span class="secno"></span> <span class="content">Normative References</span></a>
+      <li><a href="#informative"><span class="secno"></span> <span class="content">Informative References</span></a>
+     </ol>
+    <li><a href="#idl-index"><span class="secno"></span> <span class="content">IDL Index</span></a>
+    <li><a href="#issues-index"><span class="secno"></span> <span class="content">Issues Index</span></a>
+   </ol>
+  </nav>
+  <main>
+   <section>
+    <h2 class="heading settled" data-level="1" id="intro"><span class="secno">1. </span><span class="content">Introduction</span><a class="self-link" href="#intro"></a></h2>
+    <p><em>This section is not normative.</em></p>
+    <p>As the web platform is extended to enable more useful and powerful
+  applications, it becomes increasingly important to ensure that the features
+  which enable those applications are enabled only in contexts which meet a minimum
+  security level. This document describes threat models for feature abuse on the web
+  (see <a href="#threat-models">§4.1 Threat Models</a>) and outlines normative requirements which should be
+  incorporated into documents specifying new features (see <a href="#implementation-considerations">§7 Implementation Considerations</a>).</p>
+    <p>The most obvious of the requirements discussed here is that application code
+  with access to sensitive or private data be delivered confidentially over
+  authenticated channels that guarantee data integrity. Delivering code securely
+  cannot ensure that an application will always meet a user’s security and
+  privacy requirements, but it is a necessary precondition.</p>
+    <p>Less obviously, application code delivered over an authenticated and confidential
+  channel isn’t enough in and of itself to limit the use of powerful features by
+  non-secure contexts. As <a href="#ancestors">§4.2 Ancestral Risk</a> explains, cooperative frames can be
+  abused to bypass otherwise solid restrictions on a feature. The algorithms
+  defined below ensure that these bypasses are difficult and user-visible.</p>
+    <p>The following examples summarize the normative text which follows:</p>
+    <h3 class="heading settled" data-level="1.1" id="examples-top-level"><span class="secno">1.1. </span><span class="content">Top-level Documents</span><a class="self-link" href="#examples-top-level"></a></h3>
+    <p>Top-level documents are secure as long as they don’t have a non-secure <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#opener-browsing-context">opener browsing context</a>. This is a bit convoluted, so let’s go straight
+  to the examples:</p>
+    <div class="example" id="example-c3b67557">
+     <a class="self-link" href="#example-c3b67557"></a> 
+     <p><code>http://example.com/</code> opened in a <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#top-level-browsing-context">top-level browsing
+    context</a> is not a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-1">secure context</a>, as it was not delivered over
+    an authenticated and encrypted channel.</p>
+     <svg height="200" width="400">
+      <g transform="translate(10,10)">
+       <rect class="non-secure" height="175" width="297" x="0" y="0"></rect>
+       <text transform="translate(10, 20)">http://example.com/</text>
+      </g>
+     </svg>
+    </div>
+    <div class="example" id="example-f9c0bcaa">
+     <a class="self-link" href="#example-f9c0bcaa"></a> 
+     <p><code>https://example.com/</code> opened in a <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#top-level-browsing-context">top-level browsing
+    context</a> is a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-2">secure context</a>, as it was delivered over
+    an authenticated and encrypted channel.</p>
+     <svg height="200" width="400">
+      <g transform="translate(10,10)">
+       <rect class="secure" height="175" width="297" x="0" y="0"></rect>
+       <text transform="translate(10, 20)">https://example.com/</text>
+      </g>
+     </svg>
+    </div>
+    <div class="example" id="example-601f9a50">
+     <a class="self-link" href="#example-601f9a50"></a> 
+     <p>
+      If a secure context opens <code>https://example.com/</code> in a new
+    window, that new window will be a secure context, as it is both secure on
+    its own merits, and was opened from a secure context: 
+      <svg height="400" width="400">
+       <g transform="translate(10,10)">
+        <rect class="secure" height="175" width="297" x="0" y="0"></rect>
+        <text transform="translate(10, 20)">https://secure.example.com/</text>
+       </g>
+       <g transform="translate(10,210)">
+        <rect class="secure" height="175" width="297" x="0" y="0"></rect>
+        <text transform="translate(10, 20)">https://another.example.com/</text>
+       </g>
+       <g>
+        <path d="M150, 87 C 200 75, 350 75, 150 287"></path>
+       </g>
+      </svg>
+     </p>
+    </div>
+    <div class="example" id="example-d8419274">
+     <a class="self-link" href="#example-d8419274"></a> 
+     <p>If a non-secure context opens <code>https://example.com/</code> in a new
+    window, then things are more complicated. The new window’s status depends on
+    how it was opened. If the non-secure context can obtain a reference to the
+    secure context, or vice-versa, then the new window is not a secure context. </p>
+     <p>This means that the following will both produce non-secure contexts:</p>
+<pre>&lt;a href="https://example.com/" target="_blank">Link!&lt;/a>
+      
+&lt;script>
+  var w = window.open("https://example.com/");
+&lt;/script>
+</pre>
+     <svg height="400" width="400">
+      <g transform="translate(10,10)">
+       <rect class="non-secure" height="175" width="297" x="0" y="0"></rect>
+       <text transform="translate(10, 20)">http://non-secure.example.com/</text>
+      </g>
+      <g transform="translate(10,210)">
+       <rect class="non-secure" height="175" width="297" x="0" y="0"></rect>
+       <text transform="translate(10, 20)">https://another.example.com/</text>
+      </g>
+      <g>
+       <path d="M150, 87 C 200 75, 350 75, 150 287"></path>
+      </g>
+     </svg>
+     <p>The link can be broken via the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/semantics.html#link-type-noopener"><code>noopener</code></a> link relation, meaning
+    that the following will both produce secure contexts:</p>
+<pre>&lt;a href="https://example.com/" rel="noopener" target="_blank">Link!&lt;/a>
+      
+&lt;script>
+  var w = window.open("https://example.com/", "", "noopener");
+&lt;/script>
+</pre>
+     <svg height="400" width="400">
+      <g transform="translate(10,10)">
+       <rect class="non-secure" height="175" width="297" x="0" y="0"></rect>
+       <text transform="translate(10, 20)">http://non-secure.example.com/</text>
+      </g>
+      <g transform="translate(10,210)">
+       <rect class="secure" height="175" width="297" x="0" y="0"></rect>
+       <text transform="translate(10, 20)">https://another.example.com/</text>
+      </g>
+      <g>
+       <path d="M150, 87 C 200 75, 350 75, 150 287"></path>
+      </g>
+     </svg>
+    </div>
+    <h3 class="heading settled" data-level="1.2" id="examples-framed"><span class="secno">1.2. </span><span class="content">Framed Documents</span><a class="self-link" href="#examples-framed"></a></h3>
+    <p>Framed documents can be <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-3">secure contexts</a> if they are delivered from <a data-link-type="dfn" href="#potentially-trustworthy-origin" id="ref-for-potentially-trustworthy-origin-1">potentially trustworthy origins</a>, <em>and</em> if they’re embedded
+  in a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-4">secure context</a>. That is:</p>
+    <div class="example" id="example-9e620851">
+     <a class="self-link" href="#example-9e620851"></a> If <code>https://example.com/</code> opened in a <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#top-level-browsing-context">top-level browsing
+    context</a> opens <code>https://sub.example.com/</code> in a frame, then
+    both are <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-5">secure contexts</a>, as both were delivered over
+    authenticated and encrypted channels.
+     <p></p>
+     <svg height="200" width="400">
+      <g transform="translate(10,10)">
+       <rect class="secure" height="175" width="300" x="0" y="0"></rect>
+       <text transform="translate(10, 20)">https://example.com/</text>
+       <g transform="translate(20, 50)">
+        <rect class="secure" height="105" width="250" x="0" y="0"></rect>
+        <text transform="translate(10, 20)">https://sub.example.com/</text>
+       </g>
+      </g>
+     </svg>
+    </div>
+    <div class="example" id="example-90fe8723">
+     <a class="self-link" href="#example-90fe8723"></a> 
+     <p>If <code>https://example.com/</code> was somehow able to frame <code>http://non-secure.example.com/</code> (perhaps the user has
+    overridden mixed content checking?), the top-level frame would remain
+    secure, but the framed content is not a secure context.</p>
+     <svg height="200" width="400">
+      <g transform="translate(10,10)">
+       <rect class="secure" height="175" width="300" x="0" y="0"></rect>
+       <text transform="translate(10, 20)">https://example.com/</text>
+       <g transform="translate(20, 50)">
+        <rect class="non-secure" height="105" width="250" x="0" y="0"></rect>
+        <text transform="translate(10, 20)">http://non-secure.example.com/</text>
+       </g>
+      </g>
+     </svg>
+    </div>
+    <div class="example" id="example-c52936fc">
+     <a class="self-link" href="#example-c52936fc"></a> 
+     <p>If, on the other hand, <code>https://example.com/</code> is framed
+    inside of <code>http://non-secure.example.com/</code>, then it is <em>not</em> a secure context, as its ancestor is not delivered over an
+    authenticated and encrypted channel.</p>
+     <svg height="200" width="400">
+      <g transform="translate(10,10)">
+       <rect class="non-secure" height="175" width="300" x="0" y="0"></rect>
+       <text transform="translate(10, 20)">http://non-secure.example.com/</text>
+       <g transform="translate(20, 50)">
+        <rect class="non-secure" height="105" width="250" x="0" y="0"></rect>
+        <text transform="translate(10, 20)">https://example.com/</text>
+       </g>
+      </g>
+     </svg>
+    </div>
+    <h3 class="heading settled" data-level="1.3" id="examples-workers"><span class="secno">1.3. </span><span class="content">Web Workers</span><a class="self-link" href="#examples-workers"></a></h3>
+    <p>Dedicated Workers are similar in nature to framed documents. They’re <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-6">secure contexts</a> when they’re delivered from <a data-link-type="dfn" href="#potentially-trustworthy-origin" id="ref-for-potentially-trustworthy-origin-2">potentially
+  trustworthy origins</a>, only if their owner is itself a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-7">secure
+  context</a>:</p>
+    <div class="example" id="example-512dd4fd">
+     <a class="self-link" href="#example-512dd4fd"></a> 
+     <p>If <code>https://example.com/</code> in a <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#top-level-browsing-context">top-level browsing
+    context</a> runs <code>https://example.com/worker.js</code>, then
+    both the document and the worker are <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-8">secure contexts</a>.</p>
+     <svg height="200" width="600">
+      <g transform="translate(10,10)">
+       <rect class="secure" height="175" width="300" x="0" y="0"></rect>
+       <text transform="translate(10, 20)">https://example.com/</text>
+       <g transform="translate(400, 110)">
+        <circle class="secure" r="50"></circle>
+        <text transform="translate(-75, -55)">https://example.com/worker.js</text>
+       </g>
+       <g>
+        <path d="M150, 87 C 200 75, 350 75, 405 110"></path>
+       </g>
+      </g>
+     </svg>
+    </div>
+    <div class="example" id="example-453513c5">
+     <a class="self-link" href="#example-453513c5"></a> 
+     <p>If <code>http://non-secure.example.com/</code> in a <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#top-level-browsing-context">top-level browsing
+    context</a> frames <code>https://example.com/</code>, which runs <code>https://example.com/worker.js</code>, then neither the framed document
+    nor the worker are <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-9">secure contexts</a>.</p>
+     <svg height="200" width="600">
+      <g transform="translate(10,10)">
+       <rect class="non-secure" height="175" width="297" x="0" y="0"></rect>
+       <text transform="translate(10, 20)">http://non-secure.example.com/</text>
+       <g transform="translate(20, 50)">
+        <rect class="non-secure" height="105" width="250" x="0" y="0"></rect>
+        <text transform="translate(10, 20)">https://example.com/</text>
+       </g>
+       <g transform="translate(400, 110)">
+        <circle class="non-secure" r="50"></circle>
+        <text transform="translate(-75, -55)">https://example.com/worker.js</text>
+       </g>
+       <g>
+        <path d="M150, 87 C 200 75, 350 75, 405 110"></path>
+       </g>
+      </g>
+     </svg>
+    </div>
+    <h3 class="heading settled" data-level="1.4" id="examples-shared-workers"><span class="secno">1.4. </span><span class="content">Shared Workers</span><a class="self-link" href="#examples-shared-workers"></a></h3>
+    <p>Multiple contexts may attach to a Shared Worker. If a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-10">secure context</a> creates a Shared Worker, then it is a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-11">secure context</a>, and may only be
+  attached to by other <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-12">secure contexts</a>. If a non-secure context creates
+  a Shared Worker, then it is <em>not</em> a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-13">secure context</a>, and may only
+  be attached to by other non-secure contexts.</p>
+    <div class="example" id="example-7e3c52b5">
+     <a class="self-link" href="#example-7e3c52b5"></a> 
+     <p>If <code>https://example.com/</code> in a <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#top-level-browsing-context">top-level browsing
+    context</a> runs <code>https://example.com/worker.js</code> as a Shared
+    Worker, then both the document and the worker are considered secure
+    contexts.</p>
+     <svg height="200" width="600">
+      <g transform="translate(10,10)">
+       <rect class="secure" height="175" width="300" x="0" y="0"></rect>
+       <text transform="translate(10, 20)">https://example.com/</text>
+       <g transform="translate(400, 110)">
+        <circle class="secure" r="50"></circle>
+        <text transform="translate(-75, -55)">https://example.com/worker.js</text>
+       </g>
+       <g>
+        <path d="M150, 87 C 200 75, 350 75, 405 110"></path>
+       </g>
+      </g>
+     </svg>
+    </div>
+    <div class="example" id="example-f3aef4f7">
+     <a class="self-link" href="#example-f3aef4f7"></a> 
+     <p><code>https://example.com/</code> in a different <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#top-level-browsing-context">top-level
+    browsing context</a> (e.g. in a new window) is a secure context, so it may
+    access the secure shared worker:</p>
+     <svg height="400" width="600">
+      <g transform="translate(10,10)">
+       <rect class="secure" height="175" width="300" x="0" y="0"></rect>
+       <text transform="translate(10, 20)">https://example.com/</text>
+       <g transform="translate(400, 110)">
+        <circle class="secure" r="50"></circle>
+        <text transform="translate(-75, -55)">https://example.com/worker.js</text>
+       </g>
+       <g>
+        <path d="M150, 87 C 200 75, 350 75, 405 110"></path>
+       </g>
+      </g>
+      <g transform="translate(10,200)">
+       <rect class="secure" height="175" width="300" x="0" y="0"></rect>
+       <text transform="translate(10, 20)">https://example.com/</text>
+       <g>
+        <path d="M150, 87 C 200 75, 350 75, 405 -80"></path>
+       </g>
+      </g>
+     </svg>
+    </div>
+    <div class="example" id="example-2829bc67">
+     <a class="self-link" href="#example-2829bc67"></a> 
+     <p><code>https://example.com/</code> nested in <code>http://non-secure.example.com/</code> may not connect to the secure
+    worker, as it is not a secure context.</p>
+     <svg height="400" width="600">
+      <g transform="translate(10,10)">
+       <rect class="secure" height="175" width="300" x="0" y="0"></rect>
+       <text transform="translate(10, 20)">https://example.com/</text>
+       <g transform="translate(400, 110)">
+        <circle class="secure" r="50"></circle>
+        <text transform="translate(-75, -55)">https://example.com/worker.js</text>
+       </g>
+       <g>
+        <path d="M150, 87 C 200 75, 350 75, 405 110"></path>
+       </g>
+      </g>
+      <g transform="translate(10,200)">
+       <rect class="non-secure" height="175" width="300" x="0" y="0"></rect>
+       <text transform="translate(10, 20)">http://non-secure.example.com/</text>
+       <g transform="translate(20, 50)">
+        <rect class="non-secure" height="105" width="250" x="0" y="0"></rect>
+        <text transform="translate(10, 20)">https://example.com/</text>
+       </g>
+       <g>
+        <path d="M150, 87 C 200 75, 350 75, 405 20"></path>
+        <text class="rejection" transform="translate(405, 20)">X</text>
+       </g>
+      </g>
+     </svg>
+    </div>
+    <div class="example" id="example-a7414e08">
+     <a class="self-link" href="#example-a7414e08"></a> 
+     <p>Likewise, if <code>https://example.com/</code> nested in <code>http://non-secure.example.com/</code> runs <code>https://example.com/worker.js</code> as a Shared
+    Worker, then both the document and the worker are considered non-secure.</p>
+     <svg height="400" width="600">
+      <g transform="translate(10,10)">
+       <rect class="non-secure" height="175" width="300" x="0" y="0"></rect>
+       <text transform="translate(10, 20)">http://non-secure.example.com/</text>
+       <g transform="translate(20, 50)">
+        <rect class="non-secure" height="105" width="250" x="0" y="0"></rect>
+        <text transform="translate(10, 20)">https://example.com/</text>
+       </g>
+       <g transform="translate(400, 110)">
+        <circle class="non-secure" r="50"></circle>
+        <text transform="translate(-75, -55)">https://example.com/worker.js</text>
+       </g>
+       <g>
+        <path d="M150, 87 C 200 75, 350 75, 405 110"></path>
+       </g>
+      </g>
+      <g transform="translate(10,200)">
+       <rect class="secure" height="175" width="300" x="0" y="0"></rect>
+       <text transform="translate(10, 20)">https://example.com/</text>
+       <g>
+        <path d="M150, 87 C 200 75, 350 75, 405 20"></path>
+        <text class="rejection" transform="translate(405, 20)">X</text>
+       </g>
+      </g>
+     </svg>
+    </div>
+    <h3 class="heading settled" data-level="1.5" id="examples-service-workers"><span class="secno">1.5. </span><span class="content">Service Workers</span><a class="self-link" href="#examples-service-workers"></a></h3>
+    <p>Service Workers are always <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-14">secure contexts</a>. Only <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-15">secure contexts</a> may register them, and they may only have clients which are <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-16">secure
+  contexts</a>.</p>
+    <div class="example" id="example-58019791">
+     <a class="self-link" href="#example-58019791"></a> 
+     <p>If <code>https://example.com/</code> in a <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#top-level-browsing-context">top-level browsing
+    context</a> registers <code>https://example.com/service.js</code>,
+    then both the document and the Service Worker are considered secure
+    contexts.</p>
+     <svg height="200" width="600">
+      <g transform="translate(10,10)">
+       <rect class="secure" height="175" width="300" x="0" y="0"></rect>
+       <text transform="translate(10, 20)">https://example.com/</text>
+       <g transform="translate(400, 110)">
+        <circle class="secure" r="50"></circle>
+        <text transform="translate(-75, -55)">https://example.com/service.js</text>
+       </g>
+       <g>
+        <path d="M150, 87 C 200 75, 350 75, 405 110"></path>
+       </g>
+      </g>
+     </svg>
+    </div>
+   </section>
+   <section>
+    <h2 class="heading settled" data-level="2" id="framework"><span class="secno">2. </span><span class="content">Framework</span><a class="self-link" href="#framework"></a></h2>
+    <p>A <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#settings-object">settings object</a> is considered a <dfn class="dfn-paneled" data-dfn-type="dfn" data-export="" data-lt="secure context" id="secure-context">secure context<span class="dfn-panel" data-deco=""><b><a href="#secure-context">#secure-context</a></b><b>Referenced in:</b><span><a href="#ref-for-secure-context-1">1.1. Top-level Documents</a> <a href="#ref-for-secure-context-2">(2)</a></span><span><a href="#ref-for-secure-context-3">1.2. Framed Documents</a> <a href="#ref-for-secure-context-4">(2)</a> <a href="#ref-for-secure-context-5">(3)</a></span><span><a href="#ref-for-secure-context-6">1.3. Web Workers</a> <a href="#ref-for-secure-context-7">(2)</a> <a href="#ref-for-secure-context-8">(3)</a> <a href="#ref-for-secure-context-9">(4)</a></span><span><a href="#ref-for-secure-context-10">1.4. Shared Workers</a> <a href="#ref-for-secure-context-11">(2)</a> <a href="#ref-for-secure-context-12">(3)</a> <a href="#ref-for-secure-context-13">(4)</a></span><span><a href="#ref-for-secure-context-14">1.5. Service Workers</a> <a href="#ref-for-secure-context-15">(2)</a> <a href="#ref-for-secure-context-16">(3)</a></span><span><a href="#ref-for-secure-context-17">2. Framework</a> <a href="#ref-for-secure-context-18">(2)</a></span><span><a href="#ref-for-secure-context-19">2.2.1. Shared Workers</a> <a href="#ref-for-secure-context-20">(2)</a> <a href="#ref-for-secure-context-21">(3)</a></span><span><a href="#ref-for-secure-context-22">2.2.2. Feature Detection</a> <a href="#ref-for-secure-context-23">(2)</a></span><span><a href="#ref-for-secure-context-24">3.1. 
+    Is settings object a secure context? </a></span><span><a href="#ref-for-secure-context-25">4.2. Ancestral Risk</a></span><span><a href="#ref-for-secure-context-26">4.3. Risks associated with non-secure contexts</a> <a href="#ref-for-secure-context-27">(2)</a></span><span><a href="#ref-for-secure-context-28">5.1. Incomplete Isolation</a></span><span><a href="#ref-for-secure-context-29">6. Privacy Considerations</a></span><span><a href="#ref-for-secure-context-30">7.3. Restricting New Features</a> <a href="#ref-for-secure-context-31">(2)</a> <a href="#ref-for-secure-context-32">(3)</a></span><span><a href="#ref-for-secure-context-33">7.4. Restricting Legacy Features</a> <a href="#ref-for-secure-context-34">(2)</a> <a href="#ref-for-secure-context-35">(3)</a></span><span><a href="#ref-for-secure-context-36">7.4.1. Example: Geolocation</a> <a href="#ref-for-secure-context-37">(2)</a></span></span></dfn> if
+  the algorithm in <a href="#settings-object">§3.1 Is settings object a secure context?</a> returns "<code>Secure</code>". The <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#settings-object">settings
+  object</a> is otherwise <dfn data-dfn-type="dfn" data-export="" data-lt="non-secure context" id="non-secure-context">non-secure<a class="self-link" href="#non-secure-context"></a></dfn>.</p>
+    <p>Likewise, a <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#global-object">global object</a> is considered a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-17">secure context</a> if its <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#relevant-settings-object-for-a-global-object">relevant settings object</a> is a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-18">secure context</a>.</p>
+    <h3 class="heading settled" data-level="2.1" id="monkey-patching-idl"><span class="secno">2.1. </span><span class="content">Modifications to WebIDL</span><a class="self-link" href="#monkey-patching-idl"></a></h3>
+    <p>A new <code>[SecureContext]</code> attribute is available for operators, which ensures
+  that they will only be <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-exposed">exposed</a> into secure contexts. The following
+  example should help:</p>
+    <div class="example" id="example-bb4ea7aa">
+     <a class="self-link" href="#example-bb4ea7aa"></a> 
+<pre class="idl def">interface ExampleFeature {
+  // This call will succeed in all contexts.
+  Promise &lt;double> calculateNotSoSecretResult();
+
+  // This operation will not be exposed to a non-secure context. If such a context
+  // is somehow able to call it despite this precaution, the Promise will be
+  // immedietely rejected with a 'SecurityError' exception.
+  [SecureContext] Promise&lt;double> calculateSecretResult();
+
+  // The same applies here: the operation will not be exposed to a non-secure context,
+  // and if somehow called from a non-secure context, a 'SecurityError'
+  // exception will be thrown.
+  [SecureContext] boolean getSecretBoolean();
+};
+</pre>
+    </div>
+    <p>Specification authors are encouraged to use this attribute when defining new
+  features.</p>
+    <p class="issue" id="issue-020b0dc4"><a class="self-link" href="#issue-020b0dc4"></a> This addition is currently under review. <a href="https://github.com/heycam/webidl/issues/65">&lt;https://github.com/heycam/webidl/issues/65></a></p>
+    <h3 class="heading settled" data-level="2.2" id="monkey-patching-html"><span class="secno">2.2. </span><span class="content">Modifications to HTML</span><a class="self-link" href="#monkey-patching-html"></a></h3>
+    <h4 class="heading settled" data-level="2.2.1" id="monkey-patching-shared-workers"><span class="secno">2.2.1. </span><span class="content">Shared Workers</span><a class="self-link" href="#monkey-patching-shared-workers"></a></h4>
+    <p>The <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/workers/#dom-sharedworker">SharedWorker()</a></code> constructor will throw a <code>SecurityError</code> exception if
+  a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-19">secure context</a> attempts to attach to an Worker which is not a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-20">secure context</a>, and if a non-secure context attempts to attach to a
+  Worker which is a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-21">secure context</a>. The constructor is modified as
+  follows:</p>
+    <ol>
+     <li data-md="">
+      <p>As the first substep of the <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/workers/#dom-sharedworker">SharedWorker()</a></code> constructor’s current step
+  7.7 ("If <var>worker global scope</var> is not <code>null</code>, then run these
+  steps:"), run the following step:</p>
+      <ol>
+       <li data-md="">
+        <p>If the result of executing <a href="#settings-object">§3.1 Is settings object a secure context?</a> on the <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#incumbent-settings-object">incumbent
+  settings object</a> does not match the result of executing the same
+  algorithm on <var>worker global scope</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#relevant-settings-object-for-a-global-object">relevant settings
+  object</a>, then throw a <code>SecurityError</code> exception, and abort
+  these steps.</p>
+      </ol>
+    </ol>
+    <h4 class="heading settled" data-level="2.2.2" id="monkey-patching-global-object"><span class="secno">2.2.2. </span><span class="content">Feature Detection</span><a class="self-link" href="#monkey-patching-global-object"></a></h4>
+    <p>To determine whether a context is capable of making use of features which
+  require <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-22">secure contexts</a>, a simple boolean attribute is added to the
+  global object:</p>
+<pre class="idl def">partial interface <a class="idl-code" data-link-type="interface" href="http://www.w3.org/TR/dom/#interface-window">Window</a> {
+  readonly attribute boolean <dfn class="dfn-paneled idl-code" data-dfn-for="Window" data-dfn-type="attribute" data-export="" data-lt="isSecureContext" data-readonly="" data-type="boolean " id="dom-window-issecurecontext">isSecureContext<span class="dfn-panel" data-deco=""><b><a href="#dom-window-issecurecontext">#dom-window-issecurecontext</a></b><b>Referenced in:</b><span><a href="#ref-for-dom-window-issecurecontext-1">2.2.2. Feature Detection</a></span></span></dfn>;
+};
+
+partial interface <a class="idl-code" data-link-type="interface" href="http://www.w3.org/TR/workers/#workerglobalscope">WorkerGlobalScope</a> {
+  readonly attribute boolean <dfn class="dfn-paneled idl-code" data-dfn-for="WorkerGlobalScope" data-dfn-type="attribute" data-export="" data-lt="isSecureContext" data-readonly="" data-type="boolean " id="dom-workerglobalscope-issecurecontext">isSecureContext<span class="dfn-panel" data-deco=""><b><a href="#dom-workerglobalscope-issecurecontext">#dom-workerglobalscope-issecurecontext</a></b><b>Referenced in:</b><span><a href="#ref-for-dom-workerglobalscope-issecurecontext-1">2.2.2. Feature Detection</a></span></span></dfn>;
+};
+</pre>
+    <p>Both <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/dom/#interface-window">Window</a></code>'s <code class="idl"><a data-link-type="idl" href="#dom-window-issecurecontext" id="ref-for-dom-window-issecurecontext-1">isSecureContext</a></code> and <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/workers/#workerglobalscope">WorkerGlobalScope</a></code>'s <code class="idl"><a data-link-type="idl" href="#dom-workerglobalscope-issecurecontext" id="ref-for-dom-workerglobalscope-issecurecontext-1">isSecureContext</a></code> attributes' getters return <code>true</code> if the <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#relevant-settings-object-for-a-global-object">relevant settings object</a> for the getter’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#global-object">global object</a> is a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-23">secure context</a>, and <code>false</code> otherwise.</p>
+   </section>
+   <section>
+    <h2 class="heading settled" data-level="3" id="algorithms"><span class="secno">3. </span><span class="content">Algorithms</span><a class="self-link" href="#algorithms"></a></h2>
+    <h3 class="heading settled" data-level="3.1" id="settings-object"><span class="secno">3.1. </span><span class="content"> Is <var>settings object</var> a secure context? </span><a class="self-link" href="#settings-object"></a></h3>
+    <p>Given a <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#settings-object">settings object</a> (<var>settings object</var>) this algorithm returns
+  "<code>Secure</code>" if the object represents a context which the user agent obtained
+  via a secure channel, and "<code>Not Secure</code>" otherwise.</p>
+    <ol>
+     <li data-md="">
+      <p>If <var>settings object</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#global-object">global object</a> is a <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/workers/#workerglobalscope">WorkerGlobalScope</a></code>,
+  then:</p>
+      <ol>
+       <li data-md="">
+        <p>For each <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/dom/#interface-document">Document</a></code> (<var>document</var>) in <var>settings object</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#global-object">global
+  object</a>’s list of <a data-link-type="dfn" href="http://www.w3.org/TR/workers/#the-workers-documents">the worker’s <code>Documents</code></a>:</p>
+        <ol>
+         <li data-md="">
+          <p>If <var>document</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#relevant-settings-object-for-a-global-object">relevant settings object</a> is not a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-24">secure context</a>, return "<code>Not Secure</code>".</p>
+        </ol>
+      </ol>
+     <li data-md="">
+      <p>Otherwise, <var>settings object</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#global-object">global object</a> is a <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/dom/#interface-window">Window</a></code>. If <var>settings object</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#responsible-document">responsible document</a> has a <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#creator-document">creator <code>Document</code></a>, <var>creator</var>:</p>
+      <ol>
+       <li data-md="">
+        <p>If <var>creator</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#browsing-context">browsing context</a> is an <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#ancestor-browsing-context">ancestor
+  browsing context</a> or <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#opener-browsing-context">opener browsing context</a> of <var>settings object</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#responsible-document">responsible document</a> and <var>creator</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#relevant-settings-object-for-a-global-object">relevant settings object</a> is not a secure
+  context, return "<code>Not Secure</code>".</p>
+        <p class="note" role="note">Note: Since we take account of <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#auxiliary-browsing-context">auxiliary browsing contexts</a>'
+  status, a popups' status depend on how it is opened, as discussed
+  in <a href="#examples-top-level">§1.1 Top-level Documents</a>.</p>
+      </ol>
+     <li data-md="">
+      <p>If <var>settings object</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#https-state">HTTPS state</a> is "<code>modern</code>", return
+  "<code>Secure</code>".</p>
+      <div class="note" role="note">
+        Most of the time, this check will be enough to determine whether
+    a particular context was securely delivered. Documents delivered over
+    TLS will have the flag set, and <code>srcdoc</code> <code>Document</code>s inherit their
+    ancestor’s flag (as do other kinds of requests which inherit their
+    requestor’s origin: see the <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#basic-fetch">basic fetch</a> algorithm for details
+    on some of these <a data-link-type="biblio" href="#biblio-fetch">[FETCH]</a>). 
+       <p>We’ll only continue past this check when dealing with resources
+    delivered from "trustworthy" but unauthenticated locations like <code>http://127.0.0.1/</code>.</p>
+      </div>
+     <li data-md="">
+      <p>Let <var>origin</var> be <var>settings object</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#origin">origin</a>.</p>
+     <li data-md="">
+      <p>If <var>origin</var> is an <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#origin">opaque identifier</a>, set <var>origin</var> to the <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-origin">origin</a> of <var>settings object</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#creation-url">creation
+  URL</a>.</p>
+      <p class="note" role="note">Note: We use the origin of the URL here in order to allow sandboxed
+  context to remain secure (as sandboxing is a strict reduction in the
+  context’s capabilities, and therefore to the risk it poses). This
+  covers scenarios such as <code>&lt;iframe sandbox src="http://localhost/"></code>.</p>
+     <li data-md="">
+      <p>If the result of executing the <a href="#is-origin-trustworthy">§3.2 Is origin potentially trustworthy?</a> algorithm
+  on <var>origin</var> is <strong>not</strong> <code>Potentially Trustworthy</code>, then return "<code>Not Secure</code>".</p>
+     <li data-md="">
+      <p>Return "<code>Secure</code>".</p>
+    </ol>
+    <h3 class="heading settled" data-level="3.2" id="is-origin-trustworthy"><span class="secno">3.2. </span><span class="content"> Is <var>origin</var> potentially trustworthy? </span><a class="self-link" href="#is-origin-trustworthy"></a></h3>
+    <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-export="" data-lt="potentially trustworthy origin" id="potentially-trustworthy-origin">potentially trustworthy origin<span class="dfn-panel" data-deco=""><b><a href="#potentially-trustworthy-origin">#potentially-trustworthy-origin</a></b><b>Referenced in:</b><span><a href="#ref-for-potentially-trustworthy-origin-1">1.2. Framed Documents</a></span><span><a href="#ref-for-potentially-trustworthy-origin-2">1.3. Web Workers</a></span></span></dfn> is one which a user agent
+  can generally trust as delivering data securely.</p>
+    <p>This algorithms considers certain hosts, scheme, and origins as potentially
+  trustworthy, even though they might not be authenticated and encrypted in the
+  traditional sense. In particular, the user agent SHOULD treat <code>file</code> URLs and
+  URLs with hostnames names equivalent to <code>localhost</code> as potentially
+  trustworthy. In principle the user agent could treat local files and local web
+  servers as untrustworthy, but, <em>given the information that is available to
+  the user agent at runtime</em>, the resources appear to have been transported
+  securely from disk to the user agent. Additionally, treating such resources as
+  potentially trustworthy is convenient for developers building an application
+  before deploying it to the public.</p>
+    <p>This developer-friendlyness is not without risk, however. User agents which
+  prioritize security over such niceties MAY choose to more strictly assign
+  trust in a way which excludes <code>localhost.</code> and <code>file</code>.</p>
+    <p>On the other hand, the user agent MAY choose to extend this trust to other,
+  vendor-specific URL schemes like <code>app:</code> or <code>chrome-extension:</code> which it can
+  determine <i lang="la">a priori</i> to be trusted (see <a href="#packaged-applications">§7.1 Packaged Applications</a> for detail).</p>
+    <p>Given an <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#origin">origin</a> (<var>origin</var>), the following algorithm returns
+  "<code>Potentially Trustworthy</code>" or "<code>Not Trustworthy</code>" as appropriate.</p>
+    <ol>
+     <li data-md="">
+      <p>If <var>origin</var> is an <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#origin">opaque identifier</a>, return "<code>Not Trustworthy</code>".</p>
+     <li data-md="">
+      <p>If <var>origin</var>’s <code>scheme</code> is either "<code>https</code>" or "<code>wss</code>", return
+  "<code>Potentially Trustworthy</code>".</p>
+      <p class="note" role="note">Note: This is meant to be analog to the <a data-link-type="dfn" href="http://www.w3.org/TR/mixed-content/#a-priori-authenticated-url"><i lang="la">a priori</i> authenticated URL</a> concept in <a data-link-type="biblio" href="#biblio-mix">[MIX]</a>.</p>
+      <p class="note" role="note">Note: The origin of <code>blob:</code> and <code>filesystem:</code> URLs is the origin of the
+  context in which they were created. Therefore, blobs created in a
+  trustworthy origin will themselves be potentially trustworthy. The origin
+  of <code>data:</code> and <code>javascript:</code> URLs, on the other hand, is an <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#origin">opaque
+  identifier</a>, which will not be considered potentially trustworthy.</p>
+     <li data-md="">
+      <p>If <var>origin</var>’s <code>host</code> component is or falls within "<code>localhost.</code>" <a data-link-type="biblio" href="#biblio-rfc6761">[RFC6761]</a>, return "<code>Potentially Trustworthy</code>".</p>
+     <li data-md="">
+      <p>If <var>origin</var>’s <code>host</code> component matches one of the CIDR notations <code>127.0.0.0/8</code> or <code>::1/128</code> <a data-link-type="biblio" href="#biblio-rfc4632">[RFC4632]</a>, return "<code>Potentially Trustworthy</code>".</p>
+     <li data-md="">
+      <p>If <var>origin</var>’s <code>scheme</code> component is <code>file</code>, return "<code>Potentially Trustworthy</code>".</p>
+     <li data-md="">
+      <p>If <var>origin</var>’s <code>scheme</code> component is one which the user agent considers to
+  be authenticated, return "<code>Potentially Trustworthy</code>".</p>
+      <p class="note" role="note">Note: See <a href="#packaged-applications">§7.1 Packaged Applications</a> for detail here.</p>
+     <li data-md="">
+      <p>If <var>origin</var> has been configured as a trustworthy origin, return <code>Potentially Trustworthy</code>".</p>
+      <p class="note" role="note">Note: See <a href="#development-environments">§7.2 Development Environments</a> for detail here.</p>
+     <li data-md="">
+      <p>Return "<code>Not Trusted</code>".</p>
+    </ol>
+   </section>
+   <section>
+    <h2 class="heading settled" data-level="4" id="threat-models-risks"><span class="secno">4. </span><span class="content"> Threat models and risks </span><a class="self-link" href="#threat-models-risks"></a></h2>
+    <p><em>This section is non-normative.</em></p>
+    <h3 class="heading settled" data-level="4.1" id="threat-models"><span class="secno">4.1. </span><span class="content">Threat Models</span><a class="self-link" href="#threat-models"></a></h3>
+    <p>Granting permissions to unauthenticated origins is, in the presence of a
+  network attacker, equivalent to granting the permissions to any origin. The
+  state of the Internet is such that we must indeed assume that a network
+  attacker is present. Generally, network attackers fall into 2 classes:
+  passive and active.</p>
+    <h4 class="heading settled" data-level="4.1.1" id="threat-passive"><span class="secno">4.1.1. </span><span class="content">Passive Network Attacker</span><a class="self-link" href="#threat-passive"></a></h4>
+    <p>A "Passive Network Attacker" is a party who is able to observe traffic
+  flows but who lacks the ability or chooses not to modify traffic at
+  the layers which this specification is concerned with.</p>
+    <p>Surveillance of networks in this manner "subverts the intent of communicating
+  parties without the agreement of these parties" and one "cannot defend against
+  the most nefarious actors while allowing monitoring by other actors no matter
+  how benevolent some might consider them to be." <a data-link-type="biblio" href="#biblio-rfc7258">[RFC7258]</a> Therefore, the
+  algorithms defined in this document require mechanisms that provide for the
+  privacy of data at the application layer, not simply integrity.</p>
+    <h4 class="heading settled" data-level="4.1.2" id="threat-active"><span class="secno">4.1.2. </span><span class="content">Active Network Attacker</span><a class="self-link" href="#threat-active"></a></h4>
+    <p>An "Active Network Attacker" has all the capabilities of a "Passive Network
+  Attacker" and is additionally able to modify, block or replay any data
+  transiting the network.  These capabilities are available to potential
+  adversaries at many levels of capability, from compromised devices offering
+  or simply participating in public wireless networks, to Internet Service
+  Providers indirectly introducing security and privacy vulnerabilities while
+  manipulating traffic for financial gain (<a data-link-type="biblio" href="#biblio-verizon">[VERIZON]</a> and <a data-link-type="biblio" href="#biblio-comcast">[COMCAST]</a> are
+  recent examples), to parties with direct intent to compromise security or
+  privacy who are able to target individual users, organizations or even
+  entire populations.</p>
+    <h3 class="heading settled" data-level="4.2" id="ancestors"><span class="secno">4.2. </span><span class="content">Ancestral Risk</span><a class="self-link" href="#ancestors"></a></h3>
+    <p>The <a href="#settings-object">§3.1 Is settings object a secure context?</a> algorithm walks through all the ancestors of a
+  particular context in order to determine whether or not the context itself is
+  secure. Why wouldn’t we consider a securely-delivered document in an <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/embedded-content.html#the-iframe-element">iframe</a></code> to be secure, in and of itself?</p>
+    <p>The short answer is that this model would enable abuse. Chrome’s
+  implementation of <a data-link-type="biblio" href="#biblio-webcryptoapi">[WEBCRYPTOAPI]</a> was an early experiment in locking APIs to
+  secure contexts, and it does not walk through a context’s ancestors. The
+  assumption was that locking the API to a resouce which was itself delivered
+  securely would be enough to ensure secure usage. The result, however, was
+  that entities like Netflix built <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/embedded-content.html#the-iframe-element">iframe</a></code>- and <code>postMessage()</code>-based shims
+  that exposed the API to non-secure contexts. The restriction was little more
+  than a speed-bump, slowing down non-secure access to the API, but completely
+  ineffective in preventing such access.</p>
+    <p>While the algorithms in this document do not perfectly isolate non-secure
+  contexts from <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-25">secure contexts</a> (as discussed in <a href="#isolation">§5.1 Incomplete Isolation</a>), the
+  ancestor checks provide a fairly robust protection for the guarantees of
+  authentication, confidentiality, and integrity that such contexts ought to
+  ptovide.</p>
+    <h3 class="heading settled" data-level="4.3" id="threat-risks"><span class="secno">4.3. </span><span class="content">Risks associated with non-secure contexts</span><a class="self-link" href="#threat-risks"></a></h3>
+    <p>Certain web platform features that have a distinct impact on a user’s
+  security or privacy should be available for use only in <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-26">secure
+  contexts</a> in order to defend against the threats above. Features
+  available in non-secure contexts risk exposing these capabilities to
+  network attackers:</p>
+    <ol>
+     <li> The ability to read and modify sensitive data (personally-identifying
+      information, credentials, payment instruments, and so on). <a data-link-type="biblio" href="#biblio-credential-management">[CREDENTIAL-MANAGEMENT]</a> is an example of an API that handles sensitive
+      data. 
+     <li> The ability to read and modify input from sensors on a user’s device
+      (camera, microphone, and GPS being particularly noteworthy, but
+      certainly including less obviously dangerous sensors like the
+      accelerometer). <a data-link-type="biblio" href="#biblio-geolocation-api">[GEOLOCATION-API]</a> and <a data-link-type="biblio" href="#biblio-mediacapture-streams">[MEDIACAPTURE-STREAMS]</a> are
+      historical examples of features that use sensor input. 
+     <li> The ability to access information about other devices to which a user has
+      access. <a data-link-type="biblio" href="#biblio-discovery">[DISCOVERY]</a> and <a data-link-type="biblio" href="#biblio-bluetooth">[BLUETOOTH]</a> are good examples. 
+     <li> The ability to track users using temporary or persistent identifiers,
+      including identifiers which reset themselves after some period of time
+      (e.g. <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/html5/webstorage.html#the-sessionstorage-attribute">sessionStorage</a></code>), identifiers the user can manually reset
+      (e.g. <a data-link-type="biblio" href="#biblio-encrypted-media">[ENCRYPTED-MEDIA]</a>, Cookies <a data-link-type="biblio" href="#biblio-rfc6265">[RFC6265]</a>, and <a data-link-type="biblio" href="#biblio-indexeddb">[IndexedDB]</a>),
+      as well as identifying hardware features the user can’t easily reset. 
+     <li> The ability to introduce some state for an origin which persists across
+      browsing sessions. <a data-link-type="biblio" href="#biblio-service-workers">[SERVICE-WORKERS]</a> is a great example. 
+     <li> The ability to manipulate a user agent’s native UI in some way which
+      removes, obscures, or manipulates details relevant to a user’s
+      understanding of their context. <a data-link-type="biblio" href="#biblio-fullscreen">[FULLSCREEN]</a> is a good example. 
+     <li> The ability to introduce some functionality for which user permission will
+      be required. 
+    </ol>
+    <p>This list is non-exhaustive, but should give you a feel for the types of
+  risks we should consider when writing or implementing specifications.</p>
+    <p class="note" role="note">Note: While restricting a feature itself to <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-27">secure contexts</a> is
+  critical, we ought not forget that facilities that carry such information
+  (such as new network access mechanisms, or other generic functions with access
+  to network data) are equally sensitive.</p>
+   </section>
+   <section>
+    <h2 class="heading settled" data-level="5" id="security-considerations"><span class="secno">5. </span><span class="content">Security Considerations</span><a class="self-link" href="#security-considerations"></a></h2>
+    <h3 class="heading settled" data-level="5.1" id="isolation"><span class="secno">5.1. </span><span class="content">Incomplete Isolation</span><a class="self-link" href="#isolation"></a></h3>
+    <p>The <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-28">secure context</a> definition in this document does not completely
+  isolate a "secure" view on an origin from a "non-secure" view on the same
+  origin. Exfiltration will still be possible via increasingly esoteric
+  mechanisms such as the contents of <code>localStorage</code>/<code>sessionStorage</code>, <code>storage</code> events, <code>BroadcastChannel</code>, and others.</p>
+   </section>
+   <section>
+    <h2 class="heading settled" data-level="6" id="privacy-considerations"><span class="secno">6. </span><span class="content">Privacy Considerations</span><a class="self-link" href="#privacy-considerations"></a></h2>
+    <p>The <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-29">secure context</a> definition in this document does not in itself have
+  any privacy impact. It does, however, enable other features which do have
+  interesting privacy implications to lock themselves into contexts which
+  ensures that specific guarantees can be made regarding integrity,
+  authenticity, and confidentiality.</p>
+    <p>From a privacy perspective, specification authors are encouraged to consider
+  requiring secure contexts for the features they define.</p>
+   </section>
+   <section>
+    <h2 class="heading settled" data-level="7" id="implementation-considerations"><span class="secno">7. </span><span class="content">Implementation Considerations</span><a class="self-link" href="#implementation-considerations"></a></h2>
+    <h3 class="heading settled" data-level="7.1" id="packaged-applications"><span class="secno">7.1. </span><span class="content">Packaged Applications</span><a class="self-link" href="#packaged-applications"></a></h3>
+    <p>A user agent that support packaged applications MAY whitelist specific URL
+  schemes whose contents are authenticated by the user agent. For example,
+  FirefoxOS application resources are referred to by a URL whose <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-scheme">scheme</a> component is <code>app:</code>. Likewise, Chrome’s extensions
+  and apps live on <code>chrome-extension:</code> schemes. These could reasonably be
+  considered trusted origins.</p>
+    <h3 class="heading settled" data-level="7.2" id="development-environments"><span class="secno">7.2. </span><span class="content">Development Environments</span><a class="self-link" href="#development-environments"></a></h3>
+    <p>In order to support developers who run staging servers on non-loopback hosts,
+  the user agent MAY allow users to configure specific sets of origins as
+  trustworthy, even though <a href="#is-origin-trustworthy">§3.2 Is origin potentially trustworthy?</a> would normally return <code>Not Trusted</code>.</p>
+    <h3 class="heading settled" data-level="7.3" id="new"><span class="secno">7.3. </span><span class="content">Restricting New Features</span><a class="self-link" href="#new"></a></h3>
+    <p><em>This section is non-normative.</em></p>
+    <p>When writing a specification for new features, we recommend that authors
+  and editors guard sensitive APIs with checks against <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-30">secure contexts</a>.
+  For example, something like the following might be a good approach:</p>
+    <div class="example" id="example-1611693b">
+     <a class="self-link" href="#example-1611693b"></a> 
+     <ol>
+      <li>
+        If the <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#incumbent-settings-object">incumbent settings object</a> is <em>not</em> a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-31">secure
+        context</a>, then: 
+       <ol>
+        <li> [<i>insert something appropriate here: perhaps a Promise could be
+            rejected with a <code>SecurityError</code>, an error callback could be called,
+            a permission request denied, etc.</i>]. 
+       </ol>
+     </ol>
+    </div>
+    <p>Authors should also ensure that sensitive APIs are only exposed to <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-32">secure
+  contexts</a> by guarding them with the <code>[SecureContext]</code> attribute:</p>
+    <div class="example" id="example-63db205d">
+     <a class="self-link" href="#example-63db205d"></a> 
+<pre class="idl def">[SecureContext]
+interface SensitiveFeature {
+  Promise&lt;double> getTheSecretDouble();
+};
+
+// Or:
+
+interface AnotherSensitiveFeature {
+  [SecureContext] void doThatPowerfulThing();
+};
+</pre>
+    </div>
+    <h3 class="heading settled" data-level="7.4" id="legacy"><span class="secno">7.4. </span><span class="content">Restricting Legacy Features</span><a class="self-link" href="#legacy"></a></h3>
+    <p><em>This section is non-normative.</em></p>
+    <p>The list above clearly includes some existing functionality that is currently
+  available to the web over non-secure channels. We recommend that such legacy
+  functionality begin requiring a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-33">secure context</a> as quickly as is
+  reasonably possible.</p>
+    <ol>
+     <li data-md="">
+      <p>If such a feature is not widely implemented, we recommend that the
+  specification be immediately <a data-link-type="dfn" href="http://www.w3.org/2014/Process-20140801/#rec-modify">modified</a> to include a restriction
+  to <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-34">secure contexts</a>.</p>
+     <li data-md="">
+      <p>If such a feature is widely implemented, but not yet in wide use, we
+  recommend that it be quickly restricted to <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-35">secure contexts</a> by
+  adding a check as described in <a href="#new">§7.3 Restricting New Features</a> to existing implementations, and <a data-link-type="dfn" href="http://www.w3.org/2014/Process-20140801/#rec-modify">modifying the specification</a> accordingly.</p>
+     <li data-md="">
+      <p>If such a feature is in wide use, we recommend that the existing
+  functionality be deprecated; the specification should be <a data-link-type="dfn" href="http://www.w3.org/2014/Process-20140801/#rec-modify">modified</a> to note that it does not
+  conform to the restrictions outlined in this document, and a plan should
+  be developed to both offer a conformant version of the feature and to
+  migrate existing users into that new version.</p>
+    </ol>
+    <h4 class="heading settled" data-level="7.4.1" id="legacy-example"><span class="secno">7.4.1. </span><span class="content">Example: Geolocation</span><a class="self-link" href="#legacy-example"></a></h4>
+    <p>The <a data-link-type="biblio" href="#biblio-geolocation-api">[GEOLOCATION-API]</a> is a good concrete example of such a feature; it is
+  widely implemented and used on a large number of non-secure sites. A reasonable
+  path forward might look like this:</p>
+    <ol>
+     <li data-md="">
+      <p><a data-link-type="dfn" href="http://www.w3.org/2014/Process-20140801/#rec-modify">Modify</a> the specification to include
+  checks against <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-36">secure context</a> before executing the algorithms for <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/geolocation-API/#get-current-position">getCurrentPosition()</a></code> and <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/geolocation-API/#watch-position">watchPosition()</a></code>.</p>
+      <p>If the <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#incumbent-settings-object">incumbent settings object</a> is not a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-37">secure context</a>,
+  then the algorithm should be aborted, and the <code>errorCallback</code> invoked with a <code>code</code> of <code>PERMISSION_DENIED</code>.</p>
+     <li data-md="">
+      <p>The user agent should announce clear intentions to disable the API for
+  non-secure contexts on a specific date, and warn developers accordingly
+  (via console messages, for example).</p>
+     <li data-md="">
+      <p>Leading up to the flag day, the user agent should announce a deprecation
+  schedule to ensure both that site authors recognize the need to modify
+  their code before it simply stops working altogether, and to protect
+  users in the meantime. Such a plan might include any or all of:</p>
+      <ol>
+       <li data-md="">
+        <p>Disallowing persistent permission grants to non-secure origins</p>
+       <li data-md="">
+        <p>Coarsening the accuracy of the API for non-secure origins (perhaps
+  consistently returning city-level data rather than high-accuracy
+  data)</p>
+       <li data-md="">
+        <p>UI modifications to inform users and site authors of the risk</p>
+      </ol>
+    </ol>
+   </section>
+   <section>
+    <h2 class="heading settled" data-level="8" id="acknowledgements"><span class="secno">8. </span><span class="content">Acknowledgements</span><a class="self-link" href="#acknowledgements"></a></h2>
+    <p>This document is largely based on the Chrome Security team’s work on <a data-link-type="biblio" href="#biblio-powerful-new-features">[POWERFUL-NEW-FEATURES]</a>. Chris Palmer, Ryan Sleevi, and David Dorwin have
+  been particularly engaged. Anne van Kesteren, Jonathan Watt, Boris Zbarsky, and
+  Henri Sivonen have also provided very helpful feedback.</p>
+   </section>
+  </main>
+  <h2 class="no-ref no-num heading settled" id="conformance"><span class="content">Conformance</span><a class="self-link" href="#conformance"></a></h2>
+  <h3 class="no-ref no-num heading settled" id="conventions"><span class="content">Document conventions</span><a class="self-link" href="#conventions"></a></h3>
+  <p>Conformance requirements are expressed with a combination of
+    descriptive assertions and RFC 2119 terminology. The key words “MUST”,
+    “MUST NOT”, “REQUIRED”, “SHALL”, “SHALL NOT”, “SHOULD”, “SHOULD NOT”,
+    “RECOMMENDED”, “MAY”, and “OPTIONAL” in the normative parts of this
+    document are to be interpreted as described in RFC 2119.
+    However, for readability, these words do not appear in all uppercase
+    letters in this specification. </p>
+  <p>All of the text of this specification is normative except sections
+    explicitly marked as non-normative, examples, and notes. <a data-link-type="biblio" href="#biblio-rfc2119">[RFC2119]</a></p>
+  <p>Examples in this specification are introduced with the words “for example”
+    or are set apart from the normative text with <code>class="example"</code>,
+    like this: </p>
+  <div class="example" id="example-f839f6c8">
+   <a class="self-link" href="#example-f839f6c8"></a> 
+   <p>This is an example of an informative example.</p>
+  </div>
+  <p>Informative notes begin with the word “Note” and are set apart from the
+    normative text with <code>class="note"</code>, like this: </p>
+  <p class="note" role="note">Note, this is an informative note.</p>
+  <h3 class="no-ref no-num heading settled" id="conformant-algorithms"><span class="content">Conformant Algorithms</span><a class="self-link" href="#conformant-algorithms"></a></h3>
+  <p>Requirements phrased in the imperative as part of algorithms (such as
+    "strip any leading space characters" or "return false and abort these
+    steps") are to be interpreted with the meaning of the key word ("must",
+    "should", "may", etc) used in introducing the algorithm.</p>
+  <p>Conformance requirements phrased as algorithms or specific steps can be
+    implemented in any manner, so long as the end result is equivalent. In
+    particular, the algorithms defined in this specification are intended to
+    be easy to understand and are not intended to be performant. Implementers
+    are encouraged to optimize.</p>
+<script src="https://www.w3.org/scripts/TR/2016/fixup.js"></script>
+  <h2 class="no-num no-ref heading settled" id="index"><span class="content">Index</span><a class="self-link" href="#index"></a></h2>
+  <h3 class="no-num no-ref heading settled" id="index-defined-here"><span class="content">Terms defined by this specification</span><a class="self-link" href="#index-defined-here"></a></h3>
+  <ul class="index">
+   <li>
+    isSecureContext
+    <ul>
+     <li><a href="#dom-window-issecurecontext">attribute for Window</a><span>, in §2.2.2</span>
+     <li><a href="#dom-workerglobalscope-issecurecontext">attribute for WorkerGlobalScope</a><span>, in §2.2.2</span>
+    </ul>
+   <li><a href="#non-secure-context">non-secure context</a><span>, in §2</span>
+   <li><a href="#potentially-trustworthy-origin">potentially trustworthy origin</a><span>, in §3.2</span>
+   <li><a href="#secure-context">secure context</a><span>, in §2</span>
+  </ul>
+  <h3 class="no-num no-ref heading settled" id="index-defined-elsewhere"><span class="content">Terms defined by reference</span><a class="self-link" href="#index-defined-elsewhere"></a></h3>
+  <ul class="index">
+   <li>
+    <a data-link-type="biblio">[WHATWG-DOM]</a> defines the following terms:
+    <ul>
+     <li><a href="http://www.w3.org/TR/dom/#interface-document">Document</a>
+     <li><a href="http://www.w3.org/TR/dom/#interface-window">Window</a>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[FETCH]</a> defines the following terms:
+    <ul>
+     <li><a href="https://fetch.spec.whatwg.org/#basic-fetch">basic fetch</a>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[GEOLOCATION-API]</a> defines the following terms:
+    <ul>
+     <li><a href="http://www.w3.org/TR/geolocation-API/#get-current-position">getCurrentPosition()</a>
+     <li><a href="http://www.w3.org/TR/geolocation-API/#watch-position">watchPosition()</a>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[HTML]</a> defines the following terms:
+    <ul>
+     <li><a href="https://html.spec.whatwg.org/multipage/webappapis.html#creation-url">creation url</a>
+     <li><a href="https://html.spec.whatwg.org/multipage/webappapis.html#https-state">https state</a>
+     <li><a href="https://html.spec.whatwg.org/multipage/semantics.html#link-type-noopener">noopener</a>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[html5]</a> defines the following terms:
+    <ul>
+     <li><a href="http://www.w3.org/TR/html5/browsers.html#ancestor-browsing-context">ancestor browsing context</a>
+     <li><a href="http://www.w3.org/TR/html5/browsers.html#auxiliary-browsing-context">auxiliary browsing context</a>
+     <li><a href="http://www.w3.org/TR/html5/browsers.html#browsing-context">browsing context</a>
+     <li><a href="http://www.w3.org/TR/html5/browsers.html#creator-document">creator document</a>
+     <li><a href="http://www.w3.org/TR/html5/webappapis.html#global-object">global object</a>
+     <li><a href="http://www.w3.org/TR/html5/webappapis.html#incumbent-settings-object">incumbent settings object</a>
+     <li><a href="http://www.w3.org/TR/html5/browsers.html#origin">opaque identifier</a>
+     <li><a href="http://www.w3.org/TR/html5/browsers.html#opener-browsing-context">opener browsing context</a>
+     <li><a href="http://www.w3.org/TR/html5/browsers.html#origin">origin</a>
+     <li><a href="http://www.w3.org/TR/html5/webappapis.html#relevant-settings-object-for-a-global-object">relevant settings object</a>
+     <li><a href="http://www.w3.org/TR/html5/webappapis.html#responsible-document">responsible document</a>
+     <li><a href="http://www.w3.org/TR/html5/webstorage.html#the-sessionstorage-attribute">sessionStorage</a>
+     <li><a href="http://www.w3.org/TR/html5/webappapis.html#settings-object">settings object</a>
+     <li><a href="http://www.w3.org/TR/html5/browsers.html#top-level-browsing-context">top-level browsing context</a>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[MIX]</a> defines the following terms:
+    <ul>
+     <li><a href="http://www.w3.org/TR/mixed-content/#a-priori-authenticated-url">a priori authenticated url</a>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[WHATWG-URL]</a> defines the following terms:
+    <ul>
+     <li><a href="https://url.spec.whatwg.org/#concept-url-origin">origin of a url</a>
+     <li><a href="https://url.spec.whatwg.org/#concept-url-scheme">scheme</a>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[W3C-PROCESS]</a> defines the following terms:
+    <ul>
+     <li><a href="http://www.w3.org/2014/Process-20140801/#rec-modify">modify a specification</a>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[WebIDL-1]</a> defines the following terms:
+    <ul>
+     <li><a href="https://heycam.github.io/webidl/#dfn-exposed">exposed</a>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[workers]</a> defines the following terms:
+    <ul>
+     <li><a href="http://www.w3.org/TR/workers/#dom-sharedworker">SharedWorker()</a>
+     <li><a href="http://www.w3.org/TR/workers/#workerglobalscope">WorkerGlobalScope</a>
+     <li><a href="http://www.w3.org/TR/workers/#the-workers-documents">the worker's documents</a>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[HTML]</a> defines the following terms:
+    <ul>
+     <li><a href="https://html.spec.whatwg.org/multipage/embedded-content.html#the-iframe-element">iframe</a>
+    </ul>
+  </ul>
+  <h2 class="no-num no-ref heading settled" id="references"><span class="content">References</span><a class="self-link" href="#references"></a></h2>
+  <h3 class="no-num no-ref heading settled" id="normative"><span class="content">Normative References</span><a class="self-link" href="#normative"></a></h3>
+  <dl>
+   <dt id="biblio-geolocation-api">[GEOLOCATION-API]
+   <dd>Andrei Popescu. <a href="http://dev.w3.org/geo/api/spec-source.html">Geolocation API Specification</a>. 28 May 2015. PER. URL: <a href="http://dev.w3.org/geo/api/spec-source.html">http://dev.w3.org/geo/api/spec-source.html</a>
+   <dt id="biblio-html">[HTML]
+   <dd>Ian Hickson. <a href="https://html.spec.whatwg.org/multipage/">HTML Standard</a>. Living Standard. URL: <a href="https://html.spec.whatwg.org/multipage/">https://html.spec.whatwg.org/multipage/</a>
+   <dt id="biblio-html5">[HTML5]
+   <dd>Ian Hickson; et al. <a href="http://www.w3.org/html/wg/drafts/html/master/">HTML5</a>. 28 October 2014. REC. URL: <a href="http://www.w3.org/html/wg/drafts/html/master/">http://www.w3.org/html/wg/drafts/html/master/</a>
+   <dt id="biblio-rfc2119">[RFC2119]
+   <dd>S. Bradner. <a href="https://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href="https://tools.ietf.org/html/rfc2119">https://tools.ietf.org/html/rfc2119</a>
+   <dt id="biblio-rfc4632">[RFC4632]
+   <dd>V. Fuller; T. Li. <a href="https://tools.ietf.org/html/rfc4632">Classless Inter-domain Routing (CIDR): The Internet Address Assignment and Aggregation Plan</a>. August 2006. Best Current Practice. URL: <a href="https://tools.ietf.org/html/rfc4632">https://tools.ietf.org/html/rfc4632</a>
+   <dt id="biblio-rfc6761">[RFC6761]
+   <dd>S. Cheshire; M. Krochmal. <a href="https://tools.ietf.org/html/rfc6761">Special-Use Domain Names</a>. February 2013. Proposed Standard. URL: <a href="https://tools.ietf.org/html/rfc6761">https://tools.ietf.org/html/rfc6761</a>
+   <dt id="biblio-w3c-process">[W3C-PROCESS]
+   <dd>Charles McCathie Nevile. <a href="http://www.w3.org/2014/Process-20140801/">World Wide Web Consortium Process Document</a>. URL: <a href="http://www.w3.org/2014/Process-20140801/">http://www.w3.org/2014/Process-20140801/</a>
+   <dt id="biblio-webidl-1">[WebIDL-1]
+   <dd>Cameron McCormack; Boris Zbarsky. <a href="https://heycam.github.io/webidl/">WebIDL Level 1</a>. 8 March 2016. CR. URL: <a href="https://heycam.github.io/webidl/">https://heycam.github.io/webidl/</a>
+   <dt id="biblio-whatwg-dom">[WHATWG-DOM]
+   <dd>Anne van Kesteren. <a href="https://dom.spec.whatwg.org/">DOM Standard</a>. Living Standard. URL: <a href="https://dom.spec.whatwg.org/">https://dom.spec.whatwg.org/</a>
+   <dt id="biblio-whatwg-url">[WHATWG-URL]
+   <dd>Anne van Kesteren; Sam Ruby. <a href="https://url.spec.whatwg.org/">URL Standard</a>. Living Standard. URL: <a href="https://url.spec.whatwg.org/">https://url.spec.whatwg.org/</a>
+   <dt id="biblio-workers">[WORKERS]
+   <dd>Ian Hickson. <a href="https://html.spec.whatwg.org/multipage/workers.html">Web Workers</a>. 24 September 2015. WD. URL: <a href="https://html.spec.whatwg.org/multipage/workers.html">https://html.spec.whatwg.org/multipage/workers.html</a>
+  </dl>
+  <h3 class="no-num no-ref heading settled" id="informative"><span class="content">Informative References</span><a class="self-link" href="#informative"></a></h3>
+  <dl>
+   <dt id="biblio-bluetooth">[BLUETOOTH]
+   <dd>Jeffrey Yasskin; Vincent Scheib. <a href="https://webbluetoothcg.github.io/web-bluetooth/">Web Bluetooth</a>. URL: <a href="https://webbluetoothcg.github.io/web-bluetooth/">https://webbluetoothcg.github.io/web-bluetooth/</a>
+   <dt id="biblio-comcast">[COMCAST]
+   <dd>David Kravets. <a href="http://arstechnica.com/tech-policy/2014/09/why-comcasts-javascript-ad-injections-threaten-security-net-neutrality/">Comcast Wi-Fi serving self-promotional ads via JavaScript injection</a>. URL: <a href="http://arstechnica.com/tech-policy/2014/09/why-comcasts-javascript-ad-injections-threaten-security-net-neutrality/">http://arstechnica.com/tech-policy/2014/09/why-comcasts-javascript-ad-injections-threaten-security-net-neutrality/</a>
+   <dt id="biblio-credential-management">[CREDENTIAL-MANAGEMENT]
+   <dd>Mike West. <a href="https://w3c.github.io/webappsec/specs/credentialmanagement/">Credential Management</a>. ED. URL: <a href="https://w3c.github.io/webappsec/specs/credentialmanagement/">https://w3c.github.io/webappsec/specs/credentialmanagement/</a>
+   <dt id="biblio-discovery">[DISCOVERY]
+   <dd>Rich Tibbett. <a href="https://dvcs.w3.org/hg/dap/raw-file/tip/discovery-api/Overview.html">Network Service Discovery</a>. URL: <a href="https://dvcs.w3.org/hg/dap/raw-file/tip/discovery-api/Overview.html">https://dvcs.w3.org/hg/dap/raw-file/tip/discovery-api/Overview.html</a>
+   <dt id="biblio-encrypted-media">[ENCRYPTED-MEDIA]
+   <dd>David Dorwin; et al. <a href="http://www.w3.org/TR/encrypted-media/">Encrypted Media Extensions</a>. 27 February 2016. WD. URL: <a href="http://www.w3.org/TR/encrypted-media/">http://www.w3.org/TR/encrypted-media/</a>
+   <dt id="biblio-fetch">[FETCH]
+   <dd>Anne van Kesteren. <a href="https://fetch.spec.whatwg.org/">Fetch Standard</a>. Living Standard. URL: <a href="https://fetch.spec.whatwg.org/">https://fetch.spec.whatwg.org/</a>
+   <dt id="biblio-fullscreen">[FULLSCREEN]
+   <dd>Anne van Kesteren. <a href="https://fullscreen.spec.whatwg.org/">Fullscreen API Standard</a>. Living Standard. URL: <a href="https://fullscreen.spec.whatwg.org/">https://fullscreen.spec.whatwg.org/</a>
+   <dt id="biblio-indexeddb">[IndexedDB]
+   <dd>Nikunj Mehta; et al. <a href="http://www.w3.org/TR/IndexedDB/">Indexed Database API</a>. 8 January 2015. REC. URL: <a href="http://www.w3.org/TR/IndexedDB/">http://www.w3.org/TR/IndexedDB/</a>
+   <dt id="biblio-mediacapture-streams">[MEDIACAPTURE-STREAMS]
+   <dd>Daniel Burnett; et al. <a href="http://www.w3.org/TR/mediacapture-streams/">Media Capture and Streams</a>. 14 April 2015. LCWD. URL: <a href="http://www.w3.org/TR/mediacapture-streams/">http://www.w3.org/TR/mediacapture-streams/</a>
+   <dt id="biblio-mix">[MIX]
+   <dd>Mike West. <a href="https://w3c.github.io/webappsec/specs/mixedcontent/">Mixed Content</a>. 8 October 2015. CR. URL: <a href="https://w3c.github.io/webappsec/specs/mixedcontent/">https://w3c.github.io/webappsec/specs/mixedcontent/</a>
+   <dt id="biblio-powerful-new-features">[POWERFUL-NEW-FEATURES]
+   <dd>Chrome Security Team. <a href="https://www.chromium.org/Home/chromium-security/prefer-secure-origins-for-powerful-new-features">Prefer Secure Origins For Powerful New Features</a>. URL: <a href="https://www.chromium.org/Home/chromium-security/prefer-secure-origins-for-powerful-new-features">https://www.chromium.org/Home/chromium-security/prefer-secure-origins-for-powerful-new-features</a>
+   <dt id="biblio-rfc6265">[RFC6265]
+   <dd>A. Barth. <a href="https://tools.ietf.org/html/rfc6265">HTTP State Management Mechanism</a>. April 2011. Proposed Standard. URL: <a href="https://tools.ietf.org/html/rfc6265">https://tools.ietf.org/html/rfc6265</a>
+   <dt id="biblio-rfc7258">[RFC7258]
+   <dd>S. Farrell; H. Tschofenig. <a href="https://tools.ietf.org/html/rfc7258">Pervasive Monitoring Is an Attack</a>. May 2014. Best Current Practice. URL: <a href="https://tools.ietf.org/html/rfc7258">https://tools.ietf.org/html/rfc7258</a>
+   <dt id="biblio-service-workers">[SERVICE-WORKERS]
+   <dd>Alex Russell; Jungkee Song; Jake Archibald. <a href="http://www.w3.org/TR/service-workers/">Service Workers</a>. 25 June 2015. WD. URL: <a href="http://www.w3.org/TR/service-workers/">http://www.w3.org/TR/service-workers/</a>
+   <dt id="biblio-verizon">[VERIZON]
+   <dd>Mark Bergen; Alex Kantrowitz. <a href="http://adage.com/article/digital/verizon-target-mobile-subscribers-ads/293356/">Verizon looks to target its mobile subscribers with ads</a>. URL: <a href="http://adage.com/article/digital/verizon-target-mobile-subscribers-ads/293356/">http://adage.com/article/digital/verizon-target-mobile-subscribers-ads/293356/</a>
+   <dt id="biblio-webcryptoapi">[WEBCRYPTOAPI]
+   <dd>Ryan Sleevi; Mark Watson. <a href="http://www.w3.org/TR/WebCryptoAPI/">Web Cryptography API</a>. 11 December 2014. CR. URL: <a href="http://www.w3.org/TR/WebCryptoAPI/">http://www.w3.org/TR/WebCryptoAPI/</a>
+  </dl>
+  <h2 class="no-num no-ref heading settled" id="idl-index"><span class="content">IDL Index</span><a class="self-link" href="#idl-index"></a></h2>
+<pre class="idl def">partial interface <a class="idl-code" data-link-type="interface" href="http://www.w3.org/TR/dom/#interface-window">Window</a> {
+  readonly attribute boolean <a data-readonly="" data-type="boolean " href="#dom-window-issecurecontext">isSecureContext</a>;
+};
+
+partial interface <a class="idl-code" data-link-type="interface" href="http://www.w3.org/TR/workers/#workerglobalscope">WorkerGlobalScope</a> {
+  readonly attribute boolean <a data-readonly="" data-type="boolean " href="#dom-workerglobalscope-issecurecontext">isSecureContext</a>;
+};
+
+</pre>
+  <h2 class="no-num no-ref heading settled" id="issues-index"><span class="content">Issues Index</span><a class="self-link" href="#issues-index"></a></h2>
+  <div style="counter-reset:issue">
+   <div class="issue"> This addition is currently under review. <a href="https://github.com/heycam/webidl/issues/65">&lt;https://github.com/heycam/webidl/issues/65></a><a href="#issue-020b0dc4"> ↵ </a></div>
+  </div>
+<script>
+        document.body.addEventListener("click", function(e) {
+            var queryAll = function(sel) { return [].slice.call(document.querySelectorAll(sel)); }
+            // Find the dfn element or panel, if any, that was clicked on.
+            var el = e.target;
+            var target;
+            while(el.parentElement) {
+                if(el.tagName == "DFN") {
+                    target = "dfn";
+                    break;
+                }
+                if(/H\d/.test(el.tagName) && el.getAttribute('data-dfn-type') != null) {
+                    target = "dfn";
+                    break;
+                }
+                if(el.classList.contains("dfn-panel")) {
+                    target = "dfn-panel";
+                    break;
+                }
+                el = el.parentElement;
+            }
+            if(target != "dfn-panel") {
+                // Turn off any currently "on" or "activated" panels.
+                queryAll(".dfn-panel.on, .dfn-panel.activated").forEach(function(el){
+                    el.classList.remove("on");
+                    el.classList.remove("activated");
+                });
+            }
+            if(target == "dfn") {
+                // open the panel
+                var dfnPanel = el.querySelector(".dfn-panel");
+                if(dfnPanel) {
+                    dfnPanel.classList.add("on");
+                }
+            } else if(target == "dfn-panel") {
+                // Switch it to "activated" state, which pins it.
+                el.classList.add("activated");
+            }
+
+        });
+        </script>
