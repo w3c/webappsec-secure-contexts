@@ -1961,22 +1961,24 @@ partial interface <a class="idl-code" data-link-type="interface" href="http://ww
       <div class="note" role="note">
         Most of the time, this check will be enough to determine whether
     a particular context was securely delivered. Documents delivered over
-    TLS will have the flag set, and <code>srcdoc</code> <code>Document</code>s inherit their
-    ancestor’s flag (as do other kinds of requests which inherit their
-    requestor’s origin: see the <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#basic-fetch">basic fetch</a> algorithm for details
-    on some of these <a data-link-type="biblio" href="#biblio-fetch">[FETCH]</a>). 
-       <p>We’ll only continue past this check when dealing with resources
-    delivered from "trustworthy" but unauthenticated locations like <code>http://127.0.0.1/</code>.</p>
+    TLS will have their <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#https-state">HTTPS state</a> set, and <code>srcdoc</code> <code>Document</code>s
+    inherit their ancestor’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#https-state">HTTPS state</a> (as do other kinds of
+    requests which inherit their requestor’s origin: see the <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#basic-fetch">basic
+    fetch</a> algorithm for details on some of these <a data-link-type="biblio" href="#biblio-fetch">[FETCH]</a>). 
+       <p>We only continue past this check in order to allow resources
+    delivered from "trustworthy" but unauthenticated locations like <code>http://127.0.0.1/</code> to be treated as creating a secure context.</p>
       </div>
      <li data-md="">
       <p>Let <var>origin</var> be <var>settings object</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#origin">origin</a>.</p>
      <li data-md="">
       <p>If <var>origin</var> is an <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#origin">opaque identifier</a>, set <var>origin</var> to the <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-origin">origin</a> of <var>settings object</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#creation-url">creation
   URL</a>.</p>
-      <p class="note" role="note">Note: We use the origin of the URL here in order to allow sandboxed
-  context to remain secure (as sandboxing is a strict reduction in the
-  context’s capabilities, and therefore to the risk it poses). This
-  covers scenarios such as <code>&lt;iframe sandbox src="http://localhost/"></code>.</p>
+      <p class="note" role="note">Note: We use the origin of the URL here because sandboxed content that
+  is treated as being in a unique origin (e.g. <code>&lt;iframe sandbox src="http://localhost/"></code>) would be treated as
+  non-trustworthy by <a href="#is-origin-trustworthy">§3.2 Is origin potentially trustworthy?</a>. Since sandboxing is a
+  strict reduction in the content’s capabilities, and therefore in the
+  risk it poses, we look at the origin of its URL to determine whether we
+  would have considered it trustworthy had it not been sandboxed.</p>
      <li data-md="">
       <p>If the result of executing the <a href="#is-origin-trustworthy">§3.2 Is origin potentially trustworthy?</a> algorithm
   on <var>origin</var> is <strong>not</strong> <code>Potentially Trustworthy</code>, then return "<code>Not Secure</code>".</p>
