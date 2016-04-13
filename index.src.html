@@ -23,7 +23,6 @@ Boilerplate: omit conformance, omit feedback-header
 urlPrefix: http://www.w3.org/TR/dom/; spec: DOM
   type: interface
     text: Document; url: interface-document
-    text: Window; url: interface-window
 urlPrefix: https://fetch.spec.whatwg.org/; spec: FETCH
   type: interface
     text: Response
@@ -63,10 +62,14 @@ urlPrefix: http://www.w3.org/TR/html5/; spec: HTML5
       text: script settings for browsing contexts
       text: document environment
       text: worker environment
+  type: interface
+    urlPrefix: browsers.html
+      text: Window; url: the-window-object
+urlPrefix: http://www.w3.org/TR/webstorage/; spec: WEBSTORAGE
   type: attribute
     urlPrefix: webstorage.html
       text: sessionStorage; for: WindowSessionStorage; url: the-sessionstorage-attribute
-urlPrefix: http://www.w3.org/TR/mixed-content/; spec: MIX
+urlPrefix: https://w3c.github.io/webappsec-mixed-content/; spec: MIX
   type: dfn
     text: a priori authenticated url
 urlPrefix: http://www.w3.org/TR/service-workers/; spec: SERVICE-WORKERS
@@ -83,7 +86,7 @@ urlPrefix: https://url.spec.whatwg.org/; spec: URL
     text: URL
 spec: WORKERS; urlPrefix: http://www.w3.org/TR/workers/
   type: dfn
-    text: the worker's documents
+    text: the worker's documents; url: the-worker-s-documents
     text: set up a worker environment settings object
   type: interface
     text: SharedWorker
@@ -101,6 +104,7 @@ urlPrefix: https://html.spec.whatwg.org/multipage/; spec: HTML
 spec: WEBIDL; urlPrefix: https://heycam.github.io/webidl/
   type: dfn
     text: exposed; url: dfn-exposed
+    text: [SecureContext]; url: SecureContext
 </pre>
 <pre class="biblio">
 {
@@ -590,35 +594,37 @@ spec: WEBIDL; urlPrefix: https://heycam.github.io/webidl/
   Likewise, a <a>global object</a> is considered a <a>secure context</a> if its
   <a>relevant settings object</a> is a <a>secure context</a>.
 
-  <h3 id="monkey-patching-idl">Modifications to WebIDL</h3>
+  <h3 id="integration-idl">Intergration with WebIDL</h3>
 
-  A new `[SecureContext]` attribute is available for operators, which ensures
-  that they will only be <a>exposed</a> into secure contexts. The following
-  example should help:
+  <em>This section is non-normative.</em>
+
+  A new `<a>[SecureContext]</a>` attribute is available for operators, which
+  ensures that they will only be <a>exposed</a> into secure contexts. The
+  following example should help:
 
   <div class="example">
     <pre class="idl">
       interface ExampleFeature {
         // This call will succeed in all contexts.
-        Promise &lt;double> calculateNotSoSecretResult();
+        Promise &lt;double&gt; calculateNotSoSecretResult();
 
-        // This operation will not be exposed to a non-secure context. If such a context
-        // is somehow able to call it despite this precaution, the Promise will be
-        // immedietely rejected with a 'SecurityError' exception.
-        [SecureContext] Promise&lt;double> calculateSecretResult();
+        // This operation will not be exposed to a non-secure context.
+        <a>[SecureContext]</a> Promise&lt;double&gt; calculateSecretResult();
 
-        // The same applies here: the operation will not be exposed to a non-secure context,
-        // and if somehow called from a non-secure context, a 'SecurityError'
-        // exception will be thrown.
-        [SecureContext] boolean getSecretBoolean();
+        // The same applies here: the operation will not be exposed to a non-secure context.
+        <a>[SecureContext]</a> boolean getSecretBoolean();
+      };
+
+      [SecureContext]
+      interface SecureFeature {
+        // This interface will not be exposed to non-secure contexts.
+        Promise&lt;any&gt; doAmazingThing();
       };
     </pre>
   </div>
 
   Specification authors are encouraged to use this attribute when defining new
   features.
-
-  ISSUE(heycam/webidl#65): This addition is currently under review.
 
   <h3 id="monkey-patching-html">Modifications to HTML</h3>
 

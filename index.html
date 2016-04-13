@@ -1442,7 +1442,7 @@ certain minimum standards of authentication and confidentiality are met.</p>
     <li>
      <a href="#framework"><span class="secno">2</span> <span class="content">Framework</span></a>
      <ol class="toc">
-      <li><a href="#monkey-patching-idl"><span class="secno">2.1</span> <span class="content">Modifications to WebIDL</span></a>
+      <li><a href="#integration-idl"><span class="secno">2.1</span> <span class="content">Intergration with WebIDL</span></a>
       <li>
        <a href="#monkey-patching-html"><span class="secno">2.2</span> <span class="content">Modifications to HTML</span></a>
        <ol class="toc">
@@ -1506,7 +1506,6 @@ certain minimum standards of authentication and confidentiality are met.</p>
       <li><a href="#informative"><span class="secno"></span> <span class="content">Informative References</span></a>
      </ol>
     <li><a href="#idl-index"><span class="secno"></span> <span class="content">IDL Index</span></a>
-    <li><a href="#issues-index"><span class="secno"></span> <span class="content">Issues Index</span></a>
    </ol>
   </nav>
   <main>
@@ -1866,31 +1865,33 @@ certain minimum standards of authentication and confidentiality are met.</p>
   the algorithm in <a href="#settings-object">§3.1 Is settings object a secure context?</a> returns "<code>Secure</code>". The <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#settings-object">settings
   object</a> is otherwise <dfn data-dfn-type="dfn" data-export="" data-lt="non-secure context" id="non-secure-context">non-secure<a class="self-link" href="#non-secure-context"></a></dfn>.</p>
     <p>Likewise, a <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#global-object">global object</a> is considered a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-17">secure context</a> if its <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#relevant-settings-object-for-a-global-object">relevant settings object</a> is a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-18">secure context</a>.</p>
-    <h3 class="heading settled" data-level="2.1" id="monkey-patching-idl"><span class="secno">2.1. </span><span class="content">Modifications to WebIDL</span><a class="self-link" href="#monkey-patching-idl"></a></h3>
-    <p>A new <code>[SecureContext]</code> attribute is available for operators, which ensures
-  that they will only be <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-exposed">exposed</a> into secure contexts. The following
-  example should help:</p>
-    <div class="example" id="example-bb4ea7aa">
-     <a class="self-link" href="#example-bb4ea7aa"></a> 
+    <h3 class="heading settled" data-level="2.1" id="integration-idl"><span class="secno">2.1. </span><span class="content">Intergration with WebIDL</span><a class="self-link" href="#integration-idl"></a></h3>
+    <p><em>This section is non-normative.</em></p>
+    <p>A new <code>&lt;a>[SecureContext]&lt;/a></code> attribute is available for operators, which
+  ensures that they will only be <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-exposed">exposed</a> into secure contexts. The
+  following example should help:</p>
+    <div class="example" id="example-81580eb2">
+     <a class="self-link" href="#example-81580eb2"></a> 
 <pre class="idl def">interface ExampleFeature {
   // This call will succeed in all contexts.
   Promise &lt;double> calculateNotSoSecretResult();
 
-  // This operation will not be exposed to a non-secure context. If such a context
-  // is somehow able to call it despite this precaution, the Promise will be
-  // immedietely rejected with a 'SecurityError' exception.
-  [SecureContext] Promise&lt;double> calculateSecretResult();
+  // This operation will not be exposed to a non-secure context.
+  <a data-link-type="dfn" href="https://heycam.github.io/webidl/#SecureContext">[SecureContext]</a> Promise&lt;double> calculateSecretResult();
 
-  // The same applies here: the operation will not be exposed to a non-secure context,
-  // and if somehow called from a non-secure context, a 'SecurityError'
-  // exception will be thrown.
-  [SecureContext] boolean getSecretBoolean();
+  // The same applies here: the operation will not be exposed to a non-secure context.
+  <a data-link-type="dfn" href="https://heycam.github.io/webidl/#SecureContext">[SecureContext]</a> boolean getSecretBoolean();
+};
+
+[SecureContext]
+interface SecureFeature {
+  // This interface will not be exposed to non-secure contexts.
+  Promise&lt;any> doAmazingThing();
 };
 </pre>
     </div>
     <p>Specification authors are encouraged to use this attribute when defining new
   features.</p>
-    <p class="issue" id="issue-020b0dc4"><a class="self-link" href="#issue-020b0dc4"></a> This addition is currently under review. <a href="https://github.com/heycam/webidl/issues/65">&lt;https://github.com/heycam/webidl/issues/65></a></p>
     <h3 class="heading settled" data-level="2.2" id="monkey-patching-html"><span class="secno">2.2. </span><span class="content">Modifications to HTML</span><a class="self-link" href="#monkey-patching-html"></a></h3>
     <h4 class="heading settled" data-level="2.2.1" id="monkey-patching-shared-workers"><span class="secno">2.2.1. </span><span class="content">Shared Workers</span><a class="self-link" href="#monkey-patching-shared-workers"></a></h4>
     <p>The <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/workers/#dom-sharedworker">SharedWorker()</a></code> constructor will throw a <code>SecurityError</code> exception if
@@ -1915,7 +1916,7 @@ certain minimum standards of authentication and confidentiality are met.</p>
     <p>To determine whether a context is capable of making use of features which
   require <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-22">secure contexts</a>, a simple boolean attribute is added to the
   global object:</p>
-<pre class="idl def">partial interface <a class="idl-code" data-link-type="interface" href="http://www.w3.org/TR/dom/#interface-window">Window</a> {
+<pre class="idl def">partial interface <a class="idl-code" data-link-type="interface" href="http://www.w3.org/TR/html5/browsers.html#the-window-object">Window</a> {
   readonly attribute boolean <dfn class="dfn-paneled idl-code" data-dfn-for="Window" data-dfn-type="attribute" data-export="" data-lt="isSecureContext" data-readonly="" data-type="boolean " id="dom-window-issecurecontext">isSecureContext<span class="dfn-panel" data-deco=""><b><a href="#dom-window-issecurecontext">#dom-window-issecurecontext</a></b><b>Referenced in:</b><span><a href="#ref-for-dom-window-issecurecontext-1">2.2.2. Feature Detection</a></span></span></dfn>;
 };
 
@@ -1923,7 +1924,7 @@ partial interface <a class="idl-code" data-link-type="interface" href="http://ww
   readonly attribute boolean <dfn class="dfn-paneled idl-code" data-dfn-for="WorkerGlobalScope" data-dfn-type="attribute" data-export="" data-lt="isSecureContext" data-readonly="" data-type="boolean " id="dom-workerglobalscope-issecurecontext">isSecureContext<span class="dfn-panel" data-deco=""><b><a href="#dom-workerglobalscope-issecurecontext">#dom-workerglobalscope-issecurecontext</a></b><b>Referenced in:</b><span><a href="#ref-for-dom-workerglobalscope-issecurecontext-1">2.2.2. Feature Detection</a></span></span></dfn>;
 };
 </pre>
-    <p>Both <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/dom/#interface-window">Window</a></code>'s <code class="idl"><a data-link-type="idl" href="#dom-window-issecurecontext" id="ref-for-dom-window-issecurecontext-1">isSecureContext</a></code> and <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/workers/#workerglobalscope">WorkerGlobalScope</a></code>'s <code class="idl"><a data-link-type="idl" href="#dom-workerglobalscope-issecurecontext" id="ref-for-dom-workerglobalscope-issecurecontext-1">isSecureContext</a></code> attributes' getters return <code>true</code> if the <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#relevant-settings-object-for-a-global-object">relevant settings object</a> for the getter’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#global-object">global object</a> is a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-23">secure context</a>, and <code>false</code> otherwise.</p>
+    <p>Both <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/html5/browsers.html#the-window-object">Window</a></code>'s <code class="idl"><a data-link-type="idl" href="#dom-window-issecurecontext" id="ref-for-dom-window-issecurecontext-1">isSecureContext</a></code> and <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/workers/#workerglobalscope">WorkerGlobalScope</a></code>'s <code class="idl"><a data-link-type="idl" href="#dom-workerglobalscope-issecurecontext" id="ref-for-dom-workerglobalscope-issecurecontext-1">isSecureContext</a></code> attributes' getters return <code>true</code> if the <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#relevant-settings-object-for-a-global-object">relevant settings object</a> for the getter’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#global-object">global object</a> is a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-23">secure context</a>, and <code>false</code> otherwise.</p>
    </section>
    <section>
     <h2 class="heading settled" data-level="3" id="algorithms"><span class="secno">3. </span><span class="content">Algorithms</span><a class="self-link" href="#algorithms"></a></h2>
@@ -1938,14 +1939,14 @@ partial interface <a class="idl-code" data-link-type="interface" href="http://ww
       <ol>
        <li data-md="">
         <p>For each <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/dom/#interface-document">Document</a></code> (<var>document</var>) in <var>settings object</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#global-object">global
-  object</a>’s list of <a data-link-type="dfn" href="http://www.w3.org/TR/workers/#the-workers-documents">the worker’s <code>Documents</code></a>:</p>
+  object</a>’s list of <a data-link-type="dfn" href="http://www.w3.org/TR/workers/#the-worker-s-documents">the worker’s <code>Documents</code></a>:</p>
         <ol>
          <li data-md="">
           <p>If <var>document</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#relevant-settings-object-for-a-global-object">relevant settings object</a> is not a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-24">secure context</a>, return "<code>Not Secure</code>".</p>
         </ol>
       </ol>
      <li data-md="">
-      <p>Otherwise, <var>settings object</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#global-object">global object</a> is a <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/dom/#interface-window">Window</a></code>. If <var>settings object</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#responsible-document">responsible document</a> has a <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#creator-document">creator <code>Document</code></a>, <var>creator</var>:</p>
+      <p>Otherwise, <var>settings object</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#global-object">global object</a> is a <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/html5/browsers.html#the-window-object">Window</a></code>. If <var>settings object</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#responsible-document">responsible document</a> has a <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#creator-document">creator <code>Document</code></a>, <var>creator</var>:</p>
       <ol>
        <li data-md="">
         <p>If <var>creator</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#browsing-context">browsing context</a> is an <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#ancestor-browsing-context">ancestor
@@ -2012,7 +2013,7 @@ partial interface <a class="idl-code" data-link-type="interface" href="http://ww
      <li data-md="">
       <p>If <var>origin</var>’s <code>scheme</code> is either "<code>https</code>" or "<code>wss</code>", return
   "<code>Potentially Trustworthy</code>".</p>
-      <p class="note" role="note">Note: This is meant to be analog to the <a data-link-type="dfn" href="http://www.w3.org/TR/mixed-content/#a-priori-authenticated-url"><i lang="la">a priori</i> authenticated URL</a> concept in <a data-link-type="biblio" href="#biblio-mix">[MIX]</a>.</p>
+      <p class="note" role="note">Note: This is meant to be analog to the <a data-link-type="dfn" href="https://w3c.github.io/webappsec-mixed-content/#a-priori-authenticated-url"><i lang="la">a priori</i> authenticated URL</a> concept in <a data-link-type="biblio" href="#biblio-mix">[MIX]</a>.</p>
       <p class="note" role="note">Note: The origin of <code>blob:</code> and <code>filesystem:</code> URLs is the origin of the
   context in which they were created. Therefore, blobs created in a
   trustworthy origin will themselves be potentially trustworthy. The origin
@@ -2102,7 +2103,7 @@ partial interface <a class="idl-code" data-link-type="interface" href="http://ww
       access. <a data-link-type="biblio" href="#biblio-discovery">[DISCOVERY]</a> and <a data-link-type="biblio" href="#biblio-bluetooth">[BLUETOOTH]</a> are good examples. 
      <li> The ability to track users using temporary or persistent identifiers,
       including identifiers which reset themselves after some period of time
-      (e.g. <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/html5/webstorage.html#the-sessionstorage-attribute">sessionStorage</a></code>), identifiers the user can manually reset
+      (e.g. <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/webstorage/webstorage.html#the-sessionstorage-attribute">sessionStorage</a></code>), identifiers the user can manually reset
       (e.g. <a data-link-type="biblio" href="#biblio-encrypted-media">[ENCRYPTED-MEDIA]</a>, Cookies <a data-link-type="biblio" href="#biblio-rfc6265">[RFC6265]</a>, and <a data-link-type="biblio" href="#biblio-indexeddb">[IndexedDB]</a>),
       as well as identifying hardware features the user can’t easily reset. 
      <li> The ability to introduce some state for an origin which persists across
@@ -2295,7 +2296,6 @@ interface AnotherSensitiveFeature {
     <a data-link-type="biblio">[WHATWG-DOM]</a> defines the following terms:
     <ul>
      <li><a href="http://www.w3.org/TR/dom/#interface-document">Document</a>
-     <li><a href="http://www.w3.org/TR/dom/#interface-window">Window</a>
     </ul>
    <li>
     <a data-link-type="biblio">[FETCH]</a> defines the following terms:
@@ -2318,6 +2318,7 @@ interface AnotherSensitiveFeature {
    <li>
     <a data-link-type="biblio">[html5]</a> defines the following terms:
     <ul>
+     <li><a href="http://www.w3.org/TR/html5/browsers.html#the-window-object">Window</a>
      <li><a href="http://www.w3.org/TR/html5/browsers.html#ancestor-browsing-context">ancestor browsing context</a>
      <li><a href="http://www.w3.org/TR/html5/browsers.html#auxiliary-browsing-context">auxiliary browsing context</a>
      <li><a href="http://www.w3.org/TR/html5/browsers.html#browsing-context">browsing context</a>
@@ -2329,14 +2330,13 @@ interface AnotherSensitiveFeature {
      <li><a href="http://www.w3.org/TR/html5/browsers.html#origin">origin</a>
      <li><a href="http://www.w3.org/TR/html5/webappapis.html#relevant-settings-object-for-a-global-object">relevant settings object</a>
      <li><a href="http://www.w3.org/TR/html5/webappapis.html#responsible-document">responsible document</a>
-     <li><a href="http://www.w3.org/TR/html5/webstorage.html#the-sessionstorage-attribute">sessionStorage</a>
      <li><a href="http://www.w3.org/TR/html5/webappapis.html#settings-object">settings object</a>
      <li><a href="http://www.w3.org/TR/html5/browsers.html#top-level-browsing-context">top-level browsing context</a>
     </ul>
    <li>
     <a data-link-type="biblio">[MIX]</a> defines the following terms:
     <ul>
-     <li><a href="http://www.w3.org/TR/mixed-content/#a-priori-authenticated-url">a priori authenticated url</a>
+     <li><a href="https://w3c.github.io/webappsec-mixed-content/#a-priori-authenticated-url">a priori authenticated url</a>
     </ul>
    <li>
     <a data-link-type="biblio">[WHATWG-URL]</a> defines the following terms:
@@ -2352,14 +2352,20 @@ interface AnotherSensitiveFeature {
    <li>
     <a data-link-type="biblio">[WebIDL-1]</a> defines the following terms:
     <ul>
+     <li><a href="https://heycam.github.io/webidl/#SecureContext">[securecontext]</a>
      <li><a href="https://heycam.github.io/webidl/#dfn-exposed">exposed</a>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[webstorage]</a> defines the following terms:
+    <ul>
+     <li><a href="http://www.w3.org/TR/webstorage/webstorage.html#the-sessionstorage-attribute">sessionStorage</a>
     </ul>
    <li>
     <a data-link-type="biblio">[workers]</a> defines the following terms:
     <ul>
      <li><a href="http://www.w3.org/TR/workers/#dom-sharedworker">SharedWorker()</a>
      <li><a href="http://www.w3.org/TR/workers/#workerglobalscope">WorkerGlobalScope</a>
-     <li><a href="http://www.w3.org/TR/workers/#the-workers-documents">the worker's documents</a>
+     <li><a href="http://www.w3.org/TR/workers/#the-worker-s-documents">the worker's documents</a>
     </ul>
    <li>
     <a data-link-type="biblio">[HTML]</a> defines the following terms:
@@ -2386,6 +2392,8 @@ interface AnotherSensitiveFeature {
    <dd>Charles McCathie Nevile. <a href="http://www.w3.org/2014/Process-20140801/">World Wide Web Consortium Process Document</a>. URL: <a href="http://www.w3.org/2014/Process-20140801/">http://www.w3.org/2014/Process-20140801/</a>
    <dt id="biblio-webidl-1">[WebIDL-1]
    <dd>Cameron McCormack; Boris Zbarsky. <a href="https://heycam.github.io/webidl/">WebIDL Level 1</a>. 8 March 2016. CR. URL: <a href="https://heycam.github.io/webidl/">https://heycam.github.io/webidl/</a>
+   <dt id="biblio-webstorage">[WEBSTORAGE]
+   <dd>Ian Hickson. <a href="https://w3c.github.io/webstorage/">Web Storage (Second Edition)</a>. 26 November 2015. PR. URL: <a href="https://w3c.github.io/webstorage/">https://w3c.github.io/webstorage/</a>
    <dt id="biblio-whatwg-dom">[WHATWG-DOM]
    <dd>Anne van Kesteren. <a href="https://dom.spec.whatwg.org/">DOM Standard</a>. Living Standard. URL: <a href="https://dom.spec.whatwg.org/">https://dom.spec.whatwg.org/</a>
    <dt id="biblio-whatwg-url">[WHATWG-URL]
@@ -2429,7 +2437,7 @@ interface AnotherSensitiveFeature {
    <dd>Ryan Sleevi; Mark Watson. <a href="http://www.w3.org/TR/WebCryptoAPI/">Web Cryptography API</a>. 11 December 2014. CR. URL: <a href="http://www.w3.org/TR/WebCryptoAPI/">http://www.w3.org/TR/WebCryptoAPI/</a>
   </dl>
   <h2 class="no-num no-ref heading settled" id="idl-index"><span class="content">IDL Index</span><a class="self-link" href="#idl-index"></a></h2>
-<pre class="idl def">partial interface <a class="idl-code" data-link-type="interface" href="http://www.w3.org/TR/dom/#interface-window">Window</a> {
+<pre class="idl def">partial interface <a class="idl-code" data-link-type="interface" href="http://www.w3.org/TR/html5/browsers.html#the-window-object">Window</a> {
   readonly attribute boolean <a data-readonly="" data-type="boolean " href="#dom-window-issecurecontext">isSecureContext</a>;
 };
 
@@ -2438,10 +2446,6 @@ partial interface <a class="idl-code" data-link-type="interface" href="http://ww
 };
 
 </pre>
-  <h2 class="no-num no-ref heading settled" id="issues-index"><span class="content">Issues Index</span><a class="self-link" href="#issues-index"></a></h2>
-  <div style="counter-reset:issue">
-   <div class="issue"> This addition is currently under review. <a href="https://github.com/heycam/webidl/issues/65">&lt;https://github.com/heycam/webidl/issues/65></a><a href="#issue-020b0dc4"> ↵ </a></div>
-  </div>
 <script>
         document.body.addEventListener("click", function(e) {
             var queryAll = function(sel) { return [].slice.call(document.querySelectorAll(sel)); }
