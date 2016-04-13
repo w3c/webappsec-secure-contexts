@@ -810,7 +810,7 @@ partial interface <a class="idl-code" data-link-type="interface" href="http://ww
       access. <a data-link-type="biblio" href="#biblio-discovery">[DISCOVERY]</a> and <a data-link-type="biblio" href="#biblio-bluetooth">[BLUETOOTH]</a> are good examples. 
      <li> The ability to track users using temporary or persistent identifiers,
       including identifiers which reset themselves after some period of time
-      (e.g. <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/webstorage/webstorage.html#the-sessionstorage-attribute">sessionStorage</a></code>), identifiers the user can manually reset
+      (e.g. <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/webstorage/#the-sessionstorage-attribute">sessionStorage</a></code>), identifiers the user can manually reset
       (e.g. <a data-link-type="biblio" href="#biblio-encrypted-media">[ENCRYPTED-MEDIA]</a>, Cookies <a data-link-type="biblio" href="#biblio-rfc6265">[RFC6265]</a>, and <a data-link-type="biblio" href="#biblio-indexeddb">[IndexedDB]</a>),
       as well as identifying hardware features the user can’t easily reset. 
      <li> The ability to introduce some state for an origin which persists across
@@ -901,15 +901,15 @@ interface AnotherSensitiveFeature {
     <ol>
      <li data-md="">
       <p>If such a feature is not widely implemented, we recommend that the
-  specification be immediately <a data-link-type="dfn" href="http://www.w3.org/2014/Process-20140801/#rec-modify">modified</a> to include a restriction
+  specification be immediately <a data-link-type="dfn" href="https://www.w3.org/2015/Process-20150901/#rec-modify">modified</a> to include a restriction
   to <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-34">secure contexts</a>.</p>
      <li data-md="">
       <p>If such a feature is widely implemented, but not yet in wide use, we
   recommend that it be quickly restricted to <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-35">secure contexts</a> by
-  adding a check as described in <a href="#new">§7.3 Restricting New Features</a> to existing implementations, and <a data-link-type="dfn" href="http://www.w3.org/2014/Process-20140801/#rec-modify">modifying the specification</a> accordingly.</p>
+  adding a check as described in <a href="#new">§7.3 Restricting New Features</a> to existing implementations, and <a data-link-type="dfn" href="https://www.w3.org/2015/Process-20150901/#rec-modify">modifying the specification</a> accordingly.</p>
      <li data-md="">
       <p>If such a feature is in wide use, we recommend that the existing
-  functionality be deprecated; the specification should be <a data-link-type="dfn" href="http://www.w3.org/2014/Process-20140801/#rec-modify">modified</a> to note that it does not
+  functionality be deprecated; the specification should be <a data-link-type="dfn" href="https://www.w3.org/2015/Process-20150901/#rec-modify">modified</a> to note that it does not
   conform to the restrictions outlined in this document, and a plan should
   be developed to both offer a conformant version of the feature and to
   migrate existing users into that new version.</p>
@@ -920,7 +920,7 @@ interface AnotherSensitiveFeature {
   path forward might look like this:</p>
     <ol>
      <li data-md="">
-      <p><a data-link-type="dfn" href="http://www.w3.org/2014/Process-20140801/#rec-modify">Modify</a> the specification to include
+      <p><a data-link-type="dfn" href="https://www.w3.org/2015/Process-20150901/#rec-modify">Modify</a> the specification to include
   checks against <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-36">secure context</a> before executing the algorithms for <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/geolocation-API/#get-current-position">getCurrentPosition()</a></code> and <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/geolocation-API/#watch-position">watchPosition()</a></code>.</p>
       <p>If the <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#incumbent-settings-object">incumbent settings object</a> is not a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-37">secure context</a>,
   then the algorithm should be aborted, and the <code>errorCallback</code> invoked with a <code>code</code> of <code>PERMISSION_DENIED</code>.</p>
@@ -1054,7 +1054,7 @@ interface AnotherSensitiveFeature {
    <li>
     <a data-link-type="biblio">[W3C-PROCESS]</a> defines the following terms:
     <ul>
-     <li><a href="http://www.w3.org/2014/Process-20140801/#rec-modify">modify a specification</a>
+     <li><a href="https://www.w3.org/2015/Process-20150901/#rec-modify">modify a specification</a>
     </ul>
    <li>
     <a data-link-type="biblio">[WebIDL-1]</a> defines the following terms:
@@ -1065,7 +1065,7 @@ interface AnotherSensitiveFeature {
    <li>
     <a data-link-type="biblio">[webstorage]</a> defines the following terms:
     <ul>
-     <li><a href="http://www.w3.org/TR/webstorage/webstorage.html#the-sessionstorage-attribute">sessionStorage</a>
+     <li><a href="http://www.w3.org/TR/webstorage/#the-sessionstorage-attribute">sessionStorage</a>
     </ul>
    <li>
     <a data-link-type="biblio">[workers]</a> defines the following terms:
