@@ -725,7 +725,7 @@ spec: WEBIDL; urlPrefix: https://heycam.github.io/webidl/
 
       Note: We use the origin of the URL here because sandboxed content that
       is treated as being in a unique origin (e.g.
-      `<iframe sandbox src="http://localhost/">`) would be treated as
+      `<iframe sandbox src="http://127.0.0.1/">`) would otherwise be treated as
       non-trustworthy by [[#is-origin-trustworthy]]. Since sandboxing is a
       strict reduction in the content's capabilities, and therefore in the
       risk it poses, we look at the origin of its URL to determine whether we
@@ -747,9 +747,8 @@ spec: WEBIDL; urlPrefix: https://heycam.github.io/webidl/
   This algorithms considers certain hosts, scheme, and origins as potentially
   trustworthy, even though they might not be authenticated and encrypted in the
   traditional sense. In particular, the user agent SHOULD treat `file` URLs and
-  URLs with hostnames names equivalent to `localhost` as potentially
-  trustworthy. In principle the user agent could treat local files and local web
-  servers as untrustworthy, but, <em>given the information that is available to
+  as potentially trustworthy. In principle the user agent could treat local
+  files as untrustworthy, but, <em>given the information that is available to
   the user agent at runtime</em>, the resources appear to have been transported
   securely from disk to the user agent. Additionally, treating such resources as
   potentially trustworthy is convenient for developers building an application
@@ -757,7 +756,7 @@ spec: WEBIDL; urlPrefix: https://heycam.github.io/webidl/
 
   This developer-friendlyness is not without risk, however. User agents which
   prioritize security over such niceties MAY choose to more strictly assign
-  trust in a way which excludes `localhost.` and `file`.
+  trust in a way which excludes `file`.
 
   On the other hand, the user agent MAY choose to extend this trust to other,
   vendor-specific URL schemes like `app:` or `chrome-extension:` which it can
@@ -781,27 +780,24 @@ spec: WEBIDL; urlPrefix: https://heycam.github.io/webidl/
       of `data:` and `javascript:` URLs, on the other hand, is an <a>opaque
       identifier</a>, which will not be considered potentially trustworthy.
 
-  3.  If |origin|'s `host` component is or falls within "`localhost.`"
-      [[!RFC6761]], return "`Potentially Trustworthy`".
-
-  4.  If |origin|'s `host` component matches one of the CIDR notations
+  3.  If |origin|'s `host` component matches one of the CIDR notations
       `127.0.0.0/8` or `::1/128` [[!RFC4632]], return "`Potentially
       Trustworthy`".
 
-  5.  If |origin|'s `scheme` component is `file`, return "`Potentially
+  4.  If |origin|'s `scheme` component is `file`, return "`Potentially
       Trustworthy`".
 
-  6.  If |origin|'s `scheme` component is one which the user agent considers to
+  5.  If |origin|'s `scheme` component is one which the user agent considers to
       be authenticated, return "`Potentially Trustworthy`".
 
       Note: See [[#packaged-applications]] for detail here.
 
-  7.  If |origin| has been configured as a trustworthy origin, return
+  6.  If |origin| has been configured as a trustworthy origin, return
       `Potentially Trustworthy`".
 
       Note: See [[#development-environments]] for detail here.
 
-  8.  Return "`Not Trusted`".
+  7.  Return "`Not Trusted`".
 
 </section>
 
@@ -936,6 +932,16 @@ spec: WEBIDL; urlPrefix: https://heycam.github.io/webidl/
   origin. Exfiltration will still be possible via increasingly esoteric
   mechanisms such as the contents of `localStorage`/`sessionStorage`,
   `storage` events, `BroadcastChannel`, and others.
+
+  <h3 id="localhost">`localhost`</h3>
+
+  Section 6.3 of [[RFC6761]] lays out the resolution of `localhost.` and
+  names falling within `.localhost.` as special, and suggests that local
+  resolvers SHOULD/MAY treat them specially. For better or worse, resolvers
+  often ignore these suggestions, and will send `localhost` to the network
+  for resolution in a number of circumstances. Given that uncertainty, this
+  document errs on the conservative side by special-casing `127.0.0.1`, but
+  not `localhost`.
 </section>
 
 <section>

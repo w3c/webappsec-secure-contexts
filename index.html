@@ -1450,6 +1450,7 @@ certain minimum standards of authentication and confidentiality are met.</p>
      <a href="#security-considerations"><span class="secno">5</span> <span class="content">Security Considerations</span></a>
      <ol class="toc">
       <li><a href="#isolation"><span class="secno">5.1</span> <span class="content">Incomplete Isolation</span></a>
+      <li><a href="#localhost"><span class="secno">5.2</span> <span class="content"><code>localhost</code></span></a>
      </ol>
     <li><a href="#privacy-considerations"><span class="secno">6</span> <span class="content">Privacy Considerations</span></a>
     <li>
@@ -1953,7 +1954,7 @@ partial interface <a class="idl-code" data-link-type="interface" href="http://ww
       <p>If <var>origin</var> is an <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#origin">opaque identifier</a>, set <var>origin</var> to the <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-origin">origin</a> of <var>settings object</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#creation-url">creation
   URL</a>.</p>
       <p class="note" role="note">Note: We use the origin of the URL here because sandboxed content that
-  is treated as being in a unique origin (e.g. <code>&lt;iframe sandbox src="http://localhost/"></code>) would be treated as
+  is treated as being in a unique origin (e.g. <code>&lt;iframe sandbox src="http://127.0.0.1/"></code>) would otherwise be treated as
   non-trustworthy by <a href="#is-origin-trustworthy">§3.2 Is origin potentially trustworthy?</a>. Since sandboxing is a
   strict reduction in the content’s capabilities, and therefore in the
   risk it poses, we look at the origin of its URL to determine whether we
@@ -1970,16 +1971,15 @@ partial interface <a class="idl-code" data-link-type="interface" href="http://ww
     <p>This algorithms considers certain hosts, scheme, and origins as potentially
   trustworthy, even though they might not be authenticated and encrypted in the
   traditional sense. In particular, the user agent SHOULD treat <code>file</code> URLs and
-  URLs with hostnames names equivalent to <code>localhost</code> as potentially
-  trustworthy. In principle the user agent could treat local files and local web
-  servers as untrustworthy, but, <em>given the information that is available to
+  as potentially trustworthy. In principle the user agent could treat local
+  files as untrustworthy, but, <em>given the information that is available to
   the user agent at runtime</em>, the resources appear to have been transported
   securely from disk to the user agent. Additionally, treating such resources as
   potentially trustworthy is convenient for developers building an application
   before deploying it to the public.</p>
     <p>This developer-friendlyness is not without risk, however. User agents which
   prioritize security over such niceties MAY choose to more strictly assign
-  trust in a way which excludes <code>localhost.</code> and <code>file</code>.</p>
+  trust in a way which excludes <code>file</code>.</p>
     <p>On the other hand, the user agent MAY choose to extend this trust to other,
   vendor-specific URL schemes like <code>app:</code> or <code>chrome-extension:</code> which it can
   determine <i lang="la">a priori</i> to be trusted (see <a href="#packaged-applications">§7.1 Packaged Applications</a> for detail).</p>
@@ -1997,8 +1997,6 @@ partial interface <a class="idl-code" data-link-type="interface" href="http://ww
   trustworthy origin will themselves be potentially trustworthy. The origin
   of <code>data:</code> and <code>javascript:</code> URLs, on the other hand, is an <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#origin">opaque
   identifier</a>, which will not be considered potentially trustworthy.</p>
-     <li data-md="">
-      <p>If <var>origin</var>’s <code>host</code> component is or falls within "<code>localhost.</code>" <a data-link-type="biblio" href="#biblio-rfc6761">[RFC6761]</a>, return "<code>Potentially Trustworthy</code>".</p>
      <li data-md="">
       <p>If <var>origin</var>’s <code>host</code> component matches one of the CIDR notations <code>127.0.0.0/8</code> or <code>::1/128</code> <a data-link-type="biblio" href="#biblio-rfc4632">[RFC4632]</a>, return "<code>Potentially Trustworthy</code>".</p>
      <li data-md="">
@@ -2106,6 +2104,14 @@ partial interface <a class="idl-code" data-link-type="interface" href="http://ww
   isolate a "secure" view on an origin from a "non-secure" view on the same
   origin. Exfiltration will still be possible via increasingly esoteric
   mechanisms such as the contents of <code>localStorage</code>/<code>sessionStorage</code>, <code>storage</code> events, <code>BroadcastChannel</code>, and others.</p>
+    <h3 class="heading settled" data-level="5.2" id="localhost"><span class="secno">5.2. </span><span class="content"><code>localhost</code></span><a class="self-link" href="#localhost"></a></h3>
+    <p>Section 6.3 of <a data-link-type="biblio" href="#biblio-rfc6761">[RFC6761]</a> lays out the resolution of <code>localhost.</code> and
+  names falling within <code>.localhost.</code> as special, and suggests that local
+  resolvers SHOULD/MAY treat them specially. For better or worse, resolvers
+  often ignore these suggestions, and will send <code>localhost</code> to the network
+  for resolution in a number of circumstances. Given that uncertainty, this
+  document errs on the conservative side by special-casing <code>127.0.0.1</code>, but
+  not <code>localhost</code>.</p>
    </section>
    <section>
     <h2 class="heading settled" data-level="6" id="privacy-considerations"><span class="secno">6. </span><span class="content">Privacy Considerations</span><a class="self-link" href="#privacy-considerations"></a></h2>
@@ -2364,8 +2370,6 @@ interface AnotherSensitiveFeature {
    <dd>S. Bradner. <a href="https://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href="https://tools.ietf.org/html/rfc2119">https://tools.ietf.org/html/rfc2119</a>
    <dt id="biblio-rfc4632">[RFC4632]
    <dd>V. Fuller; T. Li. <a href="https://tools.ietf.org/html/rfc4632">Classless Inter-domain Routing (CIDR): The Internet Address Assignment and Aggregation Plan</a>. August 2006. Best Current Practice. URL: <a href="https://tools.ietf.org/html/rfc4632">https://tools.ietf.org/html/rfc4632</a>
-   <dt id="biblio-rfc6761">[RFC6761]
-   <dd>S. Cheshire; M. Krochmal. <a href="https://tools.ietf.org/html/rfc6761">Special-Use Domain Names</a>. February 2013. Proposed Standard. URL: <a href="https://tools.ietf.org/html/rfc6761">https://tools.ietf.org/html/rfc6761</a>
    <dt id="biblio-w3c-process">[W3C-PROCESS]
    <dd>Charles McCathie Nevile. <a href="http://www.w3.org/2014/Process-20140801/">World Wide Web Consortium Process Document</a>. URL: <a href="http://www.w3.org/2014/Process-20140801/">http://www.w3.org/2014/Process-20140801/</a>
    <dt id="biblio-webidl-1">[WebIDL-1]
@@ -2405,6 +2409,8 @@ interface AnotherSensitiveFeature {
    <dd>Chrome Security Team. <a href="https://www.chromium.org/Home/chromium-security/prefer-secure-origins-for-powerful-new-features">Prefer Secure Origins For Powerful New Features</a>. URL: <a href="https://www.chromium.org/Home/chromium-security/prefer-secure-origins-for-powerful-new-features">https://www.chromium.org/Home/chromium-security/prefer-secure-origins-for-powerful-new-features</a>
    <dt id="biblio-rfc6265">[RFC6265]
    <dd>A. Barth. <a href="https://tools.ietf.org/html/rfc6265">HTTP State Management Mechanism</a>. April 2011. Proposed Standard. URL: <a href="https://tools.ietf.org/html/rfc6265">https://tools.ietf.org/html/rfc6265</a>
+   <dt id="biblio-rfc6761">[RFC6761]
+   <dd>S. Cheshire; M. Krochmal. <a href="https://tools.ietf.org/html/rfc6761">Special-Use Domain Names</a>. February 2013. Proposed Standard. URL: <a href="https://tools.ietf.org/html/rfc6761">https://tools.ietf.org/html/rfc6761</a>
    <dt id="biblio-rfc7258">[RFC7258]
    <dd>S. Farrell; H. Tschofenig. <a href="https://tools.ietf.org/html/rfc7258">Pervasive Monitoring Is an Attack</a>. May 2014. Best Current Practice. URL: <a href="https://tools.ietf.org/html/rfc7258">https://tools.ietf.org/html/rfc7258</a>
    <dt id="biblio-service-workers">[SERVICE-WORKERS]
