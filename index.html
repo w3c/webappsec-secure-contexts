@@ -1958,7 +1958,7 @@ certain minimum standards of authentication and confidentiality are met.</p>
   steps:"), run the following step:</p>
       <ol>
        <li data-md="">
-        <p>If the result of executing <a href="#settings-object">§3.1 Is settings object a secure context?</a> on the <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#incumbent-settings-object">incumbent
+        <p>If the result of executing <a href="#settings-object">§3.1 Is settings object a secure context?</a> on the <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#current-settings-object">current
   settings object</a> does not match the result of executing the same
   algorithm on <var>worker global scope</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#relevant-settings-object-for-a-global-object">relevant settings
   object</a>, then throw a <code>SecurityError</code> exception, and abort
@@ -2214,11 +2214,11 @@ certain minimum standards of authentication and confidentiality are met.</p>
     <p>When writing a specification for new features, we recommend that authors
   and editors guard sensitive APIs with checks against <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-30">secure contexts</a>.
   For example, something like the following might be a good approach:</p>
-    <div class="example" id="example-1611693b">
-     <a class="self-link" href="#example-1611693b"></a> 
+    <div class="example" id="example-3c0f6ca7">
+     <a class="self-link" href="#example-3c0f6ca7"></a> 
      <ol>
       <li>
-        If the <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#incumbent-settings-object">incumbent settings object</a> is <em>not</em> a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-31">secure
+        If the <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#current-settings-object">current settings object</a> is <em>not</em> a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-31">secure
         context</a>, then: 
        <ol>
         <li> [<i>insert something appropriate here: perhaps a Promise could be
@@ -2273,7 +2273,7 @@ certain minimum standards of authentication and confidentiality are met.</p>
      <li data-md="">
       <p><a data-link-type="dfn" href="https://www.w3.org/2015/Process-20150901/#rec-modify">Modify</a> the specification to include
   checks against <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-36">secure context</a> before executing the algorithms for <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/geolocation-API/#get-current-position">getCurrentPosition()</a></code> and <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/geolocation-API/#watch-position">watchPosition()</a></code>.</p>
-      <p>If the <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#incumbent-settings-object">incumbent settings object</a> is not a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-37">secure context</a>,
+      <p>If the <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#current-settings-object">current settings object</a> is not a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-37">secure context</a>,
   then the algorithm should be aborted, and the <code>errorCallback</code> invoked with a <code>code</code> of <code>PERMISSION_DENIED</code>.</p>
      <li data-md="">
       <p>The user agent should announce clear intentions to disable the API for
@@ -2381,8 +2381,8 @@ certain minimum standards of authentication and confidentiality are met.</p>
      <li><a href="http://www.w3.org/TR/html5/browsers.html#auxiliary-browsing-context">auxiliary browsing context</a>
      <li><a href="http://www.w3.org/TR/html5/browsers.html#browsing-context">browsing context</a>
      <li><a href="http://www.w3.org/TR/html5/browsers.html#creator-document">creator document</a>
+     <li><a href="http://www.w3.org/TR/html5/webappapis.html#current-settings-object">current settings object</a>
      <li><a href="http://www.w3.org/TR/html5/webappapis.html#global-object">global object</a>
-     <li><a href="http://www.w3.org/TR/html5/webappapis.html#incumbent-settings-object">incumbent settings object</a>
      <li><a href="http://www.w3.org/TR/html5/browsers.html#origin">opaque identifier</a>
      <li><a href="http://www.w3.org/TR/html5/browsers.html#opener-browsing-context">opener browsing context</a>
      <li><a href="http://www.w3.org/TR/html5/browsers.html#origin">origin</a>

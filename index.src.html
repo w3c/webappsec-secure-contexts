@@ -54,7 +54,7 @@ urlPrefix: http://www.w3.org/TR/html5/; spec: HTML5
       text: opaque identifier; url: origin
       text: opener browsing context
     urlPrefix: webappapis.html
-      text: incumbent settings object
+      text: current settings object
       text: settings object
       text: relevant settings object; url: relevant-settings-object-for-a-global-object
       text: responsible document
@@ -639,7 +639,7 @@ spec: WEBIDL; urlPrefix: https://heycam.github.io/webidl/
       7.7 ("If <var>worker global scope</var> is not `null`, then run these
       steps:"), run the following step:
 
-      1.  If the result of executing [[#settings-object]] on the <a>incumbent
+      1.  If the result of executing [[#settings-object]] on the <a>current
           settings object</a> does not match the result of executing the same
           algorithm on <var>worker global scope</var>'s <a>relevant settings
           object</a>, then throw a `SecurityError` exception, and abort
@@ -988,7 +988,7 @@ spec: WEBIDL; urlPrefix: https://heycam.github.io/webidl/
   <div class="example">
     <ol>
       <li>
-        If the <a>incumbent settings object</a> is <em>not</em> a <a>secure
+        If the <a>current settings object</a> is <em>not</em> a <a>secure
         context</a>, then:
 
         <ol>
@@ -1057,7 +1057,7 @@ spec: WEBIDL; urlPrefix: https://heycam.github.io/webidl/
       checks against <a>secure context</a> before executing the algorithms for
       {{getCurrentPosition()}} and {{watchPosition()}}.
 
-      If the <a>incumbent settings object</a> is not a <a>secure context</a>,
+      If the <a>current settings object</a> is not a <a>secure context</a>,
       then the algorithm should be aborted, and the `errorCallback`
       invoked with a `code` of `PERMISSION_DENIED`.
 
