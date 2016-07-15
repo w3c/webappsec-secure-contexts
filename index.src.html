@@ -743,8 +743,8 @@ spec: WEBIDL; urlPrefix: https://heycam.github.io/webidl/
       would have considered it trustworthy had it not been sandboxed.
 
   6.  If the result of executing the [[#is-origin-trustworthy]] algorithm
-      on |origin| is <strong>not</strong> `Potentially
-      Trustworthy`, then return "`Not Secure`".
+      on |origin| is <strong>not</strong> "`Potentially Trustworthy`", then
+      return "`Not Secure`".
 
   7.  Return "`Secure`".
 
@@ -990,7 +990,7 @@ spec: WEBIDL; urlPrefix: https://heycam.github.io/webidl/
   In order to support developers who run staging servers on non-loopback hosts,
   the user agent MAY allow users to configure specific sets of origins as
   trustworthy, even though [[#is-origin-trustworthy]] would normally return
-  `Not Trusted`.
+  "`Not Trusted`".
 
   <h3 id="new">Restricting New Features</h3>
 

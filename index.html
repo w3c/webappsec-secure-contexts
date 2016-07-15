@@ -888,7 +888,8 @@ WorkerGlobalScope implements WindowBase64;
   would have considered it trustworthy had it not been sandboxed.</p>
      <li data-md="">
       <p>If the result of executing the <a href="#is-origin-trustworthy">§3.2 Is origin potentially trustworthy?</a> algorithm
-  on <var>origin</var> is <strong>not</strong> <code>Potentially Trustworthy</code>, then return "<code>Not Secure</code>".</p>
+  on <var>origin</var> is <strong>not</strong> "<code>Potentially Trustworthy</code>", then
+  return "<code>Not Secure</code>".</p>
      <li data-md="">
       <p>Return "<code>Secure</code>".</p>
     </ol>
@@ -1067,7 +1068,8 @@ WorkerGlobalScope implements WindowBase64;
     <h3 class="heading settled" data-level="7.2" id="development-environments"><span class="secno">7.2. </span><span class="content">Development Environments</span><a class="self-link" href="#development-environments"></a></h3>
     <p>In order to support developers who run staging servers on non-loopback hosts,
   the user agent MAY allow users to configure specific sets of origins as
-  trustworthy, even though <a href="#is-origin-trustworthy">§3.2 Is origin potentially trustworthy?</a> would normally return <code>Not Trusted</code>.</p>
+  trustworthy, even though <a href="#is-origin-trustworthy">§3.2 Is origin potentially trustworthy?</a> would normally return
+  "<code>Not Trusted</code>".</p>
     <h3 class="heading settled" data-level="7.3" id="new"><span class="secno">7.3. </span><span class="content">Restricting New Features</span><a class="self-link" href="#new"></a></h3>
     <p><em>This section is non-normative.</em></p>
     <p>When writing a specification for new features, we recommend that authors
