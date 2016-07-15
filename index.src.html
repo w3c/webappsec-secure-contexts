@@ -79,6 +79,9 @@ urlPrefix: http://www.w3.org/TR/html51/; spec: HTML51
       text: Document; url: the-document-object
     urlPrefix: browsers.html
       text: Window; url: the-window-object
+urlPrefix: https://html.spec.whatwg.org/
+  type: interface
+    text: WindowOrWorkerGlobalScope
 urlPrefix: https://w3c.github.io/webappsec-mixed-content/; spec: MIX
   type: dfn
     text: a priori authenticated url
@@ -621,7 +624,7 @@ spec: WEBIDL; urlPrefix: https://heycam.github.io/webidl/
   follows:
 
   1.  As the first substep of the {{SharedWorker()}} constructor's current step
-      7.7 ("If <var>worker global scope</var> is not `null`, then run these
+      6.7 ("If <var>worker global scope</var> is not `null`, then run these
       steps:"), run the following step:
 
       1.  If the result of executing [[#settings-object]] on the <a>current
@@ -630,6 +633,13 @@ spec: WEBIDL; urlPrefix: https://heycam.github.io/webidl/
           object</a>, then throw a `SecurityError` exception, and abort
           these steps.
 
+  ISSUE(whatwg/html#1560): Upstreaming to WHATWG is underway.
+
+  ISSUE: It's not clear to me how the W3C's [[WEBWORKERS]] document is updated.
+  It looks like it's pulling content from the WHATWG upstream, which means
+  that the PR linked above should flow into it? But that document hasn't been
+  updated since 2015, so...
+
   <h4 id="monkey-patching-global-object">Feature Detection</h4>
 
   To determine whether a context is capable of making use of features which
@@ -637,19 +647,30 @@ spec: WEBIDL; urlPrefix: https://heycam.github.io/webidl/
   global object:
 
   <pre class="idl">
-    partial interface Window {
-      readonly attribute boolean isSecureContext;
-    };
-
-    partial interface WorkerGlobalScope {
+    partial interface WindowOrWorkerGlobalScope {
       readonly attribute boolean isSecureContext;
     };
   </pre>
 
-  Both {{Window}}'s {{Window/isSecureContext}} and {{WorkerGlobalScope}}'s
-  {{WorkerGlobalScope/isSecureContext}} attributes' getters return
-  <code>true</code> if the <a>relevant settings object</a> for the getter's
-  <a>global object</a> is a <a>secure context</a>, and <code>false</code>
+  <div class="issue">
+    {{WindowOrWorkerGlobalScope}} does not appear to be defined in W3C's
+    HTML. For the purposes of that specification, the IDL above could be
+    interpreted as:
+
+    <pre>
+      interface GlobalSecureContext {
+        readonly attribute boolean isSecureContext;
+      };
+      Window implements GlobalSecureContext;
+      WorkerGlobalScope implements WindowBase64;
+    </pre>
+
+    Filed as <a href="https://github.com/w3c/html/issues/522">w3c/html#522</a>.
+  </div>
+
+  The {{WindowOrWorkerGlobalScope/isSecureContext}} attribute's getter
+  returns `true` if [[#settings-object]] returns "`Secure`" when executed upon
+  `this` <a>global object</a>'s <a>relevant settings object</a>, and `false`
   otherwise.
 </section>
 
