@@ -4,7 +4,6 @@
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
   <title>Secure Contexts</title>
   <meta content="WD" name="w3c-status">
-  <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-WD" rel="stylesheet" type="text/css">
   <meta content="Bikeshed 1.0.0" name="generator">
 <style>
     .secure {
@@ -275,6 +274,7 @@ pre.idl.highlight { color: #708090; }
         .highlight .vi { color: #0077aa } /* Name.Variable.Instance */
         .highlight .il { color: #000000 } /* Literal.Number.Integer.Long */
         </style>
+  <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-WD" rel="stylesheet" type="text/css">
  <body class="h-entry">
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="http://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
@@ -786,21 +786,21 @@ certain minimum standards of authentication and confidentiality are met.</p>
   following example should help:</p>
     <div class="example" id="example-81580eb2">
      <a class="self-link" href="#example-81580eb2"></a> 
-<pre class="idl highlight def"><span class="kt">interface</span> <span class="nv" idltype="interface">ExampleFeature</span> {
+<pre class="idl highlight def"><span class="kt">interface</span> <span class="nv" data-idltype="interface">ExampleFeature</span> {
   // This call will succeed in all contexts.
-  <span class="kt">Promise</span> &lt;<span class="kt">double</span>> <span class="nv" idltype="method">calculateNotSoSecretResult</span>();
+  <span class="kt">Promise</span> &lt;<span class="kt">double</span>> <span class="nv" data-idltype="method">calculateNotSoSecretResult</span>();
 
   // This operation will not be exposed to a non-secure context.
-  [<span class="nv" idltype="extended-attribute">SecureContext</span>] <span class="kt">Promise</span>&lt;<span class="kt">double</span>> <span class="nv" idltype="method">calculateSecretResult</span>();
+  [<span class="nv" data-idltype="extended-attribute">SecureContext</span>] <span class="kt">Promise</span>&lt;<span class="kt">double</span>> <span class="nv" data-idltype="method">calculateSecretResult</span>();
 
   // The same applies here: the operation will not be exposed to a non-secure context.
-  [<span class="nv" idltype="extended-attribute">SecureContext</span>] <span class="kt">boolean</span> <span class="nv" idltype="method">getSecretBoolean</span>();
+  [<span class="nv" data-idltype="extended-attribute">SecureContext</span>] <span class="kt">boolean</span> <span class="nv" data-idltype="method">getSecretBoolean</span>();
 };
 
-[<span class="nv" idltype="extended-attribute">SecureContext</span>]
-<span class="kt">interface</span> <span class="nv" idltype="interface">SecureFeature</span> {
+[<span class="nv" data-idltype="extended-attribute">SecureContext</span>]
+<span class="kt">interface</span> <span class="nv" data-idltype="interface">SecureFeature</span> {
   // This interface will not be exposed to non-secure contexts.
-  <span class="kt">Promise</span>&lt;<span class="kt">any</span>> <span class="nv" idltype="method">doAmazingThing</span>();
+  <span class="kt">Promise</span>&lt;<span class="kt">any</span>> <span class="nv" data-idltype="method">doAmazingThing</span>();
 };
 </pre>
     </div>
@@ -1116,15 +1116,15 @@ WorkerGlobalScope implements WindowBase64;
     <p>Authors could alternatively ensure that sensitive APIs are only exposed to <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-31">secure contexts</a> by guarding them with the <code>[SecureContext]</code> attribute:</p>
     <div class="example" id="example-63db205d">
      <a class="self-link" href="#example-63db205d"></a> 
-<pre class="idl highlight def">[<span class="nv" idltype="extended-attribute">SecureContext</span>]
-<span class="kt">interface</span> <span class="nv" idltype="interface">SensitiveFeature</span> {
-  <span class="kt">Promise</span>&lt;<span class="kt">double</span>> <span class="nv" idltype="method">getTheSecretDouble</span>();
+<pre class="idl highlight def">[<span class="nv" data-idltype="extended-attribute">SecureContext</span>]
+<span class="kt">interface</span> <span class="nv" data-idltype="interface">SensitiveFeature</span> {
+  <span class="kt">Promise</span>&lt;<span class="kt">double</span>> <span class="nv" data-idltype="method">getTheSecretDouble</span>();
 };
 
 // Or:
 
-<span class="kt">interface</span> <span class="nv" idltype="interface">AnotherSensitiveFeature</span> {
-  [<span class="nv" idltype="extended-attribute">SecureContext</span>] <span class="kt">void</span> <span class="nv" idltype="method">doThatPowerfulThing</span>();
+<span class="kt">interface</span> <span class="nv" data-idltype="interface">AnotherSensitiveFeature</span> {
+  [<span class="nv" data-idltype="extended-attribute">SecureContext</span>] <span class="kt">void</span> <span class="nv" data-idltype="method">doThatPowerfulThing</span>();
 };
 </pre>
     </div>
