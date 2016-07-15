@@ -20,9 +20,6 @@ Markup Shorthands: markdown on
 Boilerplate: omit conformance, omit feedback-header
 </pre>
 <pre class="anchors">
-urlPrefix: http://www.w3.org/TR/dom/; spec: DOM
-  type: interface
-    text: Document; url: interface-document
 urlPrefix: https://fetch.spec.whatwg.org/; spec: FETCH
   type: interface
     text: Response
@@ -32,10 +29,12 @@ urlPrefix: http://www.w3.org/TR/geolocation-API/; spec: GEOLOCATION-API
   type: method
     text: getCurrentPosition(); url: get-current-position
     text: watchPosition(); url: watch-position
-urlPrefix: http://www.w3.org/TR/html5/; spec: HTML5
+urlPrefix: http://www.w3.org/TR/html51/; spec: HTML51
   type: dfn
     urlPrefix: embedded-content-0.html
       text: an iframe srcdoc document
+    urlPrefix: semantics.html
+      text: noopener; url: link-type-noopener
     urlPrefix: browsers.html
       text: active document
       text: alias; url: concept-origin-alias
@@ -51,23 +50,35 @@ urlPrefix: http://www.w3.org/TR/html5/; spec: HTML5
       text: sandboxing flag set
       text: top-level browsing context
       text: origin
-      text: opaque identifier; url: origin
+      for: origin
+        text: scheme; url: concept-origin-scheme
+        text: host; url: concept-origin-host
+        text: port; url: concept-origin-port
+        text: domain; url: concept-origin-domain
+      text: opaque origin
+      text: tuple origin
       text: opener browsing context
     urlPrefix: webappapis.html
       text: current settings object
-      text: settings object
-      text: relevant settings object; url: relevant-settings-object-for-a-global-object
+      text: environment settings object
+      text: relevant settings object
       text: responsible document
+      text: responsible browsing context
       text: global object
       text: script settings for browsing contexts
       text: document environment
       text: worker environment
+      text: the environment settings object's global object
+      text: creation URL
+      text: HTTPS state
+  type: element
+    urlPrefix: semantics-embedded-content.html
+      text: iframe; url: the-iframe-element
   type: interface
+    urlPrefix: dom.html
+      text: Document; url: the-document-object
     urlPrefix: browsers.html
       text: Window; url: the-window-object
-urlPrefix: http://www.w3.org/TR/webstorage/; spec: WEBSTORAGE
-  type: attribute
-    text: sessionStorage; for: WindowSessionStorage; url: the-sessionstorage-attribute
 urlPrefix: https://w3c.github.io/webappsec-mixed-content/; spec: MIX
   type: dfn
     text: a priori authenticated url
@@ -83,7 +94,7 @@ urlPrefix: https://url.spec.whatwg.org/; spec: URL
     text: scheme; for: URL; url: concept-url-scheme
   type: interface
     text: URL
-spec: WORKERS; urlPrefix: http://www.w3.org/TR/workers/
+spec: WEBWORKERS; urlPrefix: http://www.w3.org/TR/workers/
   type: dfn
     text: the worker's documents; url: the-worker-s-documents
     text: set up a worker environment settings object
@@ -93,13 +104,6 @@ spec: WORKERS; urlPrefix: http://www.w3.org/TR/workers/
     text: WorkerGlobalScope
   type: constructor
     text: SharedWorker(); url: dom-sharedworker
-urlPrefix: https://html.spec.whatwg.org/multipage/; spec: HTML
-  type: dfn
-    urlPrefix: semantics.html
-      text: noopener; url: link-type-noopener
-    urlPrefix: webappapis.html
-      text: creation URL
-      text: HTTPS state
 spec: WEBIDL; urlPrefix: https://heycam.github.io/webidl/
   type: dfn
     text: exposed; url: dfn-exposed
@@ -107,30 +111,11 @@ spec: WEBIDL; urlPrefix: https://heycam.github.io/webidl/
 </pre>
 <pre class="biblio">
 {
-  "BLUETOOTH": {
-      "href": "https://webbluetoothcg.github.io/web-bluetooth/",
-      "title": "Web Bluetooth",
-      "publisher": "W3C",
-      "authors": [ "Jeffrey Yasskin", "Vincent Scheib" ]
-  },
   "COMCAST": {
       "href": "http://arstechnica.com/tech-policy/2014/09/why-comcasts-javascript-ad-injections-threaten-security-net-neutrality/",
       "title": "Comcast Wi-Fi serving self-promotional ads via JavaScript injection",
       "publisher": "Ars Technica",
       "authors": [ "David Kravets" ]
-  },
-  "CREDENTIAL-MANAGEMENT": {
-    "authors": [ "Mike West" ],
-    "href": "https://w3c.github.io/webappsec/specs/credentialmanagement/",
-    "title": "Credential Management",
-    "status": "ED",
-    "publisher": "W3C"
-  },
-  "DISCOVERY": {
-      "href": "https://dvcs.w3.org/hg/dap/raw-file/tip/discovery-api/Overview.html",
-      "title": "Network Service Discovery",
-      "authors": [ "Rich Tibbett" ],
-      "publisher": "W3C"
   },
   "VERIZON": {
       "href": "http://adage.com/article/digital/verizon-target-mobile-subscribers-ads/293356/",
@@ -146,9 +131,9 @@ spec: WEBIDL; urlPrefix: https://heycam.github.io/webidl/
   "W3C-PROCESS": {
     "authors": [ "Charles McCathie Nevile" ],
     "title": "World Wide Web Consortium Process Document",
-    "href": "http://www.w3.org/2014/Process-20140801/",
+    "href": "https://www.w3.org/2014/Process-20140801/",
     "publisher": "W3C"
-  }
+   }
 }
 </pre>
 <!--
@@ -586,9 +571,9 @@ spec: WEBIDL; urlPrefix: https://heycam.github.io/webidl/
 <section>
   <h2 id="framework">Framework</h2>
 
-  A <a>settings object</a> is considered a <dfn export>secure context</dfn> if
-  the algorithm in [[#settings-object]] returns "`Secure`". The <a>settings
-  object</a> is otherwise <dfn export lt="non-secure context">non-secure</dfn>.
+  An <a>environment settings object</a> is considered a <dfn export>secure
+  context</dfn> if the algorithm in [[#settings-object]] returns "`Secure`", and a
+  <dfn>non-secure context</dfn> otherwise.
 
   Likewise, a <a>global object</a> is considered a <a>secure context</a> if its
   <a>relevant settings object</a> is a <a>secure context</a>.
@@ -675,31 +660,35 @@ spec: WEBIDL; urlPrefix: https://heycam.github.io/webidl/
     Is |settings object| a secure context?
   </h3>
 
-  Given a <a>settings object</a> (|settings object|) this algorithm returns
-  "`Secure`" if the object represents a context which the user agent obtained
-  via a secure channel, and "`Not Secure`" otherwise.
+  Given an <a>environment settings object</a> (|settings|) this algorithm
+  returns "`Secure`" if the object represents a context which the user agent
+  obtained via a secure channel, and "`Not Secure`" otherwise.
 
-  1.  If |settings object|'s <a>global object</a> is a {{WorkerGlobalScope}},
-      then:
+  1.  Let |global| be |settings|'s
+      <a lt="the environment settings object's global object">global object</a>.
 
-      1.  For each {{Document}} (|document|) in |settings object|'s <a>global
-          object</a>'s list of <a>the worker's `Documents`</a>:
+  2.  If |global| is a {{WorkerGlobalScope}}, then:
 
-          1.  If |document|'s <a>relevant settings object</a> is not a
-              <a>secure context</a>, return "`Not Secure`".
+      1.  For each {{Document}} (|document|) in |global|'s list of <a>the
+          worker's `Documents`</a>:
 
-  2.  Otherwise, |settings object|'s <a>global object</a> is a {{Window}}. If
-      |settings object|'s <a>responsible document</a> has a <a>creator
-      <code>Document</code></a>, <var>creator</var>:
+          1.  If [[#settings-object]] returns "`Not Secure`" when executed upon
+              |document|'s <a>relevant settings object</a>, return "`Not
+              Secure`".
 
-      1.  If <var>creator</var>'s <a>browsing context</a> is an <a>ancestor
+  3.  Assert: |global| is a {{Window}}.
+  
+  4.  Otherwise, |global| is a {{Window}}. If |settings object|'s <a>responsible
+      document</a> has a <a>creator <code>Document</code></a>, |creator|:
+
+      1.  If |creator|'s <a>browsing context</a> is an <a>ancestor
           browsing context</a> or <a>opener browsing context</a> of
-          |settings object|'s <a>responsible document</a> and
-          <var>creator</var>'s <a>relevant settings object</a> is not a secure
-          context, return "`Not Secure`".
+          |settings object|'s <a>responsible browsing context</a> and
+          [[#settings-object]] returns "`Not Secure`" when executed upon
+          |creator|'s <a>relevant settings object</a>, return "`Not Secure`".
 
           Note: Since we take account of <a>auxiliary browsing contexts</a>'
-          status, a popups' status depend on how it is opened, as discussed
+          status, a popups' status depends on how it is opened, as discussed
           in [[#examples-top-level]].
 
   3.  If |settings object|'s <a>HTTPS state</a> is "`modern`", return
@@ -720,7 +709,7 @@ spec: WEBIDL; urlPrefix: https://heycam.github.io/webidl/
 
   4.  Let |origin| be |settings object|'s <a>origin</a>.
 
-  5.  If |origin| is an <a>opaque identifier</a>, set |origin| to the
+  5.  If |origin| is an <a>opaque origin</a>, set |origin| to the
       <a lt="origin of a url">origin</a> of |settings object|'s <a>creation
       URL</a>.
 
@@ -767,10 +756,12 @@ spec: WEBIDL; urlPrefix: https://heycam.github.io/webidl/
   Given an <a>origin</a> (|origin|), the following algorithm returns
   "`Potentially Trustworthy`" or "`Not Trustworthy`" as appropriate.
 
-  1.  If |origin| is an <a>opaque identifier</a>, return "`Not Trustworthy`".
+  1.  If |origin| is an <a>opaque origin</a>, return "`Not Trustworthy`".
 
-  2.  If |origin|'s `scheme` is either "`https`" or "`wss`", return
-      "`Potentially Trustworthy`".
+  2.  Assert: |origin| is a <a>tuple origin</a>.
+
+  3.  If |origin|'s <a for="origin">scheme</a> is either "`https`" or "`wss`",
+      return "`Potentially Trustworthy`".
 
       Note: This is meant to be analog to the <a><i lang="la">a priori</i>
       authenticated URL</a> concept in [[MIX]].
@@ -779,26 +770,29 @@ spec: WEBIDL; urlPrefix: https://heycam.github.io/webidl/
       context in which they were created. Therefore, blobs created in a
       trustworthy origin will themselves be potentially trustworthy. The origin
       of `data:` and `javascript:` URLs, on the other hand, is an <a>opaque
-      identifier</a>, which will not be considered potentially trustworthy.
+      origin</a>, which will not be considered potentially trustworthy.
 
-  3.  If |origin|'s `host` component matches one of the CIDR notations
-      `127.0.0.0/8` or `::1/128` [[!RFC4632]], return "`Potentially
+  4.  If |origin|'s <a for="origin">host</a> component matches one of the CIDR
+      notations `127.0.0.0/8` or `::1/128` [[!RFC4632]], return "`Potentially
       Trustworthy`".
 
-  4.  If |origin|'s `scheme` component is `file`, return "`Potentially
-      Trustworthy`".
+  5.  If |origin|'s <a for="origin">scheme</a> component is `file`, return
+      "`Potentially Trustworthy`".
 
-  5.  If |origin|'s `scheme` component is one which the user agent considers to
-      be authenticated, return "`Potentially Trustworthy`".
+  6.  If |origin|'s <a for="origin">scheme</a> component is one which the user
+      agent considers to be authenticated, return "`Potentially Trustworthy`".
 
       Note: See [[#packaged-applications]] for detail here.
 
-  6.  If |origin| has been configured as a trustworthy origin, return
+  7.  If |origin| has been configured as a trustworthy origin, return
       `Potentially Trustworthy`".
 
       Note: See [[#development-environments]] for detail here.
 
-  7.  Return "`Not Trusted`".
+  8.  Return "`Not Trusted`".
+
+  Note: Neither |origin|'s <a for="origin">domain</a> nor <a for="origin">port</a>
+  has any effect on whether or not it is considered to be a <a>secure context</a>.
 
 </section>
 
@@ -878,7 +872,7 @@ spec: WEBIDL; urlPrefix: https://heycam.github.io/webidl/
     <li>
       The ability to read and modify sensitive data (personally-identifying
       information, credentials, payment instruments, and so on).
-      [[CREDENTIAL-MANAGEMENT]] is an example of an API that handles sensitive
+      [[CREDENTIAL-MANAGEMENT-1]] is an example of an API that handles sensitive
       data.
     </li>
     <li>
@@ -890,12 +884,12 @@ spec: WEBIDL; urlPrefix: https://heycam.github.io/webidl/
     </li>
     <li>
       The ability to access information about other devices to which a user has
-      access. [[DISCOVERY]] and [[BLUETOOTH]] are good examples.
+      access. [[DISCOVERY-API]] and [[WEB-BLUETOOTH]] are good examples.
     </li>
     <li>
       The ability to track users using temporary or persistent identifiers,
       including identifiers which reset themselves after some period of time
-      (e.g. {{sessionStorage}}), identifiers the user can manually reset
+      (e.g. `window.sessionStorage`), identifiers the user can manually reset
       (e.g. [[ENCRYPTED-MEDIA]], Cookies [[RFC6265]], and [[IndexedDB]]),
       as well as identifying hardware features the user can't easily reset.
     </li>
@@ -1026,8 +1020,8 @@ spec: WEBIDL; urlPrefix: https://heycam.github.io/webidl/
 
   The list above clearly includes some existing functionality that is currently
   available to the web over non-secure channels. We recommend that such legacy
-  functionality begin requiring a <a>secure context</a> as quickly as is
-  reasonably possible.
+  functionality be modified to begin requiring a <a>secure context</a> as
+  quickly as is reasonably possible [[!W3C-PROCESS]].
 
   1.  If such a feature is not widely implemented, we recommend that the
       specification be immediately

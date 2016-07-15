@@ -420,11 +420,11 @@ certain minimum standards of authentication and confidentiality are met.</p>
   defined below ensure that these bypasses are difficult and user-visible.</p>
     <p>The following examples summarize the normative text which follows:</p>
     <h3 class="heading settled" data-level="1.1" id="examples-top-level"><span class="secno">1.1. </span><span class="content">Top-level Documents</span><a class="self-link" href="#examples-top-level"></a></h3>
-    <p>Top-level documents are secure as long as they don’t have a non-secure <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#opener-browsing-context">opener browsing context</a>. This is a bit convoluted, so let’s go straight
+    <p>Top-level documents are secure as long as they don’t have a non-secure <a data-link-type="dfn" href="http://www.w3.org/TR/html51/browsers.html#opener-browsing-context">opener browsing context</a>. This is a bit convoluted, so let’s go straight
   to the examples:</p>
     <div class="example" id="example-c3b67557">
      <a class="self-link" href="#example-c3b67557"></a> 
-     <p><code>http://example.com/</code> opened in a <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#top-level-browsing-context">top-level browsing
+     <p><code>http://example.com/</code> opened in a <a data-link-type="dfn" href="http://www.w3.org/TR/html51/browsers.html#top-level-browsing-context">top-level browsing
     context</a> is not a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-1">secure context</a>, as it was not delivered over
     an authenticated and encrypted channel.</p>
      <svg height="200" width="400">
@@ -436,7 +436,7 @@ certain minimum standards of authentication and confidentiality are met.</p>
     </div>
     <div class="example" id="example-f9c0bcaa">
      <a class="self-link" href="#example-f9c0bcaa"></a> 
-     <p><code>https://example.com/</code> opened in a <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#top-level-browsing-context">top-level browsing
+     <p><code>https://example.com/</code> opened in a <a data-link-type="dfn" href="http://www.w3.org/TR/html51/browsers.html#top-level-browsing-context">top-level browsing
     context</a> is a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-2">secure context</a>, as it was delivered over
     an authenticated and encrypted channel.</p>
      <svg height="200" width="400">
@@ -493,7 +493,7 @@ certain minimum standards of authentication and confidentiality are met.</p>
        <path d="M150, 87 C 200 75, 350 75, 150 287"></path>
       </g>
      </svg>
-     <p>The link can be broken via the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/semantics.html#link-type-noopener"><code>noopener</code></a> link relation, meaning
+     <p>The link can be broken via the <a data-link-type="dfn" href="http://www.w3.org/TR/html51/semantics.html#link-type-noopener"><code>noopener</code></a> link relation, meaning
     that the following will both produce secure contexts:</p>
 <pre>&lt;a href="https://example.com/" rel="noopener" target="_blank">Link!&lt;/a>
       
@@ -519,7 +519,7 @@ certain minimum standards of authentication and confidentiality are met.</p>
     <p>Framed documents can be <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-3">secure contexts</a> if they are delivered from <a data-link-type="dfn" href="#potentially-trustworthy-origin" id="ref-for-potentially-trustworthy-origin-1">potentially trustworthy origins</a>, <em>and</em> if they’re embedded
   in a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-4">secure context</a>. That is:</p>
     <div class="example" id="example-9e620851">
-     <a class="self-link" href="#example-9e620851"></a> If <code>https://example.com/</code> opened in a <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#top-level-browsing-context">top-level browsing
+     <a class="self-link" href="#example-9e620851"></a> If <code>https://example.com/</code> opened in a <a data-link-type="dfn" href="http://www.w3.org/TR/html51/browsers.html#top-level-browsing-context">top-level browsing
     context</a> opens <code>https://sub.example.com/</code> in a frame, then
     both are <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-5">secure contexts</a>, as both were delivered over
     authenticated and encrypted channels.
@@ -573,7 +573,7 @@ certain minimum standards of authentication and confidentiality are met.</p>
   context</a>:</p>
     <div class="example" id="example-512dd4fd">
      <a class="self-link" href="#example-512dd4fd"></a> 
-     <p>If <code>https://example.com/</code> in a <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#top-level-browsing-context">top-level browsing
+     <p>If <code>https://example.com/</code> in a <a data-link-type="dfn" href="http://www.w3.org/TR/html51/browsers.html#top-level-browsing-context">top-level browsing
     context</a> runs <code>https://example.com/worker.js</code>, then
     both the document and the worker are <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-8">secure contexts</a>.</p>
      <svg height="200" width="600">
@@ -592,7 +592,7 @@ certain minimum standards of authentication and confidentiality are met.</p>
     </div>
     <div class="example" id="example-453513c5">
      <a class="self-link" href="#example-453513c5"></a> 
-     <p>If <code>http://non-secure.example.com/</code> in a <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#top-level-browsing-context">top-level browsing
+     <p>If <code>http://non-secure.example.com/</code> in a <a data-link-type="dfn" href="http://www.w3.org/TR/html51/browsers.html#top-level-browsing-context">top-level browsing
     context</a> frames <code>https://example.com/</code>, which runs <code>https://example.com/worker.js</code>, then neither the framed document
     nor the worker are <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-9">secure contexts</a>.</p>
      <svg height="200" width="600">
@@ -620,7 +620,7 @@ certain minimum standards of authentication and confidentiality are met.</p>
   be attached to by other non-secure contexts.</p>
     <div class="example" id="example-7e3c52b5">
      <a class="self-link" href="#example-7e3c52b5"></a> 
-     <p>If <code>https://example.com/</code> in a <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#top-level-browsing-context">top-level browsing
+     <p>If <code>https://example.com/</code> in a <a data-link-type="dfn" href="http://www.w3.org/TR/html51/browsers.html#top-level-browsing-context">top-level browsing
     context</a> runs <code>https://example.com/worker.js</code> as a Shared
     Worker, then both the document and the worker are considered secure
     contexts.</p>
@@ -640,7 +640,7 @@ certain minimum standards of authentication and confidentiality are met.</p>
     </div>
     <div class="example" id="example-f3aef4f7">
      <a class="self-link" href="#example-f3aef4f7"></a> 
-     <p><code>https://example.com/</code> in a different <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#top-level-browsing-context">top-level
+     <p><code>https://example.com/</code> in a different <a data-link-type="dfn" href="http://www.w3.org/TR/html51/browsers.html#top-level-browsing-context">top-level
     browsing context</a> (e.g. in a new window) is a secure context, so it may
     access the secure shared worker:</p>
      <svg height="400" width="600">
@@ -729,7 +729,7 @@ certain minimum standards of authentication and confidentiality are met.</p>
   contexts</a>.</p>
     <div class="example" id="example-58019791">
      <a class="self-link" href="#example-58019791"></a> 
-     <p>If <code>https://example.com/</code> in a <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#top-level-browsing-context">top-level browsing
+     <p>If <code>https://example.com/</code> in a <a data-link-type="dfn" href="http://www.w3.org/TR/html51/browsers.html#top-level-browsing-context">top-level browsing
     context</a> registers <code>https://example.com/service.js</code>,
     then both the document and the Service Worker are considered secure
     contexts.</p>
@@ -750,10 +750,9 @@ certain minimum standards of authentication and confidentiality are met.</p>
    </section>
    <section>
     <h2 class="heading settled" data-level="2" id="framework"><span class="secno">2. </span><span class="content">Framework</span><a class="self-link" href="#framework"></a></h2>
-    <p>A <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#settings-object">settings object</a> is considered a <dfn class="dfn-paneled" data-dfn-type="dfn" data-export="" id="secure-context">secure context</dfn> if
-  the algorithm in <a href="#settings-object">§3.1 Is settings object a secure context?</a> returns "<code>Secure</code>". The <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#settings-object">settings
-  object</a> is otherwise <dfn data-dfn-type="dfn" data-export="" data-lt="non-secure context" id="non-secure-context">non-secure<a class="self-link" href="#non-secure-context"></a></dfn>.</p>
-    <p>Likewise, a <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#global-object">global object</a> is considered a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-17">secure context</a> if its <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#relevant-settings-object-for-a-global-object">relevant settings object</a> is a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-18">secure context</a>.</p>
+    <p>An <a data-link-type="dfn" href="http://www.w3.org/TR/html51/webappapis.html#environment-settings-object">environment settings object</a> is considered a <dfn class="dfn-paneled" data-dfn-type="dfn" data-export="" data-lt="secure context" id="secure-context">secure
+  context</dfn> if the algorithm in <a href="#settings-object">§3.1 Is settings object a secure context?</a> returns "<code>Secure</code>", and a <dfn data-dfn-type="dfn" data-noexport="" id="non-secure-context">non-secure context<a class="self-link" href="#non-secure-context"></a></dfn> otherwise.</p>
+    <p>Likewise, a <a data-link-type="dfn" href="http://www.w3.org/TR/html51/webappapis.html#global-object">global object</a> is considered a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-17">secure context</a> if its <a data-link-type="dfn" href="http://www.w3.org/TR/html51/webappapis.html#relevant-settings-object">relevant settings object</a> is a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-18">secure context</a>.</p>
     <h3 class="heading settled" data-level="2.1" id="integration-idl"><span class="secno">2.1. </span><span class="content">Intergration with WebIDL</span><a class="self-link" href="#integration-idl"></a></h3>
     <p><em>This section is non-normative.</em></p>
     <p>A new <code>&lt;a>[SecureContext]&lt;/a></code> attribute is available for operators, which
@@ -794,9 +793,9 @@ certain minimum standards of authentication and confidentiality are met.</p>
   steps:"), run the following step:</p>
       <ol>
        <li data-md="">
-        <p>If the result of executing <a href="#settings-object">§3.1 Is settings object a secure context?</a> on the <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#current-settings-object">current
+        <p>If the result of executing <a href="#settings-object">§3.1 Is settings object a secure context?</a> on the <a data-link-type="dfn" href="http://www.w3.org/TR/html51/webappapis.html#current-settings-object">current
   settings object</a> does not match the result of executing the same
-  algorithm on <var>worker global scope</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#relevant-settings-object-for-a-global-object">relevant settings
+  algorithm on <var>worker global scope</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html51/webappapis.html#relevant-settings-object">relevant settings
   object</a>, then throw a <code>SecurityError</code> exception, and abort
   these steps.</p>
       </ol>
@@ -805,7 +804,7 @@ certain minimum standards of authentication and confidentiality are met.</p>
     <p>To determine whether a context is capable of making use of features which
   require <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-22">secure contexts</a>, a simple boolean attribute is added to the
   global object:</p>
-<pre class="idl highlight def"><span class="kt">partial</span> <span class="kt">interface</span> <a class="nv idl-code" data-link-type="interface" href="http://www.w3.org/TR/html5/browsers.html#the-window-object">Window</a> {
+<pre class="idl highlight def"><span class="kt">partial</span> <span class="kt">interface</span> <a class="nv idl-code" data-link-type="interface" href="http://www.w3.org/TR/html51/browsers.html#the-window-object">Window</a> {
   <span class="kt">readonly</span> <span class="kt">attribute</span> <span class="kt">boolean</span> <dfn class="nv dfn-paneled idl-code" data-dfn-for="Window" data-dfn-type="attribute" data-export="" data-readonly="" data-type="boolean" id="dom-window-issecurecontext">isSecureContext</dfn>;
 };
 
@@ -813,55 +812,58 @@ certain minimum standards of authentication and confidentiality are met.</p>
   <span class="kt">readonly</span> <span class="kt">attribute</span> <span class="kt">boolean</span> <dfn class="nv dfn-paneled idl-code" data-dfn-for="WorkerGlobalScope" data-dfn-type="attribute" data-export="" data-readonly="" data-type="boolean" id="dom-workerglobalscope-issecurecontext">isSecureContext</dfn>;
 };
 </pre>
-    <p>Both <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/html5/browsers.html#the-window-object">Window</a></code>'s <code class="idl"><a data-link-type="idl" href="#dom-window-issecurecontext" id="ref-for-dom-window-issecurecontext-1">isSecureContext</a></code> and <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/workers/#workerglobalscope">WorkerGlobalScope</a></code>'s <code class="idl"><a data-link-type="idl" href="#dom-workerglobalscope-issecurecontext" id="ref-for-dom-workerglobalscope-issecurecontext-1">isSecureContext</a></code> attributes' getters return <code>true</code> if the <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#relevant-settings-object-for-a-global-object">relevant settings object</a> for the getter’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#global-object">global object</a> is a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-23">secure context</a>, and <code>false</code> otherwise.</p>
+    <p>Both <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/html51/browsers.html#the-window-object">Window</a></code>'s <code class="idl"><a data-link-type="idl" href="#dom-window-issecurecontext" id="ref-for-dom-window-issecurecontext-1">isSecureContext</a></code> and <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/workers/#workerglobalscope">WorkerGlobalScope</a></code>'s <code class="idl"><a data-link-type="idl" href="#dom-workerglobalscope-issecurecontext" id="ref-for-dom-workerglobalscope-issecurecontext-1">isSecureContext</a></code> attributes' getters return <code>true</code> if the <a data-link-type="dfn" href="http://www.w3.org/TR/html51/webappapis.html#relevant-settings-object">relevant settings object</a> for the getter’s <a data-link-type="dfn" href="http://www.w3.org/TR/html51/webappapis.html#global-object">global object</a> is a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-23">secure context</a>, and <code>false</code> otherwise.</p>
    </section>
    <section>
     <h2 class="heading settled" data-level="3" id="algorithms"><span class="secno">3. </span><span class="content">Algorithms</span><a class="self-link" href="#algorithms"></a></h2>
     <h3 class="heading settled" data-level="3.1" id="settings-object"><span class="secno">3.1. </span><span class="content"> Is <var>settings object</var> a secure context? </span><a class="self-link" href="#settings-object"></a></h3>
-    <p>Given a <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#settings-object">settings object</a> (<var>settings object</var>) this algorithm returns
-  "<code>Secure</code>" if the object represents a context which the user agent obtained
-  via a secure channel, and "<code>Not Secure</code>" otherwise.</p>
+    <p>Given an <a data-link-type="dfn" href="http://www.w3.org/TR/html51/webappapis.html#environment-settings-object">environment settings object</a> (<var>settings</var>) this algorithm
+  returns "<code>Secure</code>" if the object represents a context which the user agent
+  obtained via a secure channel, and "<code>Not Secure</code>" otherwise.</p>
     <ol>
      <li data-md="">
-      <p>If <var>settings object</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#global-object">global object</a> is a <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/workers/#workerglobalscope">WorkerGlobalScope</a></code>,
-  then:</p>
+      <p>Let <var>global</var> be <var>settings</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html51/webappapis.html#the-environment-settings-objects-global-object">global object</a>.</p>
+     <li data-md="">
+      <p>If <var>global</var> is a <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/workers/#workerglobalscope">WorkerGlobalScope</a></code>, then:</p>
       <ol>
        <li data-md="">
-        <p>For each <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/dom/#interface-document">Document</a></code> (<var>document</var>) in <var>settings object</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#global-object">global
-  object</a>’s list of <a data-link-type="dfn" href="http://www.w3.org/TR/workers/#the-worker-s-documents">the worker’s <code>Documents</code></a>:</p>
+        <p>For each <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/html51/dom.html#the-document-object">Document</a></code> (<var>document</var>) in <var>global</var>’s list of <a data-link-type="dfn" href="http://www.w3.org/TR/workers/#the-worker-s-documents">the
+  worker’s <code>Documents</code></a>:</p>
         <ol>
          <li data-md="">
-          <p>If <var>document</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#relevant-settings-object-for-a-global-object">relevant settings object</a> is not a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-24">secure context</a>, return "<code>Not Secure</code>".</p>
+          <p>If <a href="#settings-object">§3.1 Is settings object a secure context?</a> returns "<code>Not Secure</code>" when executed upon <var>document</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html51/webappapis.html#relevant-settings-object">relevant settings object</a>, return "<code>Not Secure</code>".</p>
         </ol>
       </ol>
      <li data-md="">
-      <p>Otherwise, <var>settings object</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#global-object">global object</a> is a <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/html5/browsers.html#the-window-object">Window</a></code>. If <var>settings object</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#responsible-document">responsible document</a> has a <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#creator-document">creator <code>Document</code></a>, <var>creator</var>:</p>
+      <p>Assert: <var>global</var> is a <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/html51/browsers.html#the-window-object">Window</a></code>.</p>
+     <li data-md="">
+      <p>Otherwise, <var>global</var> is a <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/html51/browsers.html#the-window-object">Window</a></code>. If <var>settings object</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html51/webappapis.html#responsible-document">responsible
+  document</a> has a <a data-link-type="dfn" href="http://www.w3.org/TR/html51/browsers.html#creator-document">creator <code>Document</code></a>, <var>creator</var>:</p>
       <ol>
        <li data-md="">
-        <p>If <var>creator</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#browsing-context">browsing context</a> is an <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#ancestor-browsing-context">ancestor
-  browsing context</a> or <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#opener-browsing-context">opener browsing context</a> of <var>settings object</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#responsible-document">responsible document</a> and <var>creator</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#relevant-settings-object-for-a-global-object">relevant settings object</a> is not a secure
-  context, return "<code>Not Secure</code>".</p>
-        <p class="note" role="note">Note: Since we take account of <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#auxiliary-browsing-context">auxiliary browsing contexts</a>'
-  status, a popups' status depend on how it is opened, as discussed
+        <p>If <var>creator</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html51/browsers.html#browsing-context">browsing context</a> is an <a data-link-type="dfn" href="http://www.w3.org/TR/html51/browsers.html#ancestor-browsing-context">ancestor
+  browsing context</a> or <a data-link-type="dfn" href="http://www.w3.org/TR/html51/browsers.html#opener-browsing-context">opener browsing context</a> of <var>settings object</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html51/webappapis.html#responsible-browsing-context">responsible browsing context</a> and <a href="#settings-object">§3.1 Is settings object a secure context?</a> returns "<code>Not Secure</code>" when executed upon <var>creator</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html51/webappapis.html#relevant-settings-object">relevant settings object</a>, return "<code>Not Secure</code>".</p>
+        <p class="note" role="note">Note: Since we take account of <a data-link-type="dfn" href="http://www.w3.org/TR/html51/browsers.html#auxiliary-browsing-context">auxiliary browsing contexts</a>'
+  status, a popups' status depends on how it is opened, as discussed
   in <a href="#examples-top-level">§1.1 Top-level Documents</a>.</p>
       </ol>
      <li data-md="">
-      <p>If <var>settings object</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#https-state">HTTPS state</a> is "<code>modern</code>", return
+      <p>If <var>settings object</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html51/webappapis.html#https-state">HTTPS state</a> is "<code>modern</code>", return
   "<code>Secure</code>".</p>
       <div class="note" role="note">
         Most of the time, this check will be enough to determine whether
     a particular context was securely delivered. Documents delivered over
-    TLS will have their <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#https-state">HTTPS state</a> set, and <code>srcdoc</code> <code>Document</code>s
-    inherit their ancestor’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#https-state">HTTPS state</a> (as do other kinds of
+    TLS will have their <a data-link-type="dfn" href="http://www.w3.org/TR/html51/webappapis.html#https-state">HTTPS state</a> set, and <code>srcdoc</code> <code>Document</code>s
+    inherit their ancestor’s <a data-link-type="dfn" href="http://www.w3.org/TR/html51/webappapis.html#https-state">HTTPS state</a> (as do other kinds of
     requests which inherit their requestor’s origin: see the <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#basic-fetch">basic
     fetch</a> algorithm for details on some of these <a data-link-type="biblio" href="#biblio-fetch">[FETCH]</a>). 
        <p>We only continue past this check in order to allow resources
     delivered from "trustworthy" but unauthenticated locations like <code>http://127.0.0.1/</code> to be treated as creating a secure context.</p>
       </div>
      <li data-md="">
-      <p>Let <var>origin</var> be <var>settings object</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#origin">origin</a>.</p>
+      <p>Let <var>origin</var> be <var>settings object</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html51/browsers.html#origin">origin</a>.</p>
      <li data-md="">
-      <p>If <var>origin</var> is an <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#origin">opaque identifier</a>, set <var>origin</var> to the <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-origin">origin</a> of <var>settings object</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#creation-url">creation
+      <p>If <var>origin</var> is an <a data-link-type="dfn" href="http://www.w3.org/TR/html51/browsers.html#opaque-origin">opaque origin</a>, set <var>origin</var> to the <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-origin">origin</a> of <var>settings object</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html51/webappapis.html#creation-url">creation
   URL</a>.</p>
       <p class="note" role="note">Note: We use the origin of the URL here because sandboxed content that
   is treated as being in a unique origin (e.g. <code>&lt;iframe sandbox src="http://127.0.0.1/"></code>) would otherwise be treated as
@@ -893,27 +895,31 @@ certain minimum standards of authentication and confidentiality are met.</p>
     <p>On the other hand, the user agent MAY choose to extend this trust to other,
   vendor-specific URL schemes like <code>app:</code> or <code>chrome-extension:</code> which it can
   determine <i lang="la">a priori</i> to be trusted (see <a href="#packaged-applications">§7.1 Packaged Applications</a> for detail).</p>
-    <p>Given an <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#origin">origin</a> (<var>origin</var>), the following algorithm returns
+    <p>Given an <a data-link-type="dfn" href="http://www.w3.org/TR/html51/browsers.html#origin">origin</a> (<var>origin</var>), the following algorithm returns
   "<code>Potentially Trustworthy</code>" or "<code>Not Trustworthy</code>" as appropriate.</p>
     <ol>
      <li data-md="">
-      <p>If <var>origin</var> is an <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#origin">opaque identifier</a>, return "<code>Not Trustworthy</code>".</p>
+      <p>If <var>origin</var> is an <a data-link-type="dfn" href="http://www.w3.org/TR/html51/browsers.html#opaque-origin">opaque origin</a>, return "<code>Not Trustworthy</code>".</p>
      <li data-md="">
-      <p>If <var>origin</var>’s <code>scheme</code> is either "<code>https</code>" or "<code>wss</code>", return
-  "<code>Potentially Trustworthy</code>".</p>
+      <p>Assert: <var>origin</var> is a <a data-link-type="dfn" href="http://www.w3.org/TR/html51/browsers.html#tuple-origin">tuple origin</a>.</p>
+     <li data-md="">
+      <p>If <var>origin</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html51/browsers.html#concept-origin-scheme">scheme</a> is either "<code>https</code>" or "<code>wss</code>",
+  return "<code>Potentially Trustworthy</code>".</p>
       <p class="note" role="note">Note: This is meant to be analog to the <a data-link-type="dfn" href="https://w3c.github.io/webappsec-mixed-content/#a-priori-authenticated-url"><i lang="la">a priori</i> authenticated URL</a> concept in <a data-link-type="biblio" href="#biblio-mix">[MIX]</a>.</p>
       <p class="note" role="note">Note: The origin of <code>blob:</code> and <code>filesystem:</code> URLs is the origin of the
   context in which they were created. Therefore, blobs created in a
   trustworthy origin will themselves be potentially trustworthy. The origin
-  of <code>data:</code> and <code>javascript:</code> URLs, on the other hand, is an <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#origin">opaque
-  identifier</a>, which will not be considered potentially trustworthy.</p>
+  of <code>data:</code> and <code>javascript:</code> URLs, on the other hand, is an <a data-link-type="dfn" href="http://www.w3.org/TR/html51/browsers.html#opaque-origin">opaque
+  origin</a>, which will not be considered potentially trustworthy.</p>
      <li data-md="">
-      <p>If <var>origin</var>’s <code>host</code> component matches one of the CIDR notations <code>127.0.0.0/8</code> or <code>::1/128</code> <a data-link-type="biblio" href="#biblio-rfc4632">[RFC4632]</a>, return "<code>Potentially Trustworthy</code>".</p>
+      <p>If <var>origin</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html51/browsers.html#concept-origin-host">host</a> component matches one of the CIDR
+  notations <code>127.0.0.0/8</code> or <code>::1/128</code> <a data-link-type="biblio" href="#biblio-rfc4632">[RFC4632]</a>, return "<code>Potentially Trustworthy</code>".</p>
      <li data-md="">
-      <p>If <var>origin</var>’s <code>scheme</code> component is <code>file</code>, return "<code>Potentially Trustworthy</code>".</p>
+      <p>If <var>origin</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html51/browsers.html#concept-origin-scheme">scheme</a> component is <code>file</code>, return
+  "<code>Potentially Trustworthy</code>".</p>
      <li data-md="">
-      <p>If <var>origin</var>’s <code>scheme</code> component is one which the user agent considers to
-  be authenticated, return "<code>Potentially Trustworthy</code>".</p>
+      <p>If <var>origin</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html51/browsers.html#concept-origin-scheme">scheme</a> component is one which the user
+  agent considers to be authenticated, return "<code>Potentially Trustworthy</code>".</p>
       <p class="note" role="note">Note: See <a href="#packaged-applications">§7.1 Packaged Applications</a> for detail here.</p>
      <li data-md="">
       <p>If <var>origin</var> has been configured as a trustworthy origin, return <code>Potentially Trustworthy</code>".</p>
@@ -921,6 +927,7 @@ certain minimum standards of authentication and confidentiality are met.</p>
      <li data-md="">
       <p>Return "<code>Not Trusted</code>".</p>
     </ol>
+    <p class="note" role="note">Note: Neither <var>origin</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html51/browsers.html#concept-origin-domain">domain</a> nor <a data-link-type="dfn" href="http://www.w3.org/TR/html51/browsers.html#concept-origin-port">port</a> has any effect on whether or not it is considered to be a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-24">secure context</a>.</p>
    </section>
    <section>
     <h2 class="heading settled" data-level="4" id="threat-models-risks"><span class="secno">4. </span><span class="content"> Threat models and risks </span><a class="self-link" href="#threat-models-risks"></a></h2>
@@ -955,13 +962,13 @@ certain minimum standards of authentication and confidentiality are met.</p>
     <h3 class="heading settled" data-level="4.2" id="ancestors"><span class="secno">4.2. </span><span class="content">Ancestral Risk</span><a class="self-link" href="#ancestors"></a></h3>
     <p>The <a href="#settings-object">§3.1 Is settings object a secure context?</a> algorithm walks through all the ancestors of a
   particular context in order to determine whether or not the context itself is
-  secure. Why wouldn’t we consider a securely-delivered document in an <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/embedded-content.html#the-iframe-element">iframe</a></code> to be secure, in and of itself?</p>
+  secure. Why wouldn’t we consider a securely-delivered document in an <code><a data-link-type="element" href="http://www.w3.org/TR/html51/semantics-embedded-content.html#the-iframe-element">iframe</a></code> to be secure, in and of itself?</p>
     <p>The short answer is that this model would enable abuse. Chrome’s
   implementation of <a data-link-type="biblio" href="#biblio-webcryptoapi">[WEBCRYPTOAPI]</a> was an early experiment in locking APIs to
   secure contexts, and it does not walk through a context’s ancestors. The
   assumption was that locking the API to a resouce which was itself delivered
   securely would be enough to ensure secure usage. The result, however, was
-  that entities like Netflix built <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/embedded-content.html#the-iframe-element">iframe</a></code>- and <code>postMessage()</code>-based shims
+  that entities like Netflix built <code><a data-link-type="element" href="http://www.w3.org/TR/html51/semantics-embedded-content.html#the-iframe-element">iframe</a></code>- and <code>postMessage()</code>-based shims
   that exposed the API to non-secure contexts. The restriction was little more
   than a speed-bump, slowing down non-secure access to the API, but completely
   ineffective in preventing such access.</p>
@@ -978,7 +985,7 @@ certain minimum standards of authentication and confidentiality are met.</p>
   network attackers:</p>
     <ol>
      <li> The ability to read and modify sensitive data (personally-identifying
-      information, credentials, payment instruments, and so on). <a data-link-type="biblio" href="#biblio-credential-management">[CREDENTIAL-MANAGEMENT]</a> is an example of an API that handles sensitive
+      information, credentials, payment instruments, and so on). <a data-link-type="biblio" href="#biblio-credential-management-1">[CREDENTIAL-MANAGEMENT-1]</a> is an example of an API that handles sensitive
       data. 
      <li> The ability to read and modify input from sensors on a user’s device
       (camera, microphone, and GPS being particularly noteworthy, but
@@ -986,10 +993,10 @@ certain minimum standards of authentication and confidentiality are met.</p>
       accelerometer). <a data-link-type="biblio" href="#biblio-geolocation-api">[GEOLOCATION-API]</a> and <a data-link-type="biblio" href="#biblio-mediacapture-streams">[MEDIACAPTURE-STREAMS]</a> are
       historical examples of features that use sensor input. 
      <li> The ability to access information about other devices to which a user has
-      access. <a data-link-type="biblio" href="#biblio-discovery">[DISCOVERY]</a> and <a data-link-type="biblio" href="#biblio-bluetooth">[BLUETOOTH]</a> are good examples. 
+      access. <a data-link-type="biblio" href="#biblio-discovery-api">[DISCOVERY-API]</a> and <a data-link-type="biblio" href="#biblio-web-bluetooth">[WEB-BLUETOOTH]</a> are good examples. 
      <li> The ability to track users using temporary or persistent identifiers,
       including identifiers which reset themselves after some period of time
-      (e.g. <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/webstorage/#the-sessionstorage-attribute">sessionStorage</a></code>), identifiers the user can manually reset
+      (e.g. <code>window.sessionStorage</code>), identifiers the user can manually reset
       (e.g. <a data-link-type="biblio" href="#biblio-encrypted-media">[ENCRYPTED-MEDIA]</a>, Cookies <a data-link-type="biblio" href="#biblio-rfc6265">[RFC6265]</a>, and <a data-link-type="biblio" href="#biblio-indexeddb">[IndexedDB]</a>),
       as well as identifying hardware features the user can’t easily reset. 
      <li> The ability to introduce some state for an origin which persists across
@@ -1054,7 +1061,7 @@ certain minimum standards of authentication and confidentiality are met.</p>
      <a class="self-link" href="#example-3c0f6ca7"></a> 
      <ol>
       <li>
-        If the <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#current-settings-object">current settings object</a> is <em>not</em> a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-31">secure
+        If the <a data-link-type="dfn" href="http://www.w3.org/TR/html51/webappapis.html#current-settings-object">current settings object</a> is <em>not</em> a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-31">secure
         context</a>, then: 
        <ol>
         <li> [<i>insert something appropriate here: perhaps a Promise could be
@@ -1082,8 +1089,8 @@ certain minimum standards of authentication and confidentiality are met.</p>
     <p><em>This section is non-normative.</em></p>
     <p>The list above clearly includes some existing functionality that is currently
   available to the web over non-secure channels. We recommend that such legacy
-  functionality begin requiring a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-33">secure context</a> as quickly as is
-  reasonably possible.</p>
+  functionality be modified to begin requiring a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-33">secure context</a> as
+  quickly as is reasonably possible <a data-link-type="biblio" href="#biblio-w3c-process">[W3C-PROCESS]</a>.</p>
     <ol>
      <li data-md="">
       <p>If such a feature is not widely implemented, we recommend that the
@@ -1108,7 +1115,7 @@ certain minimum standards of authentication and confidentiality are met.</p>
      <li data-md="">
       <p><a data-link-type="dfn" href="https://www.w3.org/2015/Process-20150901/#rec-modify">Modify</a> the specification to include
   checks against <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-36">secure context</a> before executing the algorithms for <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/geolocation-API/#get-current-position">getCurrentPosition()</a></code> and <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/geolocation-API/#watch-position">watchPosition()</a></code>.</p>
-      <p>If the <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#current-settings-object">current settings object</a> is not a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-37">secure context</a>,
+      <p>If the <a data-link-type="dfn" href="http://www.w3.org/TR/html51/webappapis.html#current-settings-object">current settings object</a> is not a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-37">secure context</a>,
   then the algorithm should be aborted, and the <code>errorCallback</code> invoked with a <code>code</code> of <code>PERMISSION_DENIED</code>.</p>
      <li data-md="">
       <p>The user agent should announce clear intentions to disable the API for
@@ -1186,11 +1193,6 @@ certain minimum standards of authentication and confidentiality are met.</p>
   <h3 class="no-num no-ref heading settled" id="index-defined-elsewhere"><span class="content">Terms defined by reference</span><a class="self-link" href="#index-defined-elsewhere"></a></h3>
   <ul class="index">
    <li>
-    <a data-link-type="biblio">[WHATWG-DOM]</a> defines the following terms:
-    <ul>
-     <li><a href="http://www.w3.org/TR/dom/#interface-document">Document</a>
-    </ul>
-   <li>
     <a data-link-type="biblio">[FETCH]</a> defines the following terms:
     <ul>
      <li><a href="https://fetch.spec.whatwg.org/#basic-fetch">basic fetch</a>
@@ -1202,29 +1204,34 @@ certain minimum standards of authentication and confidentiality are met.</p>
      <li><a href="http://www.w3.org/TR/geolocation-API/#watch-position">watchPosition()</a>
     </ul>
    <li>
-    <a data-link-type="biblio">[HTML]</a> defines the following terms:
+    <a data-link-type="biblio">[html51]</a> defines the following terms:
     <ul>
-     <li><a href="https://html.spec.whatwg.org/multipage/webappapis.html#creation-url">creation url</a>
-     <li><a href="https://html.spec.whatwg.org/multipage/webappapis.html#https-state">https state</a>
-     <li><a href="https://html.spec.whatwg.org/multipage/semantics.html#link-type-noopener">noopener</a>
-    </ul>
-   <li>
-    <a data-link-type="biblio">[html5]</a> defines the following terms:
-    <ul>
-     <li><a href="http://www.w3.org/TR/html5/browsers.html#the-window-object">Window</a>
-     <li><a href="http://www.w3.org/TR/html5/browsers.html#ancestor-browsing-context">ancestor browsing context</a>
-     <li><a href="http://www.w3.org/TR/html5/browsers.html#auxiliary-browsing-context">auxiliary browsing context</a>
-     <li><a href="http://www.w3.org/TR/html5/browsers.html#browsing-context">browsing context</a>
-     <li><a href="http://www.w3.org/TR/html5/browsers.html#creator-document">creator document</a>
-     <li><a href="http://www.w3.org/TR/html5/webappapis.html#current-settings-object">current settings object</a>
-     <li><a href="http://www.w3.org/TR/html5/webappapis.html#global-object">global object</a>
-     <li><a href="http://www.w3.org/TR/html5/browsers.html#origin">opaque identifier</a>
-     <li><a href="http://www.w3.org/TR/html5/browsers.html#opener-browsing-context">opener browsing context</a>
-     <li><a href="http://www.w3.org/TR/html5/browsers.html#origin">origin</a>
-     <li><a href="http://www.w3.org/TR/html5/webappapis.html#relevant-settings-object-for-a-global-object">relevant settings object</a>
-     <li><a href="http://www.w3.org/TR/html5/webappapis.html#responsible-document">responsible document</a>
-     <li><a href="http://www.w3.org/TR/html5/webappapis.html#settings-object">settings object</a>
-     <li><a href="http://www.w3.org/TR/html5/browsers.html#top-level-browsing-context">top-level browsing context</a>
+     <li><a href="http://www.w3.org/TR/html51/dom.html#the-document-object">Document</a>
+     <li><a href="http://www.w3.org/TR/html51/browsers.html#the-window-object">Window</a>
+     <li><a href="http://www.w3.org/TR/html51/browsers.html#ancestor-browsing-context">ancestor browsing context</a>
+     <li><a href="http://www.w3.org/TR/html51/browsers.html#auxiliary-browsing-context">auxiliary browsing context</a>
+     <li><a href="http://www.w3.org/TR/html51/browsers.html#browsing-context">browsing context</a>
+     <li><a href="http://www.w3.org/TR/html51/webappapis.html#creation-url">creation url</a>
+     <li><a href="http://www.w3.org/TR/html51/browsers.html#creator-document">creator document</a>
+     <li><a href="http://www.w3.org/TR/html51/webappapis.html#current-settings-object">current settings object</a>
+     <li><a href="http://www.w3.org/TR/html51/browsers.html#concept-origin-domain">domain</a>
+     <li><a href="http://www.w3.org/TR/html51/webappapis.html#environment-settings-object">environment settings object</a>
+     <li><a href="http://www.w3.org/TR/html51/webappapis.html#global-object">global object</a>
+     <li><a href="http://www.w3.org/TR/html51/browsers.html#concept-origin-host">host</a>
+     <li><a href="http://www.w3.org/TR/html51/webappapis.html#https-state">https state</a>
+     <li><a href="http://www.w3.org/TR/html51/semantics-embedded-content.html#the-iframe-element">iframe</a>
+     <li><a href="http://www.w3.org/TR/html51/semantics.html#link-type-noopener">noopener</a>
+     <li><a href="http://www.w3.org/TR/html51/browsers.html#opaque-origin">opaque origin</a>
+     <li><a href="http://www.w3.org/TR/html51/browsers.html#opener-browsing-context">opener browsing context</a>
+     <li><a href="http://www.w3.org/TR/html51/browsers.html#origin">origin</a>
+     <li><a href="http://www.w3.org/TR/html51/browsers.html#concept-origin-port">port</a>
+     <li><a href="http://www.w3.org/TR/html51/webappapis.html#relevant-settings-object">relevant settings object</a>
+     <li><a href="http://www.w3.org/TR/html51/webappapis.html#responsible-browsing-context">responsible browsing context</a>
+     <li><a href="http://www.w3.org/TR/html51/webappapis.html#responsible-document">responsible document</a>
+     <li><a href="http://www.w3.org/TR/html51/browsers.html#concept-origin-scheme">scheme</a>
+     <li><a href="http://www.w3.org/TR/html51/webappapis.html#the-environment-settings-objects-global-object">the environment settings object's global object</a>
+     <li><a href="http://www.w3.org/TR/html51/browsers.html#top-level-browsing-context">top-level browsing context</a>
+     <li><a href="http://www.w3.org/TR/html51/browsers.html#tuple-origin">tuple origin</a>
     </ul>
    <li>
     <a data-link-type="biblio">[MIX]</a> defines the following terms:
@@ -1248,21 +1255,11 @@ certain minimum standards of authentication and confidentiality are met.</p>
      <li><a href="https://heycam.github.io/webidl/#dfn-exposed">exposed</a>
     </ul>
    <li>
-    <a data-link-type="biblio">[webstorage]</a> defines the following terms:
-    <ul>
-     <li><a href="http://www.w3.org/TR/webstorage/#the-sessionstorage-attribute">sessionStorage</a>
-    </ul>
-   <li>
     <a data-link-type="biblio">[workers]</a> defines the following terms:
     <ul>
      <li><a href="http://www.w3.org/TR/workers/#dom-sharedworker">SharedWorker()</a>
      <li><a href="http://www.w3.org/TR/workers/#workerglobalscope">WorkerGlobalScope</a>
      <li><a href="http://www.w3.org/TR/workers/#the-worker-s-documents">the worker's documents</a>
-    </ul>
-   <li>
-    <a data-link-type="biblio">[HTML]</a> defines the following terms:
-    <ul>
-     <li><a href="https://html.spec.whatwg.org/multipage/embedded-content.html#the-iframe-element">iframe</a>
     </ul>
   </ul>
   <h2 class="no-num no-ref heading settled" id="references"><span class="content">References</span><a class="self-link" href="#references"></a></h2>
@@ -1270,22 +1267,16 @@ certain minimum standards of authentication and confidentiality are met.</p>
   <dl>
    <dt id="biblio-geolocation-api">[GEOLOCATION-API]
    <dd>Andrei Popescu. <a href="http://dev.w3.org/geo/api/spec-source.html">Geolocation API Specification</a>. 28 May 2015. PER. URL: <a href="http://dev.w3.org/geo/api/spec-source.html">http://dev.w3.org/geo/api/spec-source.html</a>
-   <dt id="biblio-html">[HTML]
-   <dd>Ian Hickson. <a href="https://html.spec.whatwg.org/multipage/">HTML Standard</a>. Living Standard. URL: <a href="https://html.spec.whatwg.org/multipage/">https://html.spec.whatwg.org/multipage/</a>
-   <dt id="biblio-html5">[HTML5]
-   <dd>Ian Hickson; et al. <a href="https://www.w3.org/html/wg/drafts/html/master/">HTML5</a>. 28 October 2014. REC. URL: <a href="https://www.w3.org/html/wg/drafts/html/master/">https://www.w3.org/html/wg/drafts/html/master/</a>
+   <dt id="biblio-html51">[HTML51]
+   <dd>Steve Faulkner; et al. <a href="https://w3c.github.io/html/">HTML 5.1</a>. 2 June 2016. WD. URL: <a href="https://w3c.github.io/html/">https://w3c.github.io/html/</a>
    <dt id="biblio-rfc2119">[RFC2119]
    <dd>S. Bradner. <a href="https://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href="https://tools.ietf.org/html/rfc2119">https://tools.ietf.org/html/rfc2119</a>
    <dt id="biblio-rfc4632">[RFC4632]
    <dd>V. Fuller; T. Li. <a href="https://tools.ietf.org/html/rfc4632">Classless Inter-domain Routing (CIDR): The Internet Address Assignment and Aggregation Plan</a>. August 2006. Best Current Practice. URL: <a href="https://tools.ietf.org/html/rfc4632">https://tools.ietf.org/html/rfc4632</a>
    <dt id="biblio-w3c-process">[W3C-PROCESS]
-   <dd>Charles McCathie Nevile. <a href="http://www.w3.org/2014/Process-20140801/">World Wide Web Consortium Process Document</a>. URL: <a href="http://www.w3.org/2014/Process-20140801/">http://www.w3.org/2014/Process-20140801/</a>
+   <dd>Charles McCathie Nevile. <a href="https://www.w3.org/2014/Process-20140801/">World Wide Web Consortium Process Document</a>. URL: <a href="https://www.w3.org/2014/Process-20140801/">https://www.w3.org/2014/Process-20140801/</a>
    <dt id="biblio-webidl-1">[WebIDL-1]
    <dd>Cameron McCormack; Boris Zbarsky. <a href="https://heycam.github.io/webidl/">WebIDL Level 1</a>. 8 March 2016. CR. URL: <a href="https://heycam.github.io/webidl/">https://heycam.github.io/webidl/</a>
-   <dt id="biblio-webstorage">[WEBSTORAGE]
-   <dd>Ian Hickson. <a href="https://w3c.github.io/webstorage/">Web Storage (Second Edition)</a>. 19 April 2016. REC. URL: <a href="https://w3c.github.io/webstorage/">https://w3c.github.io/webstorage/</a>
-   <dt id="biblio-whatwg-dom">[WHATWG-DOM]
-   <dd>Anne van Kesteren. <a href="https://dom.spec.whatwg.org/">DOM Standard</a>. Living Standard. URL: <a href="https://dom.spec.whatwg.org/">https://dom.spec.whatwg.org/</a>
    <dt id="biblio-whatwg-url">[WHATWG-URL]
    <dd>Anne van Kesteren; Sam Ruby. <a href="https://url.spec.whatwg.org/">URL Standard</a>. Living Standard. URL: <a href="https://url.spec.whatwg.org/">https://url.spec.whatwg.org/</a>
    <dt id="biblio-workers">[WORKERS]
@@ -1293,14 +1284,12 @@ certain minimum standards of authentication and confidentiality are met.</p>
   </dl>
   <h3 class="no-num no-ref heading settled" id="informative"><span class="content">Informative References</span><a class="self-link" href="#informative"></a></h3>
   <dl>
-   <dt id="biblio-bluetooth">[BLUETOOTH]
-   <dd>Jeffrey Yasskin; Vincent Scheib. <a href="https://webbluetoothcg.github.io/web-bluetooth/">Web Bluetooth</a>. URL: <a href="https://webbluetoothcg.github.io/web-bluetooth/">https://webbluetoothcg.github.io/web-bluetooth/</a>
    <dt id="biblio-comcast">[COMCAST]
    <dd>David Kravets. <a href="http://arstechnica.com/tech-policy/2014/09/why-comcasts-javascript-ad-injections-threaten-security-net-neutrality/">Comcast Wi-Fi serving self-promotional ads via JavaScript injection</a>. URL: <a href="http://arstechnica.com/tech-policy/2014/09/why-comcasts-javascript-ad-injections-threaten-security-net-neutrality/">http://arstechnica.com/tech-policy/2014/09/why-comcasts-javascript-ad-injections-threaten-security-net-neutrality/</a>
-   <dt id="biblio-credential-management">[CREDENTIAL-MANAGEMENT]
-   <dd>Mike West. <a href="https://w3c.github.io/webappsec/specs/credentialmanagement/">Credential Management</a>. ED. URL: <a href="https://w3c.github.io/webappsec/specs/credentialmanagement/">https://w3c.github.io/webappsec/specs/credentialmanagement/</a>
-   <dt id="biblio-discovery">[DISCOVERY]
-   <dd>Rich Tibbett. <a href="https://dvcs.w3.org/hg/dap/raw-file/tip/discovery-api/Overview.html">Network Service Discovery</a>. URL: <a href="https://dvcs.w3.org/hg/dap/raw-file/tip/discovery-api/Overview.html">https://dvcs.w3.org/hg/dap/raw-file/tip/discovery-api/Overview.html</a>
+   <dt id="biblio-credential-management-1">[CREDENTIAL-MANAGEMENT-1]
+   <dd>Mike West. <a href="https://w3c.github.io/webappsec/specs/credentialmanagement/">Credential Management Level 1</a>. 25 April 2016. WD. URL: <a href="https://w3c.github.io/webappsec/specs/credentialmanagement/">https://w3c.github.io/webappsec/specs/credentialmanagement/</a>
+   <dt id="biblio-discovery-api">[DISCOVERY-API]
+   <dd>Rich Tibbett. <a href="http://dvcs.w3.org/hg/dap/raw-file/tip/discovery-api/Overview.html">Network Service Discovery</a>. 20 February 2014. WD. URL: <a href="http://dvcs.w3.org/hg/dap/raw-file/tip/discovery-api/Overview.html">http://dvcs.w3.org/hg/dap/raw-file/tip/discovery-api/Overview.html</a>
    <dt id="biblio-encrypted-media">[ENCRYPTED-MEDIA]
    <dd>David Dorwin; et al. <a href="https://w3c.github.io/encrypted-media/">Encrypted Media Extensions</a>. 10 June 2016. WD. URL: <a href="https://w3c.github.io/encrypted-media/">https://w3c.github.io/encrypted-media/</a>
    <dt id="biblio-fetch">[FETCH]
@@ -1325,11 +1314,13 @@ certain minimum standards of authentication and confidentiality are met.</p>
    <dd>Alex Russell; Jungkee Song; Jake Archibald. <a href="https://slightlyoff.github.io/ServiceWorker/spec/service_worker/">Service Workers</a>. 25 June 2015. WD. URL: <a href="https://slightlyoff.github.io/ServiceWorker/spec/service_worker/">https://slightlyoff.github.io/ServiceWorker/spec/service_worker/</a>
    <dt id="biblio-verizon">[VERIZON]
    <dd>Mark Bergen; Alex Kantrowitz. <a href="http://adage.com/article/digital/verizon-target-mobile-subscribers-ads/293356/">Verizon looks to target its mobile subscribers with ads</a>. URL: <a href="http://adage.com/article/digital/verizon-target-mobile-subscribers-ads/293356/">http://adage.com/article/digital/verizon-target-mobile-subscribers-ads/293356/</a>
+   <dt id="biblio-web-bluetooth">[WEB-BLUETOOTH]
+   <dd>Jeffrey Yasskin. <a href="https://webbluetoothcg.github.io/web-bluetooth/">Web Bluetooth</a>. Draft Community Group Report. URL: <a href="https://webbluetoothcg.github.io/web-bluetooth/">https://webbluetoothcg.github.io/web-bluetooth/</a>
    <dt id="biblio-webcryptoapi">[WEBCRYPTOAPI]
    <dd>Ryan Sleevi; Mark Watson. <a href="https://dvcs.w3.org/hg/webcrypto-api/raw-file/tip/spec/Overview.html">Web Cryptography API</a>. 11 December 2014. CR. URL: <a href="https://dvcs.w3.org/hg/webcrypto-api/raw-file/tip/spec/Overview.html">https://dvcs.w3.org/hg/webcrypto-api/raw-file/tip/spec/Overview.html</a>
   </dl>
   <h2 class="no-num no-ref heading settled" id="idl-index"><span class="content">IDL Index</span><a class="self-link" href="#idl-index"></a></h2>
-<pre class="idl def"><span class="kt">partial</span> <span class="kt">interface</span> <a class="nv idl-code" data-link-type="interface" href="http://www.w3.org/TR/html5/browsers.html#the-window-object">Window</a> {
+<pre class="idl def"><span class="kt">partial</span> <span class="kt">interface</span> <a class="nv idl-code" data-link-type="interface" href="http://www.w3.org/TR/html51/browsers.html#the-window-object">Window</a> {
   <span class="kt">readonly</span> <span class="kt">attribute</span> <span class="kt">boolean</span> <a class="nv" data-readonly="" data-type="boolean" href="#dom-window-issecurecontext">isSecureContext</a>;
 };
 
@@ -1349,8 +1340,8 @@ certain minimum standards of authentication and confidentiality are met.</p>
     <li><a href="#ref-for-secure-context-17">2. Framework</a> <a href="#ref-for-secure-context-18">(2)</a>
     <li><a href="#ref-for-secure-context-19">2.2.1. Shared Workers</a> <a href="#ref-for-secure-context-20">(2)</a> <a href="#ref-for-secure-context-21">(3)</a>
     <li><a href="#ref-for-secure-context-22">2.2.2. Feature Detection</a> <a href="#ref-for-secure-context-23">(2)</a>
-    <li><a href="#ref-for-secure-context-24">3.1. 
-    Is settings object a secure context? </a>
+    <li><a href="#ref-for-secure-context-24">3.2. 
+    Is origin potentially trustworthy? </a>
     <li><a href="#ref-for-secure-context-25">4.2. Ancestral Risk</a>
     <li><a href="#ref-for-secure-context-26">4.3. Risks associated with non-secure contexts</a> <a href="#ref-for-secure-context-27">(2)</a>
     <li><a href="#ref-for-secure-context-28">5.1. Incomplete Isolation</a>
