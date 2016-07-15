@@ -21,8 +21,6 @@ Boilerplate: omit conformance, omit feedback-header
 </pre>
 <pre class="anchors">
 urlPrefix: https://fetch.spec.whatwg.org/; spec: FETCH
-  type: interface
-    text: Response
   type: dfn
     text: basic fetch
 urlPrefix: http://www.w3.org/TR/geolocation-API/; spec: GEOLOCATION-API
@@ -33,28 +31,27 @@ urlPrefix: http://www.w3.org/TR/html51/; spec: HTML51
   type: dfn
     urlPrefix: embedded-content-0.html
       text: an iframe srcdoc document
-    urlPrefix: semantics.html
-      text: noopener; url: link-type-noopener
     urlPrefix: browsers.html
       text: active document
       text: alias; url: concept-origin-alias
       text: ancestor browsing context
-      text: auxiliary browsing context
+      text: auxiliary browsing contexts
       text: browsing context
       text: browsing context container
       text: creating a new Document object
-      text: creator Document
       text: effective script origin
+      text: creator browsing context
+      text: parent browsing context
       text: nested browsing context
       text: sandboxed origin browsing context flag
       text: sandboxing flag set
       text: top-level browsing context
       text: origin
       for: origin
-        text: scheme; url: concept-origin-scheme
-        text: host; url: concept-origin-host
-        text: port; url: concept-origin-port
-        text: domain; url: concept-origin-domain
+        text: scheme; url: origin-scheme
+        text: host; url: origin-host
+        text: port; url: origin-port
+        text: domain; url: origin-domain
       text: opaque origin
       text: tuple origin
       text: opener browsing context
@@ -111,6 +108,9 @@ spec: WEBIDL; urlPrefix: https://heycam.github.io/webidl/
   type: dfn
     text: exposed; url: dfn-exposed
     text: [SecureContext]; url: SecureContext
+
+spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/semantics.html
+  type: dfn; text: noopener; url: link-type-noopener
 </pre>
 <pre class="biblio">
 {
@@ -289,10 +289,10 @@ spec: WEBIDL; urlPrefix: https://heycam.github.io/webidl/
     that the following will both produce secure contexts:
 
     <pre>
-      &lt;a href="https://example.com/" rel="noopener" target="_blank">Link!&lt;/a>
+      &lt;a href="https://example.com/" rel="<a>noopener</a>" target="_blank">Link!&lt;/a>
       
       &lt;script>
-        var w = window.open("https://example.com/", "", "noopener");
+        var w = window.open("https://example.com/", "", "<a>noopener</a>");
       &lt;/script>
     </pre>
    
@@ -702,20 +702,21 @@ spec: WEBIDL; urlPrefix: https://heycam.github.io/webidl/
 
   3.  Assert: |global| is a {{Window}}.
   
-  4.  Otherwise, |global| is a {{Window}}. If |settings object|'s <a>responsible
-      document</a> has a <a>creator <code>Document</code></a>, |creator|:
+  4.  If |settings object|'s <a>responsible document</a> has an <a>creator
+      browsing context</a> whose <a>creator context security</a> is "`Not
+      Secure`", return "`Not Secure`".
 
-      1.  If |creator|'s <a>browsing context</a> is an <a>ancestor
-          browsing context</a> or <a>opener browsing context</a> of
-          |settings object|'s <a>responsible browsing context</a> and
-          [[#settings-object]] returns "`Not Secure`" when executed upon
-          |creator|'s <a>relevant settings object</a>, return "`Not Secure`".
+      Note: Since we take account of <a>creator browsing contexts</a>'
+      status, a popups' status depends on how it is opened, as discussed
+      in [[#examples-top-level]].
 
-          Note: Since we take account of <a>auxiliary browsing contexts</a>'
-          status, a popups' status depends on how it is opened, as discussed
-          in [[#examples-top-level]].
+      ISSUE(whatwg/html#1561): The 'creator context security' concept doesn't
+      yet exist, other than in an open PR against WHATWG's HTML.
 
-  3.  If |settings object|'s <a>HTTPS state</a> is "`modern`", return
+      ISSUE(w3c/html#524): The 'creator context security' concept doesn't yet
+      exist in W3C's HTML.
+
+  5.  If |settings object|'s <a>HTTPS state</a> is "`modern`", return
       "`Secure`".
 
       <div class="note">
@@ -731,9 +732,9 @@ spec: WEBIDL; urlPrefix: https://heycam.github.io/webidl/
         `http://127.0.0.1/` to be treated as creating a secure context.
       </div>
 
-  4.  Let |origin| be |settings object|'s <a>origin</a>.
+  6.  Let |origin| be |settings object|'s <a>origin</a>.
 
-  5.  If |origin| is an <a>opaque origin</a>, set |origin| to the
+  7.  If |origin| is an <a>opaque origin</a>, set |origin| to the
       <a lt="origin of a url">origin</a> of |settings object|'s <a>creation
       URL</a>.
 
@@ -745,11 +746,11 @@ spec: WEBIDL; urlPrefix: https://heycam.github.io/webidl/
       risk it poses, we look at the origin of its URL to determine whether we
       would have considered it trustworthy had it not been sandboxed.
 
-  6.  If the result of executing the [[#is-origin-trustworthy]] algorithm
+  8.  If the result of executing the [[#is-origin-trustworthy]] algorithm
       on |origin| is <strong>not</strong> "`Potentially Trustworthy`", then
       return "`Not Secure`".
 
-  7.  Return "`Secure`".
+  9.  Return "`Secure`".
 
   <h3 id="is-origin-trustworthy">
     Is <var>origin</var> potentially trustworthy?

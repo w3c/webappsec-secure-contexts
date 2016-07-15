@@ -1632,8 +1632,8 @@ certain minimum standards of authentication and confidentiality are met.</p>
       </svg>
      </p>
     </div>
-    <div class="example" id="example-30335756">
-     <a class="self-link" href="#example-30335756"></a> 
+    <div class="example" id="example-7ecf6f03">
+     <a class="self-link" href="#example-7ecf6f03"></a> 
      <p>If a non-secure context opens <code>https://example.com/</code> in a new
     window, then things are more complicated. The new window’s status depends on
     how it was opened. If the non-secure context can obtain a reference to the
@@ -1658,12 +1658,12 @@ certain minimum standards of authentication and confidentiality are met.</p>
        <path d="M150, 87 C 200 75, 350 75, 150 287"></path>
       </g>
      </svg>
-     <p>The link can be broken via the <a data-link-type="dfn" href="http://www.w3.org/TR/html51/semantics.html#link-type-noopener"><code>noopener</code></a> link relation, meaning
+     <p>The link can be broken via the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/semantics.html#link-type-noopener"><code>noopener</code></a> link relation, meaning
     that the following will both produce secure contexts:</p>
-<pre>&lt;a href="https://example.com/" rel="noopener" target="_blank">Link!&lt;/a>
+<pre>&lt;a href="https://example.com/" rel="<a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/semantics.html#link-type-noopener">noopener</a>" target="_blank">Link!&lt;/a>
       
 &lt;script>
-  var w = window.open("https://example.com/", "", "noopener");
+  var w = window.open("https://example.com/", "", "<a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/semantics.html#link-type-noopener">noopener</a>");
 &lt;/script>
 </pre>
      <svg height="400" width="400">
@@ -2018,16 +2018,15 @@ WorkerGlobalScope implements WindowBase64;
      <li data-md="">
       <p>Assert: <var>global</var> is a <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/html51/browsers.html#the-window-object">Window</a></code>.</p>
      <li data-md="">
-      <p>Otherwise, <var>global</var> is a <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/html51/browsers.html#the-window-object">Window</a></code>. If <var>settings object</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html51/webappapis.html#responsible-document">responsible
-  document</a> has a <a data-link-type="dfn" href="http://www.w3.org/TR/html51/browsers.html#creator-document">creator <code>Document</code></a>, <var>creator</var>:</p>
-      <ol>
-       <li data-md="">
-        <p>If <var>creator</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html51/browsers.html#browsing-context">browsing context</a> is an <a data-link-type="dfn" href="http://www.w3.org/TR/html51/browsers.html#ancestor-browsing-context">ancestor
-  browsing context</a> or <a data-link-type="dfn" href="http://www.w3.org/TR/html51/browsers.html#opener-browsing-context">opener browsing context</a> of <var>settings object</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html51/webappapis.html#responsible-browsing-context">responsible browsing context</a> and <a href="#settings-object">§3.1 Is settings object a secure context?</a> returns "<code>Not Secure</code>" when executed upon <var>creator</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html51/webappapis.html#relevant-settings-object">relevant settings object</a>, return "<code>Not Secure</code>".</p>
-        <p class="note" role="note">Note: Since we take account of <a data-link-type="dfn" href="http://www.w3.org/TR/html51/browsers.html#auxiliary-browsing-context">auxiliary browsing contexts</a>'
+      <p>If <var>settings object</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html51/webappapis.html#responsible-document">responsible document</a> has an <a data-link-type="dfn" href="http://www.w3.org/TR/html51/browsers.html#creator-browsing-context">creator
+  browsing context</a> whose <a data-link-type="dfn">creator context security</a> is "<code>Not Secure</code>", return "<code>Not Secure</code>".</p>
+      <p class="note" role="note">Note: Since we take account of <a data-link-type="dfn" href="http://www.w3.org/TR/html51/browsers.html#creator-browsing-context">creator browsing contexts</a>'
   status, a popups' status depends on how it is opened, as discussed
   in <a href="#examples-top-level">§1.1 Top-level Documents</a>.</p>
-      </ol>
+      <p class="issue" id="issue-646b9d75"><a class="self-link" href="#issue-646b9d75"></a> The 'creator context security' concept doesn’t
+  yet exist, other than in an open PR against WHATWG’s HTML. <a href="https://github.com/whatwg/html/issues/1561">&lt;https://github.com/whatwg/html/issues/1561></a></p>
+      <p class="issue" id="issue-e7a6cce3"><a class="self-link" href="#issue-e7a6cce3"></a> The 'creator context security' concept doesn’t yet
+  exist in W3C’s HTML. <a href="https://github.com/w3c/html/issues/524">&lt;https://github.com/w3c/html/issues/524></a></p>
      <li data-md="">
       <p>If <var>settings object</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html51/webappapis.html#https-state">HTTPS state</a> is "<code>modern</code>", return
   "<code>Secure</code>".</p>
@@ -2085,7 +2084,7 @@ WorkerGlobalScope implements WindowBase64;
      <li data-md="">
       <p>Assert: <var>origin</var> is a <a data-link-type="dfn" href="http://www.w3.org/TR/html51/browsers.html#tuple-origin">tuple origin</a>.</p>
      <li data-md="">
-      <p>If <var>origin</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html51/browsers.html#concept-origin-scheme">scheme</a> is either "<code>https</code>" or "<code>wss</code>",
+      <p>If <var>origin</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html51/browsers.html#origin-scheme">scheme</a> is either "<code>https</code>" or "<code>wss</code>",
   return "<code>Potentially Trustworthy</code>".</p>
       <p class="note" role="note">Note: This is meant to be analog to the <a data-link-type="dfn" href="https://w3c.github.io/webappsec-mixed-content/#a-priori-authenticated-url"><i lang="la">a priori</i> authenticated URL</a> concept in <a data-link-type="biblio" href="#biblio-mix">[MIX]</a>.</p>
       <p class="note" role="note">Note: The origin of <code>blob:</code> and <code>filesystem:</code> URLs is the origin of the
@@ -2094,13 +2093,13 @@ WorkerGlobalScope implements WindowBase64;
   of <code>data:</code> and <code>javascript:</code> URLs, on the other hand, is an <a data-link-type="dfn" href="http://www.w3.org/TR/html51/browsers.html#opaque-origin">opaque
   origin</a>, which will not be considered potentially trustworthy.</p>
      <li data-md="">
-      <p>If <var>origin</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html51/browsers.html#concept-origin-host">host</a> component matches one of the CIDR
+      <p>If <var>origin</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html51/browsers.html#origin-host">host</a> component matches one of the CIDR
   notations <code>127.0.0.0/8</code> or <code>::1/128</code> <a data-link-type="biblio" href="#biblio-rfc4632">[RFC4632]</a>, return "<code>Potentially Trustworthy</code>".</p>
      <li data-md="">
-      <p>If <var>origin</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html51/browsers.html#concept-origin-scheme">scheme</a> component is <code>file</code>, return
+      <p>If <var>origin</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html51/browsers.html#origin-scheme">scheme</a> component is <code>file</code>, return
   "<code>Potentially Trustworthy</code>".</p>
      <li data-md="">
-      <p>If <var>origin</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html51/browsers.html#concept-origin-scheme">scheme</a> component is one which the user
+      <p>If <var>origin</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html51/browsers.html#origin-scheme">scheme</a> component is one which the user
   agent considers to be authenticated, return "<code>Potentially Trustworthy</code>".</p>
       <p class="note" role="note">Note: See <a href="#packaged-applications">§7.1 Packaged Applications</a> for detail here.</p>
      <li data-md="">
@@ -2110,7 +2109,7 @@ WorkerGlobalScope implements WindowBase64;
      <li data-md="">
       <p>Return "<code>Not Trusted</code>".</p>
     </ol>
-    <p class="note" role="note">Note: Neither <var>origin</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html51/browsers.html#concept-origin-domain">domain</a> nor <a data-link-type="dfn" href="http://www.w3.org/TR/html51/browsers.html#concept-origin-port">port</a> has any effect on whether or not it is considered to be a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-23">secure context</a>.</p>
+    <p class="note" role="note">Note: Neither <var>origin</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html51/browsers.html#origin-domain">domain</a> nor <a data-link-type="dfn" href="http://www.w3.org/TR/html51/browsers.html#origin-port">port</a> has any effect on whether or not it is considered to be a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-23">secure context</a>.</p>
    </section>
    <section>
     <h2 class="heading settled" data-level="4" id="threat-models-risks"><span class="secno">4. </span><span class="content"> Threat models and risks </span><a class="self-link" href="#threat-models-risks"></a></h2>
@@ -2383,31 +2382,31 @@ WorkerGlobalScope implements WindowBase64;
      <li><a href="http://www.w3.org/TR/geolocation-API/#watch-position">watchPosition()</a>
     </ul>
    <li>
+    <a data-link-type="biblio">[HTML]</a> defines the following terms:
+    <ul>
+     <li><a href="https://html.spec.whatwg.org/multipage/semantics.html#link-type-noopener">noopener</a>
+    </ul>
+   <li>
     <a data-link-type="biblio">[html51]</a> defines the following terms:
     <ul>
      <li><a href="http://www.w3.org/TR/html51/dom.html#the-document-object">Document</a>
      <li><a href="http://www.w3.org/TR/html51/browsers.html#the-window-object">Window</a>
-     <li><a href="http://www.w3.org/TR/html51/browsers.html#ancestor-browsing-context">ancestor browsing context</a>
-     <li><a href="http://www.w3.org/TR/html51/browsers.html#auxiliary-browsing-context">auxiliary browsing context</a>
-     <li><a href="http://www.w3.org/TR/html51/browsers.html#browsing-context">browsing context</a>
      <li><a href="http://www.w3.org/TR/html51/webappapis.html#creation-url">creation url</a>
-     <li><a href="http://www.w3.org/TR/html51/browsers.html#creator-document">creator document</a>
+     <li><a href="http://www.w3.org/TR/html51/browsers.html#creator-browsing-context">creator browsing context</a>
      <li><a href="http://www.w3.org/TR/html51/webappapis.html#current-settings-object">current settings object</a>
-     <li><a href="http://www.w3.org/TR/html51/browsers.html#concept-origin-domain">domain</a>
+     <li><a href="http://www.w3.org/TR/html51/browsers.html#origin-domain">domain</a>
      <li><a href="http://www.w3.org/TR/html51/webappapis.html#environment-settings-object">environment settings object</a>
      <li><a href="http://www.w3.org/TR/html51/webappapis.html#global-object">global object</a>
-     <li><a href="http://www.w3.org/TR/html51/browsers.html#concept-origin-host">host</a>
+     <li><a href="http://www.w3.org/TR/html51/browsers.html#origin-host">host</a>
      <li><a href="http://www.w3.org/TR/html51/webappapis.html#https-state">https state</a>
      <li><a href="http://www.w3.org/TR/html51/semantics-embedded-content.html#the-iframe-element">iframe</a>
-     <li><a href="http://www.w3.org/TR/html51/semantics.html#link-type-noopener">noopener</a>
      <li><a href="http://www.w3.org/TR/html51/browsers.html#opaque-origin">opaque origin</a>
      <li><a href="http://www.w3.org/TR/html51/browsers.html#opener-browsing-context">opener browsing context</a>
      <li><a href="http://www.w3.org/TR/html51/browsers.html#origin">origin</a>
-     <li><a href="http://www.w3.org/TR/html51/browsers.html#concept-origin-port">port</a>
+     <li><a href="http://www.w3.org/TR/html51/browsers.html#origin-port">port</a>
      <li><a href="http://www.w3.org/TR/html51/webappapis.html#relevant-settings-object">relevant settings object</a>
-     <li><a href="http://www.w3.org/TR/html51/webappapis.html#responsible-browsing-context">responsible browsing context</a>
      <li><a href="http://www.w3.org/TR/html51/webappapis.html#responsible-document">responsible document</a>
-     <li><a href="http://www.w3.org/TR/html51/browsers.html#concept-origin-scheme">scheme</a>
+     <li><a href="http://www.w3.org/TR/html51/browsers.html#origin-scheme">scheme</a>
      <li><a href="http://www.w3.org/TR/html51/webappapis.html#the-environment-settings-objects-global-object">the environment settings object's global object</a>
      <li><a href="http://www.w3.org/TR/html51/browsers.html#top-level-browsing-context">top-level browsing context</a>
      <li><a href="http://www.w3.org/TR/html51/browsers.html#tuple-origin">tuple origin</a>
@@ -2476,6 +2475,8 @@ WorkerGlobalScope implements WindowBase64;
    <dd>Anne van Kesteren. <a href="https://fetch.spec.whatwg.org/">Fetch Standard</a>. Living Standard. URL: <a href="https://fetch.spec.whatwg.org/">https://fetch.spec.whatwg.org/</a>
    <dt id="biblio-fullscreen">[FULLSCREEN]
    <dd>Anne van Kesteren. <a href="https://fullscreen.spec.whatwg.org/">Fullscreen API Standard</a>. Living Standard. URL: <a href="https://fullscreen.spec.whatwg.org/">https://fullscreen.spec.whatwg.org/</a>
+   <dt id="biblio-html">[HTML]
+   <dd>Ian Hickson. <a href="https://html.spec.whatwg.org/multipage/">HTML Standard</a>. Living Standard. URL: <a href="https://html.spec.whatwg.org/multipage/">https://html.spec.whatwg.org/multipage/</a>
    <dt id="biblio-indexeddb">[IndexedDB]
    <dd>Nikunj Mehta; et al. <a href="http://dvcs.w3.org/hg/IndexedDB/raw-file/tip/Overview.html">Indexed Database API</a>. 8 January 2015. REC. URL: <a href="http://dvcs.w3.org/hg/IndexedDB/raw-file/tip/Overview.html">http://dvcs.w3.org/hg/IndexedDB/raw-file/tip/Overview.html</a>
    <dt id="biblio-mediacapture-streams">[MEDIACAPTURE-STREAMS]
@@ -2527,6 +2528,10 @@ WorkerGlobalScope implements WindowBase64;
     <p>Filed as <a href="https://github.com/w3c/html/issues/522">w3c/html#522</a>.</p>
      <a href="#issue-d679080e"> ↵ </a>
    </div>
+   <div class="issue"> The 'creator context security' concept doesn’t
+  yet exist, other than in an open PR against WHATWG’s HTML. <a href="https://github.com/whatwg/html/issues/1561">&lt;https://github.com/whatwg/html/issues/1561></a><a href="#issue-646b9d75"> ↵ </a></div>
+   <div class="issue"> The 'creator context security' concept doesn’t yet
+  exist in W3C’s HTML. <a href="https://github.com/w3c/html/issues/524">&lt;https://github.com/w3c/html/issues/524></a><a href="#issue-e7a6cce3"> ↵ </a></div>
   </div>
   <aside class="dfn-panel" data-for="secure-context">
    <b><a href="#secure-context">#secure-context</a></b><b>Referenced in:</b>
