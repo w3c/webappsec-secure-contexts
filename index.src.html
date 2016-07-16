@@ -109,8 +109,13 @@ spec: WEBIDL; urlPrefix: https://heycam.github.io/webidl/
     text: exposed; url: dfn-exposed
     text: [SecureContext]; url: SecureContext
 
-spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/semantics.html
-  type: dfn; text: noopener; url: link-type-noopener
+spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/
+  urlPrefix: browsers.html
+    type: dfn;
+      text: creator context security
+  urlPrefix: semantics.html
+    type: dfn;
+      text: noopener; url: link-type-noopener
 </pre>
 <pre class="biblio">
 {
@@ -716,11 +721,9 @@ spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/semantics.html
       status, a popups' status depends on how it is opened, as discussed
       in [[#examples-top-level]].
 
-      ISSUE(whatwg/html#1561): The 'creator context security' concept doesn't
-      yet exist, other than in an open PR against WHATWG's HTML.
-
-      ISSUE(w3c/html#524): The 'creator context security' concept doesn't yet
-      exist in W3C's HTML.
+      ISSUE(w3c/html#524): The 'creator context security' concept landed in
+      WHATWG's HTML in <a href="https://github.com/whatwg/html/pull/1561">whatwg/html#1561</a>,
+      but doesn't yet exist in W3C's HTML.
 
   5.  If |settings object|'s <a>HTTPS state</a> is "`modern`", return
       "`Secure`".
