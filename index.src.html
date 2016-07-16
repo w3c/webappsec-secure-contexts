@@ -618,13 +618,18 @@ spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/semantics.html
 
   <h3 id="monkey-patching-html">Modifications to HTML</h3>
 
-  <h4 id="monkey-patching-shared-workers">Shared Workers</h4>
+  <h4 id="monkey-patching-shared-workers" class="non-normative">Shared Workers</h4>
+
+  <em>This section is non-normative</em>.
 
   The {{SharedWorker()}} constructor will throw a `SecurityError` exception if
   a <a>secure context</a> attempts to attach to an Worker which is not a
   <a>secure context</a>, and if a non-secure context attempts to attach to a
-  Worker which is a <a>secure context</a>. The constructor is modified as
-  follows:
+  Worker which is a <a>secure context</a>. 
+  
+  
+  The constructor is modified as follows (though the SharedWorker specification
+  remains the normative reference):
 
   1.  As the first substep of the {{SharedWorker()}} constructor's current step
       6.7 ("If <var>worker global scope</var> is not `null`, then run these
@@ -636,8 +641,9 @@ spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/semantics.html
           object</a>, then throw a `SecurityError` exception, and abort
           these steps.
 
-  ISSUE(whatwg/html#1560): Upstreaming to WHATWG is underway.
-
+  Note: This change landed in WHATWG's HTML in
+  <a href="https://github.com/whatwg/html/pull/1560">whatwg/html#1560</a>.
+  
   ISSUE: It's not clear to me how the W3C's [[WEBWORKERS]] document is updated.
   It looks like it's pulling content from the WHATWG upstream, which means
   that the PR linked above should flow into it? But that document hasn't been
