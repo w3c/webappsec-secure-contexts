@@ -1425,7 +1425,7 @@ pre.idl.highlight { color: #708090; }
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="http://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1>Secure Contexts</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2016-07-15">15 July 2016</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2016-07-16">16 July 2016</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1927,32 +1927,34 @@ certain minimum standards of authentication and confidentiality are met.</p>
   following example should help:</p>
     <div class="example" id="example-81580eb2">
      <a class="self-link" href="#example-81580eb2"></a> 
-<pre class="idl highlight def"><span class="kt">interface</span> <span class="nv" idltype="interface">ExampleFeature</span> {
+<pre class="idl highlight def"><span class="kt">interface</span> <span class="nv">ExampleFeature</span> {
   // This call will succeed in all contexts.
-  <span class="kt">Promise</span> &lt;<span class="kt">double</span>> <span class="nv" idltype="method">calculateNotSoSecretResult</span>();
+  <span class="kt">Promise</span> &lt;<span class="kt">double</span>> <span class="nv">calculateNotSoSecretResult</span>();
 
   // This operation will not be exposed to a non-secure context.
-  [<span class="nv" idltype="extended-attribute">SecureContext</span>] <span class="kt">Promise</span>&lt;<span class="kt">double</span>> <span class="nv" idltype="method">calculateSecretResult</span>();
+  [<span class="nv">SecureContext</span>] <span class="kt">Promise</span>&lt;<span class="kt">double</span>> <span class="nv">calculateSecretResult</span>();
 
   // The same applies here: the operation will not be exposed to a non-secure context.
-  [<span class="nv" idltype="extended-attribute">SecureContext</span>] <span class="kt">boolean</span> <span class="nv" idltype="method">getSecretBoolean</span>();
+  [<span class="nv">SecureContext</span>] <span class="kt">boolean</span> <span class="nv">getSecretBoolean</span>();
 };
 
-[<span class="nv" idltype="extended-attribute">SecureContext</span>]
-<span class="kt">interface</span> <span class="nv" idltype="interface">SecureFeature</span> {
+[<span class="nv">SecureContext</span>]
+<span class="kt">interface</span> <span class="nv">SecureFeature</span> {
   // This interface will not be exposed to non-secure contexts.
-  <span class="kt">Promise</span>&lt;<span class="kt">any</span>> <span class="nv" idltype="method">doAmazingThing</span>();
+  <span class="kt">Promise</span>&lt;<span class="kt">any</span>> <span class="nv">doAmazingThing</span>();
 };
 </pre>
     </div>
     <p>Specification authors are encouraged to use this attribute when defining new
   features.</p>
     <h3 class="heading settled" data-level="2.2" id="monkey-patching-html"><span class="secno">2.2. </span><span class="content">Modifications to HTML</span><a class="self-link" href="#monkey-patching-html"></a></h3>
-    <h4 class="heading settled" data-level="2.2.1" id="monkey-patching-shared-workers"><span class="secno">2.2.1. </span><span class="content">Shared Workers</span><a class="self-link" href="#monkey-patching-shared-workers"></a></h4>
+    <h4 class="non-normative heading settled" data-level="2.2.1" id="monkey-patching-shared-workers"><span class="secno">2.2.1. </span><span class="content">Shared Workers</span><a class="self-link" href="#monkey-patching-shared-workers"></a></h4>
+    <p><em>This section is non-normative</em>.</p>
     <p>The <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/workers/#dom-sharedworker">SharedWorker()</a></code> constructor will throw a <code>SecurityError</code> exception if
   a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-19">secure context</a> attempts to attach to an Worker which is not a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-20">secure context</a>, and if a non-secure context attempts to attach to a
-  Worker which is a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-21">secure context</a>. The constructor is modified as
-  follows:</p>
+  Worker which is a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-21">secure context</a>.</p>
+    <p>The constructor is modified as follows (though the SharedWorker specification
+  remains the normative reference):</p>
     <ol>
      <li data-md="">
       <p>As the first substep of the <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/workers/#dom-sharedworker">SharedWorker()</a></code> constructor’s current step
@@ -1967,7 +1969,7 @@ certain minimum standards of authentication and confidentiality are met.</p>
   these steps.</p>
       </ol>
     </ol>
-    <p class="issue" id="issue-d20688fd"><a class="self-link" href="#issue-d20688fd"></a> Upstreaming to WHATWG is underway. <a href="https://github.com/whatwg/html/issues/1560">&lt;https://github.com/whatwg/html/issues/1560></a></p>
+    <p class="note" role="note">Note: This change landed in WHATWG’s HTML in <a href="https://github.com/whatwg/html/pull/1560">whatwg/html#1560</a>.</p>
     <p class="issue" id="issue-1fde3536"><a class="self-link" href="#issue-1fde3536"></a> It’s not clear to me how the W3C’s <a data-link-type="biblio" href="#biblio-webworkers">[WEBWORKERS]</a> document is updated.
   It looks like it’s pulling content from the WHATWG upstream, which means
   that the PR linked above should flow into it? But that document hasn’t been
@@ -2019,14 +2021,13 @@ WorkerGlobalScope implements WindowBase64;
       <p>Assert: <var>global</var> is a <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/html51/browsers.html#the-window-object">Window</a></code>.</p>
      <li data-md="">
       <p>If <var>settings object</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html51/webappapis.html#responsible-document">responsible document</a> has an <a data-link-type="dfn" href="http://www.w3.org/TR/html51/browsers.html#creator-browsing-context">creator
-  browsing context</a> whose <a data-link-type="dfn">creator context security</a> is "<code>Not Secure</code>", return "<code>Not Secure</code>".</p>
+  browsing context</a> whose <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#creator-context-security">creator context security</a> is "<code>Not Secure</code>", return "<code>Not Secure</code>".</p>
       <p class="note" role="note">Note: Since we take account of <a data-link-type="dfn" href="http://www.w3.org/TR/html51/browsers.html#creator-browsing-context">creator browsing contexts</a>'
   status, a popups' status depends on how it is opened, as discussed
   in <a href="#examples-top-level">§1.1 Top-level Documents</a>.</p>
-      <p class="issue" id="issue-646b9d75"><a class="self-link" href="#issue-646b9d75"></a> The 'creator context security' concept doesn’t
-  yet exist, other than in an open PR against WHATWG’s HTML. <a href="https://github.com/whatwg/html/issues/1561">&lt;https://github.com/whatwg/html/issues/1561></a></p>
-      <p class="issue" id="issue-e7a6cce3"><a class="self-link" href="#issue-e7a6cce3"></a> The 'creator context security' concept doesn’t yet
-  exist in W3C’s HTML. <a href="https://github.com/w3c/html/issues/524">&lt;https://github.com/w3c/html/issues/524></a></p>
+      <p class="issue" id="issue-297d3ff8"><a class="self-link" href="#issue-297d3ff8"></a> The 'creator context security' concept landed in
+  WHATWG’s HTML in <a href="https://github.com/whatwg/html/pull/1561">whatwg/html#1561</a>,
+  but doesn’t yet exist in W3C’s HTML. <a href="https://github.com/w3c/html/issues/524">&lt;https://github.com/w3c/html/issues/524></a></p>
      <li data-md="">
       <p>If <var>settings object</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html51/webappapis.html#https-state">HTTPS state</a> is "<code>modern</code>", return
   "<code>Secure</code>".</p>
@@ -2256,15 +2257,15 @@ WorkerGlobalScope implements WindowBase64;
     <p>Authors could alternatively ensure that sensitive APIs are only exposed to <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-31">secure contexts</a> by guarding them with the <code>[SecureContext]</code> attribute:</p>
     <div class="example" id="example-63db205d">
      <a class="self-link" href="#example-63db205d"></a> 
-<pre class="idl highlight def">[<span class="nv" idltype="extended-attribute">SecureContext</span>]
-<span class="kt">interface</span> <span class="nv" idltype="interface">SensitiveFeature</span> {
-  <span class="kt">Promise</span>&lt;<span class="kt">double</span>> <span class="nv" idltype="method">getTheSecretDouble</span>();
+<pre class="idl highlight def">[<span class="nv">SecureContext</span>]
+<span class="kt">interface</span> <span class="nv">SensitiveFeature</span> {
+  <span class="kt">Promise</span>&lt;<span class="kt">double</span>> <span class="nv">getTheSecretDouble</span>();
 };
 
 // Or:
 
-<span class="kt">interface</span> <span class="nv" idltype="interface">AnotherSensitiveFeature</span> {
-  [<span class="nv" idltype="extended-attribute">SecureContext</span>] <span class="kt">void</span> <span class="nv" idltype="method">doThatPowerfulThing</span>();
+<span class="kt">interface</span> <span class="nv">AnotherSensitiveFeature</span> {
+  [<span class="nv">SecureContext</span>] <span class="kt">void</span> <span class="nv">doThatPowerfulThing</span>();
 };
 </pre>
     </div>
@@ -2384,6 +2385,7 @@ WorkerGlobalScope implements WindowBase64;
    <li>
     <a data-link-type="biblio">[HTML]</a> defines the following terms:
     <ul>
+     <li><a href="https://html.spec.whatwg.org/multipage/browsers.html#creator-context-security">creator context security</a>
      <li><a href="https://html.spec.whatwg.org/multipage/semantics.html#link-type-noopener">noopener</a>
     </ul>
    <li>
@@ -2446,6 +2448,8 @@ WorkerGlobalScope implements WindowBase64;
   <dl>
    <dt id="biblio-geolocation-api">[GEOLOCATION-API]
    <dd>Andrei Popescu. <a href="http://dev.w3.org/geo/api/spec-source.html">Geolocation API Specification</a>. 28 May 2015. PER. URL: <a href="http://dev.w3.org/geo/api/spec-source.html">http://dev.w3.org/geo/api/spec-source.html</a>
+   <dt id="biblio-html">[HTML]
+   <dd>Ian Hickson. <a href="https://html.spec.whatwg.org/multipage/">HTML Standard</a>. Living Standard. URL: <a href="https://html.spec.whatwg.org/multipage/">https://html.spec.whatwg.org/multipage/</a>
    <dt id="biblio-html51">[HTML51]
    <dd>Steve Faulkner; et al. <a href="https://w3c.github.io/html/">HTML 5.1</a>. 2 June 2016. WD. URL: <a href="https://w3c.github.io/html/">https://w3c.github.io/html/</a>
    <dt id="biblio-rfc2119">[RFC2119]
@@ -2475,8 +2479,6 @@ WorkerGlobalScope implements WindowBase64;
    <dd>Anne van Kesteren. <a href="https://fetch.spec.whatwg.org/">Fetch Standard</a>. Living Standard. URL: <a href="https://fetch.spec.whatwg.org/">https://fetch.spec.whatwg.org/</a>
    <dt id="biblio-fullscreen">[FULLSCREEN]
    <dd>Anne van Kesteren. <a href="https://fullscreen.spec.whatwg.org/">Fullscreen API Standard</a>. Living Standard. URL: <a href="https://fullscreen.spec.whatwg.org/">https://fullscreen.spec.whatwg.org/</a>
-   <dt id="biblio-html">[HTML]
-   <dd>Ian Hickson. <a href="https://html.spec.whatwg.org/multipage/">HTML Standard</a>. Living Standard. URL: <a href="https://html.spec.whatwg.org/multipage/">https://html.spec.whatwg.org/multipage/</a>
    <dt id="biblio-indexeddb">[IndexedDB]
    <dd>Nikunj Mehta; et al. <a href="http://dvcs.w3.org/hg/IndexedDB/raw-file/tip/Overview.html">Indexed Database API</a>. 8 January 2015. REC. URL: <a href="http://dvcs.w3.org/hg/IndexedDB/raw-file/tip/Overview.html">http://dvcs.w3.org/hg/IndexedDB/raw-file/tip/Overview.html</a>
    <dt id="biblio-mediacapture-streams">[MEDIACAPTURE-STREAMS]
@@ -2510,7 +2512,6 @@ WorkerGlobalScope implements WindowBase64;
   <div style="counter-reset:issue">
    <div class="issue"> W3C’s HTML has only an <i>extremely</i> partial port of
     the <code>noopener</code> concept. <a href="https://github.com/w3c/html/issues/523">&lt;https://github.com/w3c/html/issues/523></a><a href="#issue-ca3d623e"> ↵ </a></div>
-   <div class="issue"> Upstreaming to WHATWG is underway. <a href="https://github.com/whatwg/html/issues/1560">&lt;https://github.com/whatwg/html/issues/1560></a><a href="#issue-d20688fd"> ↵ </a></div>
    <div class="issue"> It’s not clear to me how the W3C’s <a data-link-type="biblio" href="#biblio-webworkers">[WEBWORKERS]</a> document is updated.
   It looks like it’s pulling content from the WHATWG upstream, which means
   that the PR linked above should flow into it? But that document hasn’t been
@@ -2528,10 +2529,9 @@ WorkerGlobalScope implements WindowBase64;
     <p>Filed as <a href="https://github.com/w3c/html/issues/522">w3c/html#522</a>.</p>
      <a href="#issue-d679080e"> ↵ </a>
    </div>
-   <div class="issue"> The 'creator context security' concept doesn’t
-  yet exist, other than in an open PR against WHATWG’s HTML. <a href="https://github.com/whatwg/html/issues/1561">&lt;https://github.com/whatwg/html/issues/1561></a><a href="#issue-646b9d75"> ↵ </a></div>
-   <div class="issue"> The 'creator context security' concept doesn’t yet
-  exist in W3C’s HTML. <a href="https://github.com/w3c/html/issues/524">&lt;https://github.com/w3c/html/issues/524></a><a href="#issue-e7a6cce3"> ↵ </a></div>
+   <div class="issue"> The 'creator context security' concept landed in
+  WHATWG’s HTML in <a href="https://github.com/whatwg/html/pull/1561">whatwg/html#1561</a>,
+  but doesn’t yet exist in W3C’s HTML. <a href="https://github.com/w3c/html/issues/524">&lt;https://github.com/w3c/html/issues/524></a><a href="#issue-297d3ff8"> ↵ </a></div>
   </div>
   <aside class="dfn-panel" data-for="secure-context">
    <b><a href="#secure-context">#secure-context</a></b><b>Referenced in:</b>
