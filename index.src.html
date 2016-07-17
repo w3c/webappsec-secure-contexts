@@ -270,12 +270,12 @@ spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/
 
     <pre>
       &lt;a href="https://example.com/" target="_blank">Link!&lt;/a>
-      
+
       &lt;script>
         var w = window.open("https://example.com/");
       &lt;/script>
     </pre>
-   
+
     <svg width="400" height="400">
       <g transform="translate(10,10)">
         <rect height="175" width="297" y="0" x="0" class="non-secure" />
@@ -295,12 +295,12 @@ spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/
 
     <pre>
       &lt;a href="https://example.com/" rel="<a>noopener</a>" target="_blank">Link!&lt;/a>
-      
+
       &lt;script>
         var w = window.open("https://example.com/", "", "<a>noopener</a>");
       &lt;/script>
     </pre>
-   
+
     <svg width="400" height="400">
       <g transform="translate(10,10)">
         <rect height="175" width="297" y="0" x="0" class="non-secure" />
@@ -589,70 +589,71 @@ spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/
   Likewise, a <a>global object</a> is considered a <a>secure context</a> if its
   <a>relevant settings object</a> is a <a>secure context</a>.
 
-  <h3 id="integration-idl">Intergration with WebIDL</h3>
+  <section class="non-normative">
+    <h3 id="integration-idl">Intergration with WebIDL</h3>
 
-  <em>This section is non-normative.</em>
+    <em>This section is non-normative.</em>
 
-  A new <a>`[SecureContext]`</a> attribute is available for operators, which
-  ensures that they will only be <a>exposed</a> into secure contexts. The
-  following example should help:
+    A new <a>`[SecureContext]`</a> attribute is available for operators, which
+    ensures that they will only be <a>exposed</a> into secure contexts. The
+    following example should help:
 
-  <div class="example">
-    <pre class="idl">
-      interface ExampleFeature {
-        // This call will succeed in all contexts.
-        Promise &lt;double&gt; calculateNotSoSecretResult();
+    <div class="example">
+      <pre class="idl">
+        interface ExampleFeature {
+          // This call will succeed in all contexts.
+          Promise &lt;double&gt; calculateNotSoSecretResult();
 
-        // This operation will not be exposed to a non-secure context.
-        <a>[SecureContext]</a> Promise&lt;double&gt; calculateSecretResult();
+          // This operation will not be exposed to a non-secure context.
+          <a>[SecureContext]</a> Promise&lt;double&gt; calculateSecretResult();
 
-        // The same applies here: the operation will not be exposed to a non-secure context.
-        <a>[SecureContext]</a> boolean getSecretBoolean();
-      };
+          // The same applies here: the operation will not be exposed to a non-secure context.
+          <a>[SecureContext]</a> boolean getSecretBoolean();
+        };
 
-      [SecureContext]
-      interface SecureFeature {
-        // This interface will not be exposed to non-secure contexts.
-        Promise&lt;any&gt; doAmazingThing();
-      };
-    </pre>
-  </div>
+        [SecureContext]
+        interface SecureFeature {
+          // This interface will not be exposed to non-secure contexts.
+          Promise&lt;any&gt; doAmazingThing();
+        };
+      </pre>
+    </div>
 
-  Specification authors are encouraged to use this attribute when defining new
-  features.
+    Specification authors are encouraged to use this attribute when defining new
+    features.
 
-  <h3 id="monkey-patching-html">Modifications to HTML</h3>
+    <h3 id="monkey-patching-html">Modifications to HTML</h3>
 
-  <h4 id="monkey-patching-shared-workers" class="non-normative">Shared Workers</h4>
+    <h4 id="monkey-patching-shared-workers" class="non-normative">Shared Workers</h4>
 
-  <em>This section is non-normative</em>.
+    <em>This section is non-normative</em>.
 
-  The {{SharedWorker()}} constructor will throw a `SecurityError` exception if
-  a <a>secure context</a> attempts to attach to an Worker which is not a
-  <a>secure context</a>, and if a non-secure context attempts to attach to a
-  Worker which is a <a>secure context</a>. 
-  
-  
-  The constructor is modified as follows (though the SharedWorker specification
-  remains the normative reference):
+    The {{SharedWorker()}} constructor will throw a `SecurityError` exception if
+    a <a>secure context</a> attempts to attach to an Worker which is not a
+    <a>secure context</a>, and if a non-secure context attempts to attach to a
+    Worker which is a <a>secure context</a>.
 
-  1.  As the first substep of the {{SharedWorker()}} constructor's current step
-      6.7 ("If <var>worker global scope</var> is not `null`, then run these
-      steps:"), run the following step:
+    The constructor is modified as follows (though the SharedWorker specification
+    remains the normative reference):
 
-      1.  If the result of executing [[#settings-object]] on the <a>current
-          settings object</a> does not match the result of executing the same
-          algorithm on <var>worker global scope</var>'s <a>relevant settings
-          object</a>, then throw a `SecurityError` exception, and abort
-          these steps.
+    1.  As the first substep of the {{SharedWorker()}} constructor's current step
+        6.7 ("If <var>worker global scope</var> is not `null`, then run these
+        steps:"), run the following step:
 
-  Note: This change landed in WHATWG's HTML in
-  <a href="https://github.com/whatwg/html/pull/1560">whatwg/html#1560</a>.
-  
-  ISSUE: It's not clear to me how the W3C's [[WEBWORKERS]] document is updated.
-  It looks like it's pulling content from the WHATWG upstream, which means
-  that the PR linked above should flow into it? But that document hasn't been
-  updated since 2015, so...
+        1.  If the result of executing [[#settings-object]] on the <a>current
+            settings object</a> does not match the result of executing the same
+            algorithm on <var>worker global scope</var>'s <a>relevant settings
+            object</a>, then throw a `SecurityError` exception, and abort
+            these steps.
+
+    Note: This change landed in WHATWG's HTML in
+    <a href="https://github.com/whatwg/html/pull/1560">whatwg/html#1560</a>.
+
+    ISSUE: It's not clear to me how the W3C's [[WEBWORKERS]] document is updated.
+    It looks like it's pulling content from the WHATWG upstream, which means
+    that the PR linked above should flow into it? But that document hasn't been
+    updated since 2015, so...
+  </section>
 
   <h4 id="monkey-patching-global-object">Feature Detection</h4>
 
@@ -1048,63 +1049,65 @@ spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/
     </pre>
   </div>
 
-  <h3 id="legacy">Restricting Legacy Features</h3>
+  <section class="non-normative">
+    <h3 id="legacy">Restricting Legacy Features</h3>
 
-  <em>This section is non-normative.</em>
+    <em>This section is non-normative.</em>
 
-  The list above clearly includes some existing functionality that is currently
-  available to the web over non-secure channels. We recommend that such legacy
-  functionality be modified to begin requiring a <a>secure context</a> as
-  quickly as is reasonably possible [[!W3C-PROCESS]].
+    The list above clearly includes some existing functionality that is currently
+    available to the web over non-secure channels. We recommend that such legacy
+    functionality be modified to begin requiring a <a>secure context</a> as
+    quickly as is reasonably possible [[!W3C-PROCESS]].
 
-  1.  If such a feature is not widely implemented, we recommend that the
-      specification be immediately
-      <a lt="modify a specification">modified</a> to include a restriction
-      to <a>secure contexts</a>.
+    1.  If such a feature is not widely implemented, we recommend that the
+        specification be immediately
+        <a lt="modify a specification">modified</a> to include a restriction
+        to <a>secure contexts</a>.
 
-  2.  If such a feature is widely implemented, but not yet in wide use, we
-      recommend that it be quickly restricted to <a>secure contexts</a> by
-      adding a check as described in [[#new]] to existing implementations, and
-      <a lt="modify a specification">modifying the specification</a>
-      accordingly.
+    2.  If such a feature is widely implemented, but not yet in wide use, we
+        recommend that it be quickly restricted to <a>secure contexts</a> by
+        adding a check as described in [[#new]] to existing implementations, and
+        <a lt="modify a specification">modifying the specification</a>
+        accordingly.
 
-  3.  If such a feature is in wide use, we recommend that the existing
-      functionality be deprecated; the specification should be
-      <a lt="modify a specification">modified</a> to note that it does not
-      conform to the restrictions outlined in this document, and a plan should
-      be developed to both offer a conformant version of the feature and to
-      migrate existing users into that new version.
+    3.  If such a feature is in wide use, we recommend that the existing
+        functionality be deprecated; the specification should be
+        <a lt="modify a specification">modified</a> to note that it does not
+        conform to the restrictions outlined in this document, and a plan should
+        be developed to both offer a conformant version of the feature and to
+        migrate existing users into that new version.
 
-  <h4 id="legacy-example">Example: Geolocation</h4>
+    <h4 id="legacy-example">Example: Geolocation</h4>
 
-  The [[GEOLOCATION-API]] is a good concrete example of such a feature; it is
-  widely implemented and used on a large number of non-secure sites. A reasonable
-  path forward might look like this:
+    The [[GEOLOCATION-API]] is a good concrete example of such a feature; it is
+    widely implemented and used on a large number of non-secure sites. A reasonable
+    path forward might look like this:
 
-  1.  <a lt="modify a specification">Modify</a> the specification to include
-      checks against <a>secure context</a> before executing the algorithms for
-      {{getCurrentPosition()}} and {{watchPosition()}}.
+    1.  <a lt="modify a specification">Modify</a> the specification to include
+        checks against <a>secure context</a> before executing the algorithms for
+        {{getCurrentPosition()}} and {{watchPosition()}}.
 
-      If the <a>current settings object</a> is not a <a>secure context</a>,
-      then the algorithm should be aborted, and the `errorCallback`
-      invoked with a `code` of `PERMISSION_DENIED`.
+        If the <a>current settings object</a> is not a <a>secure context</a>,
+        then the algorithm should be aborted, and the `errorCallback`
+        invoked with a `code` of `PERMISSION_DENIED`.
 
-  2.  The user agent should announce clear intentions to disable the API for
-      non-secure contexts on a specific date, and warn developers accordingly
-      (via console messages, for example).
+    2.  The user agent should announce clear intentions to disable the API for
+        non-secure contexts on a specific date, and warn developers accordingly
+        (via console messages, for example).
 
-  3.  Leading up to the flag day, the user agent should announce a deprecation
-      schedule to ensure both that site authors recognize the need to modify
-      their code before it simply stops working altogether, and to protect
-      users in the meantime. Such a plan might include any or all of:
+    3.  Leading up to the flag day, the user agent should announce a deprecation
+        schedule to ensure both that site authors recognize the need to modify
+        their code before it simply stops working altogether, and to protect
+        users in the meantime. Such a plan might include any or all of:
 
-      1.  Disallowing persistent permission grants to non-secure origins
+        1.  Disallowing persistent permission grants to non-secure origins
 
-      2.  Coarsening the accuracy of the API for non-secure origins (perhaps
-          consistently returning city-level data rather than high-accuracy
-          data)
+        2.  Coarsening the accuracy of the API for non-secure origins (perhaps
+            consistently returning city-level data rather than high-accuracy
+            data)
 
-      3.  UI modifications to inform users and site authors of the risk
+            3.  UI modifications to inform users and site authors of the risk
+  </section>
 </section>
 
 <!--
