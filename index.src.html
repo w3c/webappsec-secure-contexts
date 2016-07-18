@@ -18,6 +18,7 @@ Version History: https://github.com/w3c/webappsec-secure-contexts/commits/master
 Indent: 2
 Markup Shorthands: markdown on
 Boilerplate: omit conformance, omit feedback-header
+At Risk: The <a>sandboxed secure browsing context flag</a> defined in [[#monkey-patching-sandbox-flags]], as well as its usage in [[#settings-object]].
 </pre>
 <pre class="anchors">
 urlPrefix: https://fetch.spec.whatwg.org/; spec: FETCH
@@ -33,28 +34,30 @@ urlPrefix: http://www.w3.org/TR/html51/; spec: HTML51
       text: an iframe srcdoc document
     urlPrefix: browsers.html
       text: active document
+      text: active sandboxing flag set
       text: alias; url: concept-origin-alias
       text: ancestor browsing context
       text: auxiliary browsing contexts
       text: browsing context
       text: browsing context container
       text: creating a new Document object
-      text: effective script origin
       text: creator browsing context
-      text: parent browsing context
+      text: effective script origin
       text: nested browsing context
+      text: opaque origin
+      text: opener browsing context
+      text: origin
+      for: origin
+        text: domain; url: origin-domain
+        text: host; url: origin-host
+        text: port; url: origin-port
+        text: scheme; url: origin-scheme
+      text: parent browsing context
+      text: parse the sandboxing directive
       text: sandboxed origin browsing context flag
       text: sandboxing flag set
       text: top-level browsing context
-      text: origin
-      for: origin
-        text: scheme; url: origin-scheme
-        text: host; url: origin-host
-        text: port; url: origin-port
-        text: domain; url: origin-domain
-      text: opaque origin
       text: tuple origin
-      text: opener browsing context
     urlPrefix: webappapis.html
       text: current settings object
       text: environment settings object
@@ -624,6 +627,35 @@ spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/
 
     <h3 id="monkey-patching-html">Modifications to HTML</h3>
 
+    <h4 id="monkey-patching-sandbox-flags">Sandboxing</h4>
+
+    Developers may wish to treat sandboxed <a>browsing contexts</a> as <a>secure
+    contexts</a> in some situations, and <a>non-secure contexts</a> in others. The
+    following sandboxing flag supports this desire:
+
+    <dl>
+      <dt>The <dfn export>sandboxed secure browsing context flag</dfn></dt>
+      <dd>
+        This flag asserts that content in a browsing context will be treated as a
+        <a>non-secure context</a>, even if it would otherwise be considered secure.
+      </dd>
+    </dl>
+
+    The <a>parse the sandboxing directive</a> algorithm is extended by adding the
+    following entry to the list in the final step of the algorithm which parses
+    |tokens| into flags:
+
+    *   The <a>sandboxed secure browsing context flag</a>, unless |tokens|
+        contains the
+        <dfn type="attr-value" for="iframe/sandbox" export>`allow-secure-context`</dfn>
+        keyword.
+
+    ISSUE(w3c/webappsec-secure-contexts#28): This feature is "at risk", pending the
+    resolution of the linked issue (which itself is pending metrics gathered from
+    browser vendors). Accordingly, no attempt has been made to upstream this to
+    either WHATWG's HTML or W3C's HTML. Once we've decided whether or not to keep
+    the feature, we'll work on that.
+
     <h4 id="monkey-patching-shared-workers" class="non-normative">Shared Workers</h4>
 
     <em>This section is non-normative</em>.
@@ -726,7 +758,14 @@ spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/
       WHATWG's HTML in <a href="https://github.com/whatwg/html/pull/1561">whatwg/html#1561</a>,
       but doesn't yet exist in W3C's HTML.
 
-  5.  If |settings object|'s <a>HTTPS state</a> is "`modern`", return
+  5.  If |settings object|'s <a>responsible document</a>'s <a>active sandboxing
+      flag set</a> contains the <a>sandboxed secure browsing context flag</a>,
+      return "`Not Secure`".
+
+      NOTE: This check is "at risk". See [[#monkey-patching-sandbox-flags]] for
+      details.
+
+  6.  If |settings object|'s <a>HTTPS state</a> is "`modern`", return
       "`Secure`".
 
       <div class="note">
