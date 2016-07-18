@@ -142,7 +142,7 @@ spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/
   "W3C-PROCESS": {
     "authors": [ "Charles McCathie Nevile" ],
     "title": "World Wide Web Consortium Process Document",
-    "href": "https://www.w3.org/2014/Process-20140801/",
+    "href": "https://www.w3.org/20145/Process-20150901/",
     "publisher": "W3C"
    }
 }
@@ -587,7 +587,7 @@ spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/
 
   An <a>environment settings object</a> is considered a <dfn export>secure
   context</dfn> if the algorithm in [[#settings-object]] returns "`Secure`", and a
-  <dfn>non-secure context</dfn> otherwise.
+  <dfn export>non-secure context</dfn> otherwise.
 
   Likewise, a <a>global object</a> is considered a <a>secure context</a> if its
   <a>relevant settings object</a> is a <a>secure context</a>.
@@ -709,7 +709,7 @@ spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/
         readonly attribute boolean isSecureContext;
       };
       Window implements GlobalSecureContext;
-      WorkerGlobalScope implements WindowBase64;
+      WorkerGlobalScope implements GlobalSecureContext;
     </pre>
 
     Filed as <a href="https://github.com/w3c/html/issues/522">w3c/html#522</a>.
