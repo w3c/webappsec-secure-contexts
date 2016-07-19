@@ -20,6 +20,9 @@ Markup Shorthands: markdown on
 Boilerplate: omit conformance, omit feedback-header
 At Risk: The <a>sandboxed secure browsing context flag</a> defined in [[#monkey-patching-sandbox-flags]], as well as its usage in [[#settings-object]].
 </pre>
+<pre class="link-defaults">
+spec:url; type:interface; text:URL
+</pre>
 <pre class="anchors">
 urlPrefix: https://fetch.spec.whatwg.org/; spec: FETCH
   type: dfn
@@ -83,19 +86,13 @@ urlPrefix: http://www.w3.org/TR/html51/; spec: HTML51
 urlPrefix: https://w3c.github.io/webappsec-mixed-content/; spec: MIX
   type: dfn
     text: a priori authenticated url
-urlPrefix: http://www.w3.org/TR/service-workers/; spec: SERVICE-WORKERS
-  type: interface
-    text: ServiceWorker; url: service-worker-obj
 urlPrefix: https://www.w3.org/2015/Process-20150901/; spec: W3C-PROCESS
   type: dfn
     text: modify a specification; url: rec-modify
 spec: WEBWORKERS; urlPrefix: http://www.w3.org/TR/workers/
   type: dfn
     text: the worker's documents; url: the-worker-s-documents
-    text: set up a worker environment settings object
   type: interface
-    text: SharedWorker
-    text: Worker
     text: WorkerGlobalScope
   type: constructor
     text: SharedWorker(); url: dom-sharedworker
@@ -116,12 +113,6 @@ spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/
   urlPrefix: webappapis.html
     type: interface
       text: WindowOrWorkerGlobalScope
-urlPrefix: https://url.spec.whatwg.org/; spec: WHATWG-URL
-  type: dfn
-    text: origin; for: URL; url: concept-url-origin
-    text: scheme; for: URL; url: concept-url-scheme
-  type: interface
-    text: URL
 </pre>
 <pre class="biblio">
 {
@@ -874,8 +865,8 @@ urlPrefix: https://url.spec.whatwg.org/; spec: WHATWG-URL
 
   A <dfn export>potentially trustworthy URL</dfn> is one which either inherits
   context from it's creator (`about:blank`, `about:srcdoc`) or one whose
-  <a for="URL">origin</a> is a <a>potentially trustworthy origin</a>.
-  Given a URL (|url|), the following algorithm returns "`Potentially
+  <a for="url">origin</a> is a <a>potentially trustworthy origin</a>.
+  Given a {{URL}} (|url|), the following algorithm returns "`Potentially
   Trustworthy`" or "`Not Trustworthy`" as appropriate:
 
   1.  If |url|'s <a for="url">scheme</a> is "`data`", return "`Not
@@ -891,7 +882,7 @@ urlPrefix: https://url.spec.whatwg.org/; spec: WHATWG-URL
       Trustworthy`".
 
   3.  Return the result of executing [[#is-origin-trustworthy]] on |url|'s
-      <a for="URL">origin</a>.
+      <a for="url">origin</a>.
 
       Note: The origin of `blob:` and `filesystem:` URLs is the origin of the
       context in which they were created. Therefore, blobs created in a
@@ -1062,7 +1053,7 @@ urlPrefix: https://url.spec.whatwg.org/; spec: WHATWG-URL
   A user agent that support packaged applications MAY whitelist specific URL
   schemes whose contents are authenticated by the user agent. For example,
   FirefoxOS application resources are referred to by a URL whose
-  <a for="URL">scheme</a> component is `app:`. Likewise, Chrome's extensions
+  <a for="url">scheme</a> component is `app:`. Likewise, Chrome's extensions
   and apps live on `chrome-extension:` schemes. These could reasonably be
   considered trusted origins.
 
