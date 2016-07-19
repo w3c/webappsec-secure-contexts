@@ -46,7 +46,8 @@ urlPrefix: http://www.w3.org/TR/html51/; spec: HTML51
       text: nested browsing context
       text: opaque origin
       text: opener browsing context
-      text: origin
+      text: concept origin; url: concept-cross-origin
+      text: origin; for: environment settings object; url: environment-settings-object
       for: origin
         text: domain; url: origin-domain
         text: host; url: origin-host
@@ -54,7 +55,7 @@ urlPrefix: http://www.w3.org/TR/html51/; spec: HTML51
         text: scheme; url: origin-scheme
       text: parent browsing context
       text: parse the sandboxing directive
-      text: sandboxed origin browsing context flag
+      text: sandboxed origin browsing context flag; url: sandboxed-into-a-unique-origin
       text: sandboxing flag set
       text: top-level browsing context
       text: tuple origin
@@ -79,9 +80,6 @@ urlPrefix: http://www.w3.org/TR/html51/; spec: HTML51
       text: Document; url: the-document-object
     urlPrefix: browsers.html
       text: Window; url: the-window-object
-urlPrefix: https://html.spec.whatwg.org/
-  type: interface
-    text: WindowOrWorkerGlobalScope
 urlPrefix: https://w3c.github.io/webappsec-mixed-content/; spec: MIX
   type: dfn
     text: a priori authenticated url
@@ -91,12 +89,6 @@ urlPrefix: http://www.w3.org/TR/service-workers/; spec: SERVICE-WORKERS
 urlPrefix: https://www.w3.org/2015/Process-20150901/; spec: W3C-PROCESS
   type: dfn
     text: modify a specification; url: rec-modify
-urlPrefix: https://url.spec.whatwg.org/; spec: URL
-  type: dfn
-    text: origin of a url; url: concept-url-origin
-    text: scheme; for: URL; url: concept-url-scheme
-  type: interface
-    text: URL
 spec: WEBWORKERS; urlPrefix: http://www.w3.org/TR/workers/
   type: dfn
     text: the worker's documents; url: the-worker-s-documents
@@ -111,7 +103,9 @@ spec: WEBIDL-2; urlPrefix: https://heycam.github.io/webidl/
   type: dfn
     text: exposed; url: dfn-exposed
     text: [SecureContext]; url: SecureContext
-
+<!--
+  Things that are only defined in WHATWG specs.
+-->
 spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/
   urlPrefix: browsers.html
     type: dfn;
@@ -119,6 +113,15 @@ spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/
   urlPrefix: semantics.html
     type: dfn;
       text: noopener; url: link-type-noopener
+  urlPrefix: webappapis.html
+    type: interface
+      text: WindowOrWorkerGlobalScope
+urlPrefix: https://url.spec.whatwg.org/; spec: WHATWG-URL
+  type: dfn
+    text: origin; for: URL; url: concept-url-origin
+    text: scheme; for: URL; url: concept-url-scheme
+  type: interface
+    text: URL
 </pre>
 <pre class="biblio">
 {
@@ -725,7 +728,7 @@ spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/
   <h2 id="algorithms">Algorithms</h2>
 
   <h3 id="settings-object">
-    Is |settings object| a secure context?
+    Is the environment settings object |settings| a secure context?
   </h3>
 
   Given an <a>environment settings object</a> (|settings|) this algorithm
@@ -740,69 +743,72 @@ spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/
       1.  For each {{Document}} (|document|) in |global|'s list of <a>the
           worker's `Documents`</a>:
 
-          1.  If [[#settings-object]] returns "`Not Secure`" when executed upon
+          1.  Assert: Workers must be same-origin with the context that created
+              them, so |document|'s <a>relevant settings object</a>'s
+              <a for="environment settings object">origin</a> and <a>HTTPS
+              state</a> is the same as |global|'s <a>relevant settings
+              object</a>'s <a for="environment settings object">origin</a> and
+              <a>HTTPS state</a>.
+
+          2.  If [[#settings-object]] returns "`Not Secure`" when executed upon
               |document|'s <a>relevant settings object</a>, return "`Not
               Secure`".
 
+      2.  Return "`Secure`".
+
+          Note: Given the assertion above, if we've reached this step, the
+          worker must have been created from a <a>secure context</a>, and
+          therefore must itself be a <a>secure context</a>.
+
   3.  Assert: |global| is a {{Window}}.
-  
-  4.  If |settings object|'s <a>responsible document</a> has an <a>creator
-      browsing context</a> whose <a>creator context security</a> is "`Not
-      Secure`", return "`Not Secure`".
 
-      Note: Since we take account of <a>creator browsing contexts</a>'
-      status, a popups' status depends on how it is opened, as discussed
-      in [[#examples-top-level]].
+  4.  Let |document| be |settings|'s <a>responsible document</a>.
+ 
+  5.  Return "`Not Secure`" if any of the following are true:
 
-      ISSUE(w3c/html#524): The 'creator context security' concept landed in
-      WHATWG's HTML in <a href="https://github.com/whatwg/html/pull/1561">whatwg/html#1561</a>,
-      but doesn't yet exist in W3C's HTML.
+      1.  |document|'s <a>active sandboxing flag set</a> contains the
+          <a>sandboxed secure browsing context flag</a>.
 
-  5.  If |settings object|'s <a>responsible document</a>'s <a>active sandboxing
-      flag set</a> contains the <a>sandboxed secure browsing context flag</a>,
-      return "`Not Secure`".
+          Note: This check is "at risk". See [[#monkey-patching-sandbox-flags]]
+          for details.
 
-      NOTE: This check is "at risk". See [[#monkey-patching-sandbox-flags]] for
-      details.
+      2.  |document| has an <a>creator browsing context</a> (|context|), and
+          |context|'s <a>creator context security</a> is "`Not Secure`".
 
-  6.  If |settings object|'s <a>HTTPS state</a> is "`modern`", return
-      "`Secure`".
+          Note: Since we take account of <a>creator browsing contexts</a>'
+          status, a popups' status depends on how it is opened, as discussed
+          in [[#examples-top-level]].
 
-      <div class="note">
-        Most of the time, this check will be enough to determine whether
-        a particular context was securely delivered. Documents delivered over
-        TLS will have their <a>HTTPS state</a> set, and `srcdoc` `Document`s
-        inherit their ancestor's <a>HTTPS state</a> (as do other kinds of
-        requests which inherit their requestor's origin: see the <a>basic
-        fetch</a> algorithm for details on some of these [[FETCH]]).
+          ISSUE(w3c/html#524): The 'creator context security' concept landed in
+          WHATWG's HTML in
+          <a href="https://github.com/whatwg/html/pull/1561">whatwg/html#1561</a>,
+          but doesn't yet exist in W3C's HTML.
 
-        We only continue past this check in order to allow resources
-        delivered from "trustworthy" but unauthenticated locations like
-        `http://127.0.0.1/` to be treated as creating a secure context.
-      </div>
+      3.  |settings|'s <a>HTTPS state</a> is "`deprecated`".
 
-  6.  Let |origin| be |settings object|'s <a>origin</a>.
+      4.  |document|'s <a>active sandboxing flag set</a> includes the
+          <a>sandboxed origin browsing context flag</a>, and
+          [[#is-url-trustworthy]] returns "`Not Trustworthy`" when executed upon
+          |settings|'s <a>creation URL</a>.
 
-  7.  If |origin| is an <a>opaque origin</a>, set |origin| to the
-      <a lt="origin of a url">origin</a> of |settings object|'s <a>creation
-      URL</a>.
+          Note: We check the <a>creation URL</a> here because sandboxed content
+          that is treated as being in an opaque origin (e.g.
+          `<iframe sandbox="allow-secure-context" src="http://127.0.0.1/">`)
+          would otherwise be treated as non-trustworthy by
+          [[#is-origin-trustworthy]]. Since sandboxing is a strict reduction in
+          the content's capabilities, and therefore in the risk it poses, we
+          look at the origin of its URL to determine whether we would have
+          considered it trustworthy had it not been sandboxed.
 
-      Note: We use the origin of the URL here because sandboxed content that
-      is treated as being in a unique origin (e.g.
-      `<iframe sandbox src="http://127.0.0.1/">`) would otherwise be treated as
-      non-trustworthy by [[#is-origin-trustworthy]]. Since sandboxing is a
-      strict reduction in the content's capabilities, and therefore in the
-      risk it poses, we look at the origin of its URL to determine whether we
-      would have considered it trustworthy had it not been sandboxed.
+      5.  |document|'s <a>active sandboxing flag set</a> does not include the
+          <a>sandboxed origin browsing context flag</a>, and
+          [[#is-origin-trustworthy]] returns "`Not Trustworthy`" when executed
+          upon |settings|'s <a lt="concept origin">origin</a>.
 
-  8.  If the result of executing the [[#is-origin-trustworthy]] algorithm
-      on |origin| is <strong>not</strong> "`Potentially Trustworthy`", then
-      return "`Not Secure`".
-
-  9.  Return "`Secure`".
+  6.  Return "`Secure`".
 
   <h3 id="is-origin-trustworthy">
-    Is <var>origin</var> potentially trustworthy?
+    Is |origin| potentially trustworthy?
   </h3>
 
   A <dfn export>potentially trustworthy origin</dfn> is one which a user agent
@@ -827,8 +833,8 @@ spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/
   determine <i lang="la">a priori</i> to be trusted (see
   [[#packaged-applications]] for detail).
 
-  Given an <a>origin</a> (|origin|), the following algorithm returns
-  "`Potentially Trustworthy`" or "`Not Trustworthy`" as appropriate.
+  Given an <a lt="concept origin">origin</a> (|origin|), the following algorithm
+  returns "`Potentially Trustworthy`" or "`Not Trustworthy`" as appropriate.
 
   1.  If |origin| is an <a>opaque origin</a>, return "`Not Trustworthy`".
 
@@ -839,12 +845,6 @@ spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/
 
       Note: This is meant to be analog to the <a><i lang="la">a priori</i>
       authenticated URL</a> concept in [[MIX]].
-
-      Note: The origin of `blob:` and `filesystem:` URLs is the origin of the
-      context in which they were created. Therefore, blobs created in a
-      trustworthy origin will themselves be potentially trustworthy. The origin
-      of `data:` and `javascript:` URLs, on the other hand, is an <a>opaque
-      origin</a>, which will not be considered potentially trustworthy.
 
   4.  If |origin|'s <a for="origin">host</a> component matches one of the CIDR
       notations `127.0.0.0/8` or `::1/128` [[!RFC4632]], return "`Potentially
@@ -868,6 +868,34 @@ spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/
   Note: Neither |origin|'s <a for="origin">domain</a> nor <a for="origin">port</a>
   has any effect on whether or not it is considered to be a <a>secure context</a>.
 
+  <h3 id="is-url-trustworthy">
+    Is |url| potentially trustworthy?
+  </h3>
+
+  A <dfn export>potentially trustworthy URL</dfn> is one which either inherits
+  context from it's creator (`about:blank`, `about:srcdoc`) or one whose
+  <a for="URL">origin</a> is a <a>potentially trustworthy origin</a>.
+  Given a URL (|url|), the following algorithm returns "`Potentially
+  Trustworthy`" or "`Not Trustworthy`" as appropriate:
+
+  1.  If |url|'s <a for="url">scheme</a> is "`data`", return "`Not
+      Trustworthy`".
+
+      Note: This aligns the definition of a <a>secure context</a> with the
+      <i lang="la">de facto</i> "`data:` URL as <a>opaque origin</a>"
+      behavior that a majority of today's browsers have agreed upon, rather
+      than the <i lang="la">de jure</i> "`data:` URL inherits origin"
+      behavior defined in HTML.
+
+  2.  If |url| is "`about:blank`" or "`about:srcdoc`", return "`Potentially
+      Trustworthy`".
+
+  3.  Return the result of executing [[#is-origin-trustworthy]] on |url|'s
+      <a for="URL">origin</a>.
+
+      Note: The origin of `blob:` and `filesystem:` URLs is the origin of the
+      context in which they were created. Therefore, blobs created in a
+      trustworthy origin will themselves be potentially trustworthy.
 </section>
 
 <section>
