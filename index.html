@@ -457,7 +457,7 @@
 		font-style: normal;
 	}
 	dt dfn code, code.idl {
-		font-size: inherit;
+		font-size: normal;
 	}
 	dfn var {
 		font-style: normal;
@@ -1436,7 +1436,7 @@ pre.idl.highlight { color: #708090; }
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1>Secure Contexts</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2016-08-02">2 August 2016</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2016-08-20">20 August 2016</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -2113,7 +2113,7 @@ WorkerGlobalScope implements GlobalSecureContext;
   can generally trust as delivering data securely.</p>
     <p>This algorithms considers certain hosts, scheme, and origins as potentially
   trustworthy, even though they might not be authenticated and encrypted in the
-  traditional sense. In particular, the user agent SHOULD treat <code>file</code> URLs and
+  traditional sense. In particular, the user agent SHOULD treat <code>file</code> URLs
   as potentially trustworthy. In principle the user agent could treat local
   files as untrustworthy, but, <em>given the information that is available to
   the user agent at runtime</em>, the resources appear to have been transported
@@ -2152,7 +2152,7 @@ WorkerGlobalScope implements GlobalSecureContext;
   "<code>Potentially Trustworthy</code>".</p>
       <p class="note" role="note">Note: See <a href="#development-environments">§7.2 Development Environments</a> for detail here.</p>
      <li data-md="">
-      <p>Return "<code>Not Trusted</code>".</p>
+      <p>Return "<code>Not Trustworthy</code>".</p>
     </ol>
     <p class="note" role="note">Note: Neither <var>origin</var>’s <a data-link-type="dfn" href="https://www.w3.org/TR/html51/browsers.html#origin-domain">domain</a> nor <a data-link-type="dfn" href="https://www.w3.org/TR/html51/browsers.html#origin-port">port</a> has any effect on whether or not it is considered to be a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context-26">secure context</a>.</p>
     <h3 class="heading settled" data-level="3.3" id="is-url-trustworthy"><span class="secno">3.3. </span><span class="content"> Is <var>url</var> potentially trustworthy? </span><a class="self-link" href="#is-url-trustworthy"></a></h3>
@@ -2303,7 +2303,7 @@ WorkerGlobalScope implements GlobalSecureContext;
     <p>In order to support developers who run staging servers on non-loopback hosts,
   the user agent MAY allow users to configure specific sets of origins as
   trustworthy, even though <a href="#is-origin-trustworthy">§3.2 Is origin potentially trustworthy?</a> would normally return
-  "<code>Not Trusted</code>".</p>
+  "<code>Not Trustworthy</code>".</p>
     <h3 class="heading settled" data-level="7.3" id="new"><span class="secno">7.3. </span><span class="content">Restricting New Features</span><a class="self-link" href="#new"></a></h3>
     <p><em>This section is non-normative.</em></p>
     <p>When writing a specification for new features, we recommend that authors
@@ -2557,7 +2557,7 @@ WorkerGlobalScope implements GlobalSecureContext;
    <dt id="biblio-mediacapture-streams">[MEDIACAPTURE-STREAMS]
    <dd>Daniel Burnett; et al. <a href="https://w3c.github.io/mediacapture-main/">Media Capture and Streams</a>. 19 May 2016. CR. URL: <a href="https://w3c.github.io/mediacapture-main/">https://w3c.github.io/mediacapture-main/</a>
    <dt id="biblio-mix">[MIX]
-   <dd>Mike West. <a href="https://w3c.github.io/webappsec/specs/mixedcontent/">Mixed Content</a>. 8 October 2015. CR. URL: <a href="https://w3c.github.io/webappsec/specs/mixedcontent/">https://w3c.github.io/webappsec/specs/mixedcontent/</a>
+   <dd>Mike West. <a href="https://w3c.github.io/webappsec-mixed-content/">Mixed Content</a>. 2 August 2016. CR. URL: <a href="https://w3c.github.io/webappsec-mixed-content/">https://w3c.github.io/webappsec-mixed-content/</a>
    <dt id="biblio-powerful-new-features">[POWERFUL-NEW-FEATURES]
    <dd>Chrome Security Team. <a href="https://www.chromium.org/Home/chromium-security/prefer-secure-origins-for-powerful-new-features">Prefer Secure Origins For Powerful New Features</a>. URL: <a href="https://www.chromium.org/Home/chromium-security/prefer-secure-origins-for-powerful-new-features">https://www.chromium.org/Home/chromium-security/prefer-secure-origins-for-powerful-new-features</a>
    <dt id="biblio-rfc6265">[RFC6265]

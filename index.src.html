@@ -815,7 +815,7 @@ spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/
 
   This algorithms considers certain hosts, scheme, and origins as potentially
   trustworthy, even though they might not be authenticated and encrypted in the
-  traditional sense. In particular, the user agent SHOULD treat `file` URLs and
+  traditional sense. In particular, the user agent SHOULD treat `file` URLs
   as potentially trustworthy. In principle the user agent could treat local
   files as untrustworthy, but, <em>given the information that is available to
   the user agent at runtime</em>, the resources appear to have been transported
@@ -862,7 +862,7 @@ spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/
 
       Note: See [[#development-environments]] for detail here.
 
-  8.  Return "`Not Trusted`".
+  8.  Return "`Not Trustworthy`".
 
   Note: Neither |origin|'s <a for="origin">domain</a> nor <a for="origin">port</a>
   has any effect on whether or not it is considered to be a <a>secure context</a>.
@@ -1076,7 +1076,7 @@ spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/
   In order to support developers who run staging servers on non-loopback hosts,
   the user agent MAY allow users to configure specific sets of origins as
   trustworthy, even though [[#is-origin-trustworthy]] would normally return
-  "`Not Trusted`".
+  "`Not Trustworthy`".
 
   <h3 id="new">Restricting New Features</h3>
 
