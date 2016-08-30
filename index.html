@@ -1436,7 +1436,7 @@ pre.idl.highlight { color: #708090; }
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1>Secure Contexts</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2016-08-20">20 August 2016</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2016-08-30">30 August 2016</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1591,8 +1591,8 @@ certain minimum standards of authentication and confidentiality are met.</p>
     <p>As the web platform is extended to enable more useful and powerful
   applications, it becomes increasingly important to ensure that the features
   which enable those applications are enabled only in contexts which meet a minimum
-  security level. This document describes threat models for feature abuse on the web
-  (see <a href="#threat-models">§4.1 Threat Models</a>) and outlines normative requirements which should be
+  security level. As an extension of the TAG’s recommendations in <a data-link-type="biblio" href="#biblio-securing-web">[SECURING-WEB]</a>,
+  this document describes threat models for feature abuse on the web (see <a href="#threat-models">§4.1 Threat Models</a>) and outlines normative requirements which should be
   incorporated into documents specifying new features (see <a href="#implementation-considerations">§7 Implementation Considerations</a>).</p>
     <p>The most obvious of the requirements discussed here is that application code
   with access to sensitive or private data be delivered confidentially over
@@ -2566,6 +2566,8 @@ WorkerGlobalScope implements GlobalSecureContext;
    <dd>S. Cheshire; M. Krochmal. <a href="https://tools.ietf.org/html/rfc6761">Special-Use Domain Names</a>. February 2013. Proposed Standard. URL: <a href="https://tools.ietf.org/html/rfc6761">https://tools.ietf.org/html/rfc6761</a>
    <dt id="biblio-rfc7258">[RFC7258]
    <dd>S. Farrell; H. Tschofenig. <a href="https://tools.ietf.org/html/rfc7258">Pervasive Monitoring Is an Attack</a>. May 2014. Best Current Practice. URL: <a href="https://tools.ietf.org/html/rfc7258">https://tools.ietf.org/html/rfc7258</a>
+   <dt id="biblio-securing-web">[SECURING-WEB]
+   <dd>Mark Nottingham. <a href="https://www.w3.org/2001/tag/doc/web-https">Securing the Web</a>. Finding. URL: <a href="https://www.w3.org/2001/tag/doc/web-https">https://www.w3.org/2001/tag/doc/web-https</a>
    <dt id="biblio-service-workers">[SERVICE-WORKERS]
    <dd>Alex Russell; Jungkee Song; Jake Archibald. <a href="https://slightlyoff.github.io/ServiceWorker/spec/service_worker/">Service Workers</a>. 25 June 2015. WD. URL: <a href="https://slightlyoff.github.io/ServiceWorker/spec/service_worker/">https://slightlyoff.github.io/ServiceWorker/spec/service_worker/</a>
    <dt id="biblio-verizon">[VERIZON]
