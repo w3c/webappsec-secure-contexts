@@ -280,11 +280,11 @@ pre.idl.highlight { color: #708090; }
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1>Secure Contexts</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">W3C Candidate Recommendation, <time class="dt-updated" datetime="2016-08-30">30 August 2016</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">W3C Candidate Recommendation, <time class="dt-updated" datetime="2016-09-15">15 September 2016</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
-     <dd><a class="u-url" href="https://www.w3.org/TR/2016/CR-secure-contexts-20160830/">https://www.w3.org/TR/2016/CR-secure-contexts-20160830/</a>
+     <dd><a class="u-url" href="https://www.w3.org/TR/2016/CR-secure-contexts-20160915/">https://www.w3.org/TR/2016/CR-secure-contexts-20160915/</a>
      <dt>Latest published version:
      <dd><a href="https://www.w3.org/TR/secure-contexts/">https://www.w3.org/TR/secure-contexts/</a>
      <dt>Editor's Draft:
@@ -322,7 +322,7 @@ certain minimum standards of authentication and confidentiality are met.</p>
   can be found in the <a href="https://www.w3.org/TR/">W3C technical reports
   index at https://www.w3.org/TR/.</a></em> </p>
    <p> This document was published by the <a href="https://www.w3.org/2011/webappsec/">Web Application Security Working Group</a> as a Candidate Recommendation. This document is intended to become a W3C Recommendation.
-  This document will remain a Candidate Recommendation at least until <time class="status-deadline" datetime="2016-09-20">20 September 2016</time> in order
+  This document will remain a Candidate Recommendation at least until <time class="status-deadline" datetime="2016-10-20">20 October 2016</time> in order
   to ensure the opportunity for wide review. </p>
    <p> The (<a href="https://lists.w3.org/Archives/Public/public-webappsec/">archived</a>) public mailing list <a href="mailto:public-webappsec@w3.org?Subject=%5Bsecure-contexts%5D%20PUT%20SUBJECT%20HERE">public-webappsec@w3.org</a> (see <a href="https://www.w3.org/Mail/Request">instructions</a>)
 	is preferred for discussion of this specification.
@@ -811,10 +811,10 @@ certain minimum standards of authentication and confidentiality are met.</p>
   <span class="kt">Promise</span> &lt;<span class="kt">double</span>> <span class="nv">calculateNotSoSecretResult</span>();
 
   // This operation will not be exposed to a non-secure context.
-  [<span class="nv">SecureContext</span>] <span class="kt">Promise</span>&lt;<span class="kt">double</span>> <span class="nv">calculateSecretResult</span>();
+  <a data-link-type="dfn" href="https://heycam.github.io/webidl/#SecureContext">[<span class="nv">SecureContext</span>]</a> <span class="kt">Promise</span>&lt;<span class="kt">double</span>> <span class="nv">calculateSecretResult</span>();
 
   // The same applies here: the operation will not be exposed to a non-secure context.
-  [<span class="nv">SecureContext</span>] <span class="kt">boolean</span> <span class="nv">getSecretBoolean</span>();
+  <a data-link-type="dfn" href="https://heycam.github.io/webidl/#SecureContext">[<span class="nv">SecureContext</span>]</a> <span class="kt">boolean</span> <span class="nv">getSecretBoolean</span>();
 };
 
 [<span class="nv">SecureContext</span>]
@@ -1352,6 +1352,13 @@ WorkerGlobalScope implements GlobalSecureContext;
      <li><a href="https://w3c.github.io/webappsec-mixed-content/#a-priori-authenticated-url">a priori authenticated url</a>
     </ul>
    <li>
+    <a data-link-type="biblio">[WHATWG-URL]</a> defines the following terms:
+    <ul>
+     <li><a href="https://url.spec.whatwg.org/#url">URL</a>
+     <li><a href="https://url.spec.whatwg.org/#concept-url-origin">origin</a>
+     <li><a href="https://url.spec.whatwg.org/#concept-url-scheme">scheme</a>
+    </ul>
+   <li>
     <a data-link-type="biblio">[W3C-PROCESS]</a> defines the following terms:
     <ul>
      <li><a href="https://www.w3.org/2015/Process-20150901/#rec-modify">modify a specification</a>
@@ -1368,13 +1375,6 @@ WorkerGlobalScope implements GlobalSecureContext;
      <li><a href="https://www.w3.org/TR/workers/#dom-sharedworker">SharedWorker()</a>
      <li><a href="https://www.w3.org/TR/workers/#workerglobalscope">WorkerGlobalScope</a>
      <li><a href="https://www.w3.org/TR/workers/#the-worker-s-documents">the worker's documents</a>
-    </ul>
-   <li>
-    <a data-link-type="biblio">[WHATWG-URL]</a> defines the following terms:
-    <ul>
-     <li><a href="https://url.spec.whatwg.org/#url">URL</a>
-     <li><a href="https://url.spec.whatwg.org/#concept-url-origin">origin</a>
-     <li><a href="https://url.spec.whatwg.org/#concept-url-scheme">scheme</a>
     </ul>
   </ul>
   <h2 class="no-num no-ref heading settled" id="references"><span class="content">References</span><a class="self-link" href="#references"></a></h2>
@@ -1393,7 +1393,10 @@ WorkerGlobalScope implements GlobalSecureContext;
    <dt id="biblio-webworkers">[WEBWORKERS]
    <dd>Ian Hickson. <a href="https://www.w3.org/TR/workers/">Web Workers</a>. 24 September 2015. WD. URL: <a href="https://www.w3.org/TR/workers/">https://www.w3.org/TR/workers/</a>
    <dt id="biblio-whatwg-url">[WHATWG-URL]
-   <dd>Anne van Kesteren. <a href="https://url.spec.whatwg.org/">URL Standard</a>. Living Standard. URL: <a href="https://url.spec.whatwg.org/">https://url.spec.whatwg.org/</a>
+   <dd>
+     Anne van Kesteren. <a href="https://url.spec.whatwg.org/">URL Standard</a>. Living Standard. URL: <a href="https://url.spec.whatwg.org/">https://url.spec.whatwg.org/</a>
+     <p class="note" role="note">Note: URLs can be used in numerous different manners, in many differing contexts. For the purpose of producing strict URLs one may wish to consider <a data-link-type="biblio" href="#biblio-rfc3986">[RFC3986]</a> and <a data-link-type="biblio" href="#biblio-rfc3987">[RFC3987]</a>.</p>
+   </dd>
   </dl>
   <h3 class="no-num no-ref heading settled" id="informative"><span class="content">Informative References</span><a class="self-link" href="#informative"></a></h3>
   <dl>
@@ -1417,6 +1420,10 @@ WorkerGlobalScope implements GlobalSecureContext;
    <dd>Mike West. <a href="https://www.w3.org/TR/mixed-content/">Mixed Content</a>. 2 August 2016. CR. URL: <a href="https://www.w3.org/TR/mixed-content/">https://www.w3.org/TR/mixed-content/</a>
    <dt id="biblio-powerful-new-features">[POWERFUL-NEW-FEATURES]
    <dd>Chrome Security Team. <a href="https://www.chromium.org/Home/chromium-security/prefer-secure-origins-for-powerful-new-features">Prefer Secure Origins For Powerful New Features</a>. URL: <a href="https://www.chromium.org/Home/chromium-security/prefer-secure-origins-for-powerful-new-features">https://www.chromium.org/Home/chromium-security/prefer-secure-origins-for-powerful-new-features</a>
+   <dt id="biblio-rfc3986">[RFC3986]
+   <dd>T. Berners-Lee; R. Fielding; L. Masinter. <a href="https://tools.ietf.org/html/rfc3986">Uniform Resource Identifier (URI): Generic Syntax</a>. January 2005. Internet Standard. URL: <a href="https://tools.ietf.org/html/rfc3986">https://tools.ietf.org/html/rfc3986</a>
+   <dt id="biblio-rfc3987">[RFC3987]
+   <dd>M. Duerst; M. Suignard. <a href="https://tools.ietf.org/html/rfc3987">Internationalized Resource Identifiers (IRIs)</a>. January 2005. Proposed Standard. URL: <a href="https://tools.ietf.org/html/rfc3987">https://tools.ietf.org/html/rfc3987</a>
    <dt id="biblio-rfc6265">[RFC6265]
    <dd>A. Barth. <a href="https://tools.ietf.org/html/rfc6265">HTTP State Management Mechanism</a>. April 2011. Proposed Standard. URL: <a href="https://tools.ietf.org/html/rfc6265">https://tools.ietf.org/html/rfc6265</a>
    <dt id="biblio-rfc6761">[RFC6761]

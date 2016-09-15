@@ -414,6 +414,19 @@
 	 border-left: 0.5em solid #DEF;
 	}
 
+	/* Put nice boxes around each algorithm. */
+	[data-algorithm]:not(.heading) {
+	  padding: .5em;
+	  border: thin solid #ddd; border-radius: .5em;
+	  margin: .5em 0;
+	}
+	[data-algorithm]:not(.heading) > :first-child {
+	  margin-top: 0;
+	}
+	[data-algorithm]:not(.heading) > :last-child {
+	  margin-bottom: 0;
+	}
+
 	/* Style for switch/case <dl>s */
 	dl.switch > dd > ol.only,
 	dl.switch > dd > .only > ol {
@@ -1436,7 +1449,7 @@ pre.idl.highlight { color: #708090; }
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1>Secure Contexts</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2016-08-30">30 August 2016</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2016-09-15">15 September 2016</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1954,10 +1967,10 @@ certain minimum standards of authentication and confidentiality are met.</p>
   <span class="kt">Promise</span> &lt;<span class="kt">double</span>> <span class="nv">calculateNotSoSecretResult</span>();
 
   // This operation will not be exposed to a non-secure context.
-  [<span class="nv">SecureContext</span>] <span class="kt">Promise</span>&lt;<span class="kt">double</span>> <span class="nv">calculateSecretResult</span>();
+  <a data-link-type="dfn" href="https://heycam.github.io/webidl/#SecureContext">[<span class="nv">SecureContext</span>]</a> <span class="kt">Promise</span>&lt;<span class="kt">double</span>> <span class="nv">calculateSecretResult</span>();
 
   // The same applies here: the operation will not be exposed to a non-secure context.
-  [<span class="nv">SecureContext</span>] <span class="kt">boolean</span> <span class="nv">getSecretBoolean</span>();
+  <a data-link-type="dfn" href="https://heycam.github.io/webidl/#SecureContext">[<span class="nv">SecureContext</span>]</a> <span class="kt">boolean</span> <span class="nv">getSecretBoolean</span>();
 };
 
 [<span class="nv">SecureContext</span>]
@@ -2495,6 +2508,13 @@ WorkerGlobalScope implements GlobalSecureContext;
      <li><a href="https://w3c.github.io/webappsec-mixed-content/#a-priori-authenticated-url">a priori authenticated url</a>
     </ul>
    <li>
+    <a data-link-type="biblio">[WHATWG-URL]</a> defines the following terms:
+    <ul>
+     <li><a href="https://url.spec.whatwg.org/#url">URL</a>
+     <li><a href="https://url.spec.whatwg.org/#concept-url-origin">origin</a>
+     <li><a href="https://url.spec.whatwg.org/#concept-url-scheme">scheme</a>
+    </ul>
+   <li>
     <a data-link-type="biblio">[W3C-PROCESS]</a> defines the following terms:
     <ul>
      <li><a href="https://www.w3.org/2015/Process-20150901/#rec-modify">modify a specification</a>
@@ -2511,13 +2531,6 @@ WorkerGlobalScope implements GlobalSecureContext;
      <li><a href="https://www.w3.org/TR/workers/#dom-sharedworker">SharedWorker()</a>
      <li><a href="https://www.w3.org/TR/workers/#workerglobalscope">WorkerGlobalScope</a>
      <li><a href="https://www.w3.org/TR/workers/#the-worker-s-documents">the worker's documents</a>
-    </ul>
-   <li>
-    <a data-link-type="biblio">[WHATWG-URL]</a> defines the following terms:
-    <ul>
-     <li><a href="https://url.spec.whatwg.org/#url">URL</a>
-     <li><a href="https://url.spec.whatwg.org/#concept-url-origin">origin</a>
-     <li><a href="https://url.spec.whatwg.org/#concept-url-scheme">scheme</a>
     </ul>
   </ul>
   <h2 class="no-num no-ref heading settled" id="references"><span class="content">References</span><a class="self-link" href="#references"></a></h2>

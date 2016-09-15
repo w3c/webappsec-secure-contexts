@@ -7,7 +7,7 @@ index.html: index.src.html
 	bikeshed -f spec ./index.src.html
 
 CR:
-	bikeshed -f spec --md-status=CR --md-deadline=2016-09-20 ./index.src.html ./CR.html
+	bikeshed -f spec --md-status=CR --md-deadline=2016-10-20 ./index.src.html ./CR.html
 
 WD:
 	bikeshed -f spec --md-status=WD ./index.src.html ./WD.html
