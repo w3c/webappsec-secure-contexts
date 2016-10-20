@@ -1449,7 +1449,7 @@ pre.idl.highlight { color: #708090; }
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1>Secure Contexts</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2016-09-15">15 September 2016</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2016-10-20">20 October 2016</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -2307,9 +2307,9 @@ WorkerGlobalScope implements GlobalSecureContext;
    <section>
     <h2 class="heading settled" data-level="7" id="implementation-considerations"><span class="secno">7. </span><span class="content">Implementation Considerations</span><a class="self-link" href="#implementation-considerations"></a></h2>
     <h3 class="heading settled" data-level="7.1" id="packaged-applications"><span class="secno">7.1. </span><span class="content">Packaged Applications</span><a class="self-link" href="#packaged-applications"></a></h3>
-    <p>A user agent that support packaged applications MAY whitelist specific URL
-  schemes whose contents are authenticated by the user agent. For example,
-  FirefoxOS application resources are referred to by a URL whose <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-scheme">scheme</a> component is <code>app:</code>. Likewise, Chrome’s extensions
+    <p>A user agent that support packaged applications MAY consider as "secure"
+  specific URL schemes whose contents are authenticated by the user agent.
+  For example, FirefoxOS application resources are referred to by a URL whose <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-scheme">scheme</a> component is <code>app:</code>. Likewise, Chrome’s extensions
   and apps live on <code>chrome-extension:</code> schemes. These could reasonably be
   considered trusted origins.</p>
     <h3 class="heading settled" data-level="7.2" id="development-environments"><span class="secno">7.2. </span><span class="content">Development Environments</span><a class="self-link" href="#development-environments"></a></h3>
@@ -2539,7 +2539,7 @@ WorkerGlobalScope implements GlobalSecureContext;
    <dt id="biblio-html">[HTML]
    <dd>Ian Hickson. <a href="https://html.spec.whatwg.org/multipage/">HTML Standard</a>. Living Standard. URL: <a href="https://html.spec.whatwg.org/multipage/">https://html.spec.whatwg.org/multipage/</a>
    <dt id="biblio-html51">[HTML51]
-   <dd>Steve Faulkner; et al. <a href="https://w3c.github.io/html/">HTML 5.1</a>. 21 June 2016. CR. URL: <a href="https://w3c.github.io/html/">https://w3c.github.io/html/</a>
+   <dd>Steve Faulkner; et al. <a href="https://w3c.github.io/html/">HTML 5.1</a>. 15 September 2016. PR. URL: <a href="https://w3c.github.io/html/">https://w3c.github.io/html/</a>
    <dt id="biblio-rfc2119">[RFC2119]
    <dd>S. Bradner. <a href="https://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href="https://tools.ietf.org/html/rfc2119">https://tools.ietf.org/html/rfc2119</a>
    <dt id="biblio-rfc4632">[RFC4632]
@@ -2582,7 +2582,7 @@ WorkerGlobalScope implements GlobalSecureContext;
    <dt id="biblio-securing-web">[SECURING-WEB]
    <dd>Mark Nottingham. <a href="https://www.w3.org/2001/tag/doc/web-https">Securing the Web</a>. Finding. URL: <a href="https://www.w3.org/2001/tag/doc/web-https">https://www.w3.org/2001/tag/doc/web-https</a>
    <dt id="biblio-service-workers">[SERVICE-WORKERS]
-   <dd>Alex Russell; Jungkee Song; Jake Archibald. <a href="https://slightlyoff.github.io/ServiceWorker/spec/service_worker/">Service Workers</a>. 25 June 2015. WD. URL: <a href="https://slightlyoff.github.io/ServiceWorker/spec/service_worker/">https://slightlyoff.github.io/ServiceWorker/spec/service_worker/</a>
+   <dd>Alex Russell; et al. <a href="https://w3c.github.io/ServiceWorker/v1/">Service Workers 1</a>. 11 October 2016. WD. URL: <a href="https://w3c.github.io/ServiceWorker/v1/">https://w3c.github.io/ServiceWorker/v1/</a>
    <dt id="biblio-verizon">[VERIZON]
    <dd>Mark Bergen; Alex Kantrowitz. <a href="http://adage.com/article/digital/verizon-target-mobile-subscribers-ads/293356/">Verizon looks to target its mobile subscribers with ads</a>. URL: <a href="http://adage.com/article/digital/verizon-target-mobile-subscribers-ads/293356/">http://adage.com/article/digital/verizon-target-mobile-subscribers-ads/293356/</a>
    <dt id="biblio-web-bluetooth">[WEB-BLUETOOTH]
