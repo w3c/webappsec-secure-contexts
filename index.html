@@ -1509,8 +1509,7 @@ certain minimum standards of authentication and confidentiality are met.</p>
    <p>The following features are at-risk, and may be dropped during the CR period: </p>
    <ul>
     <li>The <a data-link-type="dfn" href="#sandboxed-secure-browsing-context-flag">sandboxed secure browsing context flag</a> defined in <a href="#monkey-patching-sandbox-flags">§2.2.1 Sandboxing</a>, as well as its usage in <a href="#settings-object">§3.1 Is the environment settings object settings a secure context?</a>. [<a href="#issue-255ee4a4">Issue 2</a>]
-    <li>The <code>localhost</code> carveout, discussed in <a href="#localhost">§5.2 localhost</a>. [<a href="#issue-8ea95bab">Issue 6</a>]
-    <li>The <code>opener</code> restriction on popups. [<a href="#issue-6a3aa5cd">Issue 7</a>]
+    <li>The <code>opener</code> restriction on popups. [<a href="#issue-8ea95bab">Issue 5</a>]
    </ul>
    <p>“At-risk” is a W3C Process term-of-art, and does not necessarily imply that the feature is in danger of being dropped or delayed. It means that the WG believes the feature may have difficulty being interoperably implemented in a timely manner, and marking it as such allows the WG to drop the feature if necessary when transitioning to the Proposed Rec stage, without having to publish a new Candidate Rec without the feature first.</p>
   </div>
@@ -2142,6 +2141,11 @@ certain minimum standards of authentication and confidentiality are met.</p>
       <p>If <var>origin</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-origin-host">host</a> component matches one of the CIDR
   notations <code>127.0.0.0/8</code> or <code>::1/128</code> <a data-link-type="biblio" href="#biblio-rfc4632">[RFC4632]</a>, return "<code>Potentially Trustworthy</code>".</p>
      <li data-md="">
+      <p>If <var>origin</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-origin-host">host</a> component is "<code>localhost</code>" or
+  falls within "<code>.localhost</code>", and the user agent conforms to the name
+  resolution rules in <a data-link-type="biblio" href="#biblio-let-localhost-be-localhost">[let-localhost-be-localhost]</a>, return "<code>Potentially Trustworthy</code>".</p>
+      <p class="note" role="note">Note: See <a href="#localhost">§5.2 localhost</a> for details on the requirements here.</p>
+     <li data-md="">
       <p>If <var>origin</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-origin-scheme">scheme</a> component is <code>file</code>, return
   "<code>Potentially Trustworthy</code>".</p>
      <li data-md="">
@@ -2273,14 +2277,10 @@ certain minimum standards of authentication and confidentiality are met.</p>
   names falling within <code>.localhost.</code> as special, and suggests that local
   resolvers SHOULD/MAY treat them specially. For better or worse, resolvers
   often ignore these suggestions, and will send <code>localhost</code> to the network
-  for resolution in a number of circumstances. Given that uncertainty, this
-  document errs on the conservative side by special-casing <code>127.0.0.1</code>, but
-  not <code>localhost</code>.</p>
-    <p class="issue" id="issue-6a3aa5cd"><a class="self-link" href="#issue-6a3aa5cd"></a> This carveout is "at risk", as
-  there’s currently only one implementation, and a parallel suggestion that we
-  resolve this in the other direction, perhaps by mandating new behavior for
-  conforming user agents' DNS resolvers to treat the SHOULDs and MAYs of the
-  RFCs as MUSTs. <a href="https://github.com/w3c/webappsec-secure-contexts/issues/43">&lt;https://github.com/w3c/webappsec-secure-contexts/issues/43></a></p>
+  for resolution in a number of circumstances.</p>
+    <p>Given that uncertainty, user agents MAY treat localhost names as having <a data-link-type="dfn" href="#potentially-trustworthy-origin" id="ref-for-potentially-trustworthy-origin-4">potentially trustworthy origins</a> if and only if they also adhere to the
+  localhost name resolution rules spelled out in <a data-link-type="biblio" href="#biblio-let-localhost-be-localhost">[let-localhost-be-localhost]</a> (which boil down to ensuring that <code>localhost</code> never resolves to a
+  non-loopback address).</p>
    </section>
    <section>
     <h2 class="heading settled" data-level="6" id="privacy-considerations"><span class="secno">6. </span><span class="content">Privacy Considerations</span><a class="self-link" href="#privacy-considerations"></a></h2>
@@ -2518,6 +2518,8 @@ certain minimum standards of authentication and confidentiality are met.</p>
   <dl>
    <dt id="biblio-html">[HTML]
    <dd>Ian Hickson. <a href="https://html.spec.whatwg.org/multipage/">HTML Standard</a>. Living Standard. URL: <a href="https://html.spec.whatwg.org/multipage/">https://html.spec.whatwg.org/multipage/</a>
+   <dt id="biblio-let-localhost-be-localhost">[LET-LOCALHOST-BE-LOCALHOST]
+   <dd>Mike West. <a href="https://tools.ietf.org/html/draft-west-let-localhost-be-localhost">Let 'localhost' be localhost.</a>. URL: <a href="https://tools.ietf.org/html/draft-west-let-localhost-be-localhost">https://tools.ietf.org/html/draft-west-let-localhost-be-localhost</a>
    <dt id="biblio-rfc2119">[RFC2119]
    <dd>S. Bradner. <a href="https://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href="https://tools.ietf.org/html/rfc2119">https://tools.ietf.org/html/rfc2119</a>
    <dt id="biblio-rfc4632">[RFC4632]
@@ -2596,11 +2598,6 @@ certain minimum standards of authentication and confidentiality are met.</p>
   as implementation is lagging, and there’s some discussion as to
   whether or not it can be softened while maintaining the mitigations
   against direct communication channels. <a href="https://github.com/w3c/webappsec-secure-contexts/issues/42">&lt;https://github.com/w3c/webappsec-secure-contexts/issues/42></a><a href="#issue-8ea95bab"> ↵ </a></div>
-   <div class="issue"> This carveout is "at risk", as
-  there’s currently only one implementation, and a parallel suggestion that we
-  resolve this in the other direction, perhaps by mandating new behavior for
-  conforming user agents' DNS resolvers to treat the SHOULDs and MAYs of the
-  RFCs as MUSTs. <a href="https://github.com/w3c/webappsec-secure-contexts/issues/43">&lt;https://github.com/w3c/webappsec-secure-contexts/issues/43></a><a href="#issue-6a3aa5cd"> ↵ </a></div>
   </div>
   <aside class="dfn-panel" data-for="secure-context">
    <b><a href="#secure-context">#secure-context</a></b><b>Referenced in:</b>
@@ -2656,6 +2653,7 @@ certain minimum standards of authentication and confidentiality are met.</p>
     <li><a href="#ref-for-potentially-trustworthy-origin-2">1.3. Web Workers</a>
     <li><a href="#ref-for-potentially-trustworthy-origin-3">3.3. 
     Is url potentially trustworthy? </a>
+    <li><a href="#ref-for-potentially-trustworthy-origin-4">5.2. localhost</a>
    </ul>
   </aside>
 <script>/* script-dfn-panel */

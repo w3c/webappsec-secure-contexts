@@ -19,8 +19,7 @@ Indent: 2
 Markup Shorthands: markdown on
 Boilerplate: omit conformance, omit feedback-header
 At Risk: The <a>sandboxed secure browsing context flag</a> defined in [[#monkey-patching-sandbox-flags]], as well as its usage in [[#settings-object]]. [<a href="#issue-255ee4a4">Issue 2</a>]
-At Risk: The `localhost` carveout, discussed in [[#localhost]]. [<a href="#issue-8ea95bab">Issue 6</a>]
-At Risk: The `opener` restriction on popups. [<a href="#issue-6a3aa5cd">Issue 7</a>]
+At Risk: The `opener` restriction on popups. [<a href="#issue-8ea95bab">Issue 5</a>]
 </pre>
 <pre class="link-defaults">
 spec:url; type:interface; text:URL
@@ -131,7 +130,13 @@ spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/
     "title": "World Wide Web Consortium Process Document",
     "href": "https://www.w3.org/20145/Process-20150901/",
     "publisher": "W3C"
-   }
+  },
+  "let-localhost-be-localhost": {
+    "authors": [ "Mike West" ],
+    "title": "Let 'localhost' be localhost.",
+    "href": "https://tools.ietf.org/html/draft-west-let-localhost-be-localhost",
+    "publisher": "IETF"    
+  }
 }
 </pre>
 <!--
@@ -825,20 +830,27 @@ spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/
       notations `127.0.0.0/8` or `::1/128` [[!RFC4632]], return "`Potentially
       Trustworthy`".
 
-  5.  If |origin|'s <a for="origin">scheme</a> component is `file`, return
+  5.  If |origin|'s <a for="origin">host</a> component is "`localhost`" or
+      falls within "`.localhost`", and the user agent conforms to the name
+      resolution rules in [[!let-localhost-be-localhost]], return "`Potentially
+      Trustworthy`".
+
+      Note: See [[#localhost]] for details on the requirements here.
+
+  6.  If |origin|'s <a for="origin">scheme</a> component is `file`, return
       "`Potentially Trustworthy`".
 
-  6.  If |origin|'s <a for="origin">scheme</a> component is one which the user
+  7.  If |origin|'s <a for="origin">scheme</a> component is one which the user
       agent considers to be authenticated, return "`Potentially Trustworthy`".
 
       Note: See [[#packaged-applications]] for detail here.
 
-  7.  If |origin| has been configured as a trustworthy origin, return
+  8.  If |origin| has been configured as a trustworthy origin, return
       "`Potentially Trustworthy`".
 
       Note: See [[#development-environments]] for detail here.
 
-  8.  Return "`Not Trustworthy`".
+  9.  Return "`Not Trustworthy`".
 
   Note: Neither |origin|'s <a for="origin">domain</a> nor <a for="origin">port</a>
   has any effect on whether or not it is considered to be a <a>secure context</a>.
@@ -1011,15 +1023,13 @@ spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/
   names falling within `.localhost.` as special, and suggests that local
   resolvers SHOULD/MAY treat them specially. For better or worse, resolvers
   often ignore these suggestions, and will send `localhost` to the network
-  for resolution in a number of circumstances. Given that uncertainty, this
-  document errs on the conservative side by special-casing `127.0.0.1`, but
-  not `localhost`.
-
-  ISSUE(w3c/webappsec-secure-contexts#43): This carveout is "at risk", as
-  there's currently only one implementation, and a parallel suggestion that we
-  resolve this in the other direction, perhaps by mandating new behavior for
-  conforming user agents' DNS resolvers to treat the SHOULDs and MAYs of the
-  RFCs as MUSTs.
+  for resolution in a number of circumstances.
+  
+  Given that uncertainty, user agents MAY treat localhost names as having
+  <a>potentially trustworthy origins</a> if and only if they also adhere to the
+  localhost name resolution rules spelled out in [[!let-localhost-be-localhost]]
+  (which boil down to ensuring that `localhost` never resolves to a
+  non-loopback address).
 </section>
 
 <section>
