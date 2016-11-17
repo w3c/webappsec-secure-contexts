@@ -24,16 +24,16 @@ At Risk: The `opener` restriction on popups. [<a href="#issue-6a3aa5cd">Issue 7<
 </pre>
 <pre class="link-defaults">
 spec:url; type:interface; text:URL
+spec:html; type:interface; for:/; text:Document
+spec:html; type:dfn; for:/; text: active sandboxing flag set
 </pre>
 <pre class="anchors">
-urlPrefix: https://fetch.spec.whatwg.org/; spec: FETCH
-  type: dfn
-    text: basic fetch
 urlPrefix: https://www.w3.org/TR/geolocation-API/; spec: GEOLOCATION-API
   type: method
     text: getCurrentPosition(); url: get-current-position
     text: watchPosition(); url: watch-position
-urlPrefix: https://www.w3.org/TR/html51/; spec: HTML51
+<!-- Uncomment this block when publishing for W3C.
+urlPrefix: https://www.w3.org/TR/html52/; spec: HTML52
   type: dfn
     urlPrefix: embedded-content-0.html
       text: an iframe srcdoc document
@@ -85,12 +85,6 @@ urlPrefix: https://www.w3.org/TR/html51/; spec: HTML51
       text: Document; url: the-document-object
     urlPrefix: browsers.html
       text: Window; url: the-window-object
-urlPrefix: https://w3c.github.io/webappsec-mixed-content/; spec: MIX
-  type: dfn
-    text: a priori authenticated url
-urlPrefix: https://www.w3.org/2015/Process-20150901/; spec: W3C-PROCESS
-  type: dfn
-    text: modify a specification; url: rec-modify
 spec: WEBWORKERS; urlPrefix: https://www.w3.org/TR/workers/
   type: dfn
     text: the worker's documents; url: the-worker-s-documents
@@ -98,10 +92,10 @@ spec: WEBWORKERS; urlPrefix: https://www.w3.org/TR/workers/
     text: WorkerGlobalScope
   type: constructor
     text: SharedWorker(); url: dom-sharedworker
-spec: WEBIDL-2; urlPrefix: https://heycam.github.io/webidl/
+-->
+urlPrefix: https://www.w3.org/2015/Process-20150901/; spec: W3C-PROCESS
   type: dfn
-    text: exposed; url: dfn-exposed
-    text: [SecureContext]; url: SecureContext
+    text: modify a specification; url: rec-modify
 <!--
   Things that are only defined in WHATWG specs.
 -->
@@ -112,9 +106,6 @@ spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/
   urlPrefix: semantics.html
     type: dfn;
       text: noopener; url: link-type-noopener
-  urlPrefix: webappapis.html
-    type: interface
-      text: WindowOrWorkerGlobalScope
 </pre>
 <pre class="biblio">
 {
@@ -587,7 +578,7 @@ spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/
   context</dfn> if the algorithm in [[#settings-object]] returns "`Secure`", and a
   <dfn export>non-secure context</dfn> otherwise.
 
-  Likewise, a <a>global object</a> is considered a <a>secure context</a> if its
+  Likewise, a <a for="/">global object</a> is considered a <a>secure context</a> if its
   <a>relevant settings object</a> is a <a>secure context</a>.
 
   <section class="non-normative">
@@ -595,7 +586,7 @@ spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/
 
     <em>This section is non-normative.</em>
 
-    A new <a>`[SecureContext]`</a> attribute is available for operators, which
+    A new [{{SecureContext}}] attribute is available for operators, which
     ensures that they will only be <a>exposed</a> into secure contexts. The
     following example should help:
 
@@ -606,13 +597,13 @@ spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/
           Promise &lt;double&gt; calculateNotSoSecretResult();
 
           // This operation will not be exposed to a non-secure context.
-          <a>[SecureContext]</a> Promise&lt;double&gt; calculateSecretResult();
+          [<a extended-attribute>SecureContext</a>] Promise&lt;double&gt; calculateSecretResult();
 
           // The same applies here: the operation will not be exposed to a non-secure context.
-          <a>[SecureContext]</a> boolean getSecretBoolean();
+          [<a extended-attribute>SecureContext</a>] boolean getSecretBoolean();
         };
 
-        [SecureContext]
+        [<a extended-attribute>SecureContext</a>]
         interface SecureFeature {
           // This interface will not be exposed to non-secure contexts.
           Promise&lt;any&gt; doAmazingThing();
@@ -627,7 +618,7 @@ spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/
 
     <h4 id="monkey-patching-sandbox-flags">Sandboxing</h4>
 
-    Developers may wish to treat sandboxed <a>browsing contexts</a> as <a>secure
+    Developers may wish to treat sandboxed <a for="/">browsing contexts</a> as <a>secure
     contexts</a> in some situations, and <a>non-secure contexts</a> in others. The
     following sandboxing flag supports this desire:
 
@@ -639,7 +630,7 @@ spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/
       </dd>
     </dl>
 
-    The <a>parse the sandboxing directive</a> algorithm is extended by adding the
+    The <a>parse a sandboxing directive</a> algorithm is extended by adding the
     following entry to the list in the final step of the algorithm which parses
     |tokens| into flags:
 
@@ -658,7 +649,7 @@ spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/
 
     <em>This section is non-normative</em>.
 
-    The {{SharedWorker()}} constructor will throw a `SecurityError` exception if
+    The {{SharedWorker}} constructor will throw a `SecurityError` exception if
     a <a>secure context</a> attempts to attach to an Worker which is not a
     <a>secure context</a>, and if a non-secure context attempts to attach to a
     Worker which is a <a>secure context</a>.
@@ -666,7 +657,7 @@ spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/
     The constructor is modified as follows (though the SharedWorker specification
     remains the normative reference):
 
-    1.  As the first substep of the {{SharedWorker()}} constructor's current step
+    1.  As the first substep of the {{SharedWorker}} constructor's current step
         6.7 ("If <var>worker global scope</var> is not `null`, then run these
         steps:"), run the following step:
 
@@ -697,25 +688,9 @@ spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/
     };
   </pre>
 
-  <div class="issue">
-    {{WindowOrWorkerGlobalScope}} does not appear to be defined in W3C's
-    HTML. For the purposes of that specification, the IDL above could be
-    interpreted as:
-
-    <pre>
-      interface GlobalSecureContext {
-        readonly attribute boolean isSecureContext;
-      };
-      Window implements GlobalSecureContext;
-      WorkerGlobalScope implements GlobalSecureContext;
-    </pre>
-
-    Filed as <a href="https://github.com/w3c/html/issues/522">w3c/html#522</a>.
-  </div>
-
   The {{WindowOrWorkerGlobalScope/isSecureContext}} attribute's getter
   returns `true` if [[#settings-object]] returns "`Secure`" when executed upon
-  `this` <a>global object</a>'s <a>relevant settings object</a>, and `false`
+  `this` <a for="/">global object</a>'s <a>relevant settings object</a>, and `false`
   otherwise.
 </section>
 
@@ -730,8 +705,7 @@ spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/
   returns "`Secure`" if the object represents a context which the user agent
   obtained via a secure channel, and "`Not Secure`" otherwise.
 
-  1.  Let |global| be |settings|'s
-      <a lt="the environment settings object's global object">global object</a>.
+  1.  Let |global| be |settings|'s <a for="environment settings object">global object</a>.
 
   2.  If |global| is a {{WorkerGlobalScope}}, then:
 
@@ -740,10 +714,11 @@ spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/
 
           1.  Assert: Workers must be same-origin with the context that created
               them, so |document|'s <a>relevant settings object</a>'s
-              <a for="environment settings object">origin</a> and <a>HTTPS
-              state</a> is the same as |global|'s <a>relevant settings
-              object</a>'s <a for="environment settings object">origin</a> and
-              <a>HTTPS state</a>.
+              <a for="environment settings object">origin</a> and
+              <a for="environment settings object">HTTPS state</a> is the same as
+              |global|'s <a>relevant settings object</a>'s
+              <a for="environment settings object">origin</a> and
+              <a for="environment settings object">HTTPS state</a>.
 
           2.  If [[#settings-object]] returns "`Not Secure`" when executed upon
               |document|'s <a>relevant settings object</a>, return "`Not
@@ -784,7 +759,7 @@ spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/
           whether or not it can be softened while maintaining the mitigations
           against direct communication channels.
 
-      3.  |settings|'s <a>HTTPS state</a> is "`deprecated`".
+      3.  |settings|'s <a for="environment settings object">HTTPS state</a> is "`deprecated`".
 
       4.  |document|'s <a>active sandboxing flag set</a> includes the
           <a>sandboxed origin browsing context flag</a>, and
@@ -803,7 +778,7 @@ spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/
       5.  |document|'s <a>active sandboxing flag set</a> does not include the
           <a>sandboxed origin browsing context flag</a>, and
           [[#is-origin-trustworthy]] returns "`Not Trustworthy`" when executed
-          upon |settings|'s <a lt="concept origin">origin</a>.
+          upon |settings|'s <a for="environment settings object">origin</a>.
 
   6.  Return "`Secure`".
 
@@ -833,7 +808,7 @@ spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/
   determine <i lang="la">a priori</i> to be trusted (see
   [[#packaged-applications]] for detail).
 
-  Given an <a lt="concept origin">origin</a> (|origin|), the following algorithm
+  Given an <a for="/">origin</a> (|origin|), the following algorithm
   returns "`Potentially Trustworthy`" or "`Not Trustworthy`" as appropriate.
 
   1.  If |origin| is an <a>opaque origin</a>, return "`Not Trustworthy`".
@@ -1105,11 +1080,11 @@ spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/
   </div>
 
   Authors could alternatively ensure that sensitive APIs are only exposed to
-  <a>secure contexts</a> by guarding them with the `[SecureContext]` attribute:
+  <a>secure contexts</a> by guarding them with the [{{SecureContext}}] attribute.
 
   <div class="example">
     <pre class="idl">
-      [SecureContext]
+      [<a extended-attribute>SecureContext</a>]
       interface SensitiveFeature {
         Promise&lt;double> getTheSecretDouble();
       };
@@ -1117,7 +1092,7 @@ spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/
       // Or:
 
       interface AnotherSensitiveFeature {
-        [SecureContext] void doThatPowerfulThing();
+        [<a extended-attribute>SecureContext</a>] void doThatPowerfulThing();
       };
     </pre>
   </div>
