@@ -1,5 +1,7 @@
 
 # Specification 'webappsec-secure-contexts'
 
-This is the repository for webappsec-secure-contexts. You're welcome to contribute! Let's make the Web rock our socks
-off!
+This is the repository for webappsec-secure-contexts. You're welcome to contribute!
+
+See
+ https://w3c.github.io/webappsec-secure-contexts/
