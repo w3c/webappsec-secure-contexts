@@ -1178,7 +1178,7 @@ Possible extra rowspan handling
 </style>
   <meta content="Bikeshed version 3ee78e75729309d4dfc4793df74c38e4ae785832" name="generator">
   <link href="https://www.w3.org/TR/secure-contexts/" rel="canonical">
-  <meta content="4214a915a00cb8815c2e774be27d9e0f4e6e1093" name="document-revision">
+  <meta content="a774084e8d58f88f8d7fe73ff1a183cefbb8d993" name="document-revision">
 <style>
     .secure {
       fill: #8F8;
@@ -1545,6 +1545,7 @@ certain minimum standards of authentication and confidentiality are met.</p>
       <li><a href="#settings-object"><span class="secno">3.1</span> <span class="content"> Is the environment settings object <var>settings</var> a secure context? </span></a>
       <li><a href="#is-origin-trustworthy"><span class="secno">3.2</span> <span class="content"> Is <var>origin</var> potentially trustworthy? </span></a>
       <li><a href="#is-url-trustworthy"><span class="secno">3.3</span> <span class="content"> Is <var>url</var> potentially trustworthy? </span></a>
+      <li><a href="#is-stylesheet-secure"><span class="secno">3.4</span> <span class="content"> Is a CSS style sheet contextually secure? </span></a>
      </ol>
     <li>
      <a href="#threat-models-risks"><span class="secno">4</span> <span class="content"> Threat models and risks </span></a>
@@ -2046,9 +2047,8 @@ certain minimum standards of authentication and confidentiality are met.</p>
    <section>
     <h2 class="heading settled" data-level="3" id="algorithms"><span class="secno">3. </span><span class="content">Algorithms</span><a class="self-link" href="#algorithms"></a></h2>
     <h3 class="heading settled" data-level="3.1" id="settings-object"><span class="secno">3.1. </span><span class="content"> Is the environment settings object <var>settings</var> a secure context? </span><a class="self-link" href="#settings-object"></a></h3>
-    <p>Given an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#environment-settings-object" id="ref-for-environment-settings-object①">environment settings object</a> (<var>settings</var>) this algorithm
-  returns "<code>Secure</code>" if the object represents a context which the user agent
-  obtained via a secure channel, and "<code>Not Secure</code>" otherwise.</p>
+    <p>A <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#environment-settings-object" id="ref-for-environment-settings-object①">environment settings object</a> (<var>settings</var>) is considered to be <dfn class="dfn-paneled" data-dfn-for="environment settings object" data-dfn-type="dfn" data-noexport="" id="environment-settings-object-contextually-secure">contextually secure</dfn> if and only if the following
+  algorithm returns "<code>Secure</code>":</p>
     <ol>
      <li data-md="">
       <p>Let <var>global</var> be <var>settings</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-global" id="ref-for-concept-settings-object-global">global object</a>.</p>
@@ -2062,7 +2062,7 @@ certain minimum standards of authentication and confidentiality are met.</p>
           <p class="assertion">Assert: Workers must be same-origin with the context that created
   them, so <var>document</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object③">relevant settings object</a>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-origin" id="ref-for-concept-settings-object-origin">origin</a> and <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#https-state" id="ref-for-https-state">HTTPS state</a> is the same as <var>global</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object④">relevant settings object</a>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-origin" id="ref-for-concept-settings-object-origin①">origin</a> and <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#https-state" id="ref-for-https-state①">HTTPS state</a>.</p>
          <li data-md="">
-          <p>If <a href="#settings-object">§3.1 Is the environment settings object settings a secure context?</a> returns "<code>Not Secure</code>" when executed upon <var>document</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object⑤">relevant settings object</a>, return "<code>Not Secure</code>".</p>
+          <p>If <var>document</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object⑤">relevant settings object</a> is not <a data-link-type="dfn" href="#environment-settings-object-contextually-secure" id="ref-for-environment-settings-object-contextually-secure">contextually secure</a>, return "<code>Not Secure</code>".</p>
         </ol>
        <li data-md="">
         <p>Return "<code>Secure</code>".</p>
@@ -2162,7 +2162,7 @@ certain minimum standards of authentication and confidentiality are met.</p>
     </ol>
     <p class="note" role="note"><span>Note:</span> Neither <var>origin</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-domain" id="ref-for-concept-origin-domain">domain</a> nor <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-port" id="ref-for-concept-origin-port">port</a> has any effect on whether or not it is considered to be a <a data-link-type="dfn" href="#secure-context" id="ref-for-secure-context②⑤">secure context</a>.</p>
     <h3 class="heading settled" data-level="3.3" id="is-url-trustworthy"><span class="secno">3.3. </span><span class="content"> Is <var>url</var> potentially trustworthy? </span><a class="self-link" href="#is-url-trustworthy"></a></h3>
-    <p>A <dfn data-dfn-type="dfn" data-export="" id="potentially-trustworthy-url">potentially trustworthy URL<a class="self-link" href="#potentially-trustworthy-url"></a></dfn> is one which either inherits
+    <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-export="" id="potentially-trustworthy-url">potentially trustworthy URL</dfn> is one which either inherits
   context from it’s creator (<code>about:blank</code>, <code>about:srcdoc</code>) or one whose <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-origin" id="ref-for-concept-url-origin">origin</a> is a <a data-link-type="dfn" href="#potentially-trustworthy-origin" id="ref-for-potentially-trustworthy-origin②">potentially trustworthy origin</a>.
   Given a <code class="idl"><a data-link-type="idl" href="https://url.spec.whatwg.org/#url" id="ref-for-url">URL</a></code> (<var>url</var>), the following algorithm returns "<code>Potentially Trustworthy</code>" or "<code>Not Trustworthy</code>" as appropriate:</p>
     <ol>
@@ -2179,6 +2179,34 @@ certain minimum standards of authentication and confidentiality are met.</p>
       <p class="note" role="note"><span>Note:</span> The origin of <code>blob:</code> and <code>filesystem:</code> URLs is the origin of the
   context in which they were created. Therefore, blobs created in a
   trustworthy origin will themselves be potentially trustworthy.</p>
+    </ol>
+    <h3 class="heading settled" data-level="3.4" id="is-stylesheet-secure"><span class="secno">3.4. </span><span class="content"> Is a CSS style sheet contextually secure? </span><a class="self-link" href="#is-stylesheet-secure"></a></h3>
+    <p>A <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#css-style-sheet" id="ref-for-css-style-sheet">CSS style sheet</a> (<var>sheet</var>) is considered to be <dfn class="dfn-paneled" data-dfn-for="CSS style sheet" data-dfn-type="dfn" data-lt="contextually secure" data-noexport="" id="css-style-sheet-contextually-secure">contextually
+  secure</dfn> if and only if the following algorithm return "<code>Secure</code>":</p>
+    <ol>
+     <li data-md="">
+      <p>If <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-location" id="ref-for-concept-css-style-sheet-location">location</a> is neither a <a data-link-type="dfn" href="#potentially-trustworthy-url" id="ref-for-potentially-trustworthy-url">potentially trustworthy URL</a>, nor <code>null</code>, return "<code>Not Secure</code>".</p>
+     <li data-md="">
+      <p>If <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-parent-css-style-sheet" id="ref-for-concept-css-style-sheet-parent-css-style-sheet">parent CSS style sheet</a> is not <code>null</code>:</p>
+      <ol>
+       <li data-md="">
+        <p>If <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-parent-css-style-sheet" id="ref-for-concept-css-style-sheet-parent-css-style-sheet①">parent CSS style sheet</a> is <a data-link-type="dfn" href="#css-style-sheet-contextually-secure" id="ref-for-css-style-sheet-contextually-secure">contextually secure</a>, return "<code>Secure</code>".</p>
+       <li data-md="">
+        <p>Return "<code>Not Secure</code>".</p>
+      </ol>
+     <li data-md="">
+      <p>If <var>sheet</var>’s [=CSSStyleSheet/owner node}} is not <code>null</code>:</p>
+      <ol>
+       <li data-md="">
+        <p>If <var>sheet</var>’s <a data-link-type="dfn" href="https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-owner-node" id="ref-for-concept-css-style-sheet-owner-node">owner node</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object⑥">relevant settings object</a> is <a data-link-type="dfn" href="#environment-settings-object-contextually-secure" id="ref-for-environment-settings-object-contextually-secure①">contextually secure</a>, return "<code>Secure</code>".</p>
+       <li data-md="">
+        <p>Return "<code>Not Secure</code>".</p>
+      </ol>
+     <li data-md="">
+      <p class="issue" id="issue-41abd343"><a class="self-link" href="#issue-41abd343"></a> What do we do when both the parent and owner are <code>null</code>? Explode? Not sure when this
+  happens. Tab! Halp!</p>
+     <li data-md="">
+      <p>Return "<code>Not Secure</code>".</p>
     </ol>
    </section>
    <section>
@@ -2439,6 +2467,12 @@ certain minimum standards of authentication and confidentiality are met.</p>
   <h3 class="no-num no-ref heading settled" id="index-defined-here"><span class="content">Terms defined by this specification</span><a class="self-link" href="#index-defined-here"></a></h3>
   <ul class="index">
    <li><a href="#attr-valuedef-iframe-sandbox-allow-secure-context">allow-secure-context</a><span>, in §2.2.1</span>
+   <li>
+    contextually secure
+    <ul>
+     <li><a href="#environment-settings-object-contextually-secure">dfn for environment settings object</a><span>, in §3.1</span>
+     <li><a href="#css-style-sheet-contextually-secure">dfn for CSS style sheet</a><span>, in §3.4</span>
+    </ul>
    <li><a href="#dom-windoworworkerglobalscope-issecurecontext">isSecureContext</a><span>, in §2.2.3</span>
    <li><a href="#non-secure-context">non-secure context</a><span>, in §2</span>
    <li><a href="#potentially-trustworthy-origin">potentially trustworthy origin</a><span>, in §3.2</span>
@@ -2448,6 +2482,14 @@ certain minimum standards of authentication and confidentiality are met.</p>
   </ul>
   <h3 class="no-num no-ref heading settled" id="index-defined-elsewhere"><span class="content">Terms defined by reference</span><a class="self-link" href="#index-defined-elsewhere"></a></h3>
   <ul class="index">
+   <li>
+    <a data-link-type="biblio">[cssom-1]</a> defines the following terms:
+    <ul>
+     <li><a href="https://drafts.csswg.org/cssom-1/#css-style-sheet">css style sheet</a>
+     <li><a href="https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-location">location</a>
+     <li><a href="https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-owner-node">owner node</a>
+     <li><a href="https://drafts.csswg.org/cssom-1/#concept-css-style-sheet-parent-css-style-sheet">parent css style sheet</a>
+    </ul>
    <li>
     <a data-link-type="biblio">[DOM]</a> defines the following terms:
     <ul>
@@ -2522,6 +2564,8 @@ certain minimum standards of authentication and confidentiality are met.</p>
   <h2 class="no-num no-ref heading settled" id="references"><span class="content">References</span><a class="self-link" href="#references"></a></h2>
   <h3 class="no-num no-ref heading settled" id="normative"><span class="content">Normative References</span><a class="self-link" href="#normative"></a></h3>
   <dl>
+   <dt id="biblio-cssom-1">[CSSOM-1]
+   <dd>Simon Pieters; Glenn Adams. <a href="https://www.w3.org/TR/cssom-1/">CSS Object Model (CSSOM)</a>. 17 March 2016. WD. URL: <a href="https://www.w3.org/TR/cssom-1/">https://www.w3.org/TR/cssom-1/</a>
    <dt id="biblio-dom">[DOM]
    <dd>Anne van Kesteren. <a href="https://dom.spec.whatwg.org/">DOM Standard</a>. Living Standard. URL: <a href="https://dom.spec.whatwg.org/">https://dom.spec.whatwg.org/</a>
    <dt id="biblio-html">[HTML]
@@ -2606,6 +2650,8 @@ certain minimum standards of authentication and confidentiality are met.</p>
   as implementation is lagging, and there’s some discussion as to
   whether or not it can be softened while maintaining the mitigations
   against direct communication channels. <a href="https://github.com/w3c/webappsec-secure-contexts/issues/42">&lt;https://github.com/w3c/webappsec-secure-contexts/issues/42></a><a href="#issue-8ea95bab"> ↵ </a></div>
+   <div class="issue"> What do we do when both the parent and owner are <code>null</code>? Explode? Not sure when this
+  happens. Tab! Halp!<a href="#issue-41abd343"> ↵ </a></div>
   </div>
   <aside class="dfn-panel" data-for="secure-context">
    <b><a href="#secure-context">#secure-context</a></b><b>Referenced in:</b>
@@ -2654,6 +2700,15 @@ certain minimum standards of authentication and confidentiality are met.</p>
     <li><a href="#ref-for-dom-windoworworkerglobalscope-issecurecontext">2.2.3. Feature Detection</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="environment-settings-object-contextually-secure">
+   <b><a href="#environment-settings-object-contextually-secure">#environment-settings-object-contextually-secure</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-environment-settings-object-contextually-secure">3.1. 
+    Is the environment settings object settings a secure context? </a>
+    <li><a href="#ref-for-environment-settings-object-contextually-secure①">3.4. 
+    Is a CSS style sheet contextually secure? </a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="potentially-trustworthy-origin">
    <b><a href="#potentially-trustworthy-origin">#potentially-trustworthy-origin</a></b><b>Referenced in:</b>
    <ul>
@@ -2662,6 +2717,20 @@ certain minimum standards of authentication and confidentiality are met.</p>
     <li><a href="#ref-for-potentially-trustworthy-origin②">3.3. 
     Is url potentially trustworthy? </a>
     <li><a href="#ref-for-potentially-trustworthy-origin③">5.2. localhost</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="potentially-trustworthy-url">
+   <b><a href="#potentially-trustworthy-url">#potentially-trustworthy-url</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-potentially-trustworthy-url">3.4. 
+    Is a CSS style sheet contextually secure? </a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="css-style-sheet-contextually-secure">
+   <b><a href="#css-style-sheet-contextually-secure">#css-style-sheet-contextually-secure</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-css-style-sheet-contextually-secure">3.4. 
+    Is a CSS style sheet contextually secure? </a>
    </ul>
   </aside>
 <script>/* script-dfn-panel */

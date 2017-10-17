@@ -26,6 +26,9 @@ spec:url; type:interface; text:URL
 spec:dom; type:interface; text:Document
 spec:html; type:dfn; for:/; text: active sandboxing flag set
 spec:html; type:dfn; for:/; text: creator context security
+spec:cssom; type:dfn; for:CSSStyleSheet; text:location
+spec:cssom; type:dfn; for:CSSStyleSheet; text:owner node
+spec:cssom; type:dfn; for:CSSStyleSheet; text:parent css style sheet
 </pre>
 <pre class="anchors">
 urlPrefix: https://www.w3.org/TR/geolocation-API/; spec: GEOLOCATION-API
@@ -636,9 +639,9 @@ urlPrefix: https://www.w3.org/2015/Process-20150901/; spec: W3C-PROCESS
     Is the environment settings object |settings| a secure context?
   </h3>
 
-  Given an <a>environment settings object</a> (|settings|) this algorithm
-  returns "`Secure`" if the object represents a context which the user agent
-  obtained via a secure channel, and "`Not Secure`" otherwise.
+  A [=environment settings object=] (|settings|) is considered to be
+  <dfn for="environment settings object">contextually secure</dfn> if and only if the following
+  algorithm returns "`Secure`":
 
   1.  Let |global| be |settings|'s <a for="environment settings object">global object</a>.
 
@@ -654,9 +657,8 @@ urlPrefix: https://www.w3.org/2015/Process-20150901/; spec: W3C-PROCESS
               <a for="environment settings object">origin</a> and
               <a for="environment settings object">HTTPS state</a>.
 
-          2.  If [[#settings-object]] returns "`Not Secure`" when executed upon
-              |document|'s <a>relevant settings object</a>, return "`Not
-              Secure`".
+          2.  If |document|'s [=relevant settings object=] is not
+              [=environment settings object/contextually secure=], return "`Not Secure`".
 
       2.  Return "`Secure`".
 
@@ -812,6 +814,35 @@ urlPrefix: https://www.w3.org/2015/Process-20150901/; spec: W3C-PROCESS
       Note: The origin of `blob:` and `filesystem:` URLs is the origin of the
       context in which they were created. Therefore, blobs created in a
       trustworthy origin will themselves be potentially trustworthy.
+
+  <h3 id="is-stylesheet-secure">
+    Is a CSS style sheet contextually secure?
+  </h3>
+
+  A [=CSS style sheet=] (|sheet|) is considered to be <dfn for="CSS style sheet">contextually
+  secure</dfn> if and only if the following algorithm return "`Secure`":
+
+  1.  If |sheet|'s [=CSSStyleSheet/location=] is neither a [=potentially trustworthy URL=] nor
+      `null`, return "`Not Secure`".
+
+  2.  If |sheet|'s [=CSSStyleSheet/parent CSS style sheet=] is not `null`:
+  
+      1.  If |sheet|'s [=CSSStyleSheet/parent CSS style sheet=] is
+          [=CSS style sheet/contextually secure=], return "`Secure`".
+
+      2.  Return "`Not Secure`". 
+
+  3.  If |sheet|'s [=CSSStyleSheet/owner node}} is not `null`:
+
+      1.  If |sheet|'s [=CSSStyleSheet/owner node=]'s [=relevant settings object=]
+          is [=environment settings object/contextually secure=], return "`Secure`".
+
+      2.  Return "`Not Secure`".
+
+  4.  ISSUE: What do we do when both the parent and owner are `null`? Explode? Not sure when this
+      happens. Tab! Halp!
+
+  5.  Return "`Not Secure`".
 </section>
 
 <section>
