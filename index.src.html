@@ -23,88 +23,18 @@ At Risk: The `opener` restriction on popups. [<a href="#issue-8ea95bab">Issue 5<
 </pre>
 <pre class="link-defaults">
 spec:url; type:interface; text:URL
-spec:html; type:interface; for:/; text:Document
+spec:dom; type:interface; text:Document
 spec:html; type:dfn; for:/; text: active sandboxing flag set
+spec:html; type:dfn; for:/; text: creator context security
 </pre>
 <pre class="anchors">
 urlPrefix: https://www.w3.org/TR/geolocation-API/; spec: GEOLOCATION-API
   type: method
     text: getCurrentPosition(); url: get-current-position
     text: watchPosition(); url: watch-position
-<!-- Uncomment this block when publishing for W3C.
-urlPrefix: https://www.w3.org/TR/html52/; spec: HTML52
-  type: dfn
-    urlPrefix: embedded-content-0.html
-      text: an iframe srcdoc document
-    urlPrefix: browsers.html
-      text: active document
-      text: active sandboxing flag set
-      text: alias; url: concept-origin-alias
-      text: ancestor browsing context
-      text: auxiliary browsing contexts
-      text: browsing context
-      text: browsing context container
-      text: creating a new Document object
-      text: creator browsing context
-      text: effective script origin
-      text: nested browsing context
-      text: opaque origin
-      text: opener browsing context
-      text: concept origin; url: concept-cross-origin
-      text: origin; for: environment settings object; url: environment-settings-object
-      for: origin
-        text: domain; url: origin-domain
-        text: host; url: origin-host
-        text: port; url: origin-port
-        text: scheme; url: origin-scheme
-      text: parent browsing context
-      text: parse the sandboxing directive
-      text: sandboxed origin browsing context flag; url: sandboxed-into-a-unique-origin
-      text: sandboxing flag set
-      text: top-level browsing context
-      text: tuple origin
-    urlPrefix: webappapis.html
-      text: current settings object
-      text: environment settings object
-      text: relevant settings object
-      text: responsible document
-      text: responsible browsing context
-      text: global object
-      text: script settings for browsing contexts
-      text: document environment
-      text: worker environment
-      text: the environment settings object's global object
-      text: creation URL
-      text: HTTPS state
-  type: element
-    urlPrefix: semantics-embedded-content.html
-      text: iframe; url: the-iframe-element
-  type: interface
-    urlPrefix: dom.html
-      text: Document; url: the-document-object
-    urlPrefix: browsers.html
-      text: Window; url: the-window-object
-spec: WEBWORKERS; urlPrefix: https://www.w3.org/TR/workers/
-  type: dfn
-    text: the worker's documents; url: the-worker-s-documents
-  type: interface
-    text: WorkerGlobalScope
-  type: constructor
-    text: SharedWorker(); url: dom-sharedworker
--->
 urlPrefix: https://www.w3.org/2015/Process-20150901/; spec: W3C-PROCESS
   type: dfn
     text: modify a specification; url: rec-modify
-<!--
-  Things that are only defined in WHATWG specs.
--->
-spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/
-  urlPrefix: browsers.html
-    type: dfn;
-      text: creator context security
-  urlPrefix: semantics.html
-    type: dfn;
-      text: noopener; url: link-type-noopener
 </pre>
 <pre class="biblio">
 {
@@ -287,14 +217,14 @@ spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/
       </g>
     </svg>
 
-    The link can be broken via the <a>`noopener`</a> link relation, meaning
+    The link can be broken via the <a>link type "`noopener`"</a>, meaning
     that the following will both produce secure contexts:
 
     <pre>
-      &lt;a href="https://example.com/" rel="<a>noopener</a>" target="_blank">Link!&lt;/a>
+      &lt;a href="https://example.com/" rel="<a lt='link type "noopener"'>noopener</a>" target="_blank">Link!&lt;/a>
 
       &lt;script>
-        var w = window.open("https://example.com/", "", "<a>noopener</a>");
+        var w = window.open("https://example.com/", "", "<a lt='link type "noopener"'>noopener</a>");
       &lt;/script>
     </pre>
 
@@ -714,8 +644,7 @@ spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/
 
   2.  If |global| is a {{WorkerGlobalScope}}, then:
 
-      1.  For each {{Document}} (|document|) in |global|'s list of <a>the
-          worker's `Documents`</a>:
+      1.  For each {{Document}} (|document|) in |global|'s [=owner set=]:
 
           1.  Assert: Workers must be same-origin with the context that created
               them, so |document|'s <a>relevant settings object</a>'s
