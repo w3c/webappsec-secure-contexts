@@ -1178,7 +1178,7 @@ Possible extra rowspan handling
 </style>
   <meta content="Bikeshed version 3ee78e75729309d4dfc4793df74c38e4ae785832" name="generator">
   <link href="https://www.w3.org/TR/secure-contexts/" rel="canonical">
-  <meta content="7557d7964a90dba24ede0445c6085f3f3cdd9afc" name="document-revision">
+  <meta content="2cc0b2f634b5062f82d540349233d30cab84e0c3" name="document-revision">
 <style>
     .secure {
       fill: #8F8;
@@ -1511,7 +1511,6 @@ certain minimum standards of authentication and confidentiality are met.</p>
    <p>The following features are at-risk, and may be dropped during the CR period: </p>
    <ul>
     <li>The <a data-link-type="dfn" href="#sandboxed-secure-browsing-context-flag" id="ref-for-sandboxed-secure-browsing-context-flag">sandboxed secure browsing context flag</a> defined in <a href="#monkey-patching-sandbox-flags">§2.2.1 Sandboxing</a>, as well as its usage in <a href="#is-settings-object-contextually-secure">§3.1 Is an environment settings object contextually secure?</a>. [<a href="#issue-255ee4a4">Issue 2</a>]
-    <li>The <code>opener</code> restriction on popups. [<a href="#issue-8ea95bab">Issue 5</a>]
    </ul>
    <p>“At-risk” is a W3C Process term-of-art, and does not necessarily imply that the feature is in danger of being dropped or delayed. It means that the WG believes the feature may have difficulty being interoperably implemented in a timely manner, and marking it as such allows the WG to drop the feature if necessary when transitioning to the Proposed Rec stage, without having to publish a new Candidate Rec without the feature first.</p>
   </div>
@@ -1622,8 +1621,6 @@ certain minimum standards of authentication and confidentiality are met.</p>
   defined below ensure that these bypasses are difficult and user-visible.</p>
     <p>The following examples summarize the normative text which follows:</p>
     <h3 class="heading settled" data-level="1.1" id="examples-top-level"><span class="secno">1.1. </span><span class="content">Top-level Documents</span><a class="self-link" href="#examples-top-level"></a></h3>
-    <p>Top-level documents are secure as long as they don’t have a non-secure <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#opener-browsing-context" id="ref-for-opener-browsing-context">opener browsing context</a>. This is a bit convoluted, so let’s go straight
-  to the examples:</p>
     <div class="example" id="example-c3b67557">
      <a class="self-link" href="#example-c3b67557"></a> 
      <p><code>http://example.com/</code> opened in a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context">top-level browsing
@@ -1648,61 +1645,29 @@ certain minimum standards of authentication and confidentiality are met.</p>
       </g>
      </svg>
     </div>
-    <div class="example" id="example-601f9a50">
-     <a class="self-link" href="#example-601f9a50"></a> 
-     <p>
-      If a secure context opens <code>https://example.com/</code> in a new
-    window, that new window will be a secure context, as it is both secure on
-    its own merits, and was opened from a secure context: 
-      <svg height="400" width="400">
-       <g transform="translate(10,10)">
-        <rect class="secure" height="175" width="297" x="0" y="0"></rect>
-        <text transform="translate(10, 20)">https://secure.example.com/</text>
-       </g>
-       <g transform="translate(10,210)">
-        <rect class="secure" height="175" width="297" x="0" y="0"></rect>
-        <text transform="translate(10, 20)">https://another.example.com/</text>
-       </g>
-       <g>
-        <path d="M150, 87 C 200 75, 350 75, 150 287"></path>
-       </g>
-      </svg>
-     </p>
-    </div>
-    <div class="example" id="example-cd14fb7f">
-     <a class="self-link" href="#example-cd14fb7f"></a> 
-     <p>If a non-secure context opens <code>https://example.com/</code> in a new
-    window, then things are more complicated. The new window’s status depends on
-    how it was opened. If the non-secure context can obtain a reference to the
-    secure context, or vice-versa, then the new window is not a secure context. </p>
-     <p>This means that the following will both produce non-secure contexts:</p>
-<pre>&lt;a href="https://example.com/" target="_blank">Link!&lt;/a>
-
-&lt;script>
-  var w = window.open("https://example.com/");
-&lt;/script>
-</pre>
+    <div class="example" id="example-7f28e529">
+     <a class="self-link" href="#example-7f28e529"></a> 
+     <p>If a secure context opens <code>https://example.com/</code> in a new
+    window, that new window will be a secure context, as it is secure on
+    its own merits:</p>
      <svg height="400" width="400">
       <g transform="translate(10,10)">
-       <rect class="non-secure" height="175" width="297" x="0" y="0"></rect>
-       <text transform="translate(10, 20)">http://non-secure.example.com/</text>
+       <rect class="secure" height="175" width="297" x="0" y="0"></rect>
+       <text transform="translate(10, 20)">https://secure.example.com/</text>
       </g>
       <g transform="translate(10,210)">
-       <rect class="non-secure" height="175" width="297" x="0" y="0"></rect>
+       <rect class="secure" height="175" width="297" x="0" y="0"></rect>
        <text transform="translate(10, 20)">https://another.example.com/</text>
       </g>
       <g>
        <path d="M150, 87 C 200 75, 350 75, 150 287"></path>
       </g>
      </svg>
-     <p>The link can be broken via the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/links.html#link-type-noopener" id="ref-for-link-type-noopener">link type "<code>noopener</code>"</a>, meaning
-    that the following will both produce secure contexts:</p>
-<pre>&lt;a href="https://example.com/" rel="<a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/links.html#link-type-noopener" id="ref-for-link-type-noopener①">noopener</a>" target="_blank">Link!&lt;/a>
-
-&lt;script>
-  var w = window.open("https://example.com/", "", "<a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/links.html#link-type-noopener" id="ref-for-link-type-noopener②">noopener</a>");
-&lt;/script>
-</pre>
+    </div>
+    <div class="example" id="example-4cfa3d2b">
+     <a class="self-link" href="#example-4cfa3d2b"></a> 
+     <p>Likewise, if a non-secure context opens <code>https://example.com/</code> in a new window,
+    that new window will be a secure context, even through its opener was non-secure:</p>
      <svg height="400" width="400">
       <g transform="translate(10,10)">
        <rect class="non-secure" height="175" width="297" x="0" y="0"></rect>
@@ -2056,15 +2021,6 @@ certain minimum standards of authentication and confidentiality are met.</p>
        <li data-md="">
         <p><var>document</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#active-sandboxing-flag-set" id="ref-for-active-sandboxing-flag-set">active sandboxing flag set</a> contains the <a data-link-type="dfn" href="#sandboxed-secure-browsing-context-flag" id="ref-for-sandboxed-secure-browsing-context-flag②">sandboxed secure browsing context flag</a>.</p>
         <p class="note" role="note"><span>Note:</span> This check is "at risk". See <a href="#monkey-patching-sandbox-flags">§2.2.1 Sandboxing</a> for details.</p>
-       <li data-md="">
-        <p><var>document</var> has an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#creator-browsing-context" id="ref-for-creator-browsing-context">creator browsing context</a> (<var>context</var>), and <var>context</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#creator-context-security" id="ref-for-creator-context-security">creator context security</a> is "<code>Not Secure</code>".</p>
-        <p class="note" role="note"><span>Note:</span> Since we take account of <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#creator-browsing-context" id="ref-for-creator-browsing-context①">creator browsing contexts</a>'
-  status, a popups' status depends on how it is opened, as discussed
-  in <a href="#examples-top-level">§1.1 Top-level Documents</a>.</p>
-        <p class="issue" id="issue-8ea95bab"><a class="self-link" href="#issue-8ea95bab"></a> This exclusion is "at risk",
-  as implementation is lagging, and there’s some discussion as to
-  whether or not it can be softened while maintaining the mitigations
-  against direct communication channels. <a href="https://github.com/w3c/webappsec-secure-contexts/issues/42">&lt;https://github.com/w3c/webappsec-secure-contexts/issues/42></a></p>
        <li data-md="">
         <p><var>settings</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#https-state" id="ref-for-https-state②">HTTPS state</a> is "<code>deprecated</code>".</p>
        <li data-md="">
@@ -2444,8 +2400,6 @@ certain minimum standards of authentication and confidentiality are met.</p>
      <li><a href="https://html.spec.whatwg.org/multipage/origin.html#active-sandboxing-flag-set">active sandboxing flag set</a>
      <li><a href="https://html.spec.whatwg.org/multipage/browsers.html#browsing-context">browsing context</a>
      <li><a href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-environment-creation-url">creation url</a>
-     <li><a href="https://html.spec.whatwg.org/multipage/browsers.html#creator-browsing-context">creator browsing context</a>
-     <li><a href="https://html.spec.whatwg.org/multipage/browsers.html#creator-context-security">creator context security</a>
      <li><a href="https://html.spec.whatwg.org/multipage/webappapis.html#current-settings-object">current settings object</a>
      <li><a href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-domain">domain</a>
      <li><a href="https://html.spec.whatwg.org/multipage/webappapis.html#environment-settings-object">environment settings object</a>
@@ -2454,9 +2408,7 @@ certain minimum standards of authentication and confidentiality are met.</p>
      <li><a href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-host">host</a>
      <li><a href="https://html.spec.whatwg.org/multipage/webappapis.html#https-state">https state</a>
      <li><a href="https://html.spec.whatwg.org/multipage/iframe-embed-object.html#the-iframe-element">iframe</a>
-     <li><a href="https://html.spec.whatwg.org/multipage/links.html#link-type-noopener">link type "noopener"</a>
      <li><a href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-opaque">opaque origin</a>
-     <li><a href="https://html.spec.whatwg.org/multipage/browsers.html#opener-browsing-context">opener browsing context</a>
      <li><a href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin">origin</a>
      <li><a href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-origin">origin <small>(for environment settings object)</small></a>
      <li><a href="https://html.spec.whatwg.org/multipage/workers.html#concept-WorkerGlobalScope-owner-set">owner set</a>
@@ -2569,10 +2521,6 @@ certain minimum standards of authentication and confidentiality are met.</p>
    <div class="issue"> This is currently defined in Step 11.4.2 of the WHATWG’s HTML (landed in <a href="https://github.com/whatwg/html/pull/1560">whatwg/html#1560</a>. It has not yet been
     picked up by the W3C’s version of that algorithm. <a href="https://github.com/w3c/workers/issues/6">&lt;https://github.com/w3c/workers/issues/6></a><a href="#issue-39cab00b"> ↵ </a></div>
    <div class="issue"> Upstream this to HTML.<a href="#issue-10e3374e"> ↵ </a></div>
-   <div class="issue"> This exclusion is "at risk",
-  as implementation is lagging, and there’s some discussion as to
-  whether or not it can be softened while maintaining the mitigations
-  against direct communication channels. <a href="https://github.com/w3c/webappsec-secure-contexts/issues/42">&lt;https://github.com/w3c/webappsec-secure-contexts/issues/42></a><a href="#issue-8ea95bab"> ↵ </a></div>
   </div>
   <aside class="dfn-panel" data-for="secure-contexts">
    <b><a href="#secure-contexts">#secure-contexts</a></b><b>Referenced in:</b>
