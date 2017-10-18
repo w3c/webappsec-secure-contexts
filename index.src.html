@@ -18,7 +18,7 @@ Version History: https://github.com/w3c/webappsec-secure-contexts/commits/master
 Indent: 2
 Markup Shorthands: markdown on
 Boilerplate: omit conformance, omit feedback-header
-At Risk: The <a>sandboxed secure browsing context flag</a> defined in [[#monkey-patching-sandbox-flags]], as well as its usage in [[#settings-object]]. [<a href="#issue-255ee4a4">Issue 2</a>]
+At Risk: The <a>sandboxed secure browsing context flag</a> defined in [[#monkey-patching-sandbox-flags]], as well as its usage in [[#is-settings-object-contextually-secure]]. [<a href="#issue-255ee4a4">Issue 2</a>]
 At Risk: The `opener` restriction on popups. [<a href="#issue-8ea95bab">Issue 5</a>]
 </pre>
 <pre class="link-defaults">
@@ -26,6 +26,7 @@ spec:url; type:interface; text:URL
 spec:dom; type:interface; text:Document
 spec:html; type:dfn; for:/; text: active sandboxing flag set
 spec:html; type:dfn; for:/; text: creator context security
+spec:html; type:dfn; for:/; text:global object
 </pre>
 <pre class="anchors">
 urlPrefix: https://www.w3.org/TR/geolocation-API/; spec: GEOLOCATION-API
@@ -241,9 +242,6 @@ urlPrefix: https://www.w3.org/2017/Process-20170301/; spec: W3C-PROCESS
         <path d="M150, 87 C 200 75, 350 75, 150 287"></path>
       </g>
     </svg>
-
-    ISSUE(w3c/html#523): W3C's HTML has only an <i>extremely</i> partial port of
-    the `noopener` concept.
   </div>
 
   <h3 id="examples-framed">Framed Documents</h3>
@@ -509,12 +507,13 @@ urlPrefix: https://www.w3.org/2017/Process-20170301/; spec: W3C-PROCESS
 <section>
   <h2 id="framework">Framework</h2>
 
-  An <a>environment settings object</a> is considered a <dfn export>secure
-  context</dfn> if the algorithm in [[#settings-object]] returns "`Secure`", and a
-  <dfn export>non-secure context</dfn> otherwise.
+  [=Environment settings objects=] are considered to be <dfn export>secure contexts</dfn> if they
+  are [=contextually secure=] as defined in [[#is-settings-object-contextually-secure]], and
+  <dfn export>non-secure contexts</dfn> otherwise.
 
-  Likewise, a <a for="/">global object</a> is considered a <a>secure context</a> if its
-  <a>relevant settings object</a> is a <a>secure context</a>.
+  Likewise, a [=global object=] ({{Window}}, {{WorkerGlobalScope}}, etc.) is considered to be a
+  [=secure context=] if its [=relevant settings object=] is [=contextually secure=] as defined in
+  [[#is-settings-object-contextually-secure]], and a [=non-secure context=] otherwise.
 
   <section class="non-normative">
     <h3 id="integration-idl">Intergration with WebIDL</h3>
@@ -580,7 +579,7 @@ urlPrefix: https://www.w3.org/2017/Process-20170301/; spec: W3C-PROCESS
     either WHATWG's HTML or W3C's HTML. Once we've decided whether or not to keep
     the feature, we'll work on that.
 
-    <h4 id="monkey-patching-shared-workers" class="non-normative">Shared Workers</h4>
+    <h4 id="shared-workers" class="non-normative">Shared Workers</h4>
 
     <em>This section is non-normative</em>.
 
@@ -589,33 +588,15 @@ urlPrefix: https://www.w3.org/2017/Process-20170301/; spec: W3C-PROCESS
     <a>secure context</a>, and if a non-secure context attempts to attach to a
     Worker which is a <a>secure context</a>.
 
-    The constructor is modified as follows (though the SharedWorker specification
-    remains the normative reference):
-
-    1.  As the first substep of the {{SharedWorker}} constructor's current step
-        6.7 ("If <var>worker global scope</var> is not `null`, then run these
-        steps:"), run the following step:
-
-        1.  If the result of executing [[#settings-object]] on the <a>current
-            settings object</a> does not match the result of executing the same
-            algorithm on <var>worker global scope</var>'s <a>relevant settings
-            object</a>, then throw a `SecurityError` exception, and abort
-            these steps.
-
-    Note: This change landed in WHATWG's HTML in
-    <a href="https://github.com/whatwg/html/pull/1560">whatwg/html#1560</a>.
-
-    ISSUE: It's not clear to me how the W3C's [[WEBWORKERS]] document is updated.
-    It looks like it's pulling content from the WHATWG upstream, which means
-    that the PR linked above should flow into it? But that document hasn't been
-    updated since 2015, so...
+    ISSUE(w3c/workers#6): This is currently defined in Step 11.4.2 of the WHATWG's HTML (landed in
+    <a href="https://github.com/whatwg/html/pull/1560">whatwg/html#1560</a>. It has not yet been
+    picked up by the W3C's version of that algorithm.
   </section>
 
   <h4 id="monkey-patching-global-object">Feature Detection</h4>
 
-  To determine whether a context is capable of making use of features which
-  require <a>secure contexts</a>, a simple boolean attribute is added to the
-  global object:
+  An application can determine determine whether it's executing in a [=secure context=] by checking
+  a simple boolean attribute on the [=global object=]:
 
   <pre class="idl">
     partial interface WindowOrWorkerGlobalScope {
@@ -624,97 +605,93 @@ urlPrefix: https://www.w3.org/2017/Process-20170301/; spec: W3C-PROCESS
   </pre>
 
   The {{WindowOrWorkerGlobalScope/isSecureContext}} attribute's getter
-  returns `true` if [[#settings-object]] returns "`Secure`" when executed upon
-  `this` <a for="/">global object</a>'s <a>relevant settings object</a>, and `false`
-  otherwise.
+  returns `true` if `this` [=global object=]'s [=relevant settings object=] is
+  [=environment settings object/contextually secure=], and `false` otherwise.
+
+  ISSUE: Upstream this to HTML.
 </section>
 
 <section>
   <h2 id="algorithms">Algorithms</h2>
 
-  <h3 id="settings-object">
-    Is the environment settings object |settings| a secure context?
+  <h3 id="is-settings-object-contextually-secure">
+    Is an environment settings object contextually secure?
   </h3>
 
-  Given an <a>environment settings object</a> (|settings|) this algorithm
-  returns "`Secure`" if the object represents a context which the user agent
-  obtained via a secure channel, and "`Not Secure`" otherwise.
+  An [=environment settings object=] (|settings|) is considered
+  <dfn for="environment settings object">contextually secure</dfn> if and only if the following
+  <dfn abstract-op id="settings-object" lt="Is an environment settings object contextually secure?">Is |settings| contextually secure?</dfn>
+  algorithm returns "`Secure`":
 
-  1.  Let |global| be |settings|'s <a for="environment settings object">global object</a>.
+  <ol class="algorithm">
+    1.  Let |global| be |settings|'s [=environment settings object/global object=].
 
-  2.  If |global| is a {{WorkerGlobalScope}}, then:
+    2.  If |global| is a {{WorkerGlobalScope}}, then:
 
-      1.  For each {{Document}} (|document|) in |global|'s [=owner set=]:
+        1.  For each {{Document}} (|document|) in |global|'s [=owner set=]:
 
-          1.  Assert: Workers must be same-origin with the context that created
-              them, so |document|'s <a>relevant settings object</a>'s
-              <a for="environment settings object">origin</a> and
-              <a for="environment settings object">HTTPS state</a> is the same as
-              |global|'s <a>relevant settings object</a>'s
-              <a for="environment settings object">origin</a> and
-              <a for="environment settings object">HTTPS state</a>.
+            1.  Assert: Workers must be same-origin with the context that created them, so
+                |document|'s [=relevant settings object=]'s [=environment settings object/origin=]
+                and [=environment settings object/HTTPS state=] is the same as |global|'s
+                [=relevant settings object=]'s [=environment settings object/origin=] and
+                [=environment settings object/HTTPS state=].
 
-          2.  If [[#settings-object]] returns "`Not Secure`" when executed upon
-              |document|'s <a>relevant settings object</a>, return "`Not
-              Secure`".
+            2.  If |document|'s [=relevant settings object=] is not
+                [=environment settings object/contextually secure=], return "`Not Secure`".
 
-      2.  Return "`Secure`".
+        2.  Return "`Secure`".
 
-          Note: Given the assertion above, if we've reached this step, the
-          worker must have been created from a <a>secure context</a>, and
-          therefore must itself be a <a>secure context</a>.
+            Note: Given the assertion above, if we've reached this step, the
+            worker must have been created from a [=secure context=], and
+            therefore must itself be a [=secure context=].
 
-  3.  Assert: |global| is a {{Window}}.
+    3.  Assert: |global| is a {{Window}}.
 
-  4.  Let |document| be |settings|'s <a>responsible document</a>.
+    4.  Let |document| be |settings|'s <a>responsible document</a>.
 
-  5.  Return "`Not Secure`" if any of the following are true:
+    5.  Return "`Not Secure`" if any of the following are true:
 
-      1.  |document|'s <a>active sandboxing flag set</a> contains the
-          <a>sandboxed secure browsing context flag</a>.
+        1.  |document|'s <a>active sandboxing flag set</a> contains the
+            <a>sandboxed secure browsing context flag</a>.
 
-          Note: This check is "at risk". See [[#monkey-patching-sandbox-flags]]
-          for details.
+            Note: This check is "at risk". See [[#monkey-patching-sandbox-flags]]
+            for details.
 
-      2.  |document| has an <a>creator browsing context</a> (|context|), and
-          |context|'s <a>creator context security</a> is "`Not Secure`".
+        2.  |document| has an <a>creator browsing context</a> (|context|), and
+            |context|'s <a>creator context security</a> is "`Not Secure`".
 
-          Note: Since we take account of <a>creator browsing contexts</a>'
-          status, a popups' status depends on how it is opened, as discussed
-          in [[#examples-top-level]].
+            Note: Since we take account of <a>creator browsing contexts</a>'
+            status, a popups' status depends on how it is opened, as discussed
+            in [[#examples-top-level]].
 
-          ISSUE(w3c/html#524): The 'creator context security' concept landed in
-          WHATWG's HTML in
-          <a href="https://github.com/whatwg/html/pull/1561">whatwg/html#1561</a>,
-          but doesn't yet exist in W3C's HTML.
+            ISSUE(w3c/webappsec-secure-contexts#42): This exclusion is "at risk",
+            as implementation is lagging, and there's some discussion as to
+            whether or not it can be softened while maintaining the mitigations
+            against direct communication channels.
 
-          ISSUE(w3c/webappsec-secure-contexts#42): This exclusion is "at risk",
-          as implementation is lagging, and there's some discussion as to
-          whether or not it can be softened while maintaining the mitigations
-          against direct communication channels.
+        3.  |settings|'s <a for="environment settings object">HTTPS state</a> is "`deprecated`".
 
-      3.  |settings|'s <a for="environment settings object">HTTPS state</a> is "`deprecated`".
+        4.  |document|'s <a>active sandboxing flag set</a> includes the
+            <a>sandboxed origin browsing context flag</a>, and
+            [[#is-url-trustworthy]] returns "`Not Trustworthy`" when executed upon
+            |settings|'s <a>creation URL</a>.
 
-      4.  |document|'s <a>active sandboxing flag set</a> includes the
-          <a>sandboxed origin browsing context flag</a>, and
-          [[#is-url-trustworthy]] returns "`Not Trustworthy`" when executed upon
-          |settings|'s <a>creation URL</a>.
+            Note: We check the <a>creation URL</a> here because sandboxed content
+            that is treated as being in an opaque origin (e.g.
+            `<iframe sandbox="allow-secure-context" src="http://127.0.0.1/">`)
+            would otherwise be treated as non-trustworthy by
+            [[#is-origin-trustworthy]]. Since sandboxing is a strict reduction in
+            the content's capabilities, and therefore in the risk it poses, we
+            look at the origin of its URL to determine whether we would have
+            considered it trustworthy had it not been sandboxed.
 
-          Note: We check the <a>creation URL</a> here because sandboxed content
-          that is treated as being in an opaque origin (e.g.
-          `<iframe sandbox="allow-secure-context" src="http://127.0.0.1/">`)
-          would otherwise be treated as non-trustworthy by
-          [[#is-origin-trustworthy]]. Since sandboxing is a strict reduction in
-          the content's capabilities, and therefore in the risk it poses, we
-          look at the origin of its URL to determine whether we would have
-          considered it trustworthy had it not been sandboxed.
+        5.  |document|'s <a>active sandboxing flag set</a> does not include the
+            <a>sandboxed origin browsing context flag</a>, and
+            [[#is-origin-trustworthy]] returns "`Not Trustworthy`" when executed
+            upon |settings|'s <a for="environment settings object">origin</a>.
 
-      5.  |document|'s <a>active sandboxing flag set</a> does not include the
-          <a>sandboxed origin browsing context flag</a>, and
-          [[#is-origin-trustworthy]] returns "`Not Trustworthy`" when executed
-          upon |settings|'s <a for="environment settings object">origin</a>.
-
-  6.  Return "`Secure`".
+    6.  Return "`Secure`".
+  </ol>
 
   <h3 id="is-origin-trustworthy">
     Is |origin| potentially trustworthy?
@@ -857,14 +834,14 @@ urlPrefix: https://www.w3.org/2017/Process-20170301/; spec: W3C-PROCESS
 
   <h3 id="ancestors">Ancestral Risk</h3>
 
-  The [[#settings-object]] algorithm walks through all the ancestors of a
-  particular context in order to determine whether or not the context itself is
-  secure. Why wouldn't we consider a securely-delivered document in an
+  The <a abstract-op>Is an environment settings object contextually secure?</a> algorithm walks
+  through all the ancestors of a particular context in order to determine whether or not the
+  context itself is secure. Why wouldn't we consider a securely-delivered document in an
   <{iframe}> to be secure, in and of itself?
 
   The short answer is that this model would enable abuse. Chrome's
   implementation of [[WEBCRYPTOAPI]] was an early experiment in locking APIs to
-  secure contexts, and it does not walk through a context's ancestors. The
+  secure contexts, and it did not walk through a context's ancestors. The
   assumption was that locking the API to a resouce which was itself delivered
   securely would be enough to ensure secure usage. The result, however, was
   that entities like Netflix built <{iframe}>- and `postMessage()`-based shims
