@@ -1176,9 +1176,9 @@ Possible extra rowspan handling
 		}
 	}
 </style>
-  <meta content="Bikeshed version 3ee78e75729309d4dfc4793df74c38e4ae785832" name="generator">
+  <meta content="Bikeshed version d1c8ac9ac0bb0f0e970e3942633cfb7d2f7e12e6" name="generator">
   <link href="https://www.w3.org/TR/secure-contexts/" rel="canonical">
-  <meta content="98f2c2634f7371bca6ffacbf73e984b22af521ab" name="document-revision">
+  <meta content="2897b992773f91da86266fbcbbd0446812d4012f" name="document-revision">
 <style>
     .secure {
       fill: #8F8;
@@ -1453,7 +1453,7 @@ pre.highlight, pre > code.highlight { display: block; padding: 1em; margin: .5em
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1>Secure Contexts</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2017-10-18">18 October 2017</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2018-01-19">19 January 2018</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1475,7 +1475,7 @@ pre.highlight, pre > code.highlight { display: block; padding: 1em; margin: .5em
     </dl>
    </div>
    <div data-fill-with="warning"></div>
-   <p class="copyright" data-fill-with="copyright"><a href="https://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2017 <a href="https://www.w3.org/"><abbr title="World Wide Web Consortium">W3C</abbr></a><sup>®</sup> (<a href="https://www.csail.mit.edu/"><abbr title="Massachusetts Institute of Technology">MIT</abbr></a>, <a href="https://www.ercim.eu/"><abbr title="European Research Consortium for Informatics and Mathematics">ERCIM</abbr></a>, <a href="https://www.keio.ac.jp/">Keio</a>, <a href="http://ev.buaa.edu.cn/">Beihang</a>). W3C <a href="https://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="https://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and <a href="https://www.w3.org/Consortium/Legal/copyright-documents">document use</a> rules apply. </p>
+   <p class="copyright" data-fill-with="copyright"><a href="https://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2018 <a href="https://www.w3.org/"><abbr title="World Wide Web Consortium">W3C</abbr></a><sup>®</sup> (<a href="https://www.csail.mit.edu/"><abbr title="Massachusetts Institute of Technology">MIT</abbr></a>, <a href="https://www.ercim.eu/"><abbr title="European Research Consortium for Informatics and Mathematics">ERCIM</abbr></a>, <a href="https://www.keio.ac.jp/">Keio</a>, <a href="http://ev.buaa.edu.cn/">Beihang</a>). W3C <a href="https://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="https://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and <a href="https://www.w3.org/Consortium/Legal/copyright-documents">document use</a> rules apply. </p>
    <hr title="Separator for header">
   </div>
   <div class="p-summary" data-fill-with="abstract">
@@ -1500,10 +1500,10 @@ certain minimum standards of authentication and confidentiality are met.</p>
 	“[secure-contexts] <em>…summary of comment…</em>” </p>
    <p> This document was produced by the <a href="https://www.w3.org/2011/webappsec/">Web Application Security Working Group</a>. </p>
    <p> This document was produced by a group operating under
-	the <a href="https://www.w3.org/Consortium/Patent-Policy-20040205/">5 February 2004 W3C Patent Policy</a>.
+	the <a href="https://www.w3.org/Consortium/Patent-Policy/">W3C Patent Policy</a>.
 	W3C maintains a <a href="https://www.w3.org/2004/01/pp-impl/49309/status" rel="disclosure">public list of any patent disclosures</a> made in connection with the deliverables of the group;
 	that page also includes instructions for disclosing a patent.
-	An individual who has actual knowledge of a patent which the individual believes contains <a href="https://www.w3.org/Consortium/Patent-Policy-20040205/#def-essential">Essential Claim(s)</a> must disclose the information in accordance with <a href="https://www.w3.org/Consortium/Patent-Policy-20040205/#sec-Disclosure">section 6 of the W3C Patent Policy</a>. </p>
+	An individual who has actual knowledge of a patent which the individual believes contains <a href="https://www.w3.org/Consortium/Patent-Policy/#def-essential">Essential Claim(s)</a> must disclose the information in accordance with <a href="https://www.w3.org/Consortium/Patent-Policy/#sec-Disclosure">section 6 of the W3C Patent Policy</a>. </p>
    <p> This document is governed by the <a href="https://www.w3.org/2017/Process-20170301/" id="w3c_process_revision">1 March 2017 W3C Process Document</a>. </p>
    <p></p>
   </div>
@@ -1621,8 +1621,8 @@ certain minimum standards of authentication and confidentiality are met.</p>
   defined below ensure that these bypasses are difficult and user-visible.</p>
     <p>The following examples summarize the normative text which follows:</p>
     <h3 class="heading settled" data-level="1.1" id="examples-top-level"><span class="secno">1.1. </span><span class="content">Top-level Documents</span><a class="self-link" href="#examples-top-level"></a></h3>
-    <div class="example" id="example-c3b67557">
-     <a class="self-link" href="#example-c3b67557"></a> 
+    <div class="example" id="example-cf9ba4ba">
+     <a class="self-link" href="#example-cf9ba4ba"></a> 
      <p><code>http://example.com/</code> opened in a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context">top-level browsing
     context</a> is not a <a data-link-type="dfn" href="#secure-contexts" id="ref-for-secure-contexts">secure context</a>, as it was not delivered over
     an authenticated and encrypted channel.</p>
@@ -1633,8 +1633,8 @@ certain minimum standards of authentication and confidentiality are met.</p>
       </g>
      </svg>
     </div>
-    <div class="example" id="example-f9c0bcaa">
-     <a class="self-link" href="#example-f9c0bcaa"></a> 
+    <div class="example" id="example-16fe3869">
+     <a class="self-link" href="#example-16fe3869"></a> 
      <p><code>https://example.com/</code> opened in a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context①">top-level browsing
     context</a> is a <a data-link-type="dfn" href="#secure-contexts" id="ref-for-secure-contexts①">secure context</a>, as it was delivered over
     an authenticated and encrypted channel.</p>
@@ -1645,8 +1645,8 @@ certain minimum standards of authentication and confidentiality are met.</p>
       </g>
      </svg>
     </div>
-    <div class="example" id="example-7f28e529">
-     <a class="self-link" href="#example-7f28e529"></a> 
+    <div class="example" id="example-5d315e5d">
+     <a class="self-link" href="#example-5d315e5d"></a> 
      <p>If a secure context opens <code>https://example.com/</code> in a new
     window, that new window will be a secure context, as it is secure on
     its own merits:</p>
@@ -1664,8 +1664,8 @@ certain minimum standards of authentication and confidentiality are met.</p>
       </g>
      </svg>
     </div>
-    <div class="example" id="example-4cfa3d2b">
-     <a class="self-link" href="#example-4cfa3d2b"></a> 
+    <div class="example" id="example-34c855e3">
+     <a class="self-link" href="#example-34c855e3"></a> 
      <p>Likewise, if a non-secure context opens <code>https://example.com/</code> in a new window,
     that new window will be a secure context, even through its opener was non-secure:</p>
      <svg height="400" width="400">
@@ -1685,8 +1685,8 @@ certain minimum standards of authentication and confidentiality are met.</p>
     <h3 class="heading settled" data-level="1.2" id="examples-framed"><span class="secno">1.2. </span><span class="content">Framed Documents</span><a class="self-link" href="#examples-framed"></a></h3>
     <p>Framed documents can be <a data-link-type="dfn" href="#secure-contexts" id="ref-for-secure-contexts②">secure contexts</a> if they are delivered from <a data-link-type="dfn" href="#potentially-trustworthy-origin" id="ref-for-potentially-trustworthy-origin">potentially trustworthy origins</a>, <em>and</em> if they’re embedded
   in a <a data-link-type="dfn" href="#secure-contexts" id="ref-for-secure-contexts③">secure context</a>. That is:</p>
-    <div class="example" id="example-9e620851">
-     <a class="self-link" href="#example-9e620851"></a> If <code>https://example.com/</code> opened in a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context②">top-level browsing
+    <div class="example" id="example-4cbedc58">
+     <a class="self-link" href="#example-4cbedc58"></a> If <code>https://example.com/</code> opened in a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context②">top-level browsing
     context</a> opens <code>https://sub.example.com/</code> in a frame, then
     both are <a data-link-type="dfn" href="#secure-contexts" id="ref-for-secure-contexts④">secure contexts</a>, as both were delivered over
     authenticated and encrypted channels.
@@ -1702,8 +1702,8 @@ certain minimum standards of authentication and confidentiality are met.</p>
       </g>
      </svg>
     </div>
-    <div class="example" id="example-90fe8723">
-     <a class="self-link" href="#example-90fe8723"></a> 
+    <div class="example" id="example-c53b520f">
+     <a class="self-link" href="#example-c53b520f"></a> 
      <p>If <code>https://example.com/</code> was somehow able to frame <code>http://non-secure.example.com/</code> (perhaps the user has
     overridden mixed content checking?), the top-level frame would remain
     secure, but the framed content is not a secure context.</p>
@@ -1718,8 +1718,8 @@ certain minimum standards of authentication and confidentiality are met.</p>
       </g>
      </svg>
     </div>
-    <div class="example" id="example-c52936fc">
-     <a class="self-link" href="#example-c52936fc"></a> 
+    <div class="example" id="example-14dbb3d6">
+     <a class="self-link" href="#example-14dbb3d6"></a> 
      <p>If, on the other hand, <code>https://example.com/</code> is framed
     inside of <code>http://non-secure.example.com/</code>, then it is <em>not</em> a secure context, as its ancestor is not delivered over an
     authenticated and encrypted channel.</p>
@@ -1738,8 +1738,8 @@ certain minimum standards of authentication and confidentiality are met.</p>
     <p>Dedicated Workers are similar in nature to framed documents. They’re <a data-link-type="dfn" href="#secure-contexts" id="ref-for-secure-contexts⑤">secure contexts</a> when they’re delivered from <a data-link-type="dfn" href="#potentially-trustworthy-origin" id="ref-for-potentially-trustworthy-origin①">potentially
   trustworthy origins</a>, only if their owner is itself a <a data-link-type="dfn" href="#secure-contexts" id="ref-for-secure-contexts⑥">secure
   context</a>:</p>
-    <div class="example" id="example-512dd4fd">
-     <a class="self-link" href="#example-512dd4fd"></a> 
+    <div class="example" id="example-1e176a8e">
+     <a class="self-link" href="#example-1e176a8e"></a> 
      <p>If <code>https://example.com/</code> in a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context③">top-level browsing
     context</a> runs <code>https://example.com/worker.js</code>, then
     both the document and the worker are <a data-link-type="dfn" href="#secure-contexts" id="ref-for-secure-contexts⑦">secure contexts</a>.</p>
@@ -1757,8 +1757,8 @@ certain minimum standards of authentication and confidentiality are met.</p>
       </g>
      </svg>
     </div>
-    <div class="example" id="example-453513c5">
-     <a class="self-link" href="#example-453513c5"></a> 
+    <div class="example" id="example-11c925a5">
+     <a class="self-link" href="#example-11c925a5"></a> 
      <p>If <code>http://non-secure.example.com/</code> in a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context④">top-level browsing
     context</a> frames <code>https://example.com/</code>, which runs <code>https://example.com/worker.js</code>, then neither the framed document
     nor the worker are <a data-link-type="dfn" href="#secure-contexts" id="ref-for-secure-contexts⑧">secure contexts</a>.</p>
@@ -1785,8 +1785,8 @@ certain minimum standards of authentication and confidentiality are met.</p>
   attached to by other <a data-link-type="dfn" href="#secure-contexts" id="ref-for-secure-contexts①①">secure contexts</a>. If a non-secure context creates
   a Shared Worker, then it is <em>not</em> a <a data-link-type="dfn" href="#secure-contexts" id="ref-for-secure-contexts①②">secure context</a>, and may only
   be attached to by other non-secure contexts.</p>
-    <div class="example" id="example-7e3c52b5">
-     <a class="self-link" href="#example-7e3c52b5"></a> 
+    <div class="example" id="example-aa4bc5ca">
+     <a class="self-link" href="#example-aa4bc5ca"></a> 
      <p>If <code>https://example.com/</code> in a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context⑤">top-level browsing
     context</a> runs <code>https://example.com/worker.js</code> as a Shared
     Worker, then both the document and the worker are considered secure
@@ -1805,8 +1805,8 @@ certain minimum standards of authentication and confidentiality are met.</p>
       </g>
      </svg>
     </div>
-    <div class="example" id="example-f3aef4f7">
-     <a class="self-link" href="#example-f3aef4f7"></a> 
+    <div class="example" id="example-b167c6df">
+     <a class="self-link" href="#example-b167c6df"></a> 
      <p><code>https://example.com/</code> in a different <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context⑥">top-level
     browsing context</a> (e.g. in a new window) is a secure context, so it may
     access the secure shared worker:</p>
@@ -1831,8 +1831,8 @@ certain minimum standards of authentication and confidentiality are met.</p>
       </g>
      </svg>
     </div>
-    <div class="example" id="example-2829bc67">
-     <a class="self-link" href="#example-2829bc67"></a> 
+    <div class="example" id="example-7db28cd3">
+     <a class="self-link" href="#example-7db28cd3"></a> 
      <p><code>https://example.com/</code> nested in <code>http://non-secure.example.com/</code> may not connect to the secure
     worker, as it is not a secure context.</p>
      <svg height="400" width="600">
@@ -1861,8 +1861,8 @@ certain minimum standards of authentication and confidentiality are met.</p>
       </g>
      </svg>
     </div>
-    <div class="example" id="example-a7414e08">
-     <a class="self-link" href="#example-a7414e08"></a> 
+    <div class="example" id="example-b6c81c39">
+     <a class="self-link" href="#example-b6c81c39"></a> 
      <p>Likewise, if <code>https://example.com/</code> nested in <code>http://non-secure.example.com/</code> runs <code>https://example.com/worker.js</code> as a Shared
     Worker, then both the document and the worker are considered non-secure.</p>
      <svg height="400" width="600">
@@ -1894,8 +1894,8 @@ certain minimum standards of authentication and confidentiality are met.</p>
     <h3 class="heading settled" data-level="1.5" id="examples-service-workers"><span class="secno">1.5. </span><span class="content">Service Workers</span><a class="self-link" href="#examples-service-workers"></a></h3>
     <p>Service Workers are always <a data-link-type="dfn" href="#secure-contexts" id="ref-for-secure-contexts①③">secure contexts</a>. Only <a data-link-type="dfn" href="#secure-contexts" id="ref-for-secure-contexts①④">secure contexts</a> may register them, and they may only have clients which are <a data-link-type="dfn" href="#secure-contexts" id="ref-for-secure-contexts①⑤">secure
   contexts</a>.</p>
-    <div class="example" id="example-58019791">
-     <a class="self-link" href="#example-58019791"></a> 
+    <div class="example" id="example-d4def638">
+     <a class="self-link" href="#example-d4def638"></a> 
      <p>If <code>https://example.com/</code> in a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context⑦">top-level browsing
     context</a> registers <code>https://example.com/service.js</code>,
     then both the document and the Service Worker are considered secure
@@ -2021,6 +2021,8 @@ certain minimum standards of authentication and confidentiality are met.</p>
        <li data-md="">
         <p><var>document</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#active-sandboxing-flag-set" id="ref-for-active-sandboxing-flag-set">active sandboxing flag set</a> contains the <a data-link-type="dfn" href="#sandboxed-secure-browsing-context-flag" id="ref-for-sandboxed-secure-browsing-context-flag②">sandboxed secure browsing context flag</a>.</p>
         <p class="note" role="note"><span>Note:</span> This check is "at risk". See <a href="#monkey-patching-sandbox-flags">§2.2.1 Sandboxing</a> for details.</p>
+       <li data-md="">
+        <p><var>document</var> has a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#parent-browsing-context" id="ref-for-parent-browsing-context">parent browsing context</a> (<var>context</var>), and <var>context</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#active-document" id="ref-for-active-document">active document</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object⑤">relevant settings object</a> is not <a data-link-type="dfn" href="#environment-settings-object-contextually-secure" id="ref-for-environment-settings-object-contextually-secure④">contextually secure</a>.</p>
        <li data-md="">
         <p><var>settings</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#https-state" id="ref-for-https-state②">HTTPS state</a> is "<code>deprecated</code>".</p>
        <li data-md="">
@@ -2397,6 +2399,7 @@ certain minimum standards of authentication and confidentiality are met.</p>
      <li><a href="https://html.spec.whatwg.org/multipage/window-object.html#window">Window</a>
      <li><a href="https://html.spec.whatwg.org/multipage/webappapis.html#windoworworkerglobalscope">WindowOrWorkerGlobalScope</a>
      <li><a href="https://html.spec.whatwg.org/multipage/workers.html#workerglobalscope">WorkerGlobalScope</a>
+     <li><a href="https://html.spec.whatwg.org/multipage/browsers.html#active-document">active document</a>
      <li><a href="https://html.spec.whatwg.org/multipage/origin.html#active-sandboxing-flag-set">active sandboxing flag set</a>
      <li><a href="https://html.spec.whatwg.org/multipage/browsers.html#browsing-context">browsing context</a>
      <li><a href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-environment-creation-url">creation url</a>
@@ -2412,6 +2415,7 @@ certain minimum standards of authentication and confidentiality are met.</p>
      <li><a href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin">origin</a>
      <li><a href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-origin">origin <small>(for environment settings object)</small></a>
      <li><a href="https://html.spec.whatwg.org/multipage/workers.html#concept-WorkerGlobalScope-owner-set">owner set</a>
+     <li><a href="https://html.spec.whatwg.org/multipage/browsers.html#parent-browsing-context">parent browsing context</a>
      <li><a href="https://html.spec.whatwg.org/multipage/origin.html#parse-a-sandboxing-directive">parse a sandboxing directive</a>
      <li><a href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-port">port</a>
      <li><a href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object">relevant settings object</a>
@@ -2483,7 +2487,7 @@ certain minimum standards of authentication and confidentiality are met.</p>
    <dt id="biblio-indexeddb">[IndexedDB]
    <dd>Nikunj Mehta; et al. <a href="https://www.w3.org/TR/IndexedDB/">Indexed Database API</a>. 8 January 2015. REC. URL: <a href="https://www.w3.org/TR/IndexedDB/">https://www.w3.org/TR/IndexedDB/</a>
    <dt id="biblio-mediacapture-streams">[MEDIACAPTURE-STREAMS]
-   <dd>Daniel Burnett; et al. <a href="https://www.w3.org/TR/mediacapture-streams/">Media Capture and Streams</a>. 19 May 2016. CR. URL: <a href="https://www.w3.org/TR/mediacapture-streams/">https://www.w3.org/TR/mediacapture-streams/</a>
+   <dd>Daniel Burnett; et al. <a href="https://www.w3.org/TR/mediacapture-streams/">Media Capture and Streams</a>. 3 October 2017. CR. URL: <a href="https://www.w3.org/TR/mediacapture-streams/">https://www.w3.org/TR/mediacapture-streams/</a>
    <dt id="biblio-mix">[MIX]
    <dd>Mike West. <a href="https://www.w3.org/TR/mixed-content/">Mixed Content</a>. 2 August 2016. CR. URL: <a href="https://www.w3.org/TR/mixed-content/">https://www.w3.org/TR/mixed-content/</a>
    <dt id="biblio-powerful-new-features">[POWERFUL-NEW-FEATURES]
@@ -2497,7 +2501,7 @@ certain minimum standards of authentication and confidentiality are met.</p>
    <dt id="biblio-securing-web">[SECURING-WEB]
    <dd>Mark Nottingham. <a href="https://www.w3.org/2001/tag/doc/web-https">Securing the Web</a>. Finding. URL: <a href="https://www.w3.org/2001/tag/doc/web-https">https://www.w3.org/2001/tag/doc/web-https</a>
    <dt id="biblio-service-workers">[SERVICE-WORKERS]
-   <dd>Alex Russell; et al. <a href="https://www.w3.org/TR/service-workers-1/">Service Workers 1</a>. 11 October 2016. WD. URL: <a href="https://www.w3.org/TR/service-workers-1/">https://www.w3.org/TR/service-workers-1/</a>
+   <dd>Alex Russell; et al. <a href="https://www.w3.org/TR/service-workers-1/">Service Workers 1</a>. 2 November 2017. WD. URL: <a href="https://www.w3.org/TR/service-workers-1/">https://www.w3.org/TR/service-workers-1/</a>
    <dt id="biblio-verizon">[VERIZON]
    <dd>Mark Bergen; Alex Kantrowitz. <a href="http://adage.com/article/digital/verizon-target-mobile-subscribers-ads/293356/">Verizon looks to target its mobile subscribers with ads</a>. URL: <a href="http://adage.com/article/digital/verizon-target-mobile-subscribers-ads/293356/">http://adage.com/article/digital/verizon-target-mobile-subscribers-ads/293356/</a>
    <dt id="biblio-web-bluetooth">[WEB-BLUETOOTH]
@@ -2576,7 +2580,7 @@ certain minimum standards of authentication and confidentiality are met.</p>
     <li><a href="#ref-for-environment-settings-object-contextually-secure">2. Framework</a> <a href="#ref-for-environment-settings-object-contextually-secure①">(2)</a>
     <li><a href="#ref-for-environment-settings-object-contextually-secure②">2.2.3. Feature Detection</a>
     <li><a href="#ref-for-environment-settings-object-contextually-secure③">3.1. 
-    Is an environment settings object contextually secure? </a>
+    Is an environment settings object contextually secure? </a> <a href="#ref-for-environment-settings-object-contextually-secure④">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="settings-object">

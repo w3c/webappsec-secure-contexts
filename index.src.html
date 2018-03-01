@@ -615,9 +615,12 @@ urlPrefix: https://www.w3.org/2017/Process-20170301/; spec: W3C-PROCESS
             Note: This check is "at risk". See [[#monkey-patching-sandbox-flags]]
             for details.
 
-        2.  |settings|'s <a for="environment settings object">HTTPS state</a> is "`deprecated`".
+        2.  |document| has a [=parent browsing context=] (|context|), and |context|'s
+            [=active document=]'s [=relevant settings object=] is not [=contextually secure=].
 
-        3.  |document|'s <a>active sandboxing flag set</a> includes the
+        3.  |settings|'s <a for="environment settings object">HTTPS state</a> is "`deprecated`".
+
+        4.  |document|'s <a>active sandboxing flag set</a> includes the
             <a>sandboxed origin browsing context flag</a>, and
             [[#is-url-trustworthy]] returns "`Not Trustworthy`" when executed upon
             |settings|'s <a>creation URL</a>.
@@ -631,7 +634,7 @@ urlPrefix: https://www.w3.org/2017/Process-20170301/; spec: W3C-PROCESS
             look at the origin of its URL to determine whether we would have
             considered it trustworthy had it not been sandboxed.
 
-        4.  |document|'s <a>active sandboxing flag set</a> does not include the
+        5.  |document|'s <a>active sandboxing flag set</a> does not include the
             <a>sandboxed origin browsing context flag</a>, and
             [[#is-origin-trustworthy]] returns "`Not Trustworthy`" when executed
             upon |settings|'s <a for="environment settings object">origin</a>.
