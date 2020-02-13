@@ -1223,7 +1223,7 @@ Possible extra rowspan handling
 </style>
   <meta content="Bikeshed version d2febad00f62a578fcdd0d902104eb698a01e002" name="generator">
   <link href="https://www.w3.org/TR/secure-contexts/" rel="canonical">
-  <meta content="4a6c6e4013a4ca8d7c3f61831578a458dd992d8b" name="document-revision">
+  <meta content="90b607620c3c4eafbab95f9df70aeb209e037444" name="document-revision">
 <style>
     .secure {
       fill: #8F8;
@@ -2139,17 +2139,13 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     <p class="note" role="note"><span>Note:</span> Neither <var>origin</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-domain" id="ref-for-concept-origin-domain">domain</a> nor <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-port" id="ref-for-concept-origin-port">port</a> has any effect on whether or not it is considered to be a <a data-link-type="dfn" href="#secure-contexts" id="ref-for-secure-contexts②④">secure context</a>.</p>
     <h3 class="heading settled" data-level="3.3" id="is-url-trustworthy"><span class="secno">3.3. </span><span class="content"> Is <var>url</var> potentially trustworthy? </span><a class="self-link" href="#is-url-trustworthy"></a></h3>
     <p>A <dfn data-dfn-type="dfn" data-export id="potentially-trustworthy-url">potentially trustworthy URL<a class="self-link" href="#potentially-trustworthy-url"></a></dfn> is one which either inherits
-  context from it’s creator (<code>about:blank</code>, <code>about:srcdoc</code>) or one whose <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-origin" id="ref-for-concept-url-origin">origin</a> is a <a data-link-type="dfn" href="#potentially-trustworthy-origin" id="ref-for-potentially-trustworthy-origin②">potentially trustworthy origin</a>.
+  context from it’s creator (<code>about:blank</code>, <code>about:srcdoc</code>, <code>data</code>) or one whose <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-origin" id="ref-for-concept-url-origin">origin</a> is a <a data-link-type="dfn" href="#potentially-trustworthy-origin" id="ref-for-potentially-trustworthy-origin②">potentially trustworthy origin</a>.
   Given a <code class="idl"><a data-link-type="idl" href="https://url.spec.whatwg.org/#url" id="ref-for-url">URL</a></code> (<var>url</var>), the following algorithm returns "<code>Potentially Trustworthy</code>" or "<code>Not Trustworthy</code>" as appropriate:</p>
     <ol>
      <li data-md>
-      <p>If <var>url</var>’s <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-scheme" id="ref-for-concept-url-scheme">scheme</a> is "<code>data</code>", return "<code>Not Trustworthy</code>".</p>
-      <p class="note" role="note"><span>Note:</span> This aligns the definition of a <a data-link-type="dfn" href="#secure-contexts" id="ref-for-secure-contexts②⑤">secure context</a> with the <i lang="la">de facto</i> "<code>data:</code> URL as <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-opaque" id="ref-for-concept-origin-opaque①">opaque origin</a>"
-  behavior that a majority of today’s browsers have agreed upon, rather
-  than the <i lang="la">de jure</i> "<code>data:</code> URL inherits origin"
-  behavior defined in HTML.</p>
-     <li data-md>
       <p>If <var>url</var> is "<code>about:blank</code>" or "<code>about:srcdoc</code>", return "<code>Potentially Trustworthy</code>".</p>
+     <li data-md>
+      <p>If <var>url</var>’s <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-scheme" id="ref-for-concept-url-scheme">scheme</a> is "<code>data</code>", return "<code>Potentially Trustworthy</code>".</p>
      <li data-md>
       <p>Return the result of executing <a href="#is-origin-trustworthy">§ 3.2 Is origin potentially trustworthy?</a> on <var>url</var>’s <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-origin" id="ref-for-concept-url-origin①">origin</a>.</p>
       <p class="note" role="note"><span>Note:</span> The origin of <code>blob:</code> and <code>filesystem:</code> URLs is the origin of the
@@ -2201,13 +2197,13 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   than a speed-bump, slowing down non-secure access to the API, but completely
   ineffective in preventing such access.</p>
     <p>While the algorithms in this document do not perfectly isolate non-secure
-  contexts from <a data-link-type="dfn" href="#secure-contexts" id="ref-for-secure-contexts②⑥">secure contexts</a> (as discussed in <a href="#isolation">§ 5.1 Incomplete Isolation</a>), the
+  contexts from <a data-link-type="dfn" href="#secure-contexts" id="ref-for-secure-contexts②⑤">secure contexts</a> (as discussed in <a href="#isolation">§ 5.1 Incomplete Isolation</a>), the
   ancestor checks provide a fairly robust protection for the guarantees of
   authentication, confidentiality, and integrity that such contexts ought to
   provide.</p>
     <h3 class="heading settled" data-level="4.3" id="threat-risks"><span class="secno">4.3. </span><span class="content">Risks associated with non-secure contexts</span><a class="self-link" href="#threat-risks"></a></h3>
     <p>Certain web platform features that have a distinct impact on a user’s
-  security or privacy should be available for use only in <a data-link-type="dfn" href="#secure-contexts" id="ref-for-secure-contexts②⑦">secure
+  security or privacy should be available for use only in <a data-link-type="dfn" href="#secure-contexts" id="ref-for-secure-contexts②⑥">secure
   contexts</a> in order to defend against the threats above. Features
   available in non-secure contexts risk exposing these capabilities to
   network attackers:</p>
@@ -2237,7 +2233,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     </ol>
     <p>This list is non-exhaustive, but should give you a feel for the types of
   risks we should consider when writing or implementing specifications.</p>
-    <p class="note" role="note"><span>Note:</span> While restricting a feature itself to <a data-link-type="dfn" href="#secure-contexts" id="ref-for-secure-contexts②⑧">secure contexts</a> is
+    <p class="note" role="note"><span>Note:</span> While restricting a feature itself to <a data-link-type="dfn" href="#secure-contexts" id="ref-for-secure-contexts②⑦">secure contexts</a> is
   critical, we ought not forget that facilities that carry such information
   (such as new network access mechanisms, or other generic functions with access
   to network data) are equally sensitive.</p>
@@ -2245,7 +2241,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    <section>
     <h2 class="heading settled" data-level="5" id="security-considerations"><span class="secno">5. </span><span class="content">Security Considerations</span><a class="self-link" href="#security-considerations"></a></h2>
     <h3 class="heading settled" data-level="5.1" id="isolation"><span class="secno">5.1. </span><span class="content">Incomplete Isolation</span><a class="self-link" href="#isolation"></a></h3>
-    <p>The <a data-link-type="dfn" href="#secure-contexts" id="ref-for-secure-contexts②⑨">secure context</a> definition in this document does not completely
+    <p>The <a data-link-type="dfn" href="#secure-contexts" id="ref-for-secure-contexts②⑧">secure context</a> definition in this document does not completely
   isolate a "secure" view on an origin from a "non-secure" view on the same
   origin. Exfiltration will still be possible via increasingly esoteric
   mechanisms such as the contents of <code>localStorage</code>/<code>sessionStorage</code>, <code>storage</code> events, <code>BroadcastChannel</code>, and others.</p>
@@ -2261,7 +2257,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    </section>
    <section>
     <h2 class="heading settled" data-level="6" id="privacy-considerations"><span class="secno">6. </span><span class="content">Privacy Considerations</span><a class="self-link" href="#privacy-considerations"></a></h2>
-    <p>The <a data-link-type="dfn" href="#secure-contexts" id="ref-for-secure-contexts③⓪">secure context</a> definition in this document does not in itself have
+    <p>The <a data-link-type="dfn" href="#secure-contexts" id="ref-for-secure-contexts②⑨">secure context</a> definition in this document does not in itself have
   any privacy impact. It does, however, enable other features which do have
   interesting privacy implications to lock themselves into contexts which
   ensures that specific guarantees can be made regarding integrity,
@@ -2285,13 +2281,13 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     <h3 class="heading settled" data-level="7.3" id="new"><span class="secno">7.3. </span><span class="content">Restricting New Features</span><a class="self-link" href="#new"></a></h3>
     <p><em>This section is non-normative.</em></p>
     <p>When writing a specification for new features, we recommend that authors
-  and editors guard sensitive APIs with checks against <a data-link-type="dfn" href="#secure-contexts" id="ref-for-secure-contexts③①">secure contexts</a>.
+  and editors guard sensitive APIs with checks against <a data-link-type="dfn" href="#secure-contexts" id="ref-for-secure-contexts③⓪">secure contexts</a>.
   For example, something like the following might be a good approach:</p>
     <div class="example" id="example-0fe6ea9a">
      <a class="self-link" href="#example-0fe6ea9a"></a> 
      <ol>
       <li>
-        If the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#current-settings-object" id="ref-for-current-settings-object">current settings object</a> is <em>not</em> a <a data-link-type="dfn" href="#secure-contexts" id="ref-for-secure-contexts③②">secure
+        If the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#current-settings-object" id="ref-for-current-settings-object">current settings object</a> is <em>not</em> a <a data-link-type="dfn" href="#secure-contexts" id="ref-for-secure-contexts③①">secure
         context</a>, then: 
        <ol>
         <li> [<i>insert something appropriate here: perhaps a Promise could be
@@ -2300,7 +2296,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
        </ol>
      </ol>
     </div>
-    <p>Authors could alternatively ensure that sensitive APIs are only exposed to <a data-link-type="dfn" href="#secure-contexts" id="ref-for-secure-contexts③③">secure contexts</a> by guarding them with the [<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#SecureContext" id="ref-for-SecureContext④">SecureContext</a></code>] attribute.</p>
+    <p>Authors could alternatively ensure that sensitive APIs are only exposed to <a data-link-type="dfn" href="#secure-contexts" id="ref-for-secure-contexts③②">secure contexts</a> by guarding them with the [<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#SecureContext" id="ref-for-SecureContext④">SecureContext</a></code>] attribute.</p>
     <div class="example" id="example-2aa4b56a">
      <a class="self-link" href="#example-2aa4b56a"></a> 
 <pre class="idl highlight def">[<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#SecureContext" id="ref-for-SecureContext⑤"><c- g>SecureContext</c-></a>]
@@ -2320,16 +2316,16 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
      <p><em>This section is non-normative.</em></p>
      <p>The list above clearly includes some existing functionality that is currently
     available to the web over non-secure channels. We recommend that such legacy
-    functionality be modified to begin requiring a <a data-link-type="dfn" href="#secure-contexts" id="ref-for-secure-contexts③④">secure context</a> as
+    functionality be modified to begin requiring a <a data-link-type="dfn" href="#secure-contexts" id="ref-for-secure-contexts③③">secure context</a> as
     quickly as is reasonably possible <a data-link-type="biblio" href="#biblio-w3c-process">[W3C-PROCESS]</a>.</p>
      <ol>
       <li data-md>
        <p>If such a feature is not widely implemented, we recommend that the
   specification be immediately <a data-link-type="dfn" href="https://www.w3.org/2017/Process-20170301/#rec-modify" id="ref-for-rec-modify">modified</a> to include a restriction
-  to <a data-link-type="dfn" href="#secure-contexts" id="ref-for-secure-contexts③⑤">secure contexts</a>.</p>
+  to <a data-link-type="dfn" href="#secure-contexts" id="ref-for-secure-contexts③④">secure contexts</a>.</p>
       <li data-md>
        <p>If such a feature is widely implemented, but not yet in wide use, we
-  recommend that it be quickly restricted to <a data-link-type="dfn" href="#secure-contexts" id="ref-for-secure-contexts③⑥">secure contexts</a> by
+  recommend that it be quickly restricted to <a data-link-type="dfn" href="#secure-contexts" id="ref-for-secure-contexts③⑤">secure contexts</a> by
   adding a check as described in <a href="#new">§ 7.3 Restricting New Features</a> to existing implementations, and <a data-link-type="dfn" href="https://www.w3.org/2017/Process-20170301/#rec-modify" id="ref-for-rec-modify①">modifying the specification</a> accordingly.</p>
       <li data-md>
        <p>If such a feature is in wide use, we recommend that the existing
@@ -2345,8 +2341,8 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
      <ol>
       <li data-md>
        <p><a data-link-type="dfn" href="https://www.w3.org/2017/Process-20170301/#rec-modify" id="ref-for-rec-modify③">Modify</a> the specification to include
-  checks against <a data-link-type="dfn" href="#secure-contexts" id="ref-for-secure-contexts③⑦">secure context</a> before executing the algorithms for <code class="idl"><a data-link-type="idl" href="https://www.w3.org/TR/geolocation-API/#get-current-position" id="ref-for-get-current-position">getCurrentPosition()</a></code> and <code class="idl"><a data-link-type="idl" href="https://www.w3.org/TR/geolocation-API/#watch-position" id="ref-for-watch-position">watchPosition()</a></code>.</p>
-       <p>If the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#current-settings-object" id="ref-for-current-settings-object①">current settings object</a> is not a <a data-link-type="dfn" href="#secure-contexts" id="ref-for-secure-contexts③⑧">secure context</a>,
+  checks against <a data-link-type="dfn" href="#secure-contexts" id="ref-for-secure-contexts③⑥">secure context</a> before executing the algorithms for <code class="idl"><a data-link-type="idl" href="https://www.w3.org/TR/geolocation-API/#get-current-position" id="ref-for-get-current-position">getCurrentPosition()</a></code> and <code class="idl"><a data-link-type="idl" href="https://www.w3.org/TR/geolocation-API/#watch-position" id="ref-for-watch-position">watchPosition()</a></code>.</p>
+       <p>If the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#current-settings-object" id="ref-for-current-settings-object①">current settings object</a> is not a <a data-link-type="dfn" href="#secure-contexts" id="ref-for-secure-contexts③⑦">secure context</a>,
   then the algorithm should be aborted, and the <code>errorCallback</code> invoked with a <code>code</code> of <code>PERMISSION_DENIED</code>.</p>
       <li data-md>
        <p>The user agent should announce clear intentions to disable the API for
@@ -2552,8 +2548,6 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    <ul>
     <li><a href="#ref-for-concept-origin-opaque">3.2. 
     Is origin potentially trustworthy? </a>
-    <li><a href="#ref-for-concept-origin-opaque①">3.3. 
-    Is url potentially trustworthy? </a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-settings-object-origin">
@@ -2853,15 +2847,13 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     Is an environment settings object contextually secure? </a> <a href="#ref-for-secure-contexts②③">(2)</a>
     <li><a href="#ref-for-secure-contexts②④">3.2. 
     Is origin potentially trustworthy? </a>
-    <li><a href="#ref-for-secure-contexts②⑤">3.3. 
-    Is url potentially trustworthy? </a>
-    <li><a href="#ref-for-secure-contexts②⑥">4.2. Ancestral Risk</a>
-    <li><a href="#ref-for-secure-contexts②⑦">4.3. Risks associated with non-secure contexts</a> <a href="#ref-for-secure-contexts②⑧">(2)</a>
-    <li><a href="#ref-for-secure-contexts②⑨">5.1. Incomplete Isolation</a>
-    <li><a href="#ref-for-secure-contexts③⓪">6. Privacy Considerations</a>
-    <li><a href="#ref-for-secure-contexts③①">7.3. Restricting New Features</a> <a href="#ref-for-secure-contexts③②">(2)</a> <a href="#ref-for-secure-contexts③③">(3)</a>
-    <li><a href="#ref-for-secure-contexts③④">7.4. Restricting Legacy Features</a> <a href="#ref-for-secure-contexts③⑤">(2)</a> <a href="#ref-for-secure-contexts③⑥">(3)</a>
-    <li><a href="#ref-for-secure-contexts③⑦">7.4.1. Example: Geolocation</a> <a href="#ref-for-secure-contexts③⑧">(2)</a>
+    <li><a href="#ref-for-secure-contexts②⑤">4.2. Ancestral Risk</a>
+    <li><a href="#ref-for-secure-contexts②⑥">4.3. Risks associated with non-secure contexts</a> <a href="#ref-for-secure-contexts②⑦">(2)</a>
+    <li><a href="#ref-for-secure-contexts②⑧">5.1. Incomplete Isolation</a>
+    <li><a href="#ref-for-secure-contexts②⑨">6. Privacy Considerations</a>
+    <li><a href="#ref-for-secure-contexts③⓪">7.3. Restricting New Features</a> <a href="#ref-for-secure-contexts③①">(2)</a> <a href="#ref-for-secure-contexts③②">(3)</a>
+    <li><a href="#ref-for-secure-contexts③③">7.4. Restricting Legacy Features</a> <a href="#ref-for-secure-contexts③④">(2)</a> <a href="#ref-for-secure-contexts③⑤">(3)</a>
+    <li><a href="#ref-for-secure-contexts③⑥">7.4.1. Example: Geolocation</a> <a href="#ref-for-secure-contexts③⑦">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="non-secure-contexts">
