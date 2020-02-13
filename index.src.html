@@ -18,12 +18,11 @@ Version History: https://github.com/w3c/webappsec-secure-contexts/commits/master
 Indent: 2
 Markup Shorthands: markdown on
 Boilerplate: omit conformance, omit feedback-header
-At Risk: The <a>sandboxed secure browsing context flag</a> defined in [[#monkey-patching-sandbox-flags]], as well as its usage in [[#is-settings-object-contextually-secure]]. [<a href="#issue-255ee4a4">Issue 2</a>]
+At Risk: The <a>sandboxed secure browsing context flag</a> defined in [[#monkey-patching-sandbox-flags]], as well as its usage in [[#is-settings-object-contextually-secure]].
 </pre>
 <pre class="link-defaults">
 spec:url; type:interface; text:URL
 spec:dom; type:interface; text:Document
-spec:html; type:dfn; for:/; text: active sandboxing flag set
 spec:html; type:dfn; for:/; text: creator context security
 spec:html; type:dfn; for:/; text:global object
 </pre>
@@ -65,7 +64,7 @@ urlPrefix: https://www.w3.org/2017/Process-20170301/; spec: W3C-PROCESS
     "authors": [ "Mike West" ],
     "title": "Let 'localhost' be localhost.",
     "href": "https://tools.ietf.org/html/draft-west-let-localhost-be-localhost",
-    "publisher": "IETF"    
+    "publisher": "IETF"
   }
 }
 </pre>
@@ -136,7 +135,7 @@ urlPrefix: https://www.w3.org/2017/Process-20170301/; spec: W3C-PROCESS
   </style>
 
   <h3 id="examples-top-level">Top-level Documents</h3>
-  
+
   <div class="example">
     <p><code>http://example.com/</code> opened in a <a>top-level browsing
     context</a> is not a <a>secure context</a>, as it was not delivered over
@@ -609,7 +608,7 @@ urlPrefix: https://www.w3.org/2017/Process-20170301/; spec: W3C-PROCESS
 
     5.  Return "`Not Secure`" if any of the following are true:
 
-        1.  |document|'s <a>active sandboxing flag set</a> contains the
+        1.  |document|'s <a for=Document>active sandboxing flag set</a> contains the
             <a>sandboxed secure browsing context flag</a>.
 
             Note: This check is "at risk". See [[#monkey-patching-sandbox-flags]]
@@ -620,7 +619,7 @@ urlPrefix: https://www.w3.org/2017/Process-20170301/; spec: W3C-PROCESS
 
         3.  |settings|'s <a for="environment settings object">HTTPS state</a> is "`deprecated`".
 
-        4.  |document|'s <a>active sandboxing flag set</a> includes the
+        4.  |document|'s <a for=Document>active sandboxing flag set</a> includes the
             <a>sandboxed origin browsing context flag</a>, and
             [[#is-url-trustworthy]] returns "`Not Trustworthy`" when executed upon
             |settings|'s <a>creation URL</a>.
@@ -634,7 +633,7 @@ urlPrefix: https://www.w3.org/2017/Process-20170301/; spec: W3C-PROCESS
             look at the origin of its URL to determine whether we would have
             considered it trustworthy had it not been sandboxed.
 
-        5.  |document|'s <a>active sandboxing flag set</a> does not include the
+        5.  |document|'s <a for=Document>active sandboxing flag set</a> does not include the
             <a>sandboxed origin browsing context flag</a>, and
             [[#is-origin-trustworthy]] returns "`Not Trustworthy`" when executed
             upon |settings|'s <a for="environment settings object">origin</a>.
@@ -879,7 +878,7 @@ urlPrefix: https://www.w3.org/2017/Process-20170301/; spec: W3C-PROCESS
   resolvers SHOULD/MAY treat them specially. For better or worse, resolvers
   often ignore these suggestions, and will send `localhost` to the network
   for resolution in a number of circumstances.
-  
+
   Given that uncertainty, user agents MAY treat localhost names as having
   <a>potentially trustworthy origins</a> if and only if they also adhere to the
   localhost name resolution rules spelled out in [[!let-localhost-be-localhost]]
