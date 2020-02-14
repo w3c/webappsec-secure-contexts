@@ -18,7 +18,6 @@ Version History: https://github.com/w3c/webappsec-secure-contexts/commits/master
 Indent: 2
 Markup Shorthands: markdown on
 Boilerplate: omit conformance, omit feedback-header
-At Risk: The <a>sandboxed secure browsing context flag</a> defined in [[#monkey-patching-sandbox-flags]], as well as its usage in [[#is-settings-object-contextually-secure]].
 </pre>
 <pre class="link-defaults">
 spec:url; type:interface; text:URL
@@ -507,35 +506,6 @@ urlPrefix: https://www.w3.org/2017/Process-20170301/; spec: W3C-PROCESS
 
     <h3 id="monkey-patching-html">Modifications to HTML</h3>
 
-    <h4 id="monkey-patching-sandbox-flags">Sandboxing</h4>
-
-    Developers may wish to treat sandboxed <a for="/">browsing contexts</a> as <a>secure
-    contexts</a> in some situations, and <a>non-secure contexts</a> in others. The
-    following sandboxing flag supports this desire:
-
-    <dl>
-      <dt>The <dfn export>sandboxed secure browsing context flag</dfn></dt>
-      <dd>
-        This flag asserts that content in a browsing context will be treated as a
-        <a>non-secure context</a>, even if it would otherwise be considered secure.
-      </dd>
-    </dl>
-
-    The <a>parse a sandboxing directive</a> algorithm is extended by adding the
-    following entry to the list in the final step of the algorithm which parses
-    |tokens| into flags:
-
-    *   The <a>sandboxed secure browsing context flag</a>, unless |tokens|
-        contains the
-        <dfn attr-value for="iframe/sandbox" export>`allow-secure-context`</dfn>
-        keyword.
-
-    ISSUE(w3c/webappsec-secure-contexts#28): This feature is "at risk", pending the
-    resolution of the linked issue (which itself is pending metrics gathered from
-    browser vendors). Accordingly, no attempt has been made to upstream this to
-    either WHATWG's HTML or W3C's HTML. Once we've decided whether or not to keep
-    the feature, we'll work on that.
-
     <h4 id="shared-workers" class="non-normative">Shared Workers</h4>
 
     <em>This section is non-normative</em>.
@@ -608,18 +578,12 @@ urlPrefix: https://www.w3.org/2017/Process-20170301/; spec: W3C-PROCESS
 
     5.  Return "`Not Secure`" if any of the following are true:
 
-        1.  |document|'s <a for=Document>active sandboxing flag set</a> contains the
-            <a>sandboxed secure browsing context flag</a>.
-
-            Note: This check is "at risk". See [[#monkey-patching-sandbox-flags]]
-            for details.
-
-        2.  |document| has a [=parent browsing context=] (|context|), and |context|'s
+        1.  |document| has a [=parent browsing context=] (|context|), and |context|'s
             [=active document=]'s [=relevant settings object=] is not [=contextually secure=].
 
-        3.  |settings|'s <a for="environment settings object">HTTPS state</a> is "`deprecated`".
+        2.  |settings|'s <a for="environment settings object">HTTPS state</a> is "`deprecated`".
 
-        4.  |document|'s <a for=Document>active sandboxing flag set</a> includes the
+        3.  |document|'s <a for=Document>active sandboxing flag set</a> includes the
             <a>sandboxed origin browsing context flag</a>, and
             [[#is-url-trustworthy]] returns "`Not Trustworthy`" when executed upon
             |settings|'s <a>creation URL</a>.
@@ -633,7 +597,7 @@ urlPrefix: https://www.w3.org/2017/Process-20170301/; spec: W3C-PROCESS
             look at the origin of its URL to determine whether we would have
             considered it trustworthy had it not been sandboxed.
 
-        5.  |document|'s <a for=Document>active sandboxing flag set</a> does not include the
+        4.  |document|'s <a for=Document>active sandboxing flag set</a> does not include the
             <a>sandboxed origin browsing context flag</a>, and
             [[#is-origin-trustworthy]] returns "`Not Trustworthy`" when executed
             upon |settings|'s <a for="environment settings object">origin</a>.
