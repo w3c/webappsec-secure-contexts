@@ -1223,7 +1223,7 @@ Possible extra rowspan handling
 </style>
   <meta content="Bikeshed version d2febad00f62a578fcdd0d902104eb698a01e002" name="generator">
   <link href="https://www.w3.org/TR/secure-contexts/" rel="canonical">
-  <meta content="90b607620c3c4eafbab95f9df70aeb209e037444" name="document-revision">
+  <meta content="3fbc1bbdfa52212827e4c816a321d3b40c9a0d9b" name="document-revision">
 <style>
     .secure {
       fill: #8F8;
@@ -1498,7 +1498,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1>Secure Contexts</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2020-02-13">13 February 2020</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2020-02-14">14 February 2020</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1574,7 +1574,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     <li>
      <a href="#framework"><span class="secno">2</span> <span class="content">Framework</span></a>
      <ol class="toc">
-      <li><a href="#integration-idl"><span class="secno">2.1</span> <span class="content">Intergration with WebIDL</span></a>
+      <li><a href="#integration-idl"><span class="secno">2.1</span> <span class="content">Integration with WebIDL</span></a>
       <li>
        <a href="#monkey-patching-html"><span class="secno">2.2</span> <span class="content">Modifications to HTML</span></a>
        <ol class="toc">
@@ -1966,7 +1966,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   are <a data-link-type="dfn" href="#environment-settings-object-contextually-secure" id="ref-for-environment-settings-object-contextually-secure">contextually secure</a> as defined in <a href="#is-settings-object-contextually-secure">§ 3.1 Is an environment settings object contextually secure?</a>, and <dfn class="dfn-paneled" data-dfn-type="dfn" data-export id="non-secure-contexts">non-secure contexts</dfn> otherwise.</p>
     <p>Likewise, a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#global-object" id="ref-for-global-object">global object</a> (<code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/window-object.html#window" id="ref-for-window">Window</a></code>, <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/workers.html#workerglobalscope" id="ref-for-workerglobalscope">WorkerGlobalScope</a></code>, etc.) is considered to be a <a data-link-type="dfn" href="#secure-contexts" id="ref-for-secure-contexts①⑥">secure context</a> if its <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object">relevant settings object</a> is <a data-link-type="dfn" href="#environment-settings-object-contextually-secure" id="ref-for-environment-settings-object-contextually-secure①">contextually secure</a> as defined in <a href="#is-settings-object-contextually-secure">§ 3.1 Is an environment settings object contextually secure?</a>, and a <a data-link-type="dfn" href="#non-secure-contexts" id="ref-for-non-secure-contexts">non-secure context</a> otherwise.</p>
     <section class="non-normative">
-     <h3 class="heading settled" data-level="2.1" id="integration-idl"><span class="secno">2.1. </span><span class="content">Intergration with WebIDL</span><a class="self-link" href="#integration-idl"></a></h3>
+     <h3 class="heading settled" data-level="2.1" id="integration-idl"><span class="secno">2.1. </span><span class="content">Integration with WebIDL</span><a class="self-link" href="#integration-idl"></a></h3>
      <p><em>This section is non-normative.</em></p>
      <p>A new [<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#SecureContext" id="ref-for-SecureContext">SecureContext</a></code>] attribute is available for operators, which
     ensures that they will only be <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-exposed" id="ref-for-dfn-exposed">exposed</a> into secure contexts. The
@@ -2670,7 +2670,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <aside class="dfn-panel" data-for="term-for-SecureContext">
    <a href="https://heycam.github.io/webidl/#SecureContext">https://heycam.github.io/webidl/#SecureContext</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-SecureContext">2.1. Intergration with WebIDL</a> <a href="#ref-for-SecureContext①">(2)</a> <a href="#ref-for-SecureContext②">(3)</a> <a href="#ref-for-SecureContext③">(4)</a>
+    <li><a href="#ref-for-SecureContext">2.1. Integration with WebIDL</a> <a href="#ref-for-SecureContext①">(2)</a> <a href="#ref-for-SecureContext②">(3)</a> <a href="#ref-for-SecureContext③">(4)</a>
     <li><a href="#ref-for-SecureContext④">7.3. Restricting New Features</a> <a href="#ref-for-SecureContext⑤">(2)</a> <a href="#ref-for-SecureContext⑥">(3)</a>
    </ul>
   </aside>
@@ -2683,7 +2683,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <aside class="dfn-panel" data-for="term-for-dfn-exposed">
    <a href="https://heycam.github.io/webidl/#dfn-exposed">https://heycam.github.io/webidl/#dfn-exposed</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dfn-exposed">2.1. Intergration with WebIDL</a>
+    <li><a href="#ref-for-dfn-exposed">2.1. Integration with WebIDL</a>
    </ul>
   </aside>
   <h3 class="no-num no-ref heading settled" id="index-defined-elsewhere"><span class="content">Terms defined by reference</span><a class="self-link" href="#index-defined-elsewhere"></a></h3>
