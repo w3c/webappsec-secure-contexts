@@ -563,18 +563,22 @@ urlPrefix: https://www.w3.org/2017/Process-20170301/; spec: W3C-PROCESS
       Note: This is meant to be analog to the <a><i lang="la">a priori</i>
       authenticated URL</a> concept in [[MIX]].
 
-  4.  If |origin|'s <a for="origin">host</a> component matches one of the CIDR
+  4.  If |origin|'s <a for="origin">host</a> matches one of the CIDR
       notations `127.0.0.0/8` or `::1/128` [[!RFC4632]], return "`Potentially
       Trustworthy`".
 
-  5.  If |origin|'s <a for="origin">host</a> component is "`localhost`" or
-      falls within "`.localhost`", and the user agent conforms to the name
-      resolution rules in [[!let-localhost-be-localhost]], return "`Potentially
-      Trustworthy`".
+  5.  If the user agent conforms to the name resolution rules in
+      [[!let-localhost-be-localhost]] and one of the following is true:
+
+      * |origin|'s <a for="origin">host</a> is "`localhost`" or "`localhost.`"
+
+      * |origin|'s <a for="origin">host</a> ends with "`.localhost`" or "`.localhost.`"
+
+      then return "`Potentially Trustworthy`".
 
       Note: See [[#localhost]] for details on the requirements here.
 
-  6.  If |origin|'s <a for="origin">scheme</a> component is `file`, return
+  6.  If |origin|'s <a for="origin">scheme</a> is "`file`", return
       "`Potentially Trustworthy`".
 
   7.  If |origin|'s <a for="origin">scheme</a> component is one which the user

@@ -1323,7 +1323,7 @@ Possible extra rowspan handling
 </style>
   <meta content="Bikeshed version 89ebb6ab, updated Fri Oct 9 15:32:07 2020 -0700" name="generator">
   <link href="https://www.w3.org/TR/secure-contexts/" rel="canonical">
-  <meta content="533cc15ab77c65d70bb2a56a09274f2088b2f939" name="document-revision">
+  <meta content="683732dc245605cdcaf79716ab3ede1543155aeb" name="document-revision">
 <style>
     .secure {
       fill: #8F8;
@@ -2430,15 +2430,20 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   return "<code>Potentially Trustworthy</code>".</p>
       <p class="note" role="note"><span>Note:</span> This is meant to be analog to the <a data-link-type="dfn" href="https://w3c.github.io/webappsec-mixed-content/#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url"><i lang="la">a priori</i> authenticated URL</a> concept in <a data-link-type="biblio" href="#biblio-mix">[MIX]</a>.</p>
      <li data-md>
-      <p>If <var>origin</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-host" id="ref-for-concept-origin-host">host</a> component matches one of the CIDR
+      <p>If <var>origin</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-host" id="ref-for-concept-origin-host">host</a> matches one of the CIDR
   notations <code>127.0.0.0/8</code> or <code>::1/128</code> <a data-link-type="biblio" href="#biblio-rfc4632">[RFC4632]</a>, return "<code>Potentially Trustworthy</code>".</p>
      <li data-md>
-      <p>If <var>origin</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-host" id="ref-for-concept-origin-host①">host</a> component is "<code>localhost</code>" or
-  falls within "<code>.localhost</code>", and the user agent conforms to the name
-  resolution rules in <a data-link-type="biblio" href="#biblio-let-localhost-be-localhost">[let-localhost-be-localhost]</a>, return "<code>Potentially Trustworthy</code>".</p>
+      <p>If the user agent conforms to the name resolution rules in <a data-link-type="biblio" href="#biblio-let-localhost-be-localhost">[let-localhost-be-localhost]</a> and one of the following is true:</p>
+      <ul>
+       <li data-md>
+        <p><var>origin</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-host" id="ref-for-concept-origin-host①">host</a> is "<code>localhost</code>" or "<code>localhost.</code>"</p>
+       <li data-md>
+        <p><var>origin</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-host" id="ref-for-concept-origin-host②">host</a> ends with "<code>.localhost</code>" or "<code>.localhost.</code>"</p>
+      </ul>
+      <p>then return "<code>Potentially Trustworthy</code>".</p>
       <p class="note" role="note"><span>Note:</span> See <a href="#localhost">§ 5.2 localhost</a> for details on the requirements here.</p>
      <li data-md>
-      <p>If <var>origin</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-scheme" id="ref-for-concept-origin-scheme①">scheme</a> component is <code>file</code>, return
+      <p>If <var>origin</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-scheme" id="ref-for-concept-origin-scheme①">scheme</a> is "<code>file</code>", return
   "<code>Potentially Trustworthy</code>".</p>
      <li data-md>
       <p>If <var>origin</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-scheme" id="ref-for-concept-origin-scheme②">scheme</a> component is one which the user
@@ -2782,7 +2787,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    <a href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-host">https://html.spec.whatwg.org/multipage/origin.html#concept-origin-host</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-concept-origin-host">3.1. 
-    Is origin potentially trustworthy? </a> <a href="#ref-for-concept-origin-host①">(2)</a>
+    Is origin potentially trustworthy? </a> <a href="#ref-for-concept-origin-host①">(2)</a> <a href="#ref-for-concept-origin-host②">(3)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-the-iframe-element">
