@@ -1221,9 +1221,9 @@ Possible extra rowspan handling
 		}
 	}
 </style>
-  <meta content="Bikeshed version b43aa594f5014ff14748da1aace9afaa73d2b3e6" name="generator">
+  <meta content="Bikeshed version ca998723, updated Tue May 12 17:31:17 2020 -0700" name="generator">
   <link href="https://www.w3.org/TR/secure-contexts/" rel="canonical">
-  <meta content="1e2694ff640bcd5223d5d946cb9f1b5740a1d4fc" name="document-revision">
+  <meta content="fdb41dcbacb6035c7fc0f8d5823d09b7fec7ccda" name="document-revision">
 <style>
     .secure {
       fill: #8F8;
@@ -1252,91 +1252,6 @@ Possible extra rowspan handling
       stroke-dasharray: 5px, 5px;
     }
   </style>
-<style>/* style-md-lists */
-
-/* This is a weird hack for me not yet following the commonmark spec
-   regarding paragraph and lists. */
-[data-md] > :first-child {
-    margin-top: 0;
-}
-[data-md] > :last-child {
-    margin-bottom: 0;
-}</style>
-<style>/* style-selflinks */
-
-.heading, .issue, .note, .example, li, dt {
-    position: relative;
-}
-a.self-link {
-    position: absolute;
-    top: 0;
-    left: calc(-1 * (3.5rem - 26px));
-    width: calc(3.5rem - 26px);
-    height: 2em;
-    text-align: center;
-    border: none;
-    transition: opacity .2s;
-    opacity: .5;
-}
-a.self-link:hover {
-    opacity: 1;
-}
-.heading > a.self-link {
-    font-size: 83%;
-}
-li > a.self-link {
-    left: calc(-1 * (3.5rem - 26px) - 2em);
-}
-dfn > a.self-link {
-    top: auto;
-    left: auto;
-    opacity: 0;
-    width: 1.5em;
-    height: 1.5em;
-    background: gray;
-    color: white;
-    font-style: normal;
-    transition: opacity .2s, background-color .2s, color .2s;
-}
-dfn:hover > a.self-link {
-    opacity: 1;
-}
-dfn > a.self-link:hover {
-    color: black;
-}
-
-a.self-link::before            { content: "¶"; }
-.heading > a.self-link::before { content: "§"; }
-dfn > a.self-link::before      { content: "#"; }</style>
-<style>/* style-counters */
-
-body {
-    counter-reset: example figure issue;
-}
-.issue {
-    counter-increment: issue;
-}
-.issue:not(.no-marker)::before {
-    content: "Issue " counter(issue);
-}
-
-.example {
-    counter-increment: example;
-}
-.example:not(.no-marker)::before {
-    content: "Example " counter(example);
-}
-.invalid.example:not(.no-marker)::before,
-.illegal.example:not(.no-marker)::before {
-    content: "Invalid Example" counter(example);
-}
-
-figcaption {
-    counter-increment: figure;
-}
-figcaption:not(.no-marker)::before {
-    content: "Figure " counter(figure) " ";
-}</style>
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -1399,6 +1314,35 @@ pre .property::before, pre .property::after {
 [data-link-type=biblio] {
     white-space: pre;
 }</style>
+<style>/* style-counters */
+
+body {
+    counter-reset: example figure issue;
+}
+.issue {
+    counter-increment: issue;
+}
+.issue:not(.no-marker)::before {
+    content: "Issue " counter(issue);
+}
+
+.example {
+    counter-increment: example;
+}
+.example:not(.no-marker)::before {
+    content: "Example " counter(example);
+}
+.invalid.example:not(.no-marker)::before,
+.illegal.example:not(.no-marker)::before {
+    content: "Invalid Example" counter(example);
+}
+
+figcaption {
+    counter-increment: figure;
+}
+figcaption:not(.no-marker)::before {
+    content: "Figure " counter(figure) " ";
+}</style>
 <style>/* style-dfn-panel */
 
 .dfn-panel {
@@ -1436,6 +1380,62 @@ pre .property::before, pre .property::after {
 
 .dfn-paneled { cursor: pointer; }
 </style>
+<style>/* style-md-lists */
+
+/* This is a weird hack for me not yet following the commonmark spec
+   regarding paragraph and lists. */
+[data-md] > :first-child {
+    margin-top: 0;
+}
+[data-md] > :last-child {
+    margin-bottom: 0;
+}</style>
+<style>/* style-selflinks */
+
+.heading, .issue, .note, .example, li, dt {
+    position: relative;
+}
+a.self-link {
+    position: absolute;
+    top: 0;
+    left: calc(-1 * (3.5rem - 26px));
+    width: calc(3.5rem - 26px);
+    height: 2em;
+    text-align: center;
+    border: none;
+    transition: opacity .2s;
+    opacity: .5;
+}
+a.self-link:hover {
+    opacity: 1;
+}
+.heading > a.self-link {
+    font-size: 83%;
+}
+li > a.self-link {
+    left: calc(-1 * (3.5rem - 26px) - 2em);
+}
+dfn > a.self-link {
+    top: auto;
+    left: auto;
+    opacity: 0;
+    width: 1.5em;
+    height: 1.5em;
+    background: gray;
+    color: white;
+    font-style: normal;
+    transition: opacity .2s, background-color .2s, color .2s;
+}
+dfn:hover > a.self-link {
+    opacity: 1;
+}
+dfn > a.self-link:hover {
+    color: black;
+}
+
+a.self-link::before            { content: "¶"; }
+.heading > a.self-link::before { content: "§"; }
+dfn > a.self-link::before      { content: "#"; }</style>
 <style>/* style-syntax-highlighting */
 pre.idl.highlight { color: #708090; }
 .highlight:not(.idl) { background: hsl(24, 20%, 95%); }
@@ -1498,7 +1498,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1>Secure Contexts</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2020-02-14">14 February 2020</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2020-05-18">18 May 2020</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -2042,16 +2042,13 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
        <li data-md>
         <p><var>settings</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#https-state" id="ref-for-https-state②">HTTPS state</a> is "<code>deprecated</code>".</p>
        <li data-md>
-        <p><var>document</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#active-sandboxing-flag-set" id="ref-for-active-sandboxing-flag-set">active sandboxing flag set</a> includes the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#sandboxed-origin-browsing-context-flag" id="ref-for-sandboxed-origin-browsing-context-flag">sandboxed origin browsing context flag</a>, and <a href="#is-url-trustworthy">§ 3.3 Is url potentially trustworthy?</a> returns "<code>Not Trustworthy</code>" when executed upon <var>settings</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-environment-creation-url" id="ref-for-concept-environment-creation-url">creation URL</a>.</p>
+        <p><a href="#is-url-trustworthy">§ 3.3 Is url potentially trustworthy?</a> returns "<code>Not Trustworthy</code>" when executed upon <var>settings</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-environment-creation-url" id="ref-for-concept-environment-creation-url">creation URL</a>.</p>
         <p class="note" role="note"><span>Note:</span> We check the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-environment-creation-url" id="ref-for-concept-environment-creation-url①">creation URL</a> here because sandboxed content
   that is treated as being in an opaque origin (e.g. <code>&lt;iframe sandbox="allow-secure-context" src="http://127.0.0.1/"></code>)
   would otherwise be treated as non-trustworthy by <a href="#is-origin-trustworthy">§ 3.2 Is origin potentially trustworthy?</a>. Since sandboxing is a strict reduction in
   the content’s capabilities, and therefore in the risk it poses, we
   look at the origin of its URL to determine whether we would have
   considered it trustworthy had it not been sandboxed.</p>
-       <li data-md>
-        <p><var>document</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#active-sandboxing-flag-set" id="ref-for-active-sandboxing-flag-set①">active sandboxing flag set</a> does not include the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#sandboxed-origin-browsing-context-flag" id="ref-for-sandboxed-origin-browsing-context-flag①">sandboxed origin browsing context flag</a>, and <a href="#is-origin-trustworthy">§ 3.2 Is origin potentially trustworthy?</a> returns "<code>Not Trustworthy</code>" when executed
-  upon <var>settings</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-origin" id="ref-for-concept-settings-object-origin②">origin</a>.</p>
       </ol>
      <li data-md>
       <p>Return "<code>Secure</code>".</p>
@@ -2111,7 +2108,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     <h3 class="heading settled" data-level="3.3" id="is-url-trustworthy"><span class="secno">3.3. </span><span class="content"> Is <var>url</var> potentially trustworthy? </span><a class="self-link" href="#is-url-trustworthy"></a></h3>
     <p>A <dfn data-dfn-type="dfn" data-export id="potentially-trustworthy-url">potentially trustworthy URL<a class="self-link" href="#potentially-trustworthy-url"></a></dfn> is one which either inherits
   context from it’s creator (<code>about:blank</code>, <code>about:srcdoc</code>, <code>data</code>) or one whose <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-origin" id="ref-for-concept-url-origin">origin</a> is a <a data-link-type="dfn" href="#potentially-trustworthy-origin" id="ref-for-potentially-trustworthy-origin②">potentially trustworthy origin</a>.
-  Given a <code class="idl"><a data-link-type="idl" href="https://url.spec.whatwg.org/#url" id="ref-for-url">URL</a></code> (<var>url</var>), the following algorithm returns "<code>Potentially Trustworthy</code>" or "<code>Not Trustworthy</code>" as appropriate:</p>
+  Given a <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url" id="ref-for-concept-url">URL</a> (<var>url</var>), the following algorithm returns "<code>Potentially Trustworthy</code>" or "<code>Not Trustworthy</code>" as appropriate:</p>
     <ol>
      <li data-md>
       <p>If <var>url</var> is "<code>about:blank</code>" or "<code>about:srcdoc</code>", return "<code>Potentially Trustworthy</code>".</p>
@@ -2443,13 +2440,6 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     Is an environment settings object contextually secure? </a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="term-for-active-sandboxing-flag-set">
-   <a href="https://html.spec.whatwg.org/multipage/origin.html#active-sandboxing-flag-set">https://html.spec.whatwg.org/multipage/origin.html#active-sandboxing-flag-set</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-active-sandboxing-flag-set">3.1. 
-    Is an environment settings object contextually secure? </a> <a href="#ref-for-active-sandboxing-flag-set①">(2)</a>
-   </ul>
-  </aside>
   <aside class="dfn-panel" data-for="term-for-concept-environment-creation-url">
    <a href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-environment-creation-url">https://html.spec.whatwg.org/multipage/webappapis.html#concept-environment-creation-url</a><b>Referenced in:</b>
    <ul>
@@ -2517,7 +2507,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    <a href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-origin">https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-origin</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-concept-settings-object-origin">3.1. 
-    Is an environment settings object contextually secure? </a> <a href="#ref-for-concept-settings-object-origin①">(2)</a> <a href="#ref-for-concept-settings-object-origin②">(3)</a>
+    Is an environment settings object contextually secure? </a> <a href="#ref-for-concept-settings-object-origin①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-WorkerGlobalScope-owner-set">
@@ -2557,13 +2547,6 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     Is an environment settings object contextually secure? </a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="term-for-sandboxed-origin-browsing-context-flag">
-   <a href="https://html.spec.whatwg.org/multipage/origin.html#sandboxed-origin-browsing-context-flag">https://html.spec.whatwg.org/multipage/origin.html#sandboxed-origin-browsing-context-flag</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-sandboxed-origin-browsing-context-flag">3.1. 
-    Is an environment settings object contextually secure? </a> <a href="#ref-for-sandboxed-origin-browsing-context-flag①">(2)</a>
-   </ul>
-  </aside>
   <aside class="dfn-panel" data-for="term-for-concept-origin-scheme">
    <a href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-scheme">https://html.spec.whatwg.org/multipage/origin.html#concept-origin-scheme</a><b>Referenced in:</b>
    <ul>
@@ -2595,13 +2578,6 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     Is origin potentially trustworthy? </a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="term-for-url">
-   <a href="https://url.spec.whatwg.org/#url">https://url.spec.whatwg.org/#url</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-url">3.3. 
-    Is url potentially trustworthy? </a>
-   </ul>
-  </aside>
   <aside class="dfn-panel" data-for="term-for-concept-url-origin">
    <a href="https://url.spec.whatwg.org/#concept-url-origin">https://url.spec.whatwg.org/#concept-url-origin</a><b>Referenced in:</b>
    <ul>
@@ -2615,6 +2591,13 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     <li><a href="#ref-for-concept-url-scheme">3.3. 
     Is url potentially trustworthy? </a>
     <li><a href="#ref-for-concept-url-scheme①">7.1. Packaged Applications</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-url">
+   <a href="https://url.spec.whatwg.org/#concept-url">https://url.spec.whatwg.org/#concept-url</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-url">3.3. 
+    Is url potentially trustworthy? </a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-rec-modify">
@@ -2664,7 +2647,6 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
      <li><span class="dfn-paneled" id="term-for-windoworworkerglobalscope" style="color:initial">WindowOrWorkerGlobalScope</span>
      <li><span class="dfn-paneled" id="term-for-workerglobalscope" style="color:initial">WorkerGlobalScope</span>
      <li><span class="dfn-paneled" id="term-for-active-document" style="color:initial">active document</span>
-     <li><span class="dfn-paneled" id="term-for-active-sandboxing-flag-set" style="color:initial">active sandboxing flag set</span>
      <li><span class="dfn-paneled" id="term-for-concept-environment-creation-url" style="color:initial">creation url</span>
      <li><span class="dfn-paneled" id="term-for-current-settings-object" style="color:initial">current settings object</span>
      <li><span class="dfn-paneled" id="term-for-concept-origin-domain" style="color:initial">domain</span>
@@ -2680,7 +2662,6 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
      <li><span class="dfn-paneled" id="term-for-concept-origin-port" style="color:initial">port</span>
      <li><span class="dfn-paneled" id="term-for-relevant-settings-object" style="color:initial">relevant settings object</span>
      <li><span class="dfn-paneled" id="term-for-responsible-document" style="color:initial">responsible document</span>
-     <li><span class="dfn-paneled" id="term-for-sandboxed-origin-browsing-context-flag" style="color:initial">sandboxed origin browsing context flag</span>
      <li><span class="dfn-paneled" id="term-for-concept-origin-scheme" style="color:initial">scheme</span>
      <li><span class="dfn-paneled" id="term-for-top-level-browsing-context" style="color:initial">top-level browsing context</span>
      <li><span class="dfn-paneled" id="term-for-concept-origin-tuple" style="color:initial">tuple origin</span>
@@ -2693,9 +2674,9 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    <li>
     <a data-link-type="biblio">[URL]</a> defines the following terms:
     <ul>
-     <li><span class="dfn-paneled" id="term-for-url" style="color:initial">URL</span>
      <li><span class="dfn-paneled" id="term-for-concept-url-origin" style="color:initial">origin</span>
      <li><span class="dfn-paneled" id="term-for-concept-url-scheme" style="color:initial">scheme</span>
+     <li><span class="dfn-paneled" id="term-for-concept-url" style="color:initial">url</span>
     </ul>
    <li>
     <a data-link-type="biblio">[W3C-PROCESS]</a> defines the following terms:
@@ -2770,8 +2751,8 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    <dd>Mark Watson. <a href="https://www.w3.org/TR/WebCryptoAPI/">Web Cryptography API</a>. 26 January 2017. REC. URL: <a href="https://www.w3.org/TR/WebCryptoAPI/">https://www.w3.org/TR/WebCryptoAPI/</a>
   </dl>
   <h2 class="no-num no-ref heading settled" id="idl-index"><span class="content">IDL Index</span><a class="self-link" href="#idl-index"></a></h2>
-<pre class="idl highlight def"><c- b>partial</c-> <c- b>interface</c-> <c- b>mixin</c-> <a class="idl-code" data-link-type="interface" href="https://html.spec.whatwg.org/multipage/webappapis.html#windoworworkerglobalscope" id="ref-for-windoworworkerglobalscope①"><c- g>WindowOrWorkerGlobalScope</c-></a> {
-  <c- b>readonly</c-> <c- b>attribute</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-boolean" id="ref-for-idl-boolean①"><c- b>boolean</c-></a> <a data-readonly data-type="boolean" href="#dom-windoworworkerglobalscope-issecurecontext"><code><c- g>isSecureContext</c-></code></a>;
+<pre class="idl highlight def"><c- b>partial</c-> <c- b>interface</c-> <c- b>mixin</c-> <a class="idl-code" data-link-type="interface" href="https://html.spec.whatwg.org/multipage/webappapis.html#windoworworkerglobalscope"><c- g>WindowOrWorkerGlobalScope</c-></a> {
+  <c- b>readonly</c-> <c- b>attribute</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-boolean"><c- b>boolean</c-></a> <a data-readonly data-type="boolean" href="#dom-windoworworkerglobalscope-issecurecontext"><code><c- g>isSecureContext</c-></code></a>;
 };
 
 </pre>

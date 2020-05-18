@@ -20,9 +20,7 @@ Markup Shorthands: markdown on
 Boilerplate: omit conformance, omit feedback-header
 </pre>
 <pre class="link-defaults">
-spec:url; type:interface; text:URL
 spec:dom; type:interface; text:Document
-spec:html; type:dfn; for:/; text: creator context security
 spec:html; type:dfn; for:/; text:global object
 </pre>
 <pre class="anchors">
@@ -583,9 +581,7 @@ urlPrefix: https://www.w3.org/2017/Process-20170301/; spec: W3C-PROCESS
 
         2.  |settings|'s <a for="environment settings object">HTTPS state</a> is "`deprecated`".
 
-        3.  |document|'s <a for=Document>active sandboxing flag set</a> includes the
-            <a>sandboxed origin browsing context flag</a>, and
-            [[#is-url-trustworthy]] returns "`Not Trustworthy`" when executed upon
+        3.  [[#is-url-trustworthy]] returns "`Not Trustworthy`" when executed upon
             |settings|'s <a>creation URL</a>.
 
             Note: We check the <a>creation URL</a> here because sandboxed content
@@ -596,11 +592,6 @@ urlPrefix: https://www.w3.org/2017/Process-20170301/; spec: W3C-PROCESS
             the content's capabilities, and therefore in the risk it poses, we
             look at the origin of its URL to determine whether we would have
             considered it trustworthy had it not been sandboxed.
-
-        4.  |document|'s <a for=Document>active sandboxing flag set</a> does not include the
-            <a>sandboxed origin browsing context flag</a>, and
-            [[#is-origin-trustworthy]] returns "`Not Trustworthy`" when executed
-            upon |settings|'s <a for="environment settings object">origin</a>.
 
     6.  Return "`Secure`".
   </ol>
@@ -680,7 +671,7 @@ urlPrefix: https://www.w3.org/2017/Process-20170301/; spec: W3C-PROCESS
   A <dfn export>potentially trustworthy URL</dfn> is one which either inherits
   context from it's creator (`about:blank`, `about:srcdoc`, `data`) or one whose
   <a for="url">origin</a> is a <a>potentially trustworthy origin</a>.
-  Given a {{URL}} (|url|), the following algorithm returns "`Potentially
+  Given a <a for=/>URL</a> (|url|), the following algorithm returns "`Potentially
   Trustworthy`" or "`Not Trustworthy`" as appropriate:
 
   1.  If |url| is "`about:blank`" or "`about:srcdoc`", return "`Potentially
