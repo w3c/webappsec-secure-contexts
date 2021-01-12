@@ -20,10 +20,8 @@ Markup Shorthands: markdown on
 Boilerplate: omit conformance, omit feedback-header
 </pre>
 <pre class="link-defaults">
-spec:url; type:interface; text:URL
-spec:dom; type:interface; text:Document
-spec:html; type:dfn; for:/; text: creator context security
-spec:html; type:dfn; for:/; text:global object
+spec:html; type:attribute; text:isSecureContext
+spec:html; type:dfn; text:environment
 </pre>
 <pre class="anchors">
 urlPrefix: https://www.w3.org/TR/geolocation-API/; spec: GEOLOCATION-API
@@ -460,150 +458,71 @@ urlPrefix: https://www.w3.org/2017/Process-20170301/; spec: W3C-PROCESS
   </div>
 </section>
 
-<section>
+<section class="non-normative">
   <h2 id="framework">Framework</h2>
 
-  [=Environment settings objects=] are considered to be <dfn export>secure contexts</dfn> if they
-  are [=contextually secure=] as defined in [[#is-settings-object-contextually-secure]], and
-  <dfn export>non-secure contexts</dfn> otherwise.
+  <em>This section is non-normative.</em>
 
-  Likewise, a [=global object=] ({{Window}}, {{WorkerGlobalScope}}, etc.) is considered to be a
-  [=secure context=] if its [=relevant settings object=] is [=contextually secure=] as defined in
-  [[#is-settings-object-contextually-secure]], and a [=non-secure context=] otherwise.
+  <h3 id="integration-idl">Integration with WebIDL</h3>
 
-  <section class="non-normative">
-    <h3 id="integration-idl">Integration with WebIDL</h3>
+  A new [{{SecureContext}}] attribute is available for operators, which
+  ensures that they will only be <a>exposed</a> into secure contexts. The
+  following example should help:
 
-    <em>This section is non-normative.</em>
+  <div class="example">
+    <pre class="idl">
+      interface ExampleFeature {
+        // This call will succeed in all contexts.
+        Promise &lt;double&gt; calculateNotSoSecretResult();
 
-    A new [{{SecureContext}}] attribute is available for operators, which
-    ensures that they will only be <a>exposed</a> into secure contexts. The
-    following example should help:
+        // This operation will not be exposed to a non-secure context.
+        [<a extended-attribute>SecureContext</a>] Promise&lt;double&gt; calculateSecretResult();
 
-    <div class="example">
-      <pre class="idl">
-        interface ExampleFeature {
-          // This call will succeed in all contexts.
-          Promise &lt;double&gt; calculateNotSoSecretResult();
+        // The same applies here: the operation will not be exposed to a non-secure context.
+        [<a extended-attribute>SecureContext</a>] boolean getSecretBoolean();
+      };
 
-          // This operation will not be exposed to a non-secure context.
-          [<a extended-attribute>SecureContext</a>] Promise&lt;double&gt; calculateSecretResult();
+      [<a extended-attribute>SecureContext</a>]
+      interface SecureFeature {
+        // This interface will not be exposed to non-secure contexts.
+        Promise&lt;any&gt; doAmazingThing();
+      };
+    </pre>
+  </div>
 
-          // The same applies here: the operation will not be exposed to a non-secure context.
-          [<a extended-attribute>SecureContext</a>] boolean getSecretBoolean();
-        };
+  Specification authors are encouraged to use this attribute when defining new
+  features.
 
-        [<a extended-attribute>SecureContext</a>]
-        interface SecureFeature {
-          // This interface will not be exposed to non-secure contexts.
-          Promise&lt;any&gt; doAmazingThing();
-        };
-      </pre>
-    </div>
+  <h3 id="monkey-patching-html">Integrations with HTML</h3>
 
-    Specification authors are encouraged to use this attribute when defining new
-    features.
+  <h4 id="shared-workers" class="non-normative">Shared Workers</h4>
 
-    <h3 id="monkey-patching-html">Modifications to HTML</h3>
-
-    <h4 id="shared-workers" class="non-normative">Shared Workers</h4>
-
-    <em>This section is non-normative</em>.
-
-    The {{SharedWorker}} constructor will throw a `SecurityError` exception if
-    a <a>secure context</a> attempts to attach to an Worker which is not a
-    <a>secure context</a>, and if a non-secure context attempts to attach to a
-    Worker which is a <a>secure context</a>.
-
-    ISSUE(w3c/workers#6): This is currently defined in Step 11.4.2 of the WHATWG's HTML (landed in
-    <a href="https://github.com/whatwg/html/pull/1560">whatwg/html#1560</a>. It has not yet been
-    picked up by the W3C's version of that algorithm.
-  </section>
+  The {{SharedWorker}} constructor will throw a "{{SecurityError}}"
+  {{DOMException}} exception if a <a>secure context</a> attempts to attach to
+  a Worker which is not a <a>secure context</a>, and if a non-secure context
+  attempts to attach to a Worker which is a <a>secure context</a>.
 
   <h4 id="monkey-patching-global-object">Feature Detection</h4>
 
-  An application can determine determine whether it's executing in a [=secure context=] by checking
-  a simple boolean attribute on the [=global object=]:
+  An application can determine determine whether it's executing in a
+  [=secure context=] by checking the
+  {{WindowOrWorkerGlobalScope/isSecureContext}} boolean defined on
+  {{WindowOrWorkerGlobalScope}}.
 
-  <pre class="idl">
-    partial interface mixin WindowOrWorkerGlobalScope {
-      readonly attribute boolean isSecureContext;
-    };
-  </pre>
+  <h4 id="is-settings-object-contextually-secure">Secure and non-secure contexts</h4>
 
-  The {{WindowOrWorkerGlobalScope/isSecureContext}} attribute's getter
-  returns `true` if `this` [=global object=]'s [=relevant settings object=] is
-  [=environment settings object/contextually secure=], and `false` otherwise.
+  The HTML Standard defines whether an [=environment=] is a [=secure context=]
+  or a [=non-secure context=]. This is the primary mechanism used by other
+  specifications.
 
-  ISSUE: Upstream this to HTML.
+  Given a [=/global object=], specifications can check whether its
+  [=relevant settings object=] (which is an [=environment=]) is a
+  [=secure context=].
+
 </section>
 
 <section>
   <h2 id="algorithms">Algorithms</h2>
-
-  <h3 id="is-settings-object-contextually-secure">
-    Is an environment settings object contextually secure?
-  </h3>
-
-  An [=environment settings object=] (|settings|) is considered
-  <dfn for="environment settings object">contextually secure</dfn> if and only if the following
-  <dfn abstract-op id="settings-object" lt="Is an environment settings object contextually secure?">Is |settings| contextually secure?</dfn>
-  algorithm returns "`Secure`":
-
-  <ol class="algorithm">
-    1.  Let |global| be |settings|'s [=environment settings object/global object=].
-
-    2.  If |global| is a {{WorkerGlobalScope}}, then:
-
-        1.  For each {{Document}} (|document|) in |global|'s [=owner set=]:
-
-            1.  Assert: Workers must be same-origin with the context that created them, so
-                |document|'s [=relevant settings object=]'s [=environment settings object/origin=]
-                and [=environment settings object/HTTPS state=] is the same as |global|'s
-                [=relevant settings object=]'s [=environment settings object/origin=] and
-                [=environment settings object/HTTPS state=].
-
-            2.  If |document|'s [=relevant settings object=] is not
-                [=environment settings object/contextually secure=], return "`Not Secure`".
-
-        2.  Return "`Secure`".
-
-            Note: Given the assertion above, if we've reached this step, the
-            worker must have been created from a [=secure context=], and
-            therefore must itself be a [=secure context=].
-
-    3.  Assert: |global| is a {{Window}}.
-
-    4.  Let |document| be |settings|'s <a>responsible document</a>.
-
-    5.  Return "`Not Secure`" if any of the following are true:
-
-        1.  |document| has a [=parent browsing context=] (|context|), and |context|'s
-            [=active document=]'s [=relevant settings object=] is not [=contextually secure=].
-
-        2.  |settings|'s <a for="environment settings object">HTTPS state</a> is "`deprecated`".
-
-        3.  |document|'s <a for=Document>active sandboxing flag set</a> includes the
-            <a>sandboxed origin browsing context flag</a>, and
-            [[#is-url-trustworthy]] returns "`Not Trustworthy`" when executed upon
-            |settings|'s <a>creation URL</a>.
-
-            Note: We check the <a>creation URL</a> here because sandboxed content
-            that is treated as being in an opaque origin (e.g.
-            `<iframe sandbox="allow-secure-context" src="http://127.0.0.1/">`)
-            would otherwise be treated as non-trustworthy by
-            [[#is-origin-trustworthy]]. Since sandboxing is a strict reduction in
-            the content's capabilities, and therefore in the risk it poses, we
-            look at the origin of its URL to determine whether we would have
-            considered it trustworthy had it not been sandboxed.
-
-        4.  |document|'s <a for=Document>active sandboxing flag set</a> does not include the
-            <a>sandboxed origin browsing context flag</a>, and
-            [[#is-origin-trustworthy]] returns "`Not Trustworthy`" when executed
-            upon |settings|'s <a for="environment settings object">origin</a>.
-
-    6.  Return "`Secure`".
-  </ol>
 
   <h3 id="is-origin-trustworthy">
     Is |origin| potentially trustworthy?
@@ -680,7 +599,7 @@ urlPrefix: https://www.w3.org/2017/Process-20170301/; spec: W3C-PROCESS
   A <dfn export>potentially trustworthy URL</dfn> is one which either inherits
   context from it's creator (`about:blank`, `about:srcdoc`, `data`) or one whose
   <a for="url">origin</a> is a <a>potentially trustworthy origin</a>.
-  Given a {{URL}} (|url|), the following algorithm returns "`Potentially
+  Given a [=URL record=] (|url|), the following algorithm returns "`Potentially
   Trustworthy`" or "`Not Trustworthy`" as appropriate:
 
   1.  If |url| is "`about:blank`" or "`about:srcdoc`", return "`Potentially
@@ -740,7 +659,7 @@ urlPrefix: https://www.w3.org/2017/Process-20170301/; spec: W3C-PROCESS
 
   <h3 id="ancestors">Ancestral Risk</h3>
 
-  The <a abstract-op>Is an environment settings object contextually secure?</a> algorithm walks
+  The [=secure context=] algorithm walks
   through all the ancestors of a particular context in order to determine whether or not the
   context itself is secure. Why wouldn't we consider a securely-delivered document in an
   <{iframe}> to be secure, in and of itself?
