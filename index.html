@@ -2468,7 +2468,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
       <p>If <var>url</var>’s <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-scheme" id="ref-for-concept-url-scheme">scheme</a> is "<code>data</code>", return "<code>Potentially Trustworthy</code>".</p>
      <li data-md>
       <p>Return the result of executing <a href="#is-origin-trustworthy">§ 3.1 Is origin potentially trustworthy?</a> on <var>url</var>’s <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-origin" id="ref-for-concept-url-origin①">origin</a>.</p>
-      <p class="note" role="note"><span>Note:</span> The origin of <code>blob:</code> and <code>filesystem:</code> URLs is the origin of the
+      <p class="note" role="note"><span>Note:</span> The origin of <code>blob:</code> URLs is the origin of the
   context in which they were created. Therefore, blobs created in a
   trustworthy origin will themselves be potentially trustworthy.</p>
     </ol>
