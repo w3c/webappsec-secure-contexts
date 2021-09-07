@@ -6,7 +6,7 @@
   <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-ED" rel="stylesheet">
   <meta content="Bikeshed version 4f053d00e, updated Tue Aug 10 14:13:32 2021 -0700" name="generator">
   <link href="https://www.w3.org/TR/secure-contexts/" rel="canonical">
-  <meta content="132e32b1ac8b200c0794ca9247fa4d96c1647d42" name="document-revision">
+  <meta content="98f82006ed57d23c5fefa7702ccec23f952c69b5" name="document-revision">
 <style>
     .secure {
       fill: #8F8;
@@ -632,27 +632,6 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   certain minimum standards of authentication and confidentiality are met.</p>
   </div>
   <h2 class="no-num no-toc no-ref heading settled" id="status"><span class="content">Status of this document</span></h2>
-  <div data-fill-with="status">
-   <p> This is a public copy of the editors’ draft.
-	It is provided for discussion only and may change at any moment.
-	Its publication here does not imply endorsement of its contents by W3C.
-	Don’t cite this document other than as work in progress. </p>
-   <p> <strong>Changes to this document may be tracked at <a href="https://github.com/w3c/webappsec">https://github.com/w3c/webappsec</a>.</strong> </p>
-   <p> The (<a href="https://lists.w3.org/Archives/Public/public-webappsec/">archived</a>) public mailing list <a href="mailto:public-webappsec@w3.org?Subject=%5Bsecure-contexts%5D%20PUT%20SUBJECT%20HERE">public-webappsec@w3.org</a> (see <a href="https://www.w3.org/Mail/Request">instructions</a>)
-	is preferred for discussion of this specification.
-	When sending e-mail,
-	please put the text “secure-contexts” in the subject,
-	preferably like this:
-	“[secure-contexts] <em>…summary of comment…</em>” </p>
-   <p> This document was produced by the <a href="https://www.w3.org/2011/webappsec/">Web Application Security Working Group</a>. </p>
-   <p> This document was produced by a group operating under
-	the <a href="https://www.w3.org/Consortium/Patent-Policy/">W3C Patent Policy</a>.
-	W3C maintains a <a href="https://www.w3.org/groups/wg/webappsec/ipr" rel="disclosure">public list of any patent disclosures</a> made in connection with the deliverables of the group;
-	that page also includes instructions for disclosing a patent.
-	An individual who has actual knowledge of a patent which the individual believes contains <a href="https://www.w3.org/Consortium/Patent-Policy/#def-essential">Essential Claim(s)</a> must disclose the information in accordance with <a href="https://www.w3.org/Consortium/Patent-Policy/#sec-Disclosure">section 6 of the W3C Patent Policy</a>. </p>
-   <p> This document is governed by the <a href="https://www.w3.org/2020/Process-20200915/" id="w3c_process_revision">15 September 2020 W3C Process Document</a>. </p>
-   <p></p>
-  </div>
   <div data-fill-with="at-risk"></div>
   <nav data-fill-with="table-of-contents" id="toc">
    <h2 class="no-num no-toc no-ref" id="contents">Table of Contents</h2>
@@ -737,6 +716,36 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    </ol>
   </nav>
   <main>
+   <p> <em>This section describes the status of this document at the time of
+  its publication. Other documents may supersede this document. A list of
+  current W3C publications and the latest revision of this technical report
+  can be found in the <a href="https://www.w3.org/TR/">W3C technical reports
+  index at https://www.w3.org/TR/.</a></em> </p>
+   <p> This document was published by the <a href="https://www.w3.org/2011/webappsec/">Web Application Security Working Group</a> as a Candidate Recommendation Draft. This document is intended to become a W3C Recommendation. </p>
+   <p> If you wish to make comments regarding this document, please send them to <a href="mailto:public-webappsec@w3.org?Subject=%5BSsecure-contexts%5D%20PUT%20SUBJECT%20HERE">public-webappsec@w3.org</a> (<a href="mailto:public-webappsec-request@w3.org?subject=subscribe">subscribe</a>, <a href="https://lists.w3.org/Archives/Public/public-webappsec/">archives</a>).
+    When sending e-mail,
+    please put the text “secure-contexts” in the subject,
+    preferably like this:
+    [secure-contexts] <em>…summary of comment…</em>”.
+    All comments are welcome. </p>
+   <p> Publication as a Candidate Recommendation does not imply endorsement by the
+  W3C Membership. A Candidate Recommendation Draft integrates changes from the
+  previous Candidate Recommendation that the Working Group intends to include in
+  a subsequent Candidate Recommendation Snapshot. This is a draft document and
+  may be updated, replaced or obsoleted by other documents at any time. It is
+  inappropriate to cite this document as other than work in progress. </p>
+   <p> The entrance criteria for this document to enter the Proposed Recommendation stage
+  is to have a minimum of two independent and interoperable user agents that
+  implementation all the features of this specification, which will be determined by
+  passing the user agent tests defined in the test suite developed by the Working
+  Group. The Working Group will prepare an implementation report to track progress. </p>
+   <p> This document was produced by a group operating under
+    the <a href="https://www.w3.org/Consortium/Patent-Policy-20200915/">W3C Patent Policy</a>.
+    W3C maintains a <a href="https://www.w3.org/groups/wg/das/ipr" rel="disclosure">public list of any patent disclosures</a> made in connection with the deliverables of the group;
+    that page also includes instructions for disclosing a patent.
+    An individual who has actual knowledge of a patent which the individual believes contains <a href="https://www.w3.org/Consortium/Patent-Policy-20200915/#def-essential">Essential Claim(s)</a> must disclose the information in accordance with <a href="https://www.w3.org/Consortium/Patent-Policy-20200915/#sec-Disclosure">section 6 of the W3C Patent Policy</a>. </p>
+   <p> This document is governed by the <a href="https://www.w3.org/2020/Process-20200915/" id="w3c_process_revision">15 September 2020 W3C Process Document</a>. </p>
+   <p></p>
    <section>
     <h2 class="heading settled" data-level="1" id="intro"><span class="secno">1. </span><span class="content">Introduction</span><a class="self-link" href="#intro"></a></h2>
     <p><em>This section is not normative.</em></p>
