@@ -12,6 +12,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: w3c/spec-prod@v2
         with:
+          TOOLCHAIN: bikeshed
           GH_PAGES_BRANCH: gh-pages
           W3C_ECHIDNA_TOKEN: ${{ secrets.ECHIDNA_TOKEN }}
           W3C_WG_DECISION_URL: https://lists.w3.org/Archives/Public/public-webappsec/2015Mar/0170.html
