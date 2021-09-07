@@ -2,6 +2,8 @@
 <pre class="metadata">
 Status: ED
 ED: https://w3c.github.io/webappsec-secure-contexts/
+Issue Tracking: GitHub https://github.com/w3c/webappsec-secure-contexts/issues
+Implementation Report: https://wpt.fyi/results/secure-contexts
 Shortname: secure-contexts
 Level: None
 TR: https://www.w3.org/TR/secure-contexts/
