@@ -7,7 +7,6 @@ Implementation Report: https://wpt.fyi/results/secure-contexts
 Shortname: secure-contexts
 Level: None
 TR: https://www.w3.org/TR/secure-contexts/
-Previous Version: https://www.w3.org/TR/2016/WD-secure-contexts-20160719/
 Editor: Mike West 56384, Google Inc., mkwst@google.com
 Former Editor: Yan Zhu, Brave
 Group: webappsec
