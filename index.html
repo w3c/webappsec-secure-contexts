@@ -3,10 +3,11 @@
   <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
   <title>Secure Contexts</title>
-  <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-ED" rel="stylesheet">
-  <meta content="Bikeshed version a210b7d86, updated Thu Sep 16 13:45:19 2021 -0700" name="generator">
+  <meta content="ED" name="w3c-status">
+  <link href="https://www.w3.org/StyleSheets/TR/2021/W3C-ED" rel="stylesheet">
+  <meta content="Bikeshed version 82ce88815, updated Thu Sep 7 16:33:55 2023 -0700" name="generator">
   <link href="https://www.w3.org/TR/secure-contexts/" rel="canonical">
-  <meta content="93442a1dce84fb235e94ff76df5e41c47fd16d6b" name="document-revision">
+  <meta content="88c94452a8c429fab23557583b150499a88d100c" name="document-revision">
 <style>
     .secure {
       fill: #8F8;
@@ -35,8 +36,7 @@
       stroke-dasharray: 5px, 5px;
     }
   </style>
-<style>/* style-autolinks */
-
+<style>/* Boilerplate: style-autolinks */
 .css.css, .property.property, .descriptor.descriptor {
     color: var(--a-normal-text);
     font-size: inherit;
@@ -96,8 +96,17 @@ pre .property::before, pre .property::after {
 
 [data-link-type=biblio] {
     white-space: pre;
-}</style>
-<style>/* style-colors */
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --selflink-text: black;
+        --selflink-bg: silver;
+        --selflink-hover-text: white;
+    }
+}
+</style>
+<style>/* Boilerplate: style-colors */
 
 /* Any --*-text not paired with a --*-bg is assumed to have a transparent bg */
 :root {
@@ -205,203 +214,7 @@ pre .property::before, pre .property::after {
     --outdated-shadow: red;
 
     --editedrec-bg: darkorange;
-}</style>
-<style>/* style-counters */
-
-body {
-    counter-reset: example figure issue;
 }
-.issue {
-    counter-increment: issue;
-}
-.issue:not(.no-marker)::before {
-    content: "Issue " counter(issue);
-}
-
-.example {
-    counter-increment: example;
-}
-.example:not(.no-marker)::before {
-    content: "Example " counter(example);
-}
-.invalid.example:not(.no-marker)::before,
-.illegal.example:not(.no-marker)::before {
-    content: "Invalid Example" counter(example);
-}
-
-figcaption {
-    counter-increment: figure;
-}
-figcaption:not(.no-marker)::before {
-    content: "Figure " counter(figure) " ";
-}</style>
-<style>/* style-dfn-panel */
-
-:root {
-    --dfnpanel-bg: #ddd;
-    --dfnpanel-text: var(--text);
-}
-.dfn-panel {
-    position: absolute;
-    z-index: 35;
-    height: auto;
-    width: -webkit-fit-content;
-    width: fit-content;
-    max-width: 300px;
-    max-height: 500px;
-    overflow: auto;
-    padding: 0.5em 0.75em;
-    font: small Helvetica Neue, sans-serif, Droid Sans Fallback;
-    background: var(--dfnpanel-bg);
-    color: var(--dfnpanel-text);
-    border: outset 0.2em;
-}
-.dfn-panel:not(.on) { display: none; }
-.dfn-panel * { margin: 0; padding: 0; text-indent: 0; }
-.dfn-panel > b { display: block; }
-.dfn-panel a { color: var(--dfnpanel-text); }
-.dfn-panel a:not(:hover) { text-decoration: none !important; border-bottom: none !important; }
-.dfn-panel > b + b { margin-top: 0.25em; }
-.dfn-panel ul { padding: 0; }
-.dfn-panel li { list-style: inside; }
-.dfn-panel.activated {
-    display: inline-block;
-    position: fixed;
-    left: .5em;
-    bottom: 2em;
-    margin: 0 auto;
-    max-width: calc(100vw - 1.5em - .4em - .5em);
-    max-height: 30vh;
-}
-
-.dfn-paneled { cursor: pointer; }
-</style>
-<style>/* style-md-lists */
-
-/* This is a weird hack for me not yet following the commonmark spec
-   regarding paragraph and lists. */
-[data-md] > :first-child {
-    margin-top: 0;
-}
-[data-md] > :last-child {
-    margin-bottom: 0;
-}</style>
-<style>/* style-selflinks */
-
-:root {
-    --selflink-text: white;
-    --selflink-bg: gray;
-    --selflink-hover-text: black;
-}
-.heading, .issue, .note, .example, li, dt {
-    position: relative;
-}
-a.self-link {
-    position: absolute;
-    top: 0;
-    left: calc(-1 * (3.5rem - 26px));
-    width: calc(3.5rem - 26px);
-    height: 2em;
-    text-align: center;
-    border: none;
-    transition: opacity .2s;
-    opacity: .5;
-}
-a.self-link:hover {
-    opacity: 1;
-}
-.heading > a.self-link {
-    font-size: 83%;
-}
-li > a.self-link {
-    left: calc(-1 * (3.5rem - 26px) - 2em);
-}
-dfn > a.self-link {
-    top: auto;
-    left: auto;
-    opacity: 0;
-    width: 1.5em;
-    height: 1.5em;
-    background: var(--selflink-bg);
-    color: var(--selflink-text);
-    font-style: normal;
-    transition: opacity .2s, background-color .2s, color .2s;
-}
-dfn:hover > a.self-link {
-    opacity: 1;
-}
-dfn > a.self-link:hover {
-    color: var(--selflink-hover-text);
-}
-
-a.self-link::before            { content: "¶"; }
-.heading > a.self-link::before { content: "§"; }
-dfn > a.self-link::before      { content: "#"; }
-</style>
-<style>/* style-syntax-highlighting */
-
-            pre.idl.highlight {
-                background: var(--borderedblock-bg, var(--def-bg));
-            }
-            
-code.highlight { padding: .1em; border-radius: .3em; }
-pre.highlight, pre > code.highlight { display: block; padding: 1em; margin: .5em 0; overflow: auto; border-radius: 0; }
-
-.highlight:not(.idl) { background: rgba(0, 0, 0, .03); }
-c-[a] { color: #990055 } /* Keyword.Declaration */
-c-[b] { color: #990055 } /* Keyword.Type */
-c-[c] { color: #708090 } /* Comment */
-c-[d] { color: #708090 } /* Comment.Multiline */
-c-[e] { color: #0077aa } /* Name.Attribute */
-c-[f] { color: #669900 } /* Name.Tag */
-c-[g] { color: #222222 } /* Name.Variable */
-c-[k] { color: #990055 } /* Keyword */
-c-[l] { color: #000000 } /* Literal */
-c-[m] { color: #000000 } /* Literal.Number */
-c-[n] { color: #0077aa } /* Name */
-c-[o] { color: #999999 } /* Operator */
-c-[p] { color: #999999 } /* Punctuation */
-c-[s] { color: #a67f59 } /* Literal.String */
-c-[t] { color: #a67f59 } /* Literal.String.Single */
-c-[u] { color: #a67f59 } /* Literal.String.Double */
-c-[cp] { color: #708090 } /* Comment.Preproc */
-c-[c1] { color: #708090 } /* Comment.Single */
-c-[cs] { color: #708090 } /* Comment.Special */
-c-[kc] { color: #990055 } /* Keyword.Constant */
-c-[kn] { color: #990055 } /* Keyword.Namespace */
-c-[kp] { color: #990055 } /* Keyword.Pseudo */
-c-[kr] { color: #990055 } /* Keyword.Reserved */
-c-[ld] { color: #000000 } /* Literal.Date */
-c-[nc] { color: #0077aa } /* Name.Class */
-c-[no] { color: #0077aa } /* Name.Constant */
-c-[nd] { color: #0077aa } /* Name.Decorator */
-c-[ni] { color: #0077aa } /* Name.Entity */
-c-[ne] { color: #0077aa } /* Name.Exception */
-c-[nf] { color: #0077aa } /* Name.Function */
-c-[nl] { color: #0077aa } /* Name.Label */
-c-[nn] { color: #0077aa } /* Name.Namespace */
-c-[py] { color: #0077aa } /* Name.Property */
-c-[ow] { color: #999999 } /* Operator.Word */
-c-[mb] { color: #000000 } /* Literal.Number.Bin */
-c-[mf] { color: #000000 } /* Literal.Number.Float */
-c-[mh] { color: #000000 } /* Literal.Number.Hex */
-c-[mi] { color: #000000 } /* Literal.Number.Integer */
-c-[mo] { color: #000000 } /* Literal.Number.Oct */
-c-[sb] { color: #a67f59 } /* Literal.String.Backtick */
-c-[sc] { color: #a67f59 } /* Literal.String.Char */
-c-[sd] { color: #a67f59 } /* Literal.String.Doc */
-c-[se] { color: #a67f59 } /* Literal.String.Escape */
-c-[sh] { color: #a67f59 } /* Literal.String.Heredoc */
-c-[si] { color: #a67f59 } /* Literal.String.Interpol */
-c-[sx] { color: #a67f59 } /* Literal.String.Other */
-c-[sr] { color: #a67f59 } /* Literal.String.Regex */
-c-[ss] { color: #a67f59 } /* Literal.String.Symbol */
-c-[vc] { color: #0077aa } /* Name.Variable.Class */
-c-[vg] { color: #0077aa } /* Name.Variable.Global */
-c-[vi] { color: #0077aa } /* Name.Variable.Instance */
-c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
-</style>
-<style>/* style-darkmode */
 
 @media (prefers-color-scheme: dark) {
     :root {
@@ -514,20 +327,288 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
        which is quite common in practice... */
     img { background: white; }
 }
-@media (prefers-color-scheme: dark) {
-    :root {
-        --selflink-text: black;
-        --selflink-bg: silver;
-        --selflink-hover-text: white;
-    }
+</style>
+<style>/* Boilerplate: style-counters */
+body {
+    counter-reset: example figure issue;
+}
+.issue {
+    counter-increment: issue;
+}
+.issue:not(.no-marker)::before {
+    content: "Issue " counter(issue);
 }
 
+.example {
+    counter-increment: example;
+}
+.example:not(.no-marker)::before {
+    content: "Example " counter(example);
+}
+.invalid.example:not(.no-marker)::before,
+.illegal.example:not(.no-marker)::before {
+    content: "Invalid Example" counter(example);
+}
+
+figcaption {
+    counter-increment: figure;
+}
+figcaption:not(.no-marker)::before {
+    content: "Figure " counter(figure) " ";
+}
+</style>
+<style>/* Boilerplate: style-dfn-panel */
+:root {
+    --dfnpanel-bg: #ddd;
+    --dfnpanel-text: var(--text);
+}
 @media (prefers-color-scheme: dark) {
     :root {
         --dfnpanel-bg: #222;
         --dfnpanel-text: var(--text);
     }
 }
+.dfn-panel {
+    position: absolute;
+    z-index: 35;
+    width: 20em;
+    width: 300px;
+    height: auto;
+    max-height: 500px;
+    overflow: auto;
+    padding: 0.5em 0.75em;
+    font: small Helvetica Neue, sans-serif, Droid Sans Fallback;
+    background: var(--dfnpanel-bg);
+    color: var(--dfnpanel-text);
+    border: outset 0.2em;
+    white-space: normal; /* in case it's moved into a pre */
+}
+.dfn-panel:not(.on) { display: none; }
+.dfn-panel * { margin: 0; padding: 0; text-indent: 0; }
+.dfn-panel > b { display: block; }
+.dfn-panel a { color: var(--dfnpanel-text); }
+.dfn-panel a:not(:hover) { text-decoration: none !important; border-bottom: none !important; }
+.dfn-panel > b + b { margin-top: 0.25em; }
+.dfn-panel ul { padding: 0 0 0 1em; list-style: none; }
+.dfn-panel li a {
+    white-space: pre;
+    display: inline-block;
+    max-width: calc(300px - 1.5em - 1em);
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.dfn-panel.activated {
+    display: inline-block;
+    position: fixed;
+    left: .5em;
+    bottom: 2em;
+    margin: 0 auto;
+    max-width: calc(100vw - 1.5em - .4em - .5em);
+    max-height: 30vh;
+}
+
+.dfn-paneled[role="button"] { cursor: pointer; }
+</style>
+<style>/* Boilerplate: style-dfn-panel */
+:root {
+    --dfnpanel-bg: #ddd;
+    --dfnpanel-text: var(--text);
+}
+@media (prefers-color-scheme: dark) {
+    :root {
+        --dfnpanel-bg: #222;
+        --dfnpanel-text: var(--text);
+    }
+}
+.dfn-panel {
+    position: absolute;
+    z-index: 35;
+    width: 20em;
+    width: 300px;
+    height: auto;
+    max-height: 500px;
+    overflow: auto;
+    padding: 0.5em 0.75em;
+    font: small Helvetica Neue, sans-serif, Droid Sans Fallback;
+    background: var(--dfnpanel-bg);
+    color: var(--dfnpanel-text);
+    border: outset 0.2em;
+    white-space: normal; /* in case it's moved into a pre */
+}
+.dfn-panel:not(.on) { display: none; }
+.dfn-panel * { margin: 0; padding: 0; text-indent: 0; }
+.dfn-panel > b { display: block; }
+.dfn-panel a { color: var(--dfnpanel-text); }
+.dfn-panel a:not(:hover) { text-decoration: none !important; border-bottom: none !important; }
+.dfn-panel > b + b { margin-top: 0.25em; }
+.dfn-panel ul { padding: 0 0 0 1em; list-style: none; }
+.dfn-panel li a {
+    white-space: pre;
+    display: inline-block;
+    max-width: calc(300px - 1.5em - 1em);
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.dfn-panel.activated {
+    display: inline-block;
+    position: fixed;
+    left: .5em;
+    bottom: 2em;
+    margin: 0 auto;
+    max-width: calc(100vw - 1.5em - .4em - .5em);
+    max-height: 30vh;
+}
+
+.dfn-paneled[role="button"] { cursor: pointer; }
+</style>
+<style>/* Boilerplate: style-issues */
+a[href].issue-return {
+    float: right;
+    float: inline-end;
+    color: var(--issueheading-text);
+    font-weight: bold;
+    text-decoration: none;
+}
+</style>
+<style>/* Boilerplate: style-md-lists */
+/* This is a weird hack for me not yet following the commonmark spec
+   regarding paragraph and lists. */
+[data-md] > :first-child {
+    margin-top: 0;
+}
+[data-md] > :last-child {
+    margin-bottom: 0;
+}
+</style>
+<style>/* Boilerplate: style-selflinks */
+
+:root {
+    --selflink-text: white;
+    --selflink-bg: gray;
+    --selflink-hover-text: black;
+}
+.heading, .issue, .note, .example, li, dt {
+    position: relative;
+}
+a.self-link {
+    position: absolute;
+    top: 0;
+    left: calc(-1 * (3.5rem - 26px));
+    width: calc(3.5rem - 26px);
+    height: 2em;
+    text-align: center;
+    border: none;
+    transition: opacity .2s;
+    opacity: .5;
+}
+a.self-link:hover {
+    opacity: 1;
+}
+.heading > a.self-link {
+    font-size: 83%;
+}
+.example > a.self-link,
+.note > a.self-link,
+.issue > a.self-link {
+    /* These blocks are overflow:auto, so positioning outside
+       doesn't work. */
+    left: auto;
+    right: 0;
+}
+li > a.self-link {
+    left: calc(-1 * (3.5rem - 26px) - 2em);
+}
+dfn > a.self-link {
+    top: auto;
+    left: auto;
+    opacity: 0;
+    width: 1.5em;
+    height: 1.5em;
+    background: var(--selflink-bg);
+    color: var(--selflink-text);
+    font-style: normal;
+    transition: opacity .2s, background-color .2s, color .2s;
+}
+dfn:hover > a.self-link {
+    opacity: 1;
+}
+dfn > a.self-link:hover {
+    color: var(--selflink-hover-text);
+}
+
+a.self-link::before            { content: "¶"; }
+.heading > a.self-link::before { content: "§"; }
+dfn > a.self-link::before      { content: "#"; }
+</style>
+<style>/* Boilerplate: style-syntax-highlighting */
+
+            pre.idl.highlight {
+                background: var(--borderedblock-bg, var(--def-bg));
+            }
+            
+</style>
+<style>/* Boilerplate: style-syntax-highlighting */
+
+code.highlight { padding: .1em; border-radius: .3em; }
+pre.highlight, pre > code.highlight { display: block; padding: 1em; margin: .5em 0; overflow: auto; border-radius: 0; }
+
+.highlight:not(.idl) { background: rgba(0, 0, 0, .03); }
+c-[a] { color: #990055 } /* Keyword.Declaration */
+c-[b] { color: #990055 } /* Keyword.Type */
+c-[c] { color: #708090 } /* Comment */
+c-[d] { color: #708090 } /* Comment.Multiline */
+c-[e] { color: #0077aa } /* Name.Attribute */
+c-[f] { color: #669900 } /* Name.Tag */
+c-[g] { color: #222222 } /* Name.Variable */
+c-[k] { color: #990055 } /* Keyword */
+c-[l] { color: #000000 } /* Literal */
+c-[m] { color: #000000 } /* Literal.Number */
+c-[n] { color: #0077aa } /* Name */
+c-[o] { color: #999999 } /* Operator */
+c-[p] { color: #999999 } /* Punctuation */
+c-[s] { color: #a67f59 } /* Literal.String */
+c-[t] { color: #a67f59 } /* Literal.String.Single */
+c-[u] { color: #a67f59 } /* Literal.String.Double */
+c-[cp] { color: #708090 } /* Comment.Preproc */
+c-[c1] { color: #708090 } /* Comment.Single */
+c-[cs] { color: #708090 } /* Comment.Special */
+c-[kc] { color: #990055 } /* Keyword.Constant */
+c-[kn] { color: #990055 } /* Keyword.Namespace */
+c-[kp] { color: #990055 } /* Keyword.Pseudo */
+c-[kr] { color: #990055 } /* Keyword.Reserved */
+c-[ld] { color: #000000 } /* Literal.Date */
+c-[nc] { color: #0077aa } /* Name.Class */
+c-[no] { color: #0077aa } /* Name.Constant */
+c-[nd] { color: #0077aa } /* Name.Decorator */
+c-[ni] { color: #0077aa } /* Name.Entity */
+c-[ne] { color: #0077aa } /* Name.Exception */
+c-[nf] { color: #0077aa } /* Name.Function */
+c-[nl] { color: #0077aa } /* Name.Label */
+c-[nn] { color: #0077aa } /* Name.Namespace */
+c-[py] { color: #0077aa } /* Name.Property */
+c-[ow] { color: #999999 } /* Operator.Word */
+c-[mb] { color: #000000 } /* Literal.Number.Bin */
+c-[mf] { color: #000000 } /* Literal.Number.Float */
+c-[mh] { color: #000000 } /* Literal.Number.Hex */
+c-[mi] { color: #000000 } /* Literal.Number.Integer */
+c-[mo] { color: #000000 } /* Literal.Number.Oct */
+c-[sb] { color: #a67f59 } /* Literal.String.Backtick */
+c-[sc] { color: #a67f59 } /* Literal.String.Char */
+c-[sd] { color: #a67f59 } /* Literal.String.Doc */
+c-[se] { color: #a67f59 } /* Literal.String.Escape */
+c-[sh] { color: #a67f59 } /* Literal.String.Heredoc */
+c-[si] { color: #a67f59 } /* Literal.String.Interpol */
+c-[sx] { color: #a67f59 } /* Literal.String.Other */
+c-[sr] { color: #a67f59 } /* Literal.String.Regex */
+c-[ss] { color: #a67f59 } /* Literal.String.Symbol */
+c-[vc] { color: #0077aa } /* Name.Variable.Class */
+c-[vg] { color: #0077aa } /* Name.Variable.Global */
+c-[vi] { color: #0077aa } /* Name.Variable.Instance */
+c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
+
+
 @media (prefers-color-scheme: dark) {
     .highlight:not(.idl) { background: rgba(255, 255, 255, .05); }
 
@@ -593,11 +674,11 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
 </style>
  <body class="h-entry">
   <div class="head">
-   <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
+   <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72"> </a> </p>
    <h1>Secure Contexts</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-09-18">18 September 2021</time></span></h2>
-   <details>
-    <summary>Specification Metadata</summary>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2023-11-10">10 November 2023</time></p>
+   <details open>
+    <summary>More details about this document</summary>
     <div data-fill-with="spec-metadata">
      <dl>
       <dt>This version:
@@ -608,10 +689,9 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
       <dd><a href="https://github.com/w3c/webappsec-secure-contexts/commits/main/index.bs">https://github.com/w3c/webappsec-secure-contexts/commits/main/index.bs</a>
       <dt>Feedback:
       <dd><span><a href="mailto:public-webappsec@w3.org?subject=%5Bsecure-contexts%5D%20YOUR%20TOPIC%20HERE">public-webappsec@w3.org</a> with subject line “<kbd>[secure-contexts] <i data-lt>… message topic …</i></kbd>” (<a href="https://lists.w3.org/Archives/Public/public-webappsec/" rel="discussion">archives</a>)</span>
+      <dd><a href="https://github.com/w3c/webappsec-secure-contexts/issues">GitHub</a>
       <dt>Implementation Report:
       <dd><a href="https://wpt.fyi/results/secure-contexts">https://wpt.fyi/results/secure-contexts</a>
-      <dt>Issue Tracking:
-      <dd><a href="https://github.com/w3c/webappsec-secure-contexts/issues">GitHub</a>
       <dt class="editor">Editor:
       <dd class="editor p-author h-card vcard" data-editor-id="56384"><a class="p-name fn u-email email" href="mailto:mkwst@google.com">Mike West</a> (<span class="p-org org">Google Inc.</span>)
       <dt class="editor">Former Editor:
@@ -622,7 +702,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     </div>
    </details>
    <div data-fill-with="warning"></div>
-   <p class="copyright" data-fill-with="copyright"><a href="https://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2021 <a href="https://www.w3.org/"><abbr title="World Wide Web Consortium">W3C</abbr></a><sup>®</sup> (<a href="https://www.csail.mit.edu/"><abbr title="Massachusetts Institute of Technology">MIT</abbr></a>, <a href="https://www.ercim.eu/"><abbr title="European Research Consortium for Informatics and Mathematics">ERCIM</abbr></a>, <a href="https://www.keio.ac.jp/">Keio</a>, <a href="https://ev.buaa.edu.cn/">Beihang</a>). W3C <a href="https://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="https://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and <a href="https://www.w3.org/Consortium/Legal/copyright-software">permissive document license</a> rules apply. </p>
+   <p class="copyright" data-fill-with="copyright"><a href="https://www.w3.org/policies/#copyright">Copyright</a> © 2023 <a href="https://www.w3.org/">World Wide Web Consortium</a>. <abbr title="World Wide Web Consortium">W3C</abbr><sup>®</sup> <a href="https://www.w3.org/policies/#Legal_Disclaimer">liability</a>, <a href="https://www.w3.org/policies/#W3C_Trademarks">trademark</a> and <a href="https://www.w3.org/copyright/software-license/" rel="license" title="W3C Software and Document License">permissive document license</a> rules apply. </p>
    <hr title="Separator for header">
   </div>
   <div class="p-summary" data-fill-with="abstract">
@@ -632,7 +712,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   implementers and specification authors to enable certain features only when
   certain minimum standards of authentication and confidentiality are met.</p>
   </div>
-  <h2 class="no-num no-toc no-ref heading settled" id="status"><span class="content">Status of this document</span></h2>
+  <h2 class="no-num no-toc no-ref heading settled" id="sotd"><span class="content">Status of this document</span></h2>
   <div data-fill-with="status">
    <p> This is a public copy of the editors’ draft.
 	It is provided for discussion only and may change at any moment.
@@ -645,13 +725,13 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
 	please put the text “secure-contexts” in the subject,
 	preferably like this:
 	“[secure-contexts] <em>…summary of comment…</em>” </p>
-   <p> This document was produced by the <a href="https://www.w3.org/2011/webappsec/">Web Application Security Working Group</a>. </p>
+   <p> This document was produced by the <a href="https://www.w3.org/groups/wg/webappsec">Web Application Security Working Group</a>. </p>
    <p> This document was produced by a group operating under
 	the <a href="https://www.w3.org/Consortium/Patent-Policy/">W3C Patent Policy</a>.
 	W3C maintains a <a href="https://www.w3.org/groups/wg/webappsec/ipr" rel="disclosure">public list of any patent disclosures</a> made in connection with the deliverables of the group;
 	that page also includes instructions for disclosing a patent.
 	An individual who has actual knowledge of a patent which the individual believes contains <a href="https://www.w3.org/Consortium/Patent-Policy/#def-essential">Essential Claim(s)</a> must disclose the information in accordance with <a href="https://www.w3.org/Consortium/Patent-Policy/#sec-Disclosure">section 6 of the W3C Patent Policy</a>. </p>
-   <p> This document is governed by the <a href="https://www.w3.org/2020/Process-20200915/" id="w3c_process_revision">15 September 2020 W3C Process Document</a>. </p>
+   <p> This document is governed by the <a href="https://www.w3.org/2023/Process-20231103/" id="w3c_process_revision">03 November 2023 W3C Process Document</a>. </p>
    <p></p>
   </div>
   <div data-fill-with="at-risk"></div>
@@ -718,12 +798,6 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
      </ol>
     <li><a href="#acknowledgements"><span class="secno">8</span> <span class="content">Acknowledgements</span></a>
     <li>
-     <a href="#conformance"><span class="secno"></span> <span class="content">Conformance</span></a>
-     <ol class="toc">
-      <li><a href="#conventions"><span class="secno"></span> <span class="content">Document conventions</span></a>
-      <li><a href="#conformant-algorithms"><span class="secno"></span> <span class="content">Conformant Algorithms</span></a>
-     </ol>
-    <li>
      <a href="#index"><span class="secno"></span> <span class="content">Index</span></a>
      <ol class="toc">
       <li><a href="#index-defined-here"><span class="secno"></span> <span class="content">Terms defined by this specification</span></a>
@@ -744,7 +818,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     <p>As the web platform is extended to enable more useful and powerful
   applications, it becomes increasingly important to ensure that the features
   which enable those applications are enabled only in contexts which meet a minimum
-  security level. As an extension of the TAG’s recommendations in <a data-link-type="biblio" href="#biblio-securing-web">[SECURING-WEB]</a>,
+  security level. As an extension of the TAG’s recommendations in <a data-link-type="biblio" href="#biblio-securing-web" title="Securing the Web">[SECURING-WEB]</a>,
   this document describes threat models for feature abuse on the web (see <a href="#threat-models">§ 4.1 Threat Models</a>) and outlines normative requirements which should be
   incorporated into documents specifying new features (see <a href="#implementation-considerations">§ 7 Implementation Considerations</a>).</p>
     <p>The most obvious of the requirements discussed here is that application code
@@ -761,7 +835,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     <h3 class="heading settled" data-level="1.1" id="examples-top-level"><span class="secno">1.1. </span><span class="content">Top-level Documents</span><a class="self-link" href="#examples-top-level"></a></h3>
     <div class="example" id="example-c84aa709">
      <a class="self-link" href="#example-c84aa709"></a> 
-     <p><code>http://example.com/</code> opened in a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context">top-level browsing
+     <p><code>http://example.com/</code> opened in a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/document-sequences.html#top-level-browsing-context" id="ref-for-top-level-browsing-context">top-level browsing
     context</a> is not a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#secure-context" id="ref-for-secure-context">secure context</a>, as it was not delivered over
     an authenticated and encrypted channel.</p>
      <svg height="200" width="400">
@@ -773,7 +847,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     </div>
     <div class="example" id="example-13e52697">
      <a class="self-link" href="#example-13e52697"></a> 
-     <p><code>https://example.com/</code> opened in a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context①">top-level browsing
+     <p><code>https://example.com/</code> opened in a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/document-sequences.html#top-level-browsing-context" id="ref-for-top-level-browsing-context①">top-level browsing
     context</a> is a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#secure-context" id="ref-for-secure-context①">secure context</a>, as it was delivered over
     an authenticated and encrypted channel.</p>
      <svg height="200" width="400">
@@ -824,7 +898,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     <p>Framed documents can be <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#secure-context" id="ref-for-secure-context②">secure contexts</a> if they are delivered from <a data-link-type="dfn" href="#potentially-trustworthy-origin" id="ref-for-potentially-trustworthy-origin">potentially trustworthy origins</a>, <em>and</em> if they’re embedded
   in a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#secure-context" id="ref-for-secure-context③">secure context</a>. That is:</p>
     <div class="example" id="example-d781493f">
-     <a class="self-link" href="#example-d781493f"></a> If <code>https://example.com/</code> opened in a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context②">top-level browsing
+     <a class="self-link" href="#example-d781493f"></a> If <code>https://example.com/</code> opened in a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/document-sequences.html#top-level-browsing-context" id="ref-for-top-level-browsing-context②">top-level browsing
     context</a> opens <code>https://sub.example.com/</code> in a frame, then
     both are <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#secure-context" id="ref-for-secure-context④">secure contexts</a>, as both were delivered over
     authenticated and encrypted channels.
@@ -878,7 +952,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   context</a>:</p>
     <div class="example" id="example-81f4526b">
      <a class="self-link" href="#example-81f4526b"></a> 
-     <p>If <code>https://example.com/</code> in a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context③">top-level browsing
+     <p>If <code>https://example.com/</code> in a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/document-sequences.html#top-level-browsing-context" id="ref-for-top-level-browsing-context③">top-level browsing
     context</a> runs <code>https://example.com/worker.js</code>, then
     both the document and the worker are <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#secure-context" id="ref-for-secure-context⑦">secure contexts</a>.</p>
      <svg height="200" width="600">
@@ -897,7 +971,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     </div>
     <div class="example" id="example-3fea90e7">
      <a class="self-link" href="#example-3fea90e7"></a> 
-     <p>If <code>http://non-secure.example.com/</code> in a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context④">top-level browsing
+     <p>If <code>http://non-secure.example.com/</code> in a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/document-sequences.html#top-level-browsing-context" id="ref-for-top-level-browsing-context④">top-level browsing
     context</a> frames <code>https://example.com/</code>, which runs <code>https://example.com/worker.js</code>, then neither the framed document
     nor the worker are <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#secure-context" id="ref-for-secure-context⑧">secure contexts</a>.</p>
      <svg height="200" width="600">
@@ -925,7 +999,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   be attached to by other non-secure contexts.</p>
     <div class="example" id="example-0fa14bd0">
      <a class="self-link" href="#example-0fa14bd0"></a> 
-     <p>If <code>https://example.com/</code> in a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context⑤">top-level browsing
+     <p>If <code>https://example.com/</code> in a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/document-sequences.html#top-level-browsing-context" id="ref-for-top-level-browsing-context⑤">top-level browsing
     context</a> runs <code>https://example.com/worker.js</code> as a Shared
     Worker, then both the document and the worker are considered secure
     contexts.</p>
@@ -945,7 +1019,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     </div>
     <div class="example" id="example-5d65c447">
      <a class="self-link" href="#example-5d65c447"></a> 
-     <p><code>https://example.com/</code> in a different <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context⑥">top-level
+     <p><code>https://example.com/</code> in a different <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/document-sequences.html#top-level-browsing-context" id="ref-for-top-level-browsing-context⑥">top-level
     browsing context</a> (e.g. in a new window) is a secure context, so it may
     access the secure shared worker:</p>
      <svg height="400" width="600">
@@ -1034,7 +1108,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   contexts</a>.</p>
     <div class="example" id="example-7c2324e2">
      <a class="self-link" href="#example-7c2324e2"></a> 
-     <p>If <code>https://example.com/</code> in a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context⑦">top-level browsing
+     <p>If <code>https://example.com/</code> in a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/document-sequences.html#top-level-browsing-context" id="ref-for-top-level-browsing-context⑦">top-level browsing
     context</a> registers <code>https://example.com/service.js</code>,
     then both the document and the Service Worker are considered secure
     contexts.</p>
@@ -1057,8 +1131,8 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     <h2 class="heading settled" data-level="2" id="framework"><span class="secno">2. </span><span class="content">Framework</span><a class="self-link" href="#framework"></a></h2>
     <p><em>This section is non-normative.</em></p>
     <h3 class="heading settled" data-level="2.1" id="integration-idl"><span class="secno">2.1. </span><span class="content">Integration with WebIDL</span><a class="self-link" href="#integration-idl"></a></h3>
-    <p>A new [<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#SecureContext" id="ref-for-SecureContext">SecureContext</a></code>] attribute is available for operators, which
-  ensures that they will only be <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-exposed" id="ref-for-dfn-exposed">exposed</a> into secure contexts. The
+    <p>A new [<code class="idl"><a data-link-type="idl" href="https://webidl.spec.whatwg.org/#SecureContext" id="ref-for-SecureContext">SecureContext</a></code>] attribute is available for operators, which
+  ensures that they will only be <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#dfn-exposed" id="ref-for-dfn-exposed">exposed</a> into secure contexts. The
   following example should help:</p>
     <div class="example" id="example-5703efea">
      <a class="self-link" href="#example-5703efea"></a> 
@@ -1067,13 +1141,13 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <c- b>Promise</c-> &lt;<c- b>double</c->> <c- g>calculateNotSoSecretResult</c->();
 
   // This operation will not be exposed to a non-secure context.
-  [<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#SecureContext" id="ref-for-SecureContext①"><c- g>SecureContext</c-></a>] <c- b>Promise</c->&lt;<c- b>double</c->> <c- g>calculateSecretResult</c->();
+  [<a class="idl-code" data-link-type="extended-attribute" href="https://webidl.spec.whatwg.org/#SecureContext" id="ref-for-SecureContext①"><c- g>SecureContext</c-></a>] <c- b>Promise</c->&lt;<c- b>double</c->> <c- g>calculateSecretResult</c->();
 
   // The same applies here: the operation will not be exposed to a non-secure context.
-  [<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#SecureContext" id="ref-for-SecureContext②"><c- g>SecureContext</c-></a>] <c- b>boolean</c-> <c- g>getSecretBoolean</c->();
+  [<a class="idl-code" data-link-type="extended-attribute" href="https://webidl.spec.whatwg.org/#SecureContext" id="ref-for-SecureContext②"><c- g>SecureContext</c-></a>] <c- b>boolean</c-> <c- g>getSecretBoolean</c->();
 };
 
-[<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#SecureContext" id="ref-for-SecureContext③"><c- g>SecureContext</c-></a>]
+[<a class="idl-code" data-link-type="extended-attribute" href="https://webidl.spec.whatwg.org/#SecureContext" id="ref-for-SecureContext③"><c- g>SecureContext</c-></a>]
 <c- b>interface</c-> <c- g>SecureFeature</c-> {
   // This interface will not be exposed to non-secure contexts.
   <c- b>Promise</c->&lt;<c- b>any</c->> <c- g>doAmazingThing</c->();
@@ -1084,15 +1158,15 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   features.</p>
     <h3 class="heading settled" data-level="2.2" id="monkey-patching-html"><span class="secno">2.2. </span><span class="content">Integrations with HTML</span><a class="self-link" href="#monkey-patching-html"></a></h3>
     <h4 class="non-normative heading settled" data-level="2.2.1" id="shared-workers"><span class="secno">2.2.1. </span><span class="content">Shared Workers</span><a class="self-link" href="#shared-workers"></a></h4>
-    <p>The <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/workers.html#sharedworker" id="ref-for-sharedworker">SharedWorker</a></code> constructor will throw a "<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#securityerror" id="ref-for-securityerror">SecurityError</a></code>" <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMException" id="ref-for-idl-DOMException">DOMException</a></code> exception if a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#secure-context" id="ref-for-secure-context①⑥">secure context</a> attempts to attach to
+    <p>The <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/workers.html#sharedworker" id="ref-for-sharedworker">SharedWorker</a></code> constructor will throw a "<code class="idl"><a data-link-type="idl" href="https://webidl.spec.whatwg.org/#securityerror" id="ref-for-securityerror">SecurityError</a></code>" <code class="idl"><a data-link-type="idl" href="https://webidl.spec.whatwg.org/#idl-DOMException" id="ref-for-idl-DOMException">DOMException</a></code> exception if a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#secure-context" id="ref-for-secure-context①⑥">secure context</a> attempts to attach to
   a Worker which is not a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#secure-context" id="ref-for-secure-context①⑦">secure context</a>, and if a non-secure context
   attempts to attach to a Worker which is a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#secure-context" id="ref-for-secure-context①⑧">secure context</a>.</p>
     <h4 class="heading settled" data-level="2.2.2" id="monkey-patching-global-object"><span class="secno">2.2.2. </span><span class="content">Feature Detection</span><a class="self-link" href="#monkey-patching-global-object"></a></h4>
     <p>An application can determine whether it’s executing in a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#secure-context" id="ref-for-secure-context①⑨">secure context</a> by checking the <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/webappapis.html#dom-issecurecontext" id="ref-for-dom-issecurecontext">isSecureContext</a></code> boolean defined on <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/webappapis.html#windoworworkerglobalscope" id="ref-for-windoworworkerglobalscope">WindowOrWorkerGlobalScope</a></code>.</p>
     <h4 class="heading settled" data-level="2.2.3" id="is-settings-object-contextually-secure"><span class="secno">2.2.3. </span><span class="content">Secure and non-secure contexts</span><a class="self-link" href="#is-settings-object-contextually-secure"></a></h4>
-    <p>The HTML Standard defines whether an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#blob-url-entry-environment" id="ref-for-blob-url-entry-environment">environment</a> is a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#secure-context" id="ref-for-secure-context②⓪">secure context</a> or a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#non-secure-context" id="ref-for-non-secure-context">non-secure context</a>. This is the primary mechanism used by other
+    <p>The HTML Standard defines whether an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/semantics.html#link-options-environment" id="ref-for-link-options-environment">environment</a> is a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#secure-context" id="ref-for-secure-context②⓪">secure context</a> or a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#non-secure-context" id="ref-for-non-secure-context">non-secure context</a>. This is the primary mechanism used by other
   specifications.</p>
-    <p>Given a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#global-object" id="ref-for-global-object">global object</a>, specifications can check whether its <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object">relevant settings object</a> (which is an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#blob-url-entry-environment" id="ref-for-blob-url-entry-environment①">environment</a>) is a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#secure-context" id="ref-for-secure-context②①">secure context</a>.</p>
+    <p>Given a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#global-object" id="ref-for-global-object">global object</a>, specifications can check whether its <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object">relevant settings object</a> (which is an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/semantics.html#link-options-environment" id="ref-for-link-options-environment①">environment</a>) is a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#secure-context" id="ref-for-secure-context②①">secure context</a>.</p>
    </section>
    <section>
     <h2 class="heading settled" data-level="3" id="algorithms"><span class="secno">3. </span><span class="content">Algorithms</span><a class="self-link" href="#algorithms"></a></h2>
@@ -1114,57 +1188,57 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     <p>On the other hand, the user agent MAY choose to extend this trust to other,
   vendor-specific URL schemes like <code>app:</code> or <code>chrome-extension:</code> which it can
   determine <i lang="la">a priori</i> to be trusted (see <a href="#packaged-applications">§ 7.1 Packaged Applications</a> for detail).</p>
-    <p>Given an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin" id="ref-for-concept-origin">origin</a> (<var>origin</var>), the following algorithm
+    <p>Given an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-origin" id="ref-for-concept-origin">origin</a> (<var>origin</var>), the following algorithm
   returns "<code>Potentially Trustworthy</code>" or "<code>Not Trustworthy</code>" as appropriate.</p>
     <ol>
      <li data-md>
-      <p>If <var>origin</var> is an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-opaque" id="ref-for-concept-origin-opaque">opaque origin</a>, return "<code>Not Trustworthy</code>".</p>
+      <p>If <var>origin</var> is an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-origin-opaque" id="ref-for-concept-origin-opaque">opaque origin</a>, return "<code>Not Trustworthy</code>".</p>
      <li data-md>
-      <p class="assertion">Assert: <var>origin</var> is a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-tuple" id="ref-for-concept-origin-tuple">tuple origin</a>.</p>
+      <p class="assertion">Assert: <var>origin</var> is a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-origin-tuple" id="ref-for-concept-origin-tuple">tuple origin</a>.</p>
      <li data-md>
-      <p>If <var>origin</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-scheme" id="ref-for-concept-origin-scheme">scheme</a> is either "<code>https</code>" or "<code>wss</code>",
+      <p>If <var>origin</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-origin-scheme" id="ref-for-concept-origin-scheme">scheme</a> is either "<code>https</code>" or "<code>wss</code>",
   return "<code>Potentially Trustworthy</code>".</p>
-      <p class="note" role="note"><span>Note:</span> This is meant to be analog to the <a data-link-type="dfn" href="https://w3c.github.io/webappsec-mixed-content/#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url"><i lang="la">a priori</i> authenticated URL</a> concept in <a data-link-type="biblio" href="#biblio-mix">[MIX]</a>.</p>
+      <p class="note" role="note"><span class="marker">Note:</span> This is meant to be analog to the <a data-link-type="dfn" href="https://w3c.github.io/webappsec-mixed-content/#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url"><i lang="la">a priori</i> authenticated URL</a> concept in <a data-link-type="biblio" href="#biblio-mix" title="Mixed Content">[MIX]</a>.</p>
      <li data-md>
-      <p>If <var>origin</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-host" id="ref-for-concept-origin-host">host</a> matches one of the CIDR
-  notations <code>127.0.0.0/8</code> or <code>::1/128</code> <a data-link-type="biblio" href="#biblio-rfc4632">[RFC4632]</a>, return "<code>Potentially Trustworthy</code>".</p>
+      <p>If <var>origin</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-origin-host" id="ref-for-concept-origin-host">host</a> matches one of the CIDR
+  notations <code>127.0.0.0/8</code> or <code>::1/128</code> <a data-link-type="biblio" href="#biblio-rfc4632" title="Classless Inter-domain Routing (CIDR): The Internet Address Assignment and Aggregation Plan">[RFC4632]</a>, return "<code>Potentially       Trustworthy</code>".</p>
      <li data-md>
-      <p>If the user agent conforms to the name resolution rules in <a data-link-type="biblio" href="#biblio-let-localhost-be-localhost">[let-localhost-be-localhost]</a> and one of the following is true:</p>
+      <p>If the user agent conforms to the name resolution rules in <a data-link-type="biblio" href="#biblio-let-localhost-be-localhost" title="Let &apos;localhost&apos; be localhost.">[let-localhost-be-localhost]</a> and one of the following is true:</p>
       <ul>
        <li data-md>
-        <p><var>origin</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-host" id="ref-for-concept-origin-host①">host</a> is "<code>localhost</code>" or "<code>localhost.</code>"</p>
+        <p><var>origin</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-origin-host" id="ref-for-concept-origin-host①">host</a> is "<code>localhost</code>" or "<code>localhost.</code>"</p>
        <li data-md>
-        <p><var>origin</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-host" id="ref-for-concept-origin-host②">host</a> ends with "<code>.localhost</code>" or "<code>.localhost.</code>"</p>
+        <p><var>origin</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-origin-host" id="ref-for-concept-origin-host②">host</a> ends with "<code>.localhost</code>" or "<code>.localhost.</code>"</p>
       </ul>
       <p>then return "<code>Potentially Trustworthy</code>".</p>
-      <p class="note" role="note"><span>Note:</span> See <a href="#localhost">§ 5.2 localhost</a> for details on the requirements here.</p>
+      <p class="note" role="note"><span class="marker">Note:</span> See <a href="#localhost">§ 5.2 localhost</a> for details on the requirements here.</p>
      <li data-md>
-      <p>If <var>origin</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-scheme" id="ref-for-concept-origin-scheme①">scheme</a> is "<code>file</code>", return
+      <p>If <var>origin</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-origin-scheme" id="ref-for-concept-origin-scheme①">scheme</a> is "<code>file</code>", return
   "<code>Potentially Trustworthy</code>".</p>
      <li data-md>
-      <p>If <var>origin</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-scheme" id="ref-for-concept-origin-scheme②">scheme</a> component is one which the user
+      <p>If <var>origin</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-origin-scheme" id="ref-for-concept-origin-scheme②">scheme</a> component is one which the user
   agent considers to be authenticated, return "<code>Potentially Trustworthy</code>".</p>
-      <p class="note" role="note"><span>Note:</span> See <a href="#packaged-applications">§ 7.1 Packaged Applications</a> for detail here.</p>
+      <p class="note" role="note"><span class="marker">Note:</span> See <a href="#packaged-applications">§ 7.1 Packaged Applications</a> for detail here.</p>
      <li data-md>
       <p>If <var>origin</var> has been configured as a trustworthy origin, return
   "<code>Potentially Trustworthy</code>".</p>
-      <p class="note" role="note"><span>Note:</span> See <a href="#development-environments">§ 7.2 Development Environments</a> for detail here.</p>
+      <p class="note" role="note"><span class="marker">Note:</span> See <a href="#development-environments">§ 7.2 Development Environments</a> for detail here.</p>
      <li data-md>
       <p>Return "<code>Not Trustworthy</code>".</p>
     </ol>
-    <p class="note" role="note"><span>Note:</span> Neither <var>origin</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-domain" id="ref-for-concept-origin-domain">domain</a> nor <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-port" id="ref-for-concept-origin-port">port</a> has any effect on whether or not it is considered to be a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#secure-context" id="ref-for-secure-context②②">secure context</a>.</p>
+    <p class="note" role="note"><span class="marker">Note:</span> Neither <var>origin</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-origin-domain" id="ref-for-concept-origin-domain">domain</a> nor <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-origin-port" id="ref-for-concept-origin-port">port</a> has any effect on whether or not it is considered to be a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#secure-context" id="ref-for-secure-context②②">secure context</a>.</p>
     <h3 class="heading settled" data-level="3.2" id="is-url-trustworthy"><span class="secno">3.2. </span><span class="content"> Is <var>url</var> potentially trustworthy? </span><a class="self-link" href="#is-url-trustworthy"></a></h3>
     <p>A <dfn data-dfn-type="dfn" data-export id="potentially-trustworthy-url">potentially trustworthy URL<a class="self-link" href="#potentially-trustworthy-url"></a></dfn> is one which either inherits
   context from its creator (<code>about:blank</code>, <code>about:srcdoc</code>, <code>data</code>) or one whose <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-origin" id="ref-for-concept-url-origin">origin</a> is a <a data-link-type="dfn" href="#potentially-trustworthy-origin" id="ref-for-potentially-trustworthy-origin②">potentially trustworthy origin</a>.
-  Given a <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url" id="ref-for-concept-url">URL record</a> (<var>url</var>), the following algorithm returns "<code>Potentially Trustworthy</code>" or "<code>Not Trustworthy</code>" as appropriate:</p>
+  Given a <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url" id="ref-for-concept-url">URL record</a> (<var>url</var>), the following algorithm returns "<code>Potentially   Trustworthy</code>" or "<code>Not Trustworthy</code>" as appropriate:</p>
     <ol>
      <li data-md>
-      <p>If <var>url</var> is "<code>about:blank</code>" or "<code>about:srcdoc</code>", return "<code>Potentially Trustworthy</code>".</p>
+      <p>If <var>url</var> is "<code>about:blank</code>" or "<code>about:srcdoc</code>", return "<code>Potentially       Trustworthy</code>".</p>
      <li data-md>
-      <p>If <var>url</var>’s <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-scheme" id="ref-for-concept-url-scheme">scheme</a> is "<code>data</code>", return "<code>Potentially Trustworthy</code>".</p>
+      <p>If <var>url</var>’s <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-scheme" id="ref-for-concept-url-scheme">scheme</a> is "<code>data</code>", return "<code>Potentially       Trustworthy</code>".</p>
      <li data-md>
       <p>Return the result of executing <a href="#is-origin-trustworthy">§ 3.1 Is origin potentially trustworthy?</a> on <var>url</var>’s <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-origin" id="ref-for-concept-url-origin①">origin</a>.</p>
-      <p class="note" role="note"><span>Note:</span> The origin of <code>blob:</code> URLs is the origin of the
+      <p class="note" role="note"><span class="marker">Note:</span> The origin of <code>blob:</code> URLs is the origin of the
   context in which they were created. Therefore, blobs created in a
   trustworthy origin will themselves be potentially trustworthy.</p>
     </ol>
@@ -1185,7 +1259,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     <p>Surveillance of networks in this manner "subverts the intent of communicating
   parties without the agreement of these parties" and one "cannot defend against
   the most nefarious actors while allowing monitoring by other actors no matter
-  how benevolent some might consider them to be." <a data-link-type="biblio" href="#biblio-rfc7258">[RFC7258]</a> Therefore, the
+  how benevolent some might consider them to be." <a data-link-type="biblio" href="#biblio-rfc7258" title="Pervasive Monitoring Is an Attack">[RFC7258]</a> Therefore, the
   algorithms defined in this document require mechanisms that provide for the
   privacy of data at the application layer, not simply integrity.</p>
     <h4 class="heading settled" data-level="4.1.2" id="threat-active"><span class="secno">4.1.2. </span><span class="content">Active Network Attacker</span><a class="self-link" href="#threat-active"></a></h4>
@@ -1195,7 +1269,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   adversaries at many levels of capability, from compromised devices offering
   or simply participating in public wireless networks, to Internet Service
   Providers indirectly introducing security and privacy vulnerabilities while
-  manipulating traffic for financial gain (<a data-link-type="biblio" href="#biblio-verizon">[VERIZON]</a> and <a data-link-type="biblio" href="#biblio-comcast">[COMCAST]</a> are
+  manipulating traffic for financial gain (<a data-link-type="biblio" href="#biblio-verizon" title="Verizon looks to target its mobile subscribers with ads">[VERIZON]</a> and <a data-link-type="biblio" href="#biblio-comcast" title="Comcast Wi-Fi serving self-promotional ads via JavaScript injection">[COMCAST]</a> are
   recent examples), to parties with direct intent to compromise security or
   privacy who are able to target individual users, organizations or even
   entire populations.</p>
@@ -1204,7 +1278,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   through all the ancestors of a particular context in order to determine whether or not the
   context itself is secure. Why wouldn’t we consider a securely-delivered document in an <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/iframe-embed-object.html#the-iframe-element" id="ref-for-the-iframe-element">iframe</a></code> to be secure, in and of itself?</p>
     <p>The short answer is that this model would enable abuse. Chrome’s
-  implementation of <a data-link-type="biblio" href="#biblio-webcryptoapi">[WEBCRYPTOAPI]</a> was an early experiment in locking APIs to
+  implementation of <a data-link-type="biblio" href="#biblio-webcryptoapi" title="Web Cryptography API">[WEBCRYPTOAPI]</a> was an early experiment in locking APIs to
   secure contexts, and it did not walk through a context’s ancestors. The
   assumption was that locking the API to a resource which was itself delivered
   securely would be enough to ensure secure usage. The result, however, was
@@ -1225,31 +1299,31 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   network attackers:</p>
     <ol>
      <li> The ability to read and modify sensitive data (personally-identifying
-      information, credentials, payment instruments, and so on). <a data-link-type="biblio" href="#biblio-credential-management-1">[CREDENTIAL-MANAGEMENT-1]</a> is an example of an API that handles sensitive
+      information, credentials, payment instruments, and so on). <a data-link-type="biblio" href="#biblio-credential-management-1" title="Credential Management Level 1">[CREDENTIAL-MANAGEMENT-1]</a> is an example of an API that handles sensitive
       data. 
      <li> The ability to read and modify input from sensors on a user’s device
       (camera, microphone, and GPS being particularly noteworthy, but
       certainly including less obviously dangerous sensors like the
-      accelerometer). <a data-link-type="biblio" href="#biblio-geolocation-api">[GEOLOCATION-API]</a> and <a data-link-type="biblio" href="#biblio-mediacapture-streams">[MEDIACAPTURE-STREAMS]</a> are
+      accelerometer). <a data-link-type="biblio" href="#biblio-geolocation-api" title="Geolocation API Specification 2nd Edition">[GEOLOCATION-API]</a> and <a data-link-type="biblio" href="#biblio-mediacapture-streams" title="Media Capture and Streams">[MEDIACAPTURE-STREAMS]</a> are
       historical examples of features that use sensor input. 
      <li> The ability to access information about other devices to which a user has
-      access. <a data-link-type="biblio" href="#biblio-discovery-api">[DISCOVERY-API]</a> and <a data-link-type="biblio" href="#biblio-web-bluetooth">[WEB-BLUETOOTH]</a> are good examples. 
+      access. <a data-link-type="biblio" href="#biblio-discovery-api" title="Network Service Discovery">[DISCOVERY-API]</a> and <a data-link-type="biblio" href="#biblio-web-bluetooth" title="Web Bluetooth">[WEB-BLUETOOTH]</a> are good examples. 
      <li> The ability to track users using temporary or persistent identifiers,
       including identifiers which reset themselves after some period of time
       (e.g. <code>window.sessionStorage</code>), identifiers the user can manually reset
-      (e.g. <a data-link-type="biblio" href="#biblio-encrypted-media">[ENCRYPTED-MEDIA]</a>, Cookies <a data-link-type="biblio" href="#biblio-rfc6265">[RFC6265]</a>, and <a data-link-type="biblio" href="#biblio-indexeddb">[IndexedDB]</a>),
+      (e.g. <a data-link-type="biblio" href="#biblio-encrypted-media" title="Encrypted Media Extensions">[ENCRYPTED-MEDIA]</a>, Cookies <a data-link-type="biblio" href="#biblio-rfc6265" title="HTTP State Management Mechanism">[RFC6265]</a>, and <a data-link-type="biblio" href="#biblio-indexeddb" title="Indexed Database API">[IndexedDB]</a>),
       as well as identifying hardware features the user can’t easily reset. 
      <li> The ability to introduce some state for an origin which persists across
-      browsing sessions. <a data-link-type="biblio" href="#biblio-service-workers">[SERVICE-WORKERS]</a> is a great example. 
+      browsing sessions. <a data-link-type="biblio" href="#biblio-service-workers" title="Service Workers">[SERVICE-WORKERS]</a> is a great example. 
      <li> The ability to manipulate a user agent’s native UI in some way which
       removes, obscures, or manipulates details relevant to a user’s
-      understanding of their context. <a data-link-type="biblio" href="#biblio-fullscreen">[FULLSCREEN]</a> is a good example. 
+      understanding of their context. <a data-link-type="biblio" href="#biblio-fullscreen" title="Fullscreen API Standard">[FULLSCREEN]</a> is a good example. 
      <li> The ability to introduce some functionality for which user permission will
       be required. 
     </ol>
     <p>This list is non-exhaustive, but should give you a feel for the types of
   risks we should consider when writing or implementing specifications.</p>
-    <p class="note" role="note"><span>Note:</span> While restricting a feature itself to <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#secure-context" id="ref-for-secure-context②⑥">secure contexts</a> is
+    <p class="note" role="note"><span class="marker">Note:</span> While restricting a feature itself to <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#secure-context" id="ref-for-secure-context②⑥">secure contexts</a> is
   critical, we ought not forget that facilities that carry such information
   (such as new network access mechanisms, or other generic functions with access
   to network data) are equally sensitive.</p>
@@ -1262,13 +1336,13 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   origin. Exfiltration will still be possible via increasingly esoteric
   mechanisms such as the contents of <code>localStorage</code>/<code>sessionStorage</code>, <code>storage</code> events, <code>BroadcastChannel</code>, and others.</p>
     <h3 class="heading settled" data-level="5.2" id="localhost"><span class="secno">5.2. </span><span class="content"><code>localhost</code></span><a class="self-link" href="#localhost"></a></h3>
-    <p>Section 6.3 of <a data-link-type="biblio" href="#biblio-rfc6761">[RFC6761]</a> lays out the resolution of <code>localhost.</code> and
+    <p>Section 6.3 of <a data-link-type="biblio" href="#biblio-rfc6761" title="Special-Use Domain Names">[RFC6761]</a> lays out the resolution of <code>localhost.</code> and
   names falling within <code>.localhost.</code> as special, and suggests that local
   resolvers SHOULD/MAY treat them specially. For better or worse, resolvers
   often ignore these suggestions, and will send <code>localhost</code> to the network
   for resolution in a number of circumstances.</p>
     <p>Given that uncertainty, user agents MAY treat localhost names as having <a data-link-type="dfn" href="#potentially-trustworthy-origin" id="ref-for-potentially-trustworthy-origin③">potentially trustworthy origins</a> if and only if they also adhere to the
-  localhost name resolution rules spelled out in <a data-link-type="biblio" href="#biblio-let-localhost-be-localhost">[let-localhost-be-localhost]</a> (which boil down to ensuring that <code>localhost</code> never resolves to a
+  localhost name resolution rules spelled out in <a data-link-type="biblio" href="#biblio-let-localhost-be-localhost" title="Let &apos;localhost&apos; be localhost.">[let-localhost-be-localhost]</a> (which boil down to ensuring that <code>localhost</code> never resolves to a
   non-loopback address).</p>
    </section>
    <section>
@@ -1312,10 +1386,10 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
        </ol>
      </ol>
     </div>
-    <p>Authors could alternatively ensure that sensitive APIs are only exposed to <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#secure-context" id="ref-for-secure-context③①">secure contexts</a> by guarding them with the [<code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#SecureContext" id="ref-for-SecureContext④">SecureContext</a></code>] attribute.</p>
+    <p>Authors could alternatively ensure that sensitive APIs are only exposed to <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#secure-context" id="ref-for-secure-context③①">secure contexts</a> by guarding them with the [<code class="idl"><a data-link-type="idl" href="https://webidl.spec.whatwg.org/#SecureContext" id="ref-for-SecureContext④">SecureContext</a></code>] attribute.</p>
     <div class="example" id="example-2aa4b56a">
      <a class="self-link" href="#example-2aa4b56a"></a> 
-<pre class="idl highlight def">[<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#SecureContext" id="ref-for-SecureContext⑤"><c- g>SecureContext</c-></a>]
+<pre class="idl highlight def">[<a class="idl-code" data-link-type="extended-attribute" href="https://webidl.spec.whatwg.org/#SecureContext" id="ref-for-SecureContext⑤"><c- g>SecureContext</c-></a>]
 <c- b>interface</c-> <c- g>SensitiveFeature</c-> {
   <c- b>Promise</c->&lt;<c- b>double</c->> <c- g>getTheSecretDouble</c->();
 };
@@ -1323,7 +1397,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
 // Or:
 
 <c- b>interface</c-> <c- g>AnotherSensitiveFeature</c-> {
-  [<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#SecureContext" id="ref-for-SecureContext⑥"><c- g>SecureContext</c-></a>] <c- n>void</c-> <c- g>doThatPowerfulThing</c->();
+  [<a class="idl-code" data-link-type="extended-attribute" href="https://webidl.spec.whatwg.org/#SecureContext" id="ref-for-SecureContext⑥"><c- g>SecureContext</c-></a>] <c- n>void</c-> <c- g>doThatPowerfulThing</c->();
 };
 </pre>
     </div>
@@ -1333,31 +1407,31 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
      <p>The list above clearly includes some existing functionality that is currently
     available to the web over non-secure channels. We recommend that such legacy
     functionality be modified to begin requiring a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#secure-context" id="ref-for-secure-context③②">secure context</a> as
-    quickly as is reasonably possible <a data-link-type="biblio" href="#biblio-w3c-process">[W3C-PROCESS]</a>.</p>
+    quickly as is reasonably possible <a data-link-type="biblio" href="#biblio-w3c-process" title="W3C Process Document">[W3C-PROCESS]</a>.</p>
      <ol>
       <li data-md>
        <p>If such a feature is not widely implemented, we recommend that the
-  specification be immediately <a data-link-type="dfn" href="https://www.w3.org/2017/Process-20170301/#rec-modify" id="ref-for-rec-modify">modified</a> to include a restriction
+  specification be immediately <a data-link-type="dfn" href="https://www.w3.org/2023/Process-20231103/#revising-rec" id="ref-for-revising-rec">modified</a> to include a restriction
   to <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#secure-context" id="ref-for-secure-context③③">secure contexts</a>.</p>
       <li data-md>
        <p>If such a feature is widely implemented, but not yet in wide use, we
   recommend that it be quickly restricted to <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#secure-context" id="ref-for-secure-context③④">secure contexts</a> by
-  adding a check as described in <a href="#new">§ 7.3 Restricting New Features</a> to existing implementations, and <a data-link-type="dfn" href="https://www.w3.org/2017/Process-20170301/#rec-modify" id="ref-for-rec-modify①">modifying the specification</a> accordingly.</p>
+  adding a check as described in <a href="#new">§ 7.3 Restricting New Features</a> to existing implementations, and <a data-link-type="dfn" href="https://www.w3.org/2023/Process-20231103/#revising-rec" id="ref-for-revising-rec①">modifying the specification</a> accordingly.</p>
       <li data-md>
        <p>If such a feature is in wide use, we recommend that the existing
-  functionality be deprecated; the specification should be <a data-link-type="dfn" href="https://www.w3.org/2017/Process-20170301/#rec-modify" id="ref-for-rec-modify②">modified</a> to note that it does not
+  functionality be deprecated; the specification should be <a data-link-type="dfn" href="https://www.w3.org/2023/Process-20231103/#revising-rec" id="ref-for-revising-rec②">modified</a> to note that it does not
   conform to the restrictions outlined in this document, and a plan should
   be developed to both offer a conformant version of the feature and to
   migrate existing users into that new version.</p>
      </ol>
      <h4 class="heading settled" data-level="7.4.1" id="legacy-example"><span class="secno">7.4.1. </span><span class="content">Example: Geolocation</span><a class="self-link" href="#legacy-example"></a></h4>
-     <p>The <a data-link-type="biblio" href="#biblio-geolocation-api">[GEOLOCATION-API]</a> is a good concrete example of such a feature; it is
+     <p>The <a data-link-type="biblio" href="#biblio-geolocation-api" title="Geolocation API Specification 2nd Edition">[GEOLOCATION-API]</a> is a good concrete example of such a feature; it is
     widely implemented and used on a large number of non-secure sites. A reasonable
     path forward might look like this:</p>
      <ol>
       <li data-md>
-       <p><a data-link-type="dfn" href="https://www.w3.org/2017/Process-20170301/#rec-modify" id="ref-for-rec-modify③">Modify</a> the specification to include
-  checks against <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#secure-context" id="ref-for-secure-context③⑤">secure context</a> before executing the algorithms for <code class="idl"><a data-link-type="idl" href="https://www.w3.org/TR/geolocation-API/#get-current-position" id="ref-for-get-current-position">getCurrentPosition()</a></code> and <code class="idl"><a data-link-type="idl" href="https://www.w3.org/TR/geolocation-API/#watch-position" id="ref-for-watch-position">watchPosition()</a></code>.</p>
+       <p><a data-link-type="dfn" href="https://www.w3.org/2023/Process-20231103/#revising-rec" id="ref-for-revising-rec③">Modify</a> the specification to include
+  checks against <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#secure-context" id="ref-for-secure-context③⑤">secure context</a> before executing the algorithms for <code class="idl"><a data-link-type="idl" href="https://w3c.github.io/geolocation-api/#dom-geolocation-getcurrentposition" id="ref-for-dom-geolocation-getcurrentposition">getCurrentPosition()</a></code> and <code class="idl"><a data-link-type="idl" href="https://w3c.github.io/geolocation-api/#dom-geolocation-watchposition" id="ref-for-dom-geolocation-watchposition">watchPosition()</a></code>.</p>
        <p>If the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#current-settings-object" id="ref-for-current-settings-object①">current settings object</a> is not a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#secure-context" id="ref-for-secure-context③⑥">secure context</a>,
   then the algorithm should be aborted, and the <code>errorCallback</code> invoked with a <code>code</code> of <code>PERMISSION_DENIED</code>.</p>
       <li data-md>
@@ -1386,312 +1460,72 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    </section>
    <section>
     <h2 class="heading settled" data-level="8" id="acknowledgements"><span class="secno">8. </span><span class="content">Acknowledgements</span><a class="self-link" href="#acknowledgements"></a></h2>
-    <p>This document is largely based on the Chrome Security team’s work on <a data-link-type="biblio" href="#biblio-powerful-new-features">[POWERFUL-NEW-FEATURES]</a>. Chris Palmer, Ryan Sleevi, and David Dorwin have
+    <p>This document is largely based on the Chrome Security team’s work on <a data-link-type="biblio" href="#biblio-powerful-new-features" title="Prefer Secure Origins For Powerful New Features">[POWERFUL-NEW-FEATURES]</a>. Chris Palmer, Ryan Sleevi, and David Dorwin have
   been particularly engaged. Anne van Kesteren, Jonathan Watt, Boris Zbarsky, and
   Henri Sivonen have also provided very helpful feedback.</p>
    </section>
   </main>
-  <h2 class="no-ref no-num heading settled" id="conformance"><span class="content">Conformance</span><a class="self-link" href="#conformance"></a></h2>
-  <h3 class="no-ref no-num heading settled" id="conventions"><span class="content">Document conventions</span><a class="self-link" href="#conventions"></a></h3>
-  <p>Conformance requirements are expressed with a combination of
-    descriptive assertions and RFC 2119 terminology. The key words “MUST”,
-    “MUST NOT”, “REQUIRED”, “SHALL”, “SHALL NOT”, “SHOULD”, “SHOULD NOT”,
-    “RECOMMENDED”, “MAY”, and “OPTIONAL” in the normative parts of this
-    document are to be interpreted as described in RFC 2119.
-    However, for readability, these words do not appear in all uppercase
-    letters in this specification. </p>
-  <p>All of the text of this specification is normative except sections
-    explicitly marked as non-normative, examples, and notes. <a data-link-type="biblio" href="#biblio-rfc2119">[RFC2119]</a></p>
-  <p>Examples in this specification are introduced with the words “for example”
-    or are set apart from the normative text with <code>class="example"</code>,
-    like this: </p>
-  <div class="example" id="example-ae2b6bc0">
-   <a class="self-link" href="#example-ae2b6bc0"></a> 
-   <p>This is an example of an informative example.</p>
-  </div>
-  <p>Informative notes begin with the word “Note” and are set apart from the
-    normative text with <code>class="note"</code>, like this: </p>
-  <p class="note" role="note">Note, this is an informative note.</p>
-  <h3 class="no-ref no-num heading settled" id="conformant-algorithms"><span class="content">Conformant Algorithms</span><a class="self-link" href="#conformant-algorithms"></a></h3>
-  <p>Requirements phrased in the imperative as part of algorithms (such as
-    "strip any leading space characters" or "return false and abort these
-    steps") are to be interpreted with the meaning of the key word ("must",
-    "should", "may", etc) used in introducing the algorithm.</p>
-  <p>Conformance requirements phrased as algorithms or specific steps can be
-    implemented in any manner, so long as the end result is equivalent. In
-    particular, the algorithms defined in this specification are intended to
-    be easy to understand and are not intended to be performant. Implementers
-    are encouraged to optimize.</p>
-<script src="https://www.w3.org/scripts/TR/2016/fixup.js"></script>
+<script src="https://www.w3.org/scripts/TR/2021/fixup.js"></script>
   <h2 class="no-num no-ref heading settled" id="index"><span class="content">Index</span><a class="self-link" href="#index"></a></h2>
   <h3 class="no-num no-ref heading settled" id="index-defined-here"><span class="content">Terms defined by this specification</span><a class="self-link" href="#index-defined-here"></a></h3>
   <ul class="index">
    <li><a href="#potentially-trustworthy-origin">potentially trustworthy origin</a><span>, in § 3.1</span>
    <li><a href="#potentially-trustworthy-url">potentially trustworthy URL</a><span>, in § 3.2</span>
   </ul>
-  <aside class="dfn-panel" data-for="term-for-get-current-position">
-   <a href="https://www.w3.org/TR/geolocation-API/#get-current-position">https://www.w3.org/TR/geolocation-API/#get-current-position</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-get-current-position">7.4.1. Example: Geolocation</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-watch-position">
-   <a href="https://www.w3.org/TR/geolocation-API/#watch-position">https://www.w3.org/TR/geolocation-API/#watch-position</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-watch-position">7.4.1. Example: Geolocation</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-sharedworker">
-   <a href="https://html.spec.whatwg.org/multipage/workers.html#sharedworker">https://html.spec.whatwg.org/multipage/workers.html#sharedworker</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-sharedworker">2.2.1. Shared Workers</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-windoworworkerglobalscope">
-   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#windoworworkerglobalscope">https://html.spec.whatwg.org/multipage/webappapis.html#windoworworkerglobalscope</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-windoworworkerglobalscope">2.2.2. Feature Detection</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-current-settings-object">
-   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#current-settings-object">https://html.spec.whatwg.org/multipage/webappapis.html#current-settings-object</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-current-settings-object">7.3. Restricting New Features</a>
-    <li><a href="#ref-for-current-settings-object①">7.4.1. Example: Geolocation</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-concept-origin-domain">
-   <a href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-domain">https://html.spec.whatwg.org/multipage/origin.html#concept-origin-domain</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-concept-origin-domain">3.1. 
-    Is origin potentially trustworthy? </a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-blob-url-entry-environment">
-   <a href="https://html.spec.whatwg.org/multipage/infrastructure.html#blob-url-entry-environment">https://html.spec.whatwg.org/multipage/infrastructure.html#blob-url-entry-environment</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-blob-url-entry-environment">2.2.3. Secure and non-secure contexts</a> <a href="#ref-for-blob-url-entry-environment①">(2)</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-global-object">
-   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#global-object">https://html.spec.whatwg.org/multipage/webappapis.html#global-object</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-global-object">2.2.3. Secure and non-secure contexts</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-concept-origin-host">
-   <a href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-host">https://html.spec.whatwg.org/multipage/origin.html#concept-origin-host</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-concept-origin-host">3.1. 
-    Is origin potentially trustworthy? </a> <a href="#ref-for-concept-origin-host①">(2)</a> <a href="#ref-for-concept-origin-host②">(3)</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-the-iframe-element">
-   <a href="https://html.spec.whatwg.org/multipage/iframe-embed-object.html#the-iframe-element">https://html.spec.whatwg.org/multipage/iframe-embed-object.html#the-iframe-element</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-the-iframe-element">4.2. Ancestral Risk</a> <a href="#ref-for-the-iframe-element①">(2)</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-dom-issecurecontext">
-   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#dom-issecurecontext">https://html.spec.whatwg.org/multipage/webappapis.html#dom-issecurecontext</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-dom-issecurecontext">2.2.2. Feature Detection</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-non-secure-context">
-   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#non-secure-context">https://html.spec.whatwg.org/multipage/webappapis.html#non-secure-context</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-non-secure-context">2.2.3. Secure and non-secure contexts</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-concept-origin-opaque">
-   <a href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-opaque">https://html.spec.whatwg.org/multipage/origin.html#concept-origin-opaque</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-concept-origin-opaque">3.1. 
-    Is origin potentially trustworthy? </a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-concept-origin">
-   <a href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin">https://html.spec.whatwg.org/multipage/origin.html#concept-origin</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-concept-origin">3.1. 
-    Is origin potentially trustworthy? </a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-concept-origin-port">
-   <a href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-port">https://html.spec.whatwg.org/multipage/origin.html#concept-origin-port</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-concept-origin-port">3.1. 
-    Is origin potentially trustworthy? </a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-relevant-settings-object">
-   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object">https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-relevant-settings-object">2.2.3. Secure and non-secure contexts</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-concept-origin-scheme">
-   <a href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-scheme">https://html.spec.whatwg.org/multipage/origin.html#concept-origin-scheme</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-concept-origin-scheme">3.1. 
-    Is origin potentially trustworthy? </a> <a href="#ref-for-concept-origin-scheme①">(2)</a> <a href="#ref-for-concept-origin-scheme②">(3)</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-secure-context">
-   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#secure-context">https://html.spec.whatwg.org/multipage/webappapis.html#secure-context</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-secure-context">1.1. Top-level Documents</a> <a href="#ref-for-secure-context①">(2)</a>
-    <li><a href="#ref-for-secure-context②">1.2. Framed Documents</a> <a href="#ref-for-secure-context③">(2)</a> <a href="#ref-for-secure-context④">(3)</a>
-    <li><a href="#ref-for-secure-context⑤">1.3. Web Workers</a> <a href="#ref-for-secure-context⑥">(2)</a> <a href="#ref-for-secure-context⑦">(3)</a> <a href="#ref-for-secure-context⑧">(4)</a>
-    <li><a href="#ref-for-secure-context⑨">1.4. Shared Workers</a> <a href="#ref-for-secure-context①⓪">(2)</a> <a href="#ref-for-secure-context①①">(3)</a> <a href="#ref-for-secure-context①②">(4)</a>
-    <li><a href="#ref-for-secure-context①③">1.5. Service Workers</a> <a href="#ref-for-secure-context①④">(2)</a> <a href="#ref-for-secure-context①⑤">(3)</a>
-    <li><a href="#ref-for-secure-context①⑥">2.2.1. Shared Workers</a> <a href="#ref-for-secure-context①⑦">(2)</a> <a href="#ref-for-secure-context①⑧">(3)</a>
-    <li><a href="#ref-for-secure-context①⑨">2.2.2. Feature Detection</a>
-    <li><a href="#ref-for-secure-context②⓪">2.2.3. Secure and non-secure contexts</a> <a href="#ref-for-secure-context②①">(2)</a>
-    <li><a href="#ref-for-secure-context②②">3.1. 
-    Is origin potentially trustworthy? </a>
-    <li><a href="#ref-for-secure-context②③">4.2. Ancestral Risk</a> <a href="#ref-for-secure-context②④">(2)</a>
-    <li><a href="#ref-for-secure-context②⑤">4.3. Risks associated with non-secure contexts</a> <a href="#ref-for-secure-context②⑥">(2)</a>
-    <li><a href="#ref-for-secure-context②⑦">5.1. Incomplete Isolation</a>
-    <li><a href="#ref-for-secure-context②⑧">6. Privacy Considerations</a>
-    <li><a href="#ref-for-secure-context②⑨">7.3. Restricting New Features</a> <a href="#ref-for-secure-context③⓪">(2)</a> <a href="#ref-for-secure-context③①">(3)</a>
-    <li><a href="#ref-for-secure-context③②">7.4. Restricting Legacy Features</a> <a href="#ref-for-secure-context③③">(2)</a> <a href="#ref-for-secure-context③④">(3)</a>
-    <li><a href="#ref-for-secure-context③⑤">7.4.1. Example: Geolocation</a> <a href="#ref-for-secure-context③⑥">(2)</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-top-level-browsing-context">
-   <a href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context">https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-top-level-browsing-context">1.1. Top-level Documents</a> <a href="#ref-for-top-level-browsing-context①">(2)</a>
-    <li><a href="#ref-for-top-level-browsing-context②">1.2. Framed Documents</a>
-    <li><a href="#ref-for-top-level-browsing-context③">1.3. Web Workers</a> <a href="#ref-for-top-level-browsing-context④">(2)</a>
-    <li><a href="#ref-for-top-level-browsing-context⑤">1.4. Shared Workers</a> <a href="#ref-for-top-level-browsing-context⑥">(2)</a>
-    <li><a href="#ref-for-top-level-browsing-context⑦">1.5. Service Workers</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-concept-origin-tuple">
-   <a href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-tuple">https://html.spec.whatwg.org/multipage/origin.html#concept-origin-tuple</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-concept-origin-tuple">3.1. 
-    Is origin potentially trustworthy? </a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-a-priori-authenticated-url">
-   <a href="https://w3c.github.io/webappsec-mixed-content/#a-priori-authenticated-url">https://w3c.github.io/webappsec-mixed-content/#a-priori-authenticated-url</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-a-priori-authenticated-url">3.1. 
-    Is origin potentially trustworthy? </a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-concept-url-origin">
-   <a href="https://url.spec.whatwg.org/#concept-url-origin">https://url.spec.whatwg.org/#concept-url-origin</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-concept-url-origin">3.2. 
-    Is url potentially trustworthy? </a> <a href="#ref-for-concept-url-origin①">(2)</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-concept-url-scheme">
-   <a href="https://url.spec.whatwg.org/#concept-url-scheme">https://url.spec.whatwg.org/#concept-url-scheme</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-concept-url-scheme">3.2. 
-    Is url potentially trustworthy? </a>
-    <li><a href="#ref-for-concept-url-scheme①">7.1. Packaged Applications</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-concept-url">
-   <a href="https://url.spec.whatwg.org/#concept-url">https://url.spec.whatwg.org/#concept-url</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-concept-url">3.2. 
-    Is url potentially trustworthy? </a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-rec-modify">
-   <a href="https://www.w3.org/2017/Process-20170301/#rec-modify">https://www.w3.org/2017/Process-20170301/#rec-modify</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-rec-modify">7.4. Restricting Legacy Features</a> <a href="#ref-for-rec-modify①">(2)</a> <a href="#ref-for-rec-modify②">(3)</a>
-    <li><a href="#ref-for-rec-modify③">7.4.1. Example: Geolocation</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-idl-DOMException">
-   <a href="https://heycam.github.io/webidl/#idl-DOMException">https://heycam.github.io/webidl/#idl-DOMException</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-idl-DOMException">2.2.1. Shared Workers</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-SecureContext">
-   <a href="https://heycam.github.io/webidl/#SecureContext">https://heycam.github.io/webidl/#SecureContext</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-SecureContext">2.1. Integration with WebIDL</a> <a href="#ref-for-SecureContext①">(2)</a> <a href="#ref-for-SecureContext②">(3)</a> <a href="#ref-for-SecureContext③">(4)</a>
-    <li><a href="#ref-for-SecureContext④">7.3. Restricting New Features</a> <a href="#ref-for-SecureContext⑤">(2)</a> <a href="#ref-for-SecureContext⑥">(3)</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-securityerror">
-   <a href="https://heycam.github.io/webidl/#securityerror">https://heycam.github.io/webidl/#securityerror</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-securityerror">2.2.1. Shared Workers</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-dfn-exposed">
-   <a href="https://heycam.github.io/webidl/#dfn-exposed">https://heycam.github.io/webidl/#dfn-exposed</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-dfn-exposed">2.1. Integration with WebIDL</a>
-   </ul>
-  </aside>
   <h3 class="no-num no-ref heading settled" id="index-defined-elsewhere"><span class="content">Terms defined by reference</span><a class="self-link" href="#index-defined-elsewhere"></a></h3>
   <ul class="index">
    <li>
-    <a data-link-type="biblio">[GEOLOCATION-API]</a> defines the following terms:
+    <a data-link-type="biblio">[GEOLOCATION]</a> defines the following terms:
     <ul>
-     <li><span class="dfn-paneled" id="term-for-get-current-position">getCurrentPosition()</span>
-     <li><span class="dfn-paneled" id="term-for-watch-position">watchPosition()</span>
+     <li><span class="dfn-paneled" id="403be618">getCurrentPosition()</span>
+     <li><span class="dfn-paneled" id="4de8fec9">watchPosition()</span>
     </ul>
    <li>
     <a data-link-type="biblio">[HTML]</a> defines the following terms:
     <ul>
-     <li><span class="dfn-paneled" id="term-for-sharedworker">SharedWorker</span>
-     <li><span class="dfn-paneled" id="term-for-windoworworkerglobalscope">WindowOrWorkerGlobalScope</span>
-     <li><span class="dfn-paneled" id="term-for-current-settings-object">current settings object</span>
-     <li><span class="dfn-paneled" id="term-for-concept-origin-domain">domain</span>
-     <li><span class="dfn-paneled" id="term-for-blob-url-entry-environment">environment</span>
-     <li><span class="dfn-paneled" id="term-for-global-object">global object</span>
-     <li><span class="dfn-paneled" id="term-for-concept-origin-host">host</span>
-     <li><span class="dfn-paneled" id="term-for-the-iframe-element">iframe</span>
-     <li><span class="dfn-paneled" id="term-for-dom-issecurecontext">isSecureContext</span>
-     <li><span class="dfn-paneled" id="term-for-non-secure-context">non-secure context</span>
-     <li><span class="dfn-paneled" id="term-for-concept-origin-opaque">opaque origin</span>
-     <li><span class="dfn-paneled" id="term-for-concept-origin">origin</span>
-     <li><span class="dfn-paneled" id="term-for-concept-origin-port">port</span>
-     <li><span class="dfn-paneled" id="term-for-relevant-settings-object">relevant settings object</span>
-     <li><span class="dfn-paneled" id="term-for-concept-origin-scheme">scheme</span>
-     <li><span class="dfn-paneled" id="term-for-secure-context">secure context</span>
-     <li><span class="dfn-paneled" id="term-for-top-level-browsing-context">top-level browsing context</span>
-     <li><span class="dfn-paneled" id="term-for-concept-origin-tuple">tuple origin</span>
+     <li><span class="dfn-paneled" id="a13a702f">SharedWorker</span>
+     <li><span class="dfn-paneled" id="5f6d392d">WindowOrWorkerGlobalScope</span>
+     <li><span class="dfn-paneled" id="12b8dfc0">current settings object</span>
+     <li><span class="dfn-paneled" id="2672c7bc">domain</span>
+     <li><span class="dfn-paneled" id="a746ba16">environment</span>
+     <li><span class="dfn-paneled" id="4b6086d7">global object</span>
+     <li><span class="dfn-paneled" id="77a2ee6e">host</span>
+     <li><span class="dfn-paneled" id="87fcd40c">iframe</span>
+     <li><span class="dfn-paneled" id="db3b2dfc">isSecureContext</span>
+     <li><span class="dfn-paneled" id="5155c2d3">non-secure context</span>
+     <li><span class="dfn-paneled" id="b01b1359">opaque origin</span>
+     <li><span class="dfn-paneled" id="086e3aff">origin</span>
+     <li><span class="dfn-paneled" id="98e31e77">port</span>
+     <li><span class="dfn-paneled" id="9c4c1e66">relevant settings object</span>
+     <li><span class="dfn-paneled" id="a23d12a9">scheme</span>
+     <li><span class="dfn-paneled" id="65181da8">secure context</span>
+     <li><span class="dfn-paneled" id="ae2a6342">top-level browsing context</span>
+     <li><span class="dfn-paneled" id="1d2aa117">tuple origin</span>
     </ul>
    <li>
     <a data-link-type="biblio">[MIX]</a> defines the following terms:
     <ul>
-     <li><span class="dfn-paneled" id="term-for-a-priori-authenticated-url">a priori authenticated url</span>
+     <li><span class="dfn-paneled" id="4d8718f0">a priori authenticated url</span>
     </ul>
    <li>
     <a data-link-type="biblio">[URL]</a> defines the following terms:
     <ul>
-     <li><span class="dfn-paneled" id="term-for-concept-url-origin">origin</span>
-     <li><span class="dfn-paneled" id="term-for-concept-url-scheme">scheme</span>
-     <li><span class="dfn-paneled" id="term-for-concept-url">url record</span>
+     <li><span class="dfn-paneled" id="959ad97b">origin</span>
+     <li><span class="dfn-paneled" id="3a711be7">scheme</span>
+     <li><span class="dfn-paneled" id="a8c7461b">url record</span>
     </ul>
    <li>
     <a data-link-type="biblio">[W3C-PROCESS]</a> defines the following terms:
     <ul>
-     <li><span class="dfn-paneled" id="term-for-rec-modify">modify a specification</span>
+     <li><span class="dfn-paneled" id="a8e1631c">modify a specification</span>
     </ul>
    <li>
-    <a data-link-type="biblio">[WebIDL]</a> defines the following terms:
+    <a data-link-type="biblio">[WEBIDL]</a> defines the following terms:
     <ul>
-     <li><span class="dfn-paneled" id="term-for-idl-DOMException">DOMException</span>
-     <li><span class="dfn-paneled" id="term-for-SecureContext">SecureContext</span>
-     <li><span class="dfn-paneled" id="term-for-securityerror">SecurityError</span>
-     <li><span class="dfn-paneled" id="term-for-dfn-exposed">exposed</span>
+     <li><span class="dfn-paneled" id="dca2de17">DOMException</span>
+     <li><span class="dfn-paneled" id="b75bb3bd">SecureContext</span>
+     <li><span class="dfn-paneled" id="c3e881ef">SecurityError</span>
+     <li><span class="dfn-paneled" id="25c36209">exposed</span>
     </ul>
   </ul>
   <h2 class="no-num no-ref heading settled" id="references"><span class="content">References</span><a class="self-link" href="#references"></a></h2>
@@ -1700,38 +1534,38 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    <dt id="biblio-html">[HTML]
    <dd>Anne van Kesteren; et al. <a href="https://html.spec.whatwg.org/multipage/"><cite>HTML Standard</cite></a>. Living Standard. URL: <a href="https://html.spec.whatwg.org/multipage/">https://html.spec.whatwg.org/multipage/</a>
    <dt id="biblio-let-localhost-be-localhost">[LET-LOCALHOST-BE-LOCALHOST]
-   <dd>Mike West. <a href="https://tools.ietf.org/html/draft-west-let-localhost-be-localhost"><cite>Let 'localhost' be localhost.</cite></a>. URL: <a href="https://tools.ietf.org/html/draft-west-let-localhost-be-localhost">https://tools.ietf.org/html/draft-west-let-localhost-be-localhost</a>
-   <dt id="biblio-rfc2119">[RFC2119]
-   <dd>S. Bradner. <a href="https://datatracker.ietf.org/doc/html/rfc2119"><cite>Key words for use in RFCs to Indicate Requirement Levels</cite></a>. March 1997. Best Current Practice. URL: <a href="https://datatracker.ietf.org/doc/html/rfc2119">https://datatracker.ietf.org/doc/html/rfc2119</a>
+   <dd>Mike West. <a href="https://datatracker.ietf.org/doc/html/draft-ietf-dnsop-let-localhost-be-localhost"><cite>Let 'localhost' be localhost.</cite></a>. URL: <a href="https://datatracker.ietf.org/doc/html/draft-ietf-dnsop-let-localhost-be-localhost">https://datatracker.ietf.org/doc/html/draft-ietf-dnsop-let-localhost-be-localhost</a>
    <dt id="biblio-rfc4632">[RFC4632]
    <dd>V. Fuller; T. Li. <a href="https://www.rfc-editor.org/rfc/rfc4632"><cite>Classless Inter-domain Routing (CIDR): The Internet Address Assignment and Aggregation Plan</cite></a>. August 2006. Best Current Practice. URL: <a href="https://www.rfc-editor.org/rfc/rfc4632">https://www.rfc-editor.org/rfc/rfc4632</a>
    <dt id="biblio-url">[URL]
    <dd>Anne van Kesteren. <a href="https://url.spec.whatwg.org/"><cite>URL Standard</cite></a>. Living Standard. URL: <a href="https://url.spec.whatwg.org/">https://url.spec.whatwg.org/</a>
    <dt id="biblio-w3c-process">[W3C-PROCESS]
-   <dd>Charles McCathie Nevile. <a href="https://www.w3.org/20145/Process-20150901/"><cite>World Wide Web Consortium Process Document</cite></a>. URL: <a href="https://www.w3.org/20145/Process-20150901/">https://www.w3.org/20145/Process-20150901/</a>
-   <dt id="biblio-webidl">[WebIDL]
-   <dd>Boris Zbarsky. <a href="https://heycam.github.io/webidl/"><cite>Web IDL</cite></a>. 15 December 2016. ED. URL: <a href="https://heycam.github.io/webidl/">https://heycam.github.io/webidl/</a>
+   <dd>Elika J. Etemad (fantasai); Florian Rivoal. <a href="https://www.w3.org/Consortium/Process/"><cite>W3C Process Document</cite></a>. 2 November 2021. URL: <a href="https://www.w3.org/Consortium/Process/">https://www.w3.org/Consortium/Process/</a>
+   <dt id="biblio-webidl">[WEBIDL]
+   <dd>Edgar Chen; Timothy Gu. <a href="https://webidl.spec.whatwg.org/"><cite>Web IDL Standard</cite></a>. Living Standard. URL: <a href="https://webidl.spec.whatwg.org/">https://webidl.spec.whatwg.org/</a>
   </dl>
   <h3 class="no-num no-ref heading settled" id="informative"><span class="content">Informative References</span><a class="self-link" href="#informative"></a></h3>
   <dl>
    <dt id="biblio-comcast">[COMCAST]
    <dd>David Kravets. <a href="https://arstechnica.com/tech-policy/2014/09/why-comcasts-javascript-ad-injections-threaten-security-net-neutrality/"><cite>Comcast Wi-Fi serving self-promotional ads via JavaScript injection</cite></a>. URL: <a href="https://arstechnica.com/tech-policy/2014/09/why-comcasts-javascript-ad-injections-threaten-security-net-neutrality/">https://arstechnica.com/tech-policy/2014/09/why-comcasts-javascript-ad-injections-threaten-security-net-neutrality/</a>
    <dt id="biblio-credential-management-1">[CREDENTIAL-MANAGEMENT-1]
-   <dd>Mike West. <a href="https://www.w3.org/TR/credential-management-1/"><cite>Credential Management Level 1</cite></a>. 17 January 2019. WD. URL: <a href="https://www.w3.org/TR/credential-management-1/">https://www.w3.org/TR/credential-management-1/</a>
+   <dd>Mike West. <a href="https://w3c.github.io/webappsec-credential-management/"><cite>Credential Management Level 1</cite></a>. URL: <a href="https://w3c.github.io/webappsec-credential-management/">https://w3c.github.io/webappsec-credential-management/</a>
    <dt id="biblio-discovery-api">[DISCOVERY-API]
-   <dd>Rich Tibbett. <a href="https://www.w3.org/TR/discovery-api/"><cite>Network Service Discovery</cite></a>. 12 January 2017. NOTE. URL: <a href="https://www.w3.org/TR/discovery-api/">https://www.w3.org/TR/discovery-api/</a>
+   <dd>Rich Tibbett. <a href="https://dvcs.w3.org/hg/dap/raw-file/tip/discovery-api/Overview.html"><cite>Network Service Discovery</cite></a>. URL: <a href="https://dvcs.w3.org/hg/dap/raw-file/tip/discovery-api/Overview.html">https://dvcs.w3.org/hg/dap/raw-file/tip/discovery-api/Overview.html</a>
    <dt id="biblio-encrypted-media">[ENCRYPTED-MEDIA]
-   <dd>David Dorwin; et al. <a href="https://www.w3.org/TR/encrypted-media/"><cite>Encrypted Media Extensions</cite></a>. 18 September 2017. REC. URL: <a href="https://www.w3.org/TR/encrypted-media/">https://www.w3.org/TR/encrypted-media/</a>
+   <dd>David Dorwin; et al. <a href="https://w3c.github.io/encrypted-media/"><cite>Encrypted Media Extensions</cite></a>. URL: <a href="https://w3c.github.io/encrypted-media/">https://w3c.github.io/encrypted-media/</a>
    <dt id="biblio-fullscreen">[FULLSCREEN]
    <dd>Philip Jägenstedt. <a href="https://fullscreen.spec.whatwg.org/"><cite>Fullscreen API Standard</cite></a>. Living Standard. URL: <a href="https://fullscreen.spec.whatwg.org/">https://fullscreen.spec.whatwg.org/</a>
+   <dt id="biblio-geolocation">[GEOLOCATION]
+   <dd>Marcos Caceres; Reilly Grant. <a href="https://w3c.github.io/geolocation-api/"><cite>Geolocation API</cite></a>. URL: <a href="https://w3c.github.io/geolocation-api/">https://w3c.github.io/geolocation-api/</a>
    <dt id="biblio-geolocation-api">[GEOLOCATION-API]
-   <dd>Andrei Popescu. <a href="https://www.w3.org/TR/geolocation-API/"><cite>Geolocation API Specification 2nd Edition</cite></a>. 8 November 2016. REC. URL: <a href="https://www.w3.org/TR/geolocation-API/">https://www.w3.org/TR/geolocation-API/</a>
+   <dd>Andrei Popescu. <a href="https://w3c.github.io/geolocation-api/"><cite>Geolocation API Specification 2nd Edition</cite></a>. URL: <a href="https://w3c.github.io/geolocation-api/">https://w3c.github.io/geolocation-api/</a>
    <dt id="biblio-indexeddb">[IndexedDB]
-   <dd>Nikunj Mehta; et al. <a href="https://www.w3.org/TR/IndexedDB/"><cite>Indexed Database API</cite></a>. 8 January 2015. REC. URL: <a href="https://www.w3.org/TR/IndexedDB/">https://www.w3.org/TR/IndexedDB/</a>
+   <dd>Nikunj Mehta; et al. <a href="https://w3c.github.io/IndexedDB/"><cite>Indexed Database API</cite></a>. URL: <a href="https://w3c.github.io/IndexedDB/">https://w3c.github.io/IndexedDB/</a>
    <dt id="biblio-mediacapture-streams">[MEDIACAPTURE-STREAMS]
-   <dd>Cullen Jennings; et al. <a href="https://www.w3.org/TR/mediacapture-streams/"><cite>Media Capture and Streams</cite></a>. 19 August 2021. CR. URL: <a href="https://www.w3.org/TR/mediacapture-streams/">https://www.w3.org/TR/mediacapture-streams/</a>
+   <dd>Cullen Jennings; et al. <a href="https://w3c.github.io/mediacapture-main/"><cite>Media Capture and Streams</cite></a>. URL: <a href="https://w3c.github.io/mediacapture-main/">https://w3c.github.io/mediacapture-main/</a>
    <dt id="biblio-mix">[MIX]
-   <dd>Emily Stark; Mike West; Carlos IbarraLopez. <a href="https://www.w3.org/TR/mixed-content/"><cite>Mixed Content Level 2</cite></a>. 18 September 2021. CR. URL: <a href="https://www.w3.org/TR/mixed-content/">https://www.w3.org/TR/mixed-content/</a>
+   <dd>Emily Stark; Mike West; Carlos IbarraLopez. <a href="https://w3c.github.io/webappsec-mixed-content/"><cite>Mixed Content</cite></a>. URL: <a href="https://w3c.github.io/webappsec-mixed-content/">https://w3c.github.io/webappsec-mixed-content/</a>
    <dt id="biblio-powerful-new-features">[POWERFUL-NEW-FEATURES]
    <dd>Chrome Security Team. <a href="https://www.chromium.org/Home/chromium-security/prefer-secure-origins-for-powerful-new-features"><cite>Prefer Secure Origins For Powerful New Features</cite></a>. URL: <a href="https://www.chromium.org/Home/chromium-security/prefer-secure-origins-for-powerful-new-features">https://www.chromium.org/Home/chromium-security/prefer-secure-origins-for-powerful-new-features</a>
    <dt id="biblio-rfc6265">[RFC6265]
@@ -1743,77 +1577,546 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    <dt id="biblio-securing-web">[SECURING-WEB]
    <dd>Mark Nottingham. <a href="https://www.w3.org/2001/tag/doc/web-https"><cite>Securing the Web</cite></a>. TAG Finding. URL: <a href="https://www.w3.org/2001/tag/doc/web-https">https://www.w3.org/2001/tag/doc/web-https</a>
    <dt id="biblio-service-workers">[SERVICE-WORKERS]
-   <dd>Alex Russell; et al. <a href="https://www.w3.org/TR/service-workers-1/"><cite>Service Workers 1</cite></a>. 19 November 2019. CR. URL: <a href="https://www.w3.org/TR/service-workers-1/">https://www.w3.org/TR/service-workers-1/</a>
+   <dd>Jake Archibald; Marijn Kruisselbrink. <a href="https://w3c.github.io/ServiceWorker/"><cite>Service Workers</cite></a>. URL: <a href="https://w3c.github.io/ServiceWorker/">https://w3c.github.io/ServiceWorker/</a>
    <dt id="biblio-verizon">[VERIZON]
    <dd>Mark Bergen; Alex Kantrowitz. <a href="http://adage.com/article/digital/verizon-target-mobile-subscribers-ads/293356/"><cite>Verizon looks to target its mobile subscribers with ads</cite></a>. URL: <a href="http://adage.com/article/digital/verizon-target-mobile-subscribers-ads/293356/">http://adage.com/article/digital/verizon-target-mobile-subscribers-ads/293356/</a>
    <dt id="biblio-web-bluetooth">[WEB-BLUETOOTH]
-   <dd>Jeffrey Yasskin. <a href="https://webbluetoothcg.github.io/web-bluetooth/"><cite>Web Bluetooth</cite></a>. Draft Community Group Report. URL: <a href="https://webbluetoothcg.github.io/web-bluetooth/">https://webbluetoothcg.github.io/web-bluetooth/</a>
+   <dd>Jeffrey Yasskin. <a href="https://webbluetoothcg.github.io/web-bluetooth/"><cite>Web Bluetooth</cite></a>. URL: <a href="https://webbluetoothcg.github.io/web-bluetooth/">https://webbluetoothcg.github.io/web-bluetooth/</a>
    <dt id="biblio-webcryptoapi">[WEBCRYPTOAPI]
-   <dd>Mark Watson. <a href="https://www.w3.org/TR/WebCryptoAPI/"><cite>Web Cryptography API</cite></a>. 26 January 2017. REC. URL: <a href="https://www.w3.org/TR/WebCryptoAPI/">https://www.w3.org/TR/WebCryptoAPI/</a>
+   <dd>Mark Watson. <a href="https://w3c.github.io/webcrypto/"><cite>Web Cryptography API</cite></a>. URL: <a href="https://w3c.github.io/webcrypto/">https://w3c.github.io/webcrypto/</a>
   </dl>
-  <aside class="dfn-panel" data-for="potentially-trustworthy-origin">
-   <b><a href="#potentially-trustworthy-origin">#potentially-trustworthy-origin</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-potentially-trustworthy-origin">1.2. Framed Documents</a>
-    <li><a href="#ref-for-potentially-trustworthy-origin①">1.3. Web Workers</a>
-    <li><a href="#ref-for-potentially-trustworthy-origin②">3.2. 
-    Is url potentially trustworthy? </a>
-    <li><a href="#ref-for-potentially-trustworthy-origin③">5.2. localhost</a>
-   </ul>
-  </aside>
-<script>/* script-dfn-panel */
+<script>/* Boilerplate: script-dfn-panel */
+"use strict";
+{
+    const dfnsJson = window.dfnsJson || {};
 
-document.body.addEventListener("click", function(e) {
-    var queryAll = function(sel) { return [].slice.call(document.querySelectorAll(sel)); }
-    // Find the dfn element or panel, if any, that was clicked on.
-    var el = e.target;
-    var target;
-    var hitALink = false;
-    while(el.parentElement) {
-        if(el.tagName == "A") {
-            // Clicking on a link in a <dfn> shouldn't summon the panel
-            hitALink = true;
-        }
-        if(el.classList.contains("dfn-paneled")) {
-            target = "dfn";
-            break;
-        }
-        if(el.classList.contains("dfn-panel")) {
-            target = "dfn-panel";
-            break;
-        }
-        el = el.parentElement;
+    function genDfnPanel({dfnID, url, dfnText, refSections, external}) {
+        return mk.aside({
+            class: "dfn-panel",
+            id: `infopanel-for-${dfnID}`,
+            "data-for": dfnID,
+            "aria-labelled-by":`infopaneltitle-for-${dfnID}`,
+            },
+            mk.span({id:`infopaneltitle-for-${dfnID}`, style:"display:none"},
+                `Info about the '${dfnText}' ${external?"external":""} reference.`),
+            mk.a({href:url}, url),
+            mk.b({}, "Referenced in:"),
+            mk.ul({},
+                ...refSections.map(section=>
+                    mk.li({},
+                        ...section.refs.map((ref, refI)=>
+                            [
+                                mk.a({
+                                    href: `#${ref.id}`
+                                    },
+                                    (refI == 0) ? section.title : `(${refI + 1})`
+                                ),
+                                " ",
+                            ]
+                        ),
+                    ),
+                ),
+            ),
+        );
     }
-    if(target != "dfn-panel") {
-        // Turn off any currently "on" or "activated" panels.
-        queryAll(".dfn-panel.on, .dfn-panel.activated").forEach(function(el){
-            el.classList.remove("on");
-            el.classList.remove("activated");
-        });
-    }
-    if(target == "dfn" && !hitALink) {
-        // open the panel
-        var dfnPanel = document.querySelector(".dfn-panel[data-for='" + el.id + "']");
-        if(dfnPanel) {
-            dfnPanel.classList.add("on");
-            var rect = el.getBoundingClientRect();
-            dfnPanel.style.left = window.scrollX + rect.right + 5 + "px";
-            dfnPanel.style.top = window.scrollY + rect.top + "px";
-            var panelRect = dfnPanel.getBoundingClientRect();
-            var panelWidth = panelRect.right - panelRect.left;
-            if(panelRect.right > document.body.scrollWidth && (rect.left - (panelWidth + 5)) > 0) {
-                // Reposition, because the panel is overflowing
-                dfnPanel.style.left = window.scrollX + rect.left - (panelWidth + 5) + "px";
+
+    function genAllDfnPanels() {
+        for(const panelData of Object.values(window.dfnpanelData)) {
+            const dfnID = panelData.dfnID;
+            const dfn = document.getElementById(dfnID);
+            if(!dfn) {
+                console.log(`Can't find dfn#${dfnID}.`, panelData);
+            } else {
+                const panel = genDfnPanel(panelData);
+                append(document.body, panel);
+                insertDfnPopupAction(dfn, panel)
             }
-        } else {
-            console.log("Couldn't find .dfn-panel[data-for='" + el.id + "']");
         }
-    } else if(target == "dfn-panel") {
-        // Switch it to "activated" state, which pins it.
-        el.classList.add("activated");
-        el.style.left = null;
-        el.style.top = null;
     }
 
+    document.addEventListener("DOMContentLoaded", ()=>{
+        genAllDfnPanels();
+
+        // Add popup behavior to all dfns to show the corresponding dfn-panel.
+        var dfns = queryAll('.dfn-paneled');
+        for(let dfn of dfns) { ; }
+
+        document.body.addEventListener("click", (e) => {
+            // If not handled already, just hide all dfn panels.
+            hideAllDfnPanels();
+        });
+    })
+
+
+    function hideAllDfnPanels() {
+        // Turn off any currently "on" or "activated" panels.
+        queryAll(".dfn-panel.on, .dfn-panel.activated").forEach(el=>hideDfnPanel(el));
+    }
+
+    function showDfnPanel(dfnPanel, dfn) {
+        hideAllDfnPanels(); // Only display one at this time.
+        dfn.setAttribute("aria-expanded", "true");
+        dfnPanel.classList.add("on");
+        dfnPanel.style.left = "5px";
+        dfnPanel.style.top = "0px";
+        const panelRect = dfnPanel.getBoundingClientRect();
+        const panelWidth = panelRect.right - panelRect.left;
+        if (panelRect.right > document.body.scrollWidth) {
+            // Panel's overflowing the screen.
+            // Just drop it below the dfn and flip it rightward instead.
+            // This still wont' fix things if the screen is *really* wide,
+            // but fixing that's a lot harder without 'anchor()'.
+            dfnPanel.style.top = "1.5em";
+            dfnPanel.style.left = "auto";
+            dfnPanel.style.right = "0px";
+        }
+    }
+
+    function pinDfnPanel(dfnPanel) {
+        // Switch it to "activated" state, which pins it.
+        dfnPanel.classList.add("activated");
+        dfnPanel.style.left = null;
+        dfnPanel.style.top = null;
+    }
+
+    function hideDfnPanel(dfnPanel, dfn) {
+        if(!dfn) {
+            dfn = document.getElementById(dfnPanel.getAttribute("data-for"));
+        }
+        dfn.setAttribute("aria-expanded", "false")
+        dfnPanel.classList.remove("on");
+        dfnPanel.classList.remove("activated");
+    }
+
+    function toggleDfnPanel(dfnPanel, dfn) {
+        if(dfnPanel.classList.contains("on")) {
+            hideDfnPanel(dfnPanel, dfn);
+        } else {
+            showDfnPanel(dfnPanel, dfn);
+        }
+    }
+
+    function insertDfnPopupAction(dfn, dfnPanel) {
+        // Find dfn panel
+        const panelWrapper = document.createElement('span');
+        panelWrapper.appendChild(dfnPanel);
+        panelWrapper.style.position = "relative";
+        panelWrapper.style.height = "0px";
+        dfn.insertAdjacentElement("afterend", panelWrapper);
+        dfn.setAttribute('role', 'button');
+        dfn.setAttribute('aria-expanded', 'false')
+        dfn.tabIndex = 0;
+        dfn.classList.add('has-dfn-panel');
+        dfn.addEventListener('click', (event) => {
+            showDfnPanel(dfnPanel, dfn);
+            event.stopPropagation();
+        });
+        dfn.addEventListener('keypress', (event) => {
+            const kc = event.keyCode;
+            // 32->Space, 13->Enter
+            if(kc == 32 || kc == 13) {
+                toggleDfnPanel(dfnPanel, dfn);
+                event.stopPropagation();
+                event.preventDefault();
+            }
+        });
+
+        dfnPanel.addEventListener('click', (event) => {
+            if (event.target.nodeName == 'A') {
+                pinDfnPanel(dfnPanel);
+            }
+            event.stopPropagation();
+        });
+
+        dfnPanel.addEventListener('keydown', (event) => {
+            if(event.keyCode == 27) { // Escape key
+                hideDfnPanel(dfnPanel, dfn);
+                event.stopPropagation();
+                event.preventDefault();
+            }
+        })
+    }
+}
+</script>
+<script>/* Boilerplate: script-dfn-panel */
+"use strict";
+{
+    const dfnsJson = window.dfnsJson || {};
+
+    function genDfnPanel({dfnID, url, dfnText, refSections, external}) {
+        return mk.aside({
+            class: "dfn-panel",
+            id: `infopanel-for-${dfnID}`,
+            "data-for": dfnID,
+            "aria-labelled-by":`infopaneltitle-for-${dfnID}`,
+            },
+            mk.span({id:`infopaneltitle-for-${dfnID}`, style:"display:none"},
+                `Info about the '${dfnText}' ${external?"external":""} reference.`),
+            mk.a({href:url}, url),
+            mk.b({}, "Referenced in:"),
+            mk.ul({},
+                ...refSections.map(section=>
+                    mk.li({},
+                        ...section.refs.map((ref, refI)=>
+                            [
+                                mk.a({
+                                    href: `#${ref.id}`
+                                    },
+                                    (refI == 0) ? section.title : `(${refI + 1})`
+                                ),
+                                " ",
+                            ]
+                        ),
+                    ),
+                ),
+            ),
+        );
+    }
+
+    function genAllDfnPanels() {
+        for(const panelData of Object.values(window.dfnpanelData)) {
+            const dfnID = panelData.dfnID;
+            const dfn = document.getElementById(dfnID);
+            if(!dfn) {
+                console.log(`Can't find dfn#${dfnID}.`, panelData);
+            } else {
+                const panel = genDfnPanel(panelData);
+                append(document.body, panel);
+                insertDfnPopupAction(dfn, panel)
+            }
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", ()=>{
+        genAllDfnPanels();
+
+        // Add popup behavior to all dfns to show the corresponding dfn-panel.
+        var dfns = queryAll('.dfn-paneled');
+        for(let dfn of dfns) { ; }
+
+        document.body.addEventListener("click", (e) => {
+            // If not handled already, just hide all dfn panels.
+            hideAllDfnPanels();
+        });
+    })
+
+
+    function hideAllDfnPanels() {
+        // Turn off any currently "on" or "activated" panels.
+        queryAll(".dfn-panel.on, .dfn-panel.activated").forEach(el=>hideDfnPanel(el));
+    }
+
+    function showDfnPanel(dfnPanel, dfn) {
+        hideAllDfnPanels(); // Only display one at this time.
+        dfn.setAttribute("aria-expanded", "true");
+        dfnPanel.classList.add("on");
+        dfnPanel.style.left = "5px";
+        dfnPanel.style.top = "0px";
+        const panelRect = dfnPanel.getBoundingClientRect();
+        const panelWidth = panelRect.right - panelRect.left;
+        if (panelRect.right > document.body.scrollWidth) {
+            // Panel's overflowing the screen.
+            // Just drop it below the dfn and flip it rightward instead.
+            // This still wont' fix things if the screen is *really* wide,
+            // but fixing that's a lot harder without 'anchor()'.
+            dfnPanel.style.top = "1.5em";
+            dfnPanel.style.left = "auto";
+            dfnPanel.style.right = "0px";
+        }
+    }
+
+    function pinDfnPanel(dfnPanel) {
+        // Switch it to "activated" state, which pins it.
+        dfnPanel.classList.add("activated");
+        dfnPanel.style.left = null;
+        dfnPanel.style.top = null;
+    }
+
+    function hideDfnPanel(dfnPanel, dfn) {
+        if(!dfn) {
+            dfn = document.getElementById(dfnPanel.getAttribute("data-for"));
+        }
+        dfn.setAttribute("aria-expanded", "false")
+        dfnPanel.classList.remove("on");
+        dfnPanel.classList.remove("activated");
+    }
+
+    function toggleDfnPanel(dfnPanel, dfn) {
+        if(dfnPanel.classList.contains("on")) {
+            hideDfnPanel(dfnPanel, dfn);
+        } else {
+            showDfnPanel(dfnPanel, dfn);
+        }
+    }
+
+    function insertDfnPopupAction(dfn, dfnPanel) {
+        // Find dfn panel
+        const panelWrapper = document.createElement('span');
+        panelWrapper.appendChild(dfnPanel);
+        panelWrapper.style.position = "relative";
+        panelWrapper.style.height = "0px";
+        dfn.insertAdjacentElement("afterend", panelWrapper);
+        dfn.setAttribute('role', 'button');
+        dfn.setAttribute('aria-expanded', 'false')
+        dfn.tabIndex = 0;
+        dfn.classList.add('has-dfn-panel');
+        dfn.addEventListener('click', (event) => {
+            showDfnPanel(dfnPanel, dfn);
+            event.stopPropagation();
+        });
+        dfn.addEventListener('keypress', (event) => {
+            const kc = event.keyCode;
+            // 32->Space, 13->Enter
+            if(kc == 32 || kc == 13) {
+                toggleDfnPanel(dfnPanel, dfn);
+                event.stopPropagation();
+                event.preventDefault();
+            }
+        });
+
+        dfnPanel.addEventListener('click', (event) => {
+            if (event.target.nodeName == 'A') {
+                pinDfnPanel(dfnPanel);
+            }
+            event.stopPropagation();
+        });
+
+        dfnPanel.addEventListener('keydown', (event) => {
+            if(event.keyCode == 27) { // Escape key
+                hideDfnPanel(dfnPanel, dfn);
+                event.stopPropagation();
+                event.preventDefault();
+            }
+        })
+    }
+}
+</script>
+<script>/* Boilerplate: script-dfn-panel-json */
+window.dfnpanelData = {};
+window.dfnpanelData['403be618'] = {"dfnID": "403be618", "url": "https://w3c.github.io/geolocation-api/#dom-geolocation-getcurrentposition", "dfnText": "getCurrentPosition()", "refSections": [{"refs": [{"id": "ref-for-dom-geolocation-getcurrentposition"}], "title": "7.4.1. Example: Geolocation"}], "external": true};
+window.dfnpanelData['4de8fec9'] = {"dfnID": "4de8fec9", "url": "https://w3c.github.io/geolocation-api/#dom-geolocation-watchposition", "dfnText": "watchPosition()", "refSections": [{"refs": [{"id": "ref-for-dom-geolocation-watchposition"}], "title": "7.4.1. Example: Geolocation"}], "external": true};
+window.dfnpanelData['a13a702f'] = {"dfnID": "a13a702f", "url": "https://html.spec.whatwg.org/multipage/workers.html#sharedworker", "dfnText": "SharedWorker", "refSections": [{"refs": [{"id": "ref-for-sharedworker"}], "title": "2.2.1. Shared Workers"}], "external": true};
+window.dfnpanelData['5f6d392d'] = {"dfnID": "5f6d392d", "url": "https://html.spec.whatwg.org/multipage/webappapis.html#windoworworkerglobalscope", "dfnText": "WindowOrWorkerGlobalScope", "refSections": [{"refs": [{"id": "ref-for-windoworworkerglobalscope"}], "title": "2.2.2. Feature Detection"}], "external": true};
+window.dfnpanelData['12b8dfc0'] = {"dfnID": "12b8dfc0", "url": "https://html.spec.whatwg.org/multipage/webappapis.html#current-settings-object", "dfnText": "current settings object", "refSections": [{"refs": [{"id": "ref-for-current-settings-object"}], "title": "7.3. Restricting New Features"}, {"refs": [{"id": "ref-for-current-settings-object\u2460"}], "title": "7.4.1. Example: Geolocation"}], "external": true};
+window.dfnpanelData['2672c7bc'] = {"dfnID": "2672c7bc", "url": "https://html.spec.whatwg.org/multipage/browsers.html#concept-origin-domain", "dfnText": "domain", "refSections": [{"refs": [{"id": "ref-for-concept-origin-domain"}], "title": "3.1. \n    Is origin potentially trustworthy?\n  "}], "external": true};
+window.dfnpanelData['a746ba16'] = {"dfnID": "a746ba16", "url": "https://html.spec.whatwg.org/multipage/semantics.html#link-options-environment", "dfnText": "environment", "refSections": [{"refs": [{"id": "ref-for-link-options-environment"}, {"id": "ref-for-link-options-environment\u2460"}], "title": "2.2.3. Secure and non-secure contexts"}], "external": true};
+window.dfnpanelData['4b6086d7'] = {"dfnID": "4b6086d7", "url": "https://html.spec.whatwg.org/multipage/webappapis.html#global-object", "dfnText": "global object", "refSections": [{"refs": [{"id": "ref-for-global-object"}], "title": "2.2.3. Secure and non-secure contexts"}], "external": true};
+window.dfnpanelData['77a2ee6e'] = {"dfnID": "77a2ee6e", "url": "https://html.spec.whatwg.org/multipage/browsers.html#concept-origin-host", "dfnText": "host", "refSections": [{"refs": [{"id": "ref-for-concept-origin-host"}, {"id": "ref-for-concept-origin-host\u2460"}, {"id": "ref-for-concept-origin-host\u2461"}], "title": "3.1. \n    Is origin potentially trustworthy?\n  "}], "external": true};
+window.dfnpanelData['87fcd40c'] = {"dfnID": "87fcd40c", "url": "https://html.spec.whatwg.org/multipage/iframe-embed-object.html#the-iframe-element", "dfnText": "iframe", "refSections": [{"refs": [{"id": "ref-for-the-iframe-element"}, {"id": "ref-for-the-iframe-element\u2460"}], "title": "4.2. Ancestral Risk"}], "external": true};
+window.dfnpanelData['db3b2dfc'] = {"dfnID": "db3b2dfc", "url": "https://html.spec.whatwg.org/multipage/webappapis.html#dom-issecurecontext", "dfnText": "isSecureContext", "refSections": [{"refs": [{"id": "ref-for-dom-issecurecontext"}], "title": "2.2.2. Feature Detection"}], "external": true};
+window.dfnpanelData['5155c2d3'] = {"dfnID": "5155c2d3", "url": "https://html.spec.whatwg.org/multipage/webappapis.html#non-secure-context", "dfnText": "non-secure context", "refSections": [{"refs": [{"id": "ref-for-non-secure-context"}], "title": "2.2.3. Secure and non-secure contexts"}], "external": true};
+window.dfnpanelData['b01b1359'] = {"dfnID": "b01b1359", "url": "https://html.spec.whatwg.org/multipage/browsers.html#concept-origin-opaque", "dfnText": "opaque origin", "refSections": [{"refs": [{"id": "ref-for-concept-origin-opaque"}], "title": "3.1. \n    Is origin potentially trustworthy?\n  "}], "external": true};
+window.dfnpanelData['086e3aff'] = {"dfnID": "086e3aff", "url": "https://html.spec.whatwg.org/multipage/browsers.html#concept-origin", "dfnText": "origin", "refSections": [{"refs": [{"id": "ref-for-concept-origin"}], "title": "3.1. \n    Is origin potentially trustworthy?\n  "}], "external": true};
+window.dfnpanelData['98e31e77'] = {"dfnID": "98e31e77", "url": "https://html.spec.whatwg.org/multipage/browsers.html#concept-origin-port", "dfnText": "port", "refSections": [{"refs": [{"id": "ref-for-concept-origin-port"}], "title": "3.1. \n    Is origin potentially trustworthy?\n  "}], "external": true};
+window.dfnpanelData['9c4c1e66'] = {"dfnID": "9c4c1e66", "url": "https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object", "dfnText": "relevant settings object", "refSections": [{"refs": [{"id": "ref-for-relevant-settings-object"}], "title": "2.2.3. Secure and non-secure contexts"}], "external": true};
+window.dfnpanelData['a23d12a9'] = {"dfnID": "a23d12a9", "url": "https://html.spec.whatwg.org/multipage/browsers.html#concept-origin-scheme", "dfnText": "scheme", "refSections": [{"refs": [{"id": "ref-for-concept-origin-scheme"}, {"id": "ref-for-concept-origin-scheme\u2460"}, {"id": "ref-for-concept-origin-scheme\u2461"}], "title": "3.1. \n    Is origin potentially trustworthy?\n  "}], "external": true};
+window.dfnpanelData['65181da8'] = {"dfnID": "65181da8", "url": "https://html.spec.whatwg.org/multipage/webappapis.html#secure-context", "dfnText": "secure context", "refSections": [{"refs": [{"id": "ref-for-secure-context"}, {"id": "ref-for-secure-context\u2460"}], "title": "1.1. Top-level Documents"}, {"refs": [{"id": "ref-for-secure-context\u2461"}, {"id": "ref-for-secure-context\u2462"}, {"id": "ref-for-secure-context\u2463"}], "title": "1.2. Framed Documents"}, {"refs": [{"id": "ref-for-secure-context\u2464"}, {"id": "ref-for-secure-context\u2465"}, {"id": "ref-for-secure-context\u2466"}, {"id": "ref-for-secure-context\u2467"}], "title": "1.3. Web Workers"}, {"refs": [{"id": "ref-for-secure-context\u2468"}, {"id": "ref-for-secure-context\u2460\u24ea"}, {"id": "ref-for-secure-context\u2460\u2460"}, {"id": "ref-for-secure-context\u2460\u2461"}], "title": "1.4. Shared Workers"}, {"refs": [{"id": "ref-for-secure-context\u2460\u2462"}, {"id": "ref-for-secure-context\u2460\u2463"}, {"id": "ref-for-secure-context\u2460\u2464"}], "title": "1.5. Service Workers"}, {"refs": [{"id": "ref-for-secure-context\u2460\u2465"}, {"id": "ref-for-secure-context\u2460\u2466"}, {"id": "ref-for-secure-context\u2460\u2467"}], "title": "2.2.1. Shared Workers"}, {"refs": [{"id": "ref-for-secure-context\u2460\u2468"}], "title": "2.2.2. Feature Detection"}, {"refs": [{"id": "ref-for-secure-context\u2461\u24ea"}, {"id": "ref-for-secure-context\u2461\u2460"}], "title": "2.2.3. Secure and non-secure contexts"}, {"refs": [{"id": "ref-for-secure-context\u2461\u2461"}], "title": "3.1. \n    Is origin potentially trustworthy?\n  "}, {"refs": [{"id": "ref-for-secure-context\u2461\u2462"}, {"id": "ref-for-secure-context\u2461\u2463"}], "title": "4.2. Ancestral Risk"}, {"refs": [{"id": "ref-for-secure-context\u2461\u2464"}, {"id": "ref-for-secure-context\u2461\u2465"}], "title": "4.3. Risks associated with non-secure contexts"}, {"refs": [{"id": "ref-for-secure-context\u2461\u2466"}], "title": "5.1. Incomplete Isolation"}, {"refs": [{"id": "ref-for-secure-context\u2461\u2467"}], "title": "6. Privacy Considerations"}, {"refs": [{"id": "ref-for-secure-context\u2461\u2468"}, {"id": "ref-for-secure-context\u2462\u24ea"}, {"id": "ref-for-secure-context\u2462\u2460"}], "title": "7.3. Restricting New Features"}, {"refs": [{"id": "ref-for-secure-context\u2462\u2461"}, {"id": "ref-for-secure-context\u2462\u2462"}, {"id": "ref-for-secure-context\u2462\u2463"}], "title": "7.4. Restricting Legacy Features"}, {"refs": [{"id": "ref-for-secure-context\u2462\u2464"}, {"id": "ref-for-secure-context\u2462\u2465"}], "title": "7.4.1. Example: Geolocation"}], "external": true};
+window.dfnpanelData['ae2a6342'] = {"dfnID": "ae2a6342", "url": "https://html.spec.whatwg.org/multipage/document-sequences.html#top-level-browsing-context", "dfnText": "top-level browsing context", "refSections": [{"refs": [{"id": "ref-for-top-level-browsing-context"}, {"id": "ref-for-top-level-browsing-context\u2460"}], "title": "1.1. Top-level Documents"}, {"refs": [{"id": "ref-for-top-level-browsing-context\u2461"}], "title": "1.2. Framed Documents"}, {"refs": [{"id": "ref-for-top-level-browsing-context\u2462"}, {"id": "ref-for-top-level-browsing-context\u2463"}], "title": "1.3. Web Workers"}, {"refs": [{"id": "ref-for-top-level-browsing-context\u2464"}, {"id": "ref-for-top-level-browsing-context\u2465"}], "title": "1.4. Shared Workers"}, {"refs": [{"id": "ref-for-top-level-browsing-context\u2466"}], "title": "1.5. Service Workers"}], "external": true};
+window.dfnpanelData['1d2aa117'] = {"dfnID": "1d2aa117", "url": "https://html.spec.whatwg.org/multipage/browsers.html#concept-origin-tuple", "dfnText": "tuple origin", "refSections": [{"refs": [{"id": "ref-for-concept-origin-tuple"}], "title": "3.1. \n    Is origin potentially trustworthy?\n  "}], "external": true};
+window.dfnpanelData['4d8718f0'] = {"dfnID": "4d8718f0", "url": "https://w3c.github.io/webappsec-mixed-content/#a-priori-authenticated-url", "dfnText": "a priori authenticated url", "refSections": [{"refs": [{"id": "ref-for-a-priori-authenticated-url"}], "title": "3.1. \n    Is origin potentially trustworthy?\n  "}], "external": true};
+window.dfnpanelData['959ad97b'] = {"dfnID": "959ad97b", "url": "https://url.spec.whatwg.org/#concept-url-origin", "dfnText": "origin", "refSections": [{"refs": [{"id": "ref-for-concept-url-origin"}, {"id": "ref-for-concept-url-origin\u2460"}], "title": "3.2. \n    Is url potentially trustworthy?\n  "}], "external": true};
+window.dfnpanelData['3a711be7'] = {"dfnID": "3a711be7", "url": "https://url.spec.whatwg.org/#concept-url-scheme", "dfnText": "scheme", "refSections": [{"refs": [{"id": "ref-for-concept-url-scheme"}], "title": "3.2. \n    Is url potentially trustworthy?\n  "}, {"refs": [{"id": "ref-for-concept-url-scheme\u2460"}], "title": "7.1. Packaged Applications"}], "external": true};
+window.dfnpanelData['a8c7461b'] = {"dfnID": "a8c7461b", "url": "https://url.spec.whatwg.org/#concept-url", "dfnText": "url record", "refSections": [{"refs": [{"id": "ref-for-concept-url"}], "title": "3.2. \n    Is url potentially trustworthy?\n  "}], "external": true};
+window.dfnpanelData['a8e1631c'] = {"dfnID": "a8e1631c", "url": "https://www.w3.org/2023/Process-20231103/#revising-rec", "dfnText": "modify a specification", "refSections": [{"refs": [{"id": "ref-for-revising-rec"}, {"id": "ref-for-revising-rec\u2460"}, {"id": "ref-for-revising-rec\u2461"}], "title": "7.4. Restricting Legacy Features"}, {"refs": [{"id": "ref-for-revising-rec\u2462"}], "title": "7.4.1. Example: Geolocation"}], "external": true};
+window.dfnpanelData['dca2de17'] = {"dfnID": "dca2de17", "url": "https://webidl.spec.whatwg.org/#idl-DOMException", "dfnText": "DOMException", "refSections": [{"refs": [{"id": "ref-for-idl-DOMException"}], "title": "2.2.1. Shared Workers"}], "external": true};
+window.dfnpanelData['b75bb3bd'] = {"dfnID": "b75bb3bd", "url": "https://webidl.spec.whatwg.org/#SecureContext", "dfnText": "SecureContext", "refSections": [{"refs": [{"id": "ref-for-SecureContext"}, {"id": "ref-for-SecureContext\u2460"}, {"id": "ref-for-SecureContext\u2461"}, {"id": "ref-for-SecureContext\u2462"}], "title": "2.1. Integration with WebIDL"}, {"refs": [{"id": "ref-for-SecureContext\u2463"}, {"id": "ref-for-SecureContext\u2464"}, {"id": "ref-for-SecureContext\u2465"}], "title": "7.3. Restricting New Features"}], "external": true};
+window.dfnpanelData['c3e881ef'] = {"dfnID": "c3e881ef", "url": "https://webidl.spec.whatwg.org/#securityerror", "dfnText": "SecurityError", "refSections": [{"refs": [{"id": "ref-for-securityerror"}], "title": "2.2.1. Shared Workers"}], "external": true};
+window.dfnpanelData['25c36209'] = {"dfnID": "25c36209", "url": "https://webidl.spec.whatwg.org/#dfn-exposed", "dfnText": "exposed", "refSections": [{"refs": [{"id": "ref-for-dfn-exposed"}], "title": "2.1. Integration with WebIDL"}], "external": true};
+window.dfnpanelData['potentially-trustworthy-origin'] = {"dfnID": "potentially-trustworthy-origin", "url": "#potentially-trustworthy-origin", "dfnText": "potentially trustworthy origin", "refSections": [{"refs": [{"id": "ref-for-potentially-trustworthy-origin"}], "title": "1.2. Framed Documents"}, {"refs": [{"id": "ref-for-potentially-trustworthy-origin\u2460"}], "title": "1.3. Web Workers"}, {"refs": [{"id": "ref-for-potentially-trustworthy-origin\u2461"}], "title": "3.2. \n    Is url potentially trustworthy?\n  "}, {"refs": [{"id": "ref-for-potentially-trustworthy-origin\u2462"}], "title": "5.2. localhost"}], "external": false};
+</script>
+<script>/* Boilerplate: script-dom-helper */
+function query(sel) { return document.querySelector(sel); }
+
+function queryAll(sel) { return [...document.querySelectorAll(sel)]; }
+
+function iter(obj) {
+	if(!obj) return [];
+	var it = obj[Symbol.iterator];
+	if(it) return it;
+	return Object.entries(obj);
+}
+
+function mk(tagname, attrs, ...children) {
+	const el = document.createElement(tagname);
+	for(const [k,v] of iter(attrs)) {
+		if(k.slice(0,3) == "_on") {
+			const eventName = k.slice(3);
+			el.addEventListener(eventName, v);
+		} else if(k[0] == "_") {
+			// property, not attribute
+			el[k.slice(1)] = v;
+		} else {
+			if(v === false || v == null) {
+        continue;
+      } else if(v === true) {
+        el.setAttribute(k, "");
+        continue;
+      } else {
+  			el.setAttribute(k, v);
+      }
+		}
+	}
+	append(el, children);
+	return el;
+}
+
+/* Create shortcuts for every known HTML element */
+[
+  "a",
+  "abbr",
+  "acronym",
+  "address",
+  "applet",
+  "area",
+  "article",
+  "aside",
+  "audio",
+  "b",
+  "base",
+  "basefont",
+  "bdo",
+  "big",
+  "blockquote",
+  "body",
+  "br",
+  "button",
+  "canvas",
+  "caption",
+  "center",
+  "cite",
+  "code",
+  "col",
+  "colgroup",
+  "datalist",
+  "dd",
+  "del",
+  "details",
+  "dfn",
+  "dialog",
+  "div",
+  "dl",
+  "dt",
+  "em",
+  "embed",
+  "fieldset",
+  "figcaption",
+  "figure",
+  "font",
+  "footer",
+  "form",
+  "frame",
+  "frameset",
+  "head",
+  "header",
+  "h1",
+  "h2",
+  "h3",
+  "h4",
+  "h5",
+  "h6",
+  "hr",
+  "html",
+  "i",
+  "iframe",
+  "img",
+  "input",
+  "ins",
+  "kbd",
+  "label",
+  "legend",
+  "li",
+  "link",
+  "main",
+  "map",
+  "mark",
+  "meta",
+  "meter",
+  "nav",
+  "nobr",
+  "noscript",
+  "object",
+  "ol",
+  "optgroup",
+  "option",
+  "output",
+  "p",
+  "param",
+  "pre",
+  "progress",
+  "q",
+  "s",
+  "samp",
+  "script",
+  "section",
+  "select",
+  "small",
+  "source",
+  "span",
+  "strike",
+  "strong",
+  "style",
+  "sub",
+  "summary",
+  "sup",
+  "table",
+  "tbody",
+  "td",
+  "template",
+  "textarea",
+  "tfoot",
+  "th",
+  "thead",
+  "time",
+  "title",
+  "tr",
+  "u",
+  "ul",
+  "var",
+  "video",
+  "wbr",
+  "xmp",
+].forEach(tagname=>{
+	mk[tagname] = (...args) => mk(tagname, ...args);
 });
+
+function* nodesFromChildList(children) {
+	for(const child of children.flat(Infinity)) {
+		if(child instanceof Node) {
+			yield child;
+		} else {
+			yield new Text(child);
+		}
+	}
+}
+function append(el, ...children) {
+	for(const child of nodesFromChildList(children)) {
+		if(el instanceof Node) el.appendChild(child);
+		else el.push(child);
+	}
+	return el;
+}
+
+function insertAfter(el, ...children) {
+	for(const child of nodesFromChildList(children)) {
+		el.parentNode.insertBefore(child, el.nextSibling);
+	}
+	return el;
+}
+
+function clearContents(el) {
+	el.innerHTML = "";
+	return el;
+}
+
+function parseHTML(markup) {
+	if(markup.toLowerCase().trim().indexOf('<!doctype') === 0) {
+		const doc = document.implementation.createHTMLDocument("");
+		doc.documentElement.innerHTML = markup;
+		return doc;
+	} else {
+		const el = mk.template({});
+		el.innerHTML = markup;
+		return el.content;
+	}
+}
 </script>
