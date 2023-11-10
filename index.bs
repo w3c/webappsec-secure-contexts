@@ -514,7 +514,7 @@ urlPrefix: https://www.w3.org/2023/Process-20231103/; spec: W3C-PROCESS
 <section>
   <h2 id="algorithms">Algorithms</h2>
 
-  <h3 id="is-origin-trustworthy">
+  <h3 abstract-op export id="is-origin-trustworthy">
     Is |origin| potentially trustworthy?
   </h3>
 
