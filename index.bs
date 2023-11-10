@@ -21,17 +21,12 @@ Markup Shorthands: markdown on
 Boilerplate: omit conformance, omit feedback-header
 </pre>
 <pre class="link-defaults">
-spec:html; type:attribute; text:isSecureContext
 spec:html; type:dfn; text:environment
 </pre>
 <pre class="anchors">
-urlPrefix: https://www.w3.org/TR/geolocation-API/; spec: GEOLOCATION-API
-  type: method
-    text: getCurrentPosition(); url: get-current-position
-    text: watchPosition(); url: watch-position
-urlPrefix: https://www.w3.org/2017/Process-20170301/; spec: W3C-PROCESS
+urlPrefix: https://www.w3.org/2023/Process-20231103/; spec: W3C-PROCESS
   type: dfn
-    text: modify a specification; url: rec-modify
+    text: modify a specification; url: revising-rec
 </pre>
 <pre class="biblio">
 {
@@ -52,16 +47,10 @@ urlPrefix: https://www.w3.org/2017/Process-20170301/; spec: W3C-PROCESS
     "href": "https://www.chromium.org/Home/chromium-security/prefer-secure-origins-for-powerful-new-features",
     "title": "Prefer Secure Origins For Powerful New Features"
   },
-  "W3C-PROCESS": {
-    "authors": [ "Charles McCathie Nevile" ],
-    "title": "World Wide Web Consortium Process Document",
-    "href": "https://www.w3.org/20145/Process-20150901/",
-    "publisher": "W3C"
-  },
   "let-localhost-be-localhost": {
     "authors": [ "Mike West" ],
     "title": "Let 'localhost' be localhost.",
-    "href": "https://tools.ietf.org/html/draft-west-let-localhost-be-localhost",
+    "href": "https://datatracker.ietf.org/doc/html/draft-ietf-dnsop-let-localhost-be-localhost",
     "publisher": "IETF"
   }
 }
@@ -879,7 +868,7 @@ urlPrefix: https://www.w3.org/2017/Process-20170301/; spec: W3C-PROCESS
 
     1.  <a lt="modify a specification">Modify</a> the specification to include
         checks against <a>secure context</a> before executing the algorithms for
-        {{getCurrentPosition()}} and {{watchPosition()}}.
+        {{Geolocation/getCurrentPosition()}} and {{Geolocation/watchPosition()}}.
 
         If the <a>current settings object</a> is not a <a>secure context</a>,
         then the algorithm should be aborted, and the `errorCallback`
